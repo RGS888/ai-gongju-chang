@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教程管理后台 - AI工具场</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: var(--gray-100);
+            min-height: 100vh;
+        }
+
+        /* 登录页 */
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h1 {
+            font-size: 24px;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .login-box p {
+            color: var(--gray-500);
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            width: auto;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        /* 管理后台 */
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: white;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .admin-header h1 {
+            font-size: 20px;
+            color: var(--gray-800);
+        }
+
+        .admin-header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .admin-header .logout-btn {
+            padding: 8px 16px;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* 添加表单 */
+        .add-form {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .add-form h2 {
+            font-size: 18px;
+            color: var(--gray-800);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-tips {
+            font-size: 12px;
+            color: var(--gray-400);
+            margin-top: 4px;
+        }
+
+        /* 教程列表 */
+        .courses-list {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .courses-list h2 {
+            font-size: 18px;
+            color: var(--gray-800);
+            margin-bottom: 20px;
+        }
+
+        .course-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .course-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        }
+
+        .course-item img {
+            width: 160px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: var(--gray-100);
+        }
+
+        .course-info {
+            flex: 1;
+        }
+
+        .course-info h3 {
+            font-size: 16px;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+
+        .course-info .category {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .course-info p {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+
+        .course-info .link {
+            font-size: 12px;
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        .course-actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray-400);
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        /* 提示 */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* 隐藏 */
+        .hidden {
+            display: none !important;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .course-item {
+                flex-direction: column;
+            }
+            .course-item img {
+                width: 100%;
+                height: 180px;
+            }
+            .course-actions {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录页 -->
+    <div id="loginPage" class="login-container">
+        <div class="login-box">
+            <h1>🔐 教程管理后台</h1>
+            <p>请输入管理密码登录</p>
+            <div id="loginAlert" class="alert hidden"></div>
+            <div class="form-group">
+                <label>管理密码</label>
+                <input type="password" id="passwordInput" placeholder="请输入管理密码" onkeypress="handleEnter(event)">
+            </div>
+            <button class="btn btn-primary" onclick="handleLogin()">登录</button>
+            <p style="margin-top: 20px; font-size: 12px; color: #9ca3af;">
+                默认密码：Jd123321<br>
+                首次使用请修改密码！
+            </p>
+        </div>
+    </div>
+
+    <!-- 管理后台 -->
+    <div id="adminPage" class="admin-container hidden">
+        <div class="admin-header">
+            <h1>📚 教程管理后台</h1>
+            <div class="user-info">
+                <span style="color: #6b7280; font-size: 14px;">已登录</span>
+                <button class="logout-btn" onclick="handleLogout()">退出登录</button>
+                <button class="logout-btn" onclick="showChangePassword()">修改密码</button>
+            </div>
+        </div>
+
+        <!-- 添加教程表单 -->
+        <div class="add-form">
+            <h2>➕ 添加新教程</h2>
+            <div id="formAlert" class="alert hidden"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>教程标题 *</label>
+                    <input type="text" id="courseTitle" placeholder="例如：扣子AI从入门到精通">
+                </div>
+                <div class="form-group">
+                    <label>分类 *</label>
+                    <select id="courseCategory" style="width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                        <option value="AI工具">🤖 AI工具</option>
+                        <option value="视频制作">🎬 视频制作</option>
+                        <option value="运营技巧">📊 运营技巧</option>
+                        <option value="图文创作">📝 图文创作</option>
+                        <option value="变现技巧">💰 变现技巧</option>
+                        <option value="其他">📚 其他</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>教程简介 *</label>
+                <textarea id="courseDesc" placeholder="简要描述教程内容（50-100字）"></textarea>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>B站视频链接 *</label>
+                    <input type="url" id="courseLink" placeholder="https://www.bilibili.com/video/BV1xxx/">
+                    <p class="form-tips">将视频上传到B站，复制视频链接粘贴到这里</p>
+                </div>
+                <div class="form-group">
+                    <label>封面图片链接</label>
+                    <input type="url" id="courseCover" placeholder="https://i.imgur.com/xxx.jpg">
+                    <p class="form-tips">可留空自动使用默认封面，或上传到图床获取链接</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>标签（用逗号分隔）</label>
+                <input type="text" id="courseTags" placeholder="例如：扣子,AI工具,入门教程">
+            </div>
+            <button class="btn btn-primary" onclick="addCourse()" style="margin-top: 16px;">
+                ✅ 添加教程
+            </button>
+        </div>
+
+        <!-- 教程列表 -->
+        <div class="courses-list">
+            <h2>📋 已上传教程（共 <span id="courseCount">0</span> 个）</h2>
+            <div id="coursesContainer">
+                <div class="empty-state">
+                    <div class="icon">📭</div>
+                    <p>暂无教程，请添加第一个教程</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改密码弹窗 -->
+    <div id="passwordModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 30px; border-radius: 12px; width: 400px; max-width: 90%;">
+            <h3 style="margin-bottom: 20px;">🔑 修改管理密码</h3>
+            <div class="form-group">
+                <label>新密码</label>
+                <input type="password" id="newPassword" placeholder="请输入新密码">
+            </div>
+            <div class="form-group">
+                <label>确认新密码</label>
+                <input type="password" id="confirmPassword" placeholder="请再次输入新密码">
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="changePassword()" style="flex: 1;">确认修改</button>
+                <button class="btn" onclick="closePasswordModal()" style="flex: 1; background: #e5e7eb; color: #374151;">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 配置文件
+        const CONFIG = {
+            dataFile: 'courses.json',
+            defaultCover: 'https://img.freepik.com/free-vector/video-tutorial-icon_12668-719.jpg',
+            defaultPassword: 'Jd123321' // 默认密码
+        };
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 设置默认密码（如果未设置过）
+            if (!localStorage.getItem('adminPassword')) {
+                localStorage.setItem('adminPassword', CONFIG.defaultPassword);
+            }
+            checkLogin();
+            loadCourses();
+        });
+
+        // 检查登录状态
+        function checkLogin() {
+            const isLoggedIn = localStorage.getItem('adminLoggedIn');
+            if (isLoggedIn === 'true') {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('adminPage').classList.remove('hidden');
+            }
+        }
+
+        // 回车登录
+        function handleEnter(e) {
+            if (e.key === 'Enter') {
+                handleLogin();
+            }
+        }
+
+        // 登录
+        function handleLogin() {
+            const password = document.getElementById('passwordInput').value;
+            const savedPassword = localStorage.getItem('adminPassword') || 'admin123';
+            
+            if (password === savedPassword) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('adminPage').classList.remove('hidden');
+                document.getElementById('loginAlert').classList.add('hidden');
+            } else {
+                showAlert('loginAlert', '密码错误，请重试！', 'error');
+            }
+        }
+
+        // 退出登录
+        function handleLogout() {
+            localStorage.removeItem('adminLoggedIn');
+            document.getElementById('adminPage').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('passwordInput').value = '';
+        }
+
+        // 显示修改密码弹窗
+        function showChangePassword() {
+            document.getElementById('passwordModal').style.display = 'flex';
+        }
+
+        // 关闭修改密码弹窗
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        // 修改密码
+        function changePassword() {
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            if (!newPass) {
+                alert('请输入新密码');
+                return;
+            }
+            if (newPass !== confirmPass) {
+                alert('两次密码输入不一致');
+                return;
+            }
+            if (newPass.length < 6) {
+                alert('密码长度至少6位');
+                return;
+            }
+            
+            localStorage.setItem('adminPassword', newPass);
+            alert('密码修改成功！');
+            closePasswordModal();
+        }
+
+        // 显示提示
+        function showAlert(elementId, message, type) {
+            const alert = document.getElementById(elementId);
+            alert.textContent = message;
+            alert.className = 'alert alert-' + type;
+            alert.classList.remove('hidden');
+            
+            setTimeout(() => {
+                alert.classList.add('hidden');
+            }, 3000);
+        }
+
+        // 加载教程列表
+        async function loadCourses() {
+            try {
+                const response = await fetch(CONFIG.dataFile);
+                if (response.ok) {
+                    const data = await response.json();
+                    renderCourses(data.courses || []);
+                } else {
+                    renderCourses([]);
+                }
+            } catch (e) {
+                // 文件不存在，使用空列表
+                renderCourses([]);
+            }
+        }
+
+        // 渲染教程列表
+        function renderCourses(courses) {
+            const container = document.getElementById('coursesContainer');
+            document.getElementById('courseCount').textContent = courses.length;
+            
+            if (courses.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📭</div>
+                        <p>暂无教程，请添加第一个教程</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 按时间倒序
+            courses.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            container.innerHTML = courses.map(course => `
+                <div class="course-item">
+                    <img src="${course.cover || CONFIG.defaultCover}" alt="${course.title}" onerror="this.src='${CONFIG.defaultCover}'">
+                    <div class="course-info">
+                        <h3>${course.title}</h3>
+                        <span class="category">${course.category}</span>
+                        <p>${course.description}</p>
+                        <p class="link">🔗 ${course.bilibili}</p>
+                        <p style="color: #9ca3af; font-size: 12px;">📅 ${course.date} | 🏷️ ${(course.tags || []).join(', ')}</p>
+                    </div>
+                    <div class="course-actions">
+                        <a href="${course.bilibili}" target="_blank" class="btn" style="background: #20c997; color: white; padding: 8px 16px; font-size: 14px; text-decoration: none; border-radius: 6px;">查看</a>
+                        <button class="btn btn-danger" onclick="deleteCourse('${course.id}')">删除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 添加教程
+        async function addCourse() {
+            const title = document.getElementById('courseTitle').value.trim();
+            const category = document.getElementById('courseCategory').value;
+            const description = document.getElementById('courseDesc').value.trim();
+            const bilibili = document.getElementById('courseLink').value.trim();
+            const cover = document.getElementById('courseCover').value.trim();
+            const tagsStr = document.getElementById('courseTags').value.trim();
+            
+            // 验证
+            if (!title) {
+                showAlert('formAlert', '请输入教程标题！', 'error');
+                return;
+            }
+            if (!description) {
+                showAlert('formAlert', '请输入教程简介！', 'error');
+                return;
+            }
+            if (!bilibili || !bilibili.includes('bilibili.com')) {
+                showAlert('formAlert', '请输入正确的B站视频链接！', 'error');
+                return;
+            }
+            
+            // 解析标签
+            const tags = tagsStr ? tagsStr.split(/[,，]/).map(t => t.trim()).filter(t => t) : [];
+            
+            // 生成ID
+            const id = Date.now().toString();
+            
+            // 新教程对象
+            const newCourse = {
+                id: id,
+                title: title,
+                category: category,
+                cover: cover || CONFIG.defaultCover,
+                bilibili: bilibili,
+                description: description,
+                tags: tags,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            // 读取现有数据
+            let courses = [];
+            try {
+                const response = await fetch(CONFIG.dataFile);
+                if (response.ok) {
+                    const data = await response.json();
+                    courses = data.courses || [];
+                }
+            } catch (e) {
+                courses = [];
+            }
+            
+            // 添加新教程
+            courses.unshift(newCourse);
+            
+            // 保存到文件（通过下载方式）
+            downloadJSON({
+                courses: courses
+            });
+            
+            // 清空表单
+            document.getElementById('courseTitle').value = '';
+            document.getElementById('courseDesc').value = '';
+            document.getElementById('courseLink').value = '';
+            document.getElementById('courseCover').value = '';
+            document.getElementById('courseTags').value = '';
+            
+            showAlert('formAlert', '✅ 教程信息已生成！请下载下方JSON文件，并上传到网站根目录替换 courses.json', 'success');
+            
+            // 刷新列表
+            renderCourses(courses);
+        }
+
+        // 下载JSON文件
+        function downloadJSON(data) {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'courses.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // 删除教程
+        async function deleteCourse(id) {
+            if (!confirm('确定要删除这个教程吗？')) return;
+            
+            let courses = [];
+            try {
+                const response = await fetch(CONFIG.dataFile);
+                if (response.ok) {
+                    const data = await response.json();
+                    courses = data.courses || [];
+                }
+            } catch (e) {
+                courses = [];
+            }
+            
+            courses = courses.filter(c => c.id !== id);
+            downloadJSON({ courses: courses });
+            renderCourses(courses);
+            showAlert('formAlert', '✅ 教程已删除！请下载新的JSON文件上传到网站', 'success');
+        }
+    </script>
+</body>
+</html>
