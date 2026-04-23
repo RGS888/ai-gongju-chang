@@ -1,0 +1,44 @@
+{
+  "courses": [
+    {
+      "id": "001",
+      "title": "扣子(Coze)从0到1入门教程",
+      "category": "AI工具",
+      "cover": "https://i.imgur.com/example1.jpg",
+      "bilibili": "https://www.bilibili.com/video/BVxxxx/",
+      "description": "手把手教你创建第一个AI智能体Bot，从注册到上架全流程详解",
+      "tags": ["扣子", "AI工具", "入门"],
+      "date": "2026-04-16"
+    },
+    {
+      "id": "002",
+      "title": "小红书爆款笔记创作技巧",
+      "category": "运营技巧",
+      "cover": "https://i.imgur.com/example2.jpg",
+      "bilibili": "https://www.bilibili.com/video/BVxxxx/",
+      "description": "揭秘小红书爆款规律，包含标题公式、内容结构、配图技巧",
+      "tags": ["小红书", "爆款", "运营"],
+      "date": "2026-04-16"
+    },
+    {
+      "id": "003",
+      "title": "AI视频制作实战教程",
+      "category": "视频制作",
+      "cover": "https://i.imgur.com/example3.jpg",
+      "bilibili": "https://www.bilibili.com/video/BVxxxx/",
+      "description": "零基础学会AI视频生成，包含腾讯混元、即梦AI等工具使用技巧",
+      "tags": ["AI视频", "混元", "即梦"],
+      "date": "2026-04-16"
+    },
+    {
+      "id": "004",
+      "title": "剪映专业版完整教程",
+      "category": "视频制作",
+      "cover": "https://i.imgur.com/example4.jpg",
+      "bilibili": "https://www.bilibili.com/video/BVxxxx/",
+      "description": "从基础剪辑到高级特效，完整掌握剪映专业版",
+      "tags": ["剪映", "剪辑", "视频"],
+      "date": "2026-04-16"
+    }
+  ]
+}
