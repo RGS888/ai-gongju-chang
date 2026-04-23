@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册/登录 - AI工具场</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* 头部 */
+        .card-header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .card-header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .card-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* 表单区 */
+        .card-body {
+            padding: 30px;
+        }
+
+        .tab-switch {
+            display: flex;
+            margin-bottom: 24px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #6366f1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group .hint {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 6px;
+        }
+
+        .form-tips {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+            margin-top: 12px;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-home a {
+            color: #6366f1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* 用户中心 */
+        .user-center {
+            display: none;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+            color: white;
+        }
+
+        .user-name {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .user-id {
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 24px;
+        }
+
+        .menu-list {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:hover {
+            background: #f9fafb;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-right: 12px;
+        }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-text h4 {
+            font-size: 15px;
+            color: #1f2937;
+            margin-bottom: 2px;
+        }
+
+        .menu-text p {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .menu-arrow {
+            color: #d1d5db;
+        }
+
+        .btn-logout {
+            background: #fee2e2;
+            color: #dc2626;
+            margin-top: 20px;
+        }
+
+        /* 分享海报 */
+        .poster-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .poster-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 360px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .poster-header {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .poster-header h3 {
+            font-size: 16px;
+        }
+
+        .poster-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f3f4f6;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .poster-body {
+            padding: 20px;
+        }
+
+        .poster-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 30px;
+            margin-bottom: 16px;
+        }
+
+        .poster-logo {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .poster-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .poster-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .poster-qr {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6366f1;
+            font-size: 12px;
+        }
+
+        .poster-link {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .poster-link label {
+            font-size: 12px;
+            color: #6b7280;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .poster-link input {
+            width: 100%;
+            padding: 8px;
+            border: none;
+            background: white;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .poster-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .poster-actions .btn {
+            flex: 1;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        .btn-copy {
+            background: #6366f1;
+            color: white;
+        }
+
+        .btn-save {
+            background: #22c55e;
+            color: white;
+        }
+
+        /* 修改密码弹窗 */
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .password-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .password-content h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- 登录注册表单 -->
+            <div id="authForm">
+                <div class="card-header">
+                    <h1>🔐 加入AI工具场</h1>
+                    <p>注册获取专属推广链接和海报</p>
+                </div>
+                <div class="card-body">
+                    <div class="alert" id="alertBox"></div>
+                    
+                    <div class="tab-switch">
+                        <button class="tab-btn active" onclick="switchTab('login')">登录</button>
+                        <button class="tab-btn" onclick="switchTab('register')">注册</button>
+                    </div>
+
+                    <!-- 登录表单 -->
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>手机号</label>
+                            <input type="tel" id="loginPhone" placeholder="请输入手机号" maxlength="11">
+                        </div>
+                        <div class="form-group">
+                            <label>密码</label>
+                            <input type="password" id="loginPassword" placeholder="请输入密码">
+                        </div>
+                        <button type="submit" class="btn btn-primary">登录</button>
+                        <button type="button" class="btn btn-secondary" onclick="showForgotPassword()">忘记密码？</button>
+                    </form>
+
+                    <!-- 注册表单 -->
+                    <form id="registerForm" style="display: none;">
+                        <div class="form-group">
+                            <label>手机号 *</label>
+                            <input type="tel" id="regPhone" placeholder="请输入手机号" maxlength="11" required>
+                        </div>
+                        <div class="form-group">
+                            <label>微信号 *</label>
+                            <input type="text" id="regWechat" placeholder="请输入微信号" required>
+                        </div>
+                        <div class="form-group">
+                            <label>设置密码 *</label>
+                            <input type="password" id="regPassword" placeholder="请设置密码（至少6位）" minlength="6" required>
+                            <p class="form-tips">⚠️ 默认密码123456，建议登录后立即修改</p>
+                        </div>
+                        <button type="submit" class="btn btn-primary">注册</button>
+                    </form>
+
+                    <div class="back-home">
+                        <a href="index.html">← 返回首页</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户中心 -->
+            <div class="user-center" id="userCenter">
+                <div class="card-header">
+                    <h1>👤 个人中心</h1>
+                    <p>管理您的账号和推广信息</p>
+                </div>
+                <div class="card-body">
+                    <div class="user-avatar" id="userAvatar">👤</div>
+                    <div class="user-name" id="userName">用户</div>
+                    <div class="user-id" id="userId">ID: 100001</div>
+
+                    <div class="menu-list">
+                        <div class="menu-item" onclick="showSharePoster()">
+                            <div class="menu-icon">📊</div>
+                            <div class="menu-text">
+                                <h4>我的推广海报</h4>
+                                <p>专属海报，一键分享</p>
+                            </div>
+                            <span class="menu-arrow">→</span>
+                        </div>
+                        <div class="menu-item" onclick="copyShareLink()">
+                            <div class="menu-icon">🔗</div>
+                            <div class="menu-text">
+                                <h4>复制推广链接</h4>
+                                <p id="shareLinkText">点击复制专属链接</p>
+                            </div>
+                            <span class="menu-arrow">→</span>
+                        </div>
+                        <div class="menu-item" onclick="showEditInfo()">
+                            <div class="menu-icon">✏️</div>
+                            <div class="menu-text">
+                                <h4>修改资料</h4>
+                                <p>修改微信号等信息</p>
+                            </div>
+                            <span class="menu-arrow">→</span>
+                        </div>
+                        <div class="menu-item" onclick="showChangePassword()">
+                            <div class="menu-icon">🔑</div>
+                            <div class="menu-text">
+                                <h4>修改密码</h4>
+                                <p>保障账号安全</p>
+                            </div>
+                            <span class="menu-arrow">→</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-logout" onclick="logout()">退出登录</button>
+                    <div class="back-home">
+                        <a href="index.html">← 返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分享海报弹窗 -->
+    <div class="poster-modal" id="posterModal">
+        <div class="poster-content">
+            <div class="poster-header">
+                <h3>📊 推广海报</h3>
+                <button class="poster-close" onclick="closePosterModal()">×</button>
+            </div>
+            <div class="poster-body">
+                <div class="poster-image" id="posterImage">
+                    <div class="poster-logo">🛠️</div>
+                    <div class="poster-title">AI工具场</div>
+                    <div class="poster-desc">自媒体创作者必备工具导航<br>80+款免费工具汇总</div>
+                    <div class="poster-qr">二维码区域<br>（需接入生成）</div>
+                </div>
+                <div class="poster-link">
+                    <label>推广链接</label>
+                    <input type="text" id="posterLink" readonly>
+                </div>
+                <div class="poster-actions">
+                    <button class="btn btn-copy" onclick="copyPosterLink()">复制链接</button>
+                    <button class="btn btn-save" onclick="savePoster()">保存海报</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 修改密码弹窗 -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-content">
+            <h3>🔑 修改密码</h3>
+            <div class="form-group">
+                <label>当前密码</label>
+                <input type="password" id="oldPassword" placeholder="请输入当前密码">
+            </div>
+            <div class="form-group">
+                <label>新密码</label>
+                <input type="password" id="newPassword" placeholder="请输入新密码（至少6位）">
+            </div>
+            <div class="form-group">
+                <label>确认新密码</label>
+                <input type="password" id="confirmPassword" placeholder="请再次输入新密码">
+            </div>
+            <button class="btn btn-primary" onclick="changePassword()" style="margin-bottom: 12px;">确认修改</button>
+            <button class="btn btn-secondary" onclick="closePasswordModal()">取消</button>
+        </div>
+    </div>
+
+    <script>
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLogin();
+        });
+
+        // 检查登录状态
+        function checkLogin() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                showUserCenter(JSON.parse(currentUser));
+            } else {
+                showAuthForm();
+            }
+        }
+
+        // 显示登录表单
+        function showAuthForm() {
+            document.getElementById('authForm').style.display = 'block';
+            document.getElementById('userCenter').style.display = 'none';
+        }
+
+        // 显示用户中心
+        function showUserCenter(user) {
+            document.getElementById('authForm').style.display = 'none';
+            document.getElementById('userCenter').style.display = 'block';
+            
+            document.getElementById('userName').textContent = user.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+            document.getElementById('userId').textContent = 'ID: ' + user.id;
+            document.getElementById('userAvatar').textContent = user.phone.charAt(0);
+            document.getElementById('shareLinkText').textContent = 'AI工具场/?ref=' + user.id;
+            document.getElementById('posterLink').value = window.location.origin + '/?ref=' + user.id;
+        }
+
+        // 切换标签
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach((t, i) => {
+                t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
+            });
+            
+            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+        }
+
+        // 显示提示
+        function showAlert(message, type = 'error') {
+            const alert = document.getElementById('alertBox');
+            alert.textContent = message;
+            alert.className = 'alert alert-' + type;
+            alert.style.display = 'block';
+            setTimeout(() => alert.style.display = 'none', 3000);
+        }
+
+        // 注册
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const phone = document.getElementById('regPhone').value.trim();
+            const wechat = document.getElementById('regWechat').value.trim();
+            const password = document.getElementById('regPassword').value;
+            
+            if (!phone || phone.length !== 11) {
+                showAlert('请输入正确的11位手机号');
+                return;
+            }
+            if (!wechat) {
+                showAlert('请输入微信号');
+                return;
+            }
+            if (password.length < 6) {
+                showAlert('密码至少6位');
+                return;
+            }
+            
+            // 检查手机号是否已注册
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            if (users.find(u => u.phone === phone)) {
+                showAlert('该手机号已注册，请直接登录');
+                return;
+            }
+            
+            // 创建用户
+            const newUser = {
+                id: 'U' + Date.now().toString().slice(-6),
+                phone: phone,
+                wechat: wechat,
+                password: password,
+                createdAt: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            
+            showAlert('注册成功！即将进入个人中心...', 'success');
+            setTimeout(() => checkLogin(), 1500);
+        });
+
+        // 登录
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const phone = document.getElementById('loginPhone').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.phone === phone && u.password === password);
+            
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                showAlert('登录成功！', 'success');
+                setTimeout(() => checkLogin(), 1000);
+            } else {
+                showAlert('手机号或密码错误');
+            }
+        });
+
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('currentUser');
+                checkLogin();
+            }
+        }
+
+        // 显示分享海报
+        function showSharePoster() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            document.getElementById('posterLink').value = window.location.origin + '/?ref=' + user.id;
+            document.getElementById('posterModal').style.display = 'flex';
+        }
+
+        // 关闭海报弹窗
+        function closePosterModal() {
+            document.getElementById('posterModal').style.display = 'none';
+        }
+
+        // 复制推广链接
+        function copyShareLink() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const link = window.location.origin + '/?ref=' + user.id;
+            copyToClipboard(link);
+            alert('推广链接已复制到剪贴板！');
+        }
+
+        // 复制海报链接
+        function copyPosterLink() {
+            const link = document.getElementById('posterLink').value;
+            copyToClipboard(link);
+            alert('链接已复制到剪贴板！');
+        }
+
+        // 保存海报（模拟）
+        function savePoster() {
+            alert('海报保存功能需要接入后端服务，当前为演示版本');
+        }
+
+        // 复制到剪贴板
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).catch(() => {
+                const input = document.createElement('input');
+                input.value = text;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            });
+        }
+
+        // 修改密码
+        function showChangePassword() {
+            document.getElementById('passwordModal').style.display = 'flex';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').style.display = 'none';
+            document.getElementById('oldPassword').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        function changePassword() {
+            const oldPass = document.getElementById('oldPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (oldPass !== currentUser.password) {
+                alert('当前密码错误');
+                return;
+            }
+            if (newPass.length < 6) {
+                alert('新密码至少6位');
+                return;
+            }
+            if (newPass !== confirmPass) {
+                alert('两次密码不一致');
+                return;
+            }
+            
+            // 更新密码
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userIndex = users.findIndex(u => u.phone === currentUser.phone);
+            if (userIndex !== -1) {
+                users[userIndex].password = newPass;
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+                alert('密码修改成功！');
+                closePasswordModal();
+            }
+        }
+
+        // 修改资料
+        function showEditInfo() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            const newWechat = prompt('请输入新的微信号：', user.wechat);
+            if (newWechat && newWechat !== user.wechat) {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const userIndex = users.findIndex(u => u.phone === user.phone);
+                if (userIndex !== -1) {
+                    users[userIndex].wechat = newWechat;
+                    localStorage.setItem('users', JSON.stringify(users));
+                    localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+                    alert('微信号修改成功！');
+                }
+            }
+        }
+
+        // 忘记密码
+        function showForgotPassword() {
+            alert('请联系客服重置密码\n微信号：AI工具场客服');
+        }
+    </script>
+</body>
+</html>
