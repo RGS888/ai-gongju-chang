@@ -1,0 +1,10 @@
+{
+  "name": "ai-gongju-chang",
+  "compatibility_flags": ["nodejs_compat"],
+  "pages": {
+    "build_config": {
+      "build_command": "",
+      "root_directory": "/"
+    }
+  }
+}
