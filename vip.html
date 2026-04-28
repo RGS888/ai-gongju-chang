@@ -402,41 +402,78 @@
         
         /* ===== 响应式设计 ===== */
         @media(max-width:768px){
-            .vip-header{padding:30px 16px;border-radius:0 0 16px 16px}
-            .vip-header h1{font-size:24px}
-            .vip-header p{font-size:13px}
-            .pricing-cards{grid-template-columns:1fr;max-width:100%;padding:0 12px}
-            .pricing-card{padding:14px}
+            .vip-header{padding:24px 16px;border-radius:0 0 16px 16px}
+            .vip-header h1{font-size:22px}
+            .vip-header p{font-size:12px}
+            .pricing-section{padding:16px 12px}
+            .pricing-title{font-size:16px;margin-bottom:12px}
+            .pricing-cards{grid-template-columns:1fr;max-width:100%;padding:0 12px;gap:10px}
+            .pricing-card{padding:14px;border-radius:12px}
             .pricing-card .price{font-size:24px}
-            .member-card{margin:16px 12px;padding:16px}
-            .category-tabs{padding:12px}
-            .category-tab{padding:8px 16px;font-size:13px}
-            .materials-list{padding:16px 12px}
-            .material-card{padding:14px;gap:10px}
-            .material-icon{width:42px;height:42px;font-size:18px}
-            .material-title{font-size:13px}
-            .material-desc{font-size:11px}
+            .pricing-card .badge{font-size:11px;padding:3px 8px}
+            .pricing-card .desc{font-size:12px}
+            .member-card{margin:12px;padding:14px}
+            .category-tabs{padding:10px 12px;gap:8px;overflow-x:auto}
+            .category-tab{padding:8px 14px;font-size:12px;border-radius:16px;white-space:nowrap}
+            .materials-list{padding:12px}
+            .material-card{padding:12px;gap:10px;border-radius:10px}
+            .material-icon{width:40px;height:40px;font-size:16px;border-radius:8px}
+            .material-title{font-size:13px;font-weight:600}
+            .material-desc{font-size:11px;color:#888}
+            .material-meta{font-size:10px}
             .material-action{flex-shrink:0}
-            .material-price{font-size:13px}
-            .btn-buy,.btn-view{padding:6px 12px;font-size:11px}
-            .bottom-nav{padding:8px 0}
-            .nav-item{font-size:11px;padding:6px}
+            .material-price{font-size:13px;font-weight:600;margin-bottom:4px}
+            .btn-buy,.btn-view{padding:6px 12px;font-size:11px;border-radius:6px}
+            .bottom-nav{padding:6px 0}
+            .nav-item{font-size:10px;padding:4px}
             .nav-icon{font-size:20px}
-            .content-area{padding-bottom:70px}
-            .payment-modal{padding:12px}
-            .payment-modal-content{padding:20px 16px;border-radius:16px}
+            .content-area{padding-bottom:60px}
+            .payment-modal{padding:12px;align-items:flex-end}
+            .payment-modal-content{padding:16px 12px;border-radius:16px 16px 0 0;max-width:100%}
+            .payment-modal h3{font-size:16px}
+            .payment-amount{font-size:24px}
+            .payment-methods{gap:8px}
+            .payment-method-btn{padding:10px}
+            .payment-method-btn img{width:50px;height:50px}
+            .confirm-pay-btn{padding:12px;font-size:14px;border-radius:10px}
         }
         @media(max-width:480px){
-            .vip-header h1{font-size:20px}
-            .pricing-card{font-size:13px}
-            .pricing-card .badge{font-size:10px;padding:3px 8px}
+            .vip-header h1{font-size:18px}
+            .vip-header p{font-size:11px}
+            .pricing-card{font-size:12px}
+            .pricing-card .badge{font-size:10px}
+            .pricing-card .original-price{font-size:11px}
+            .pricing-card .save-tag{font-size:10px;padding:2px 6px}
+            .material-card{flex-wrap:wrap}
+            .material-action{width:100%;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0}
+            .material-price{margin-bottom:0}
         }
     </style>
 </head>
 <body>
     <div class="vip-header">
         <h1>👑 会员资料区</h1>
-        <p>精选自媒体教程/软件工具/视频课程</p>
+        <p>精选自媒体教程/软件工具/视频课程 | 免费学习至2031年</p>
+    </div>
+    
+    <!-- 管理员入口 -->
+    <div style="padding:8px 16px;text-align:right;">
+        <a href="admin.html" style="font-size:12px;color:#999;text-decoration:none;">🔐 管理员登录</a>
+    </div>
+    
+    <!-- 会员开通引导 -->
+    <div style="background:linear-gradient(135deg,#fff7ed,#fff2e8);padding:20px;margin:12px;border-radius:12px;">
+        <div style="text-align:center;margin-bottom:12px;">
+            <span style="background:linear-gradient(135deg,#f59e0b,#e65100);color:#fff;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:bold;">💎 会员专属权益</span>
+        </div>
+        <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:13px;color:#666;">
+            <span>✅ 全部22个资料免费看</span>
+            <span>✅ 优先更新特权</span>
+            <span>✅ 专属客服支持</span>
+        </div>
+        <div style="text-align:center;margin-top:12px;">
+            <a href="activate.html" style="display:inline-block;background:linear-gradient(135deg,#f59e0b,#e65100);color:#fff;padding:10px 24px;border-radius:20px;font-size:14px;font-weight:bold;text-decoration:none;">立即开通会员 ¥29/月起</a>
+        </div>
     </div>
     
     <!-- 套餐选择区域 -->
@@ -463,6 +500,11 @@
         <div class="member-status active" id="memberStatus">👑 会员已开通</div>
         <div class="member-level" id="memberLevel">月卡会员</div>
         <div class="member-expire" id="memberExpire">有效期至：-</div>
+    </div>
+    
+    <!-- 免费学习提示 -->
+    <div style="background:#f0f9ff;border:1px solid #0ea5e9;padding:12px 16px;margin:12px;border-radius:10px;text-align:center;">
+        <span style="font-size:13px;color:#0369a1;">💡 <strong>免费学习期：</strong>所有资料均可免费学习至 <strong>2031年4月29日</strong>，之后需开通会员</span>
     </div>
     
     <div class="category-tabs">
@@ -592,6 +634,9 @@
             return owned ? JSON.parse(owned) : [];
         }
         
+        // 会员信息 - 免费期至2031年
+        const FREE_EXPIRE_TIME = new Date('2031-04-29').getTime();
+        
         // 获取会员信息
         function getMemberInfo() {
             const memberData = localStorage.getItem('memberInfo');
@@ -603,6 +648,11 @@
                 }
             }
             return null;
+        }
+        
+        // 检查是否在免费期内
+        function isFreeAccess() {
+            return Date.now() < FREE_EXPIRE_TIME;
         }
         
         // 检查是否有月卡
@@ -659,7 +709,8 @@
             
             const owned = getOwnedMaterials();
             const hasMonth = hasMonthCard();
-            const isUnlocked = hasMonth; // 月卡用户解锁全部
+            const isFree = isFreeAccess(); // 免费期内
+            const isUnlocked = hasMonth || isFree; // 月卡或免费期
             
             list.innerHTML = filtered.map(m => {
                 const isOwned = owned.includes(m.id) || isUnlocked;
@@ -676,7 +727,7 @@
                         </div>
                         <div class="material-action">
                             ${isOwned ? 
-                                `<div class="material-price owned">${isUnlocked ? '👑 已解锁' : '<span class="owned-badge">已购买</span>'}</div>
+                                `<div class="material-price owned">${isUnlocked && !hasMonth ? '🆓 免费学至2031' : '<span class="owned-badge">已购买</span>'}</div>
                                  <button class="btn-view" onclick="openMaterial(${m.id})">▶️</button>` :
                                 `<div class="material-price">¥${SINGLE_PRICE}</div>
                                  <button class="btn-buy" onclick="buyMaterial(${m.id})">购买</button>`

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>扣子技能专区 - AI工具场 | 37+精品AI技能免费用</title>
-    <meta name="description" content="AI工具场扣子技能专区，精选23+款精品AI技能，包括星座运势、公众号运营、直播话术、自媒体创业等，无需编程，即刻体验AI魅力！">
+    <title>扣子技能专区 - AI工具场 | 15款精选AI技能免费用</title>
+    <meta name="description" content="AI工具场扣子技能专区，精选15款精品AI技能，包括直播话术、短视频导演、AI音乐、原创贴纸等，无需编程，即刻体验AI魅力！">
     <meta name="keywords" content="扣子技能, Coze Bot, AI技能, 公众号助手, 星座运势, 自媒体工具, AI工具场">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -144,18 +144,18 @@
 <section class="hero">
     <div class="hero-content">
         <div class="hero-badge">🎉 精选扣子AI技能</div>
-        <h1>37+精品<span>AI技能</span><br>一键体验</h1>
-        <p>涵盖星座运势、公众号运营、直播话术、短视频导演、AI音乐、原创贴纸、文章写作等全品类AI技能，无需编程，即刻体验AI魅力！</p>
+        <h1>15款<span>精选AI技能</span><br>免费体验</h1>
+        <p>涵盖直播话术、短视频导演、文章写作、AI音乐、原创贴纸等精选AI技能，无需编程，即刻体验AI魅力！</p>
         <a href="https://www.coze.cn" target="_blank" class="hero-cta">
             🚀 前往扣子平台 →
         </a>
         <div class="hero-stats">
             <div class="hero-stat">
-                <div class="hero-stat-value">37+</div>
+                <div class="hero-stat-value">15</div>
                 <div class="hero-stat-label">精选技能</div>
             </div>
             <div class="hero-stat">
-                <div class="hero-stat-value">8</div>
+                <div class="hero-stat-value">2</div>
                 <div class="hero-stat-label">技能分类</div>
             </div>
             <div class="hero-stat">
@@ -173,9 +173,6 @@
     <div class="cat-tabs" id="catTabs">
         <div class="cat-tab active" onclick="filterCategory('all')">全部技能</div>
         <div class="cat-tab" onclick="filterCategory('content')">内容创作</div>
-        <div class="cat-tab" onclick="filterCategory('lifestyle')">生活百科</div>
-        <div class="cat-tab" onclick="filterCategory('fortune')">运势玄学</div>
-        <div class="cat-tab" onclick="filterCategory('business')">创业商业</div>
         <div class="cat-tab" onclick="filterCategory('creative')">创意娱乐</div>
     </div>
 
@@ -184,47 +181,11 @@
         <div class="section-header">
             <div>
                 <div class="section-title"><span class="icon">✍️</span>内容创作类</div>
-                <div class="section-desc">公众号、自媒体、文案创作必备工具</div>
+                <div class="section-desc">直播话术、短视频、文章写作、文案创作必备工具</div>
             </div>
-            <span class="section-count">19个技能</span>
+            <span class="section-count">13个技能</span>
         </div>
         <div class="skill-grid" id="content-grid"></div>
-    </section>
-
-    <!-- SECTION: 生活百科 -->
-    <section class="section" id="section-lifestyle">
-        <div class="section-header">
-            <div>
-                <div class="section-title"><span class="icon">🌟</span>生活百科类</div>
-                <div class="section-desc">日常生活小技巧、健康养生全收录</div>
-            </div>
-            <span class="section-count">4个技能</span>
-        </div>
-        <div class="skill-grid" id="lifestyle-grid"></div>
-    </section>
-
-    <!-- SECTION: 运势玄学 -->
-    <section class="section" id="section-fortune">
-        <div class="section-header">
-            <div>
-                <div class="section-title"><span class="icon">🔮</span>运势玄学类</div>
-                <div class="section-desc">星座、生肖、风水、周公解梦</div>
-            </div>
-            <span class="section-count">3个技能</span>
-        </div>
-        <div class="skill-grid" id="fortune-grid"></div>
-    </section>
-
-    <!-- SECTION: 创业商业 -->
-    <section class="section" id="section-business">
-        <div class="section-header">
-            <div>
-                <div class="section-title"><span class="icon">💼</span>创业商业类</div>
-                <div class="section-desc">自媒体创业、营销推广必备技能</div>
-            </div>
-            <span class="section-count">4个技能</span>
-        </div>
-        <div class="skill-grid" id="business-grid"></div>
     </section>
 
     <!-- SECTION: 创意娱乐 -->
@@ -232,9 +193,9 @@
         <div class="section-header">
             <div>
                 <div class="section-title"><span class="icon">🎨</span>创意娱乐类</div>
-                <div class="section-desc">漫画、小说、绘画、旅游攻略</div>
+                <div class="section-desc">AI音乐、原创贴纸等创意工具</div>
             </div>
-            <span class="section-count">7个技能</span>
+            <span class="section-count">2个技能</span>
         </div>
         <div class="skill-grid" id="creative-grid"></div>
     </section>
@@ -298,73 +259,7 @@
 <script>
 // ===== SKILLS DATA =====
 const skills = [
-    // 内容创作类
-    {
-        id:'content-1',
-        name:'公众号爆款分析大师',
-        emoji:'📰',
-        category:'content',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'深度分析公众号爆款文章，提取标题公式、选题策略、排版技巧，让你也能写出10万+阅读量的文章！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'2.8万'
-    },
-    {
-        id:'content-2',
-        name:'公众号专业内容创作大师',
-        emoji:'✍️',
-        category:'content',
-        tags:['免费'],
-        popular:true,
-        desc:'专业级公众号内容创作助手，提供选题策划、标题撰写、正文润色、排版建议等全方位服务！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'2.5万'
-    },
-    {
-        id:'content-3',
-        name:'热点跟拍分析大师',
-        emoji:'📈',
-        category:'content',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'实时追踪全网热点话题，分析爆款视频逻辑，助你快速跟拍蹭热度，抢占流量先机！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.9万'
-    },
-    {
-        id:'content-4',
-        name:'人民日报金句创作大师',
-        emoji:'📜',
-        category:'content',
-        tags:['免费'],
-        popular:true,
-        desc:'学习人民日报金句风格，创作正能量文案、时事评论、政务宣传材料，适合体制内和自媒体人！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.6万'
-    },
-    {
-        id:'content-5',
-        name:'脱口秀段子创作大师',
-        emoji:'🎤',
-        category:'content',
-        tags:['免费','新上线'],
-        popular:true,
-        desc:'幽默段子创作助手，学习经典脱口秀技巧，创作让人捧腹大笑的段子，适合短视频创作者！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.2万'
-    },
-    {
-        id:'content-6',
-        name:'每日网站分享大师',
-        emoji:'🌐',
-        category:'content',
-        tags:['免费'],
-        popular:false,
-        desc:'每天分享精选实用网站，包含设计素材、效率工具、AI应用等，帮助发现更多宝藏资源！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'9800'
-    },
+    // 内容创作类（用户添加）
     {
         id:'content-7',
         name:'直播话术生成技能',
@@ -374,7 +269,7 @@ const skills = [
         popular:true,
         desc:'一键生成直播话术：360行全行业覆盖，智能合规检测，多风格多场景，开场到逼单全流程！',
         url:'https://www.coze.cn/skills?skill_share_pid=7600810372811145225',
-        views:'2'
+        views:'1'
     },
     {
         id:'content-8',
@@ -508,190 +403,8 @@ const skills = [
         url:'https://www.coze.cn/skills?skill_share_pid=7629768397580107811',
         views:'1'
     },
-
-    // 生活百科类
-    {
-        id:'lifestyle-1',
-        name:'生活小技巧小妙招',
-        emoji:'💡',
-        category:'lifestyle',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'涵盖家居、清洁、烹饪、健康、收纳等方方面面的小技巧，让你的生活更加轻松便捷！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'3.2万'
-    },
-    {
-        id:'lifestyle-2',
-        name:'养生百科大师',
-        emoji:'🌿',
-        category:'lifestyle',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'专业养生知识，包括食疗、运动、作息、情志调节等，帮你建立健康生活方式！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'2.6万'
-    },
-    {
-        id:'lifestyle-3',
-        name:'趣味手工DIY·变废为宝',
-        emoji:'♻️',
-        category:'lifestyle',
-        tags:['免费'],
-        popular:false,
-        desc:'废旧物品改造创意教程，用双手创造美好，让垃圾重获新生，环保又有趣！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.4万'
-    },
-    {
-        id:'lifestyle-4',
-        name:'美女服装搭配化妆技巧',
-        emoji:'💄',
-        category:'lifestyle',
-        tags:['免费','新上线'],
-        popular:false,
-        desc:'专业服装搭配建议、化妆技巧分享、发型设计参考，让你每天都能美美出门！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.1万'
-    },
-
-    // 运势玄学类
-    {
-        id:'fortune-1',
-        name:'星座命运分析大师',
-        emoji:'♈',
-        category:'fortune',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'12星座性格分析、每日运势、星座配对、水逆指南，了解星座奥秘，趋利避害！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'4.5万'
-    },
-    {
-        id:'fortune-2',
-        name:'风水大师',
-        emoji:'🏠',
-        category:'fortune',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'家居风水、办公室布局、商铺选址、装修建议，帮你打造旺宅好风水！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'2.3万'
-    },
-    {
-        id:'fortune-3',
-        name:'周公解梦大师',
-        emoji:'🌙',
-        category:'fortune',
-        tags:['免费'],
-        popular:false,
-        desc:'专业梦境解析，揭示潜意识奥秘，探索梦境的深层含义和预示！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.8万'
-    },
-
-    // 创业商业类
-    {
-        id:'business-1',
-        name:'自媒体创业建议大师',
-        emoji:'🚀',
-        category:'business',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'自媒体创业全攻略，从0到1打造个人IP，内容策划、流量获取、变现路径全覆盖！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'2.9万'
-    },
-    {
-        id:'business-2',
-        name:'父母心·子女情',
-        emoji:'❤️',
-        category:'business',
-        tags:['免费'],
-        popular:false,
-        desc:'亲子关系沟通技巧、子女教育建议、家庭情感经营，构建和谐幸福的家庭！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.5万'
-    },
-    {
-        id:'business-3',
-        name:'每日书籍拆解大师',
-        emoji:'📚',
-        category:'business',
-        tags:['免费'],
-        popular:false,
-        desc:'每天一本好书精读，提取核心观点、实用方法、精彩金句，帮你高效吸收知识！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.3万'
-    },
-    {
-        id:'business-4',
-        name:'表情包生成大师',
-        emoji:'😄',
-        category:'business',
-        tags:['免费','新上线'],
-        popular:true,
-        desc:'输入文字自动生成趣味表情包，让你的聊天更有趣，朋友圈更吸睛！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'9800'
-    },
-
-    // 创意娱乐类
-    {
-        id:'creative-1',
-        name:'小说生成器',
-        emoji:'📖',
-        category:'creative',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'AI小说创作助手，输入设定即可生成故事大纲、章节内容、人物设定，轻松开启写作之旅！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'3.1万'
-    },
-    {
-        id:'creative-2',
-        name:'漫画生成器',
-        emoji:'🎨',
-        category:'creative',
-        tags:['热门','免费'],
-        popular:true,
-        desc:'AI漫画创作工具，输入剧情自动生成漫画分镜、角色设定、场景描述，漫画家必备！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'2.7万'
-    },
-    {
-        id:'creative-3',
-        name:'AI漫剧对话镜头生成大师',
-        emoji:'🎬',
-        category:'creative',
-        tags:['免费'],
-        popular:false,
-        desc:'输入文字自动生成AI漫剧对话镜头，适合短视频创作者，快速生成剧本分镜！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.6万'
-    },
-    {
-        id:'creative-4',
-        name:'灵魂画师',
-        emoji:'🖌️',
-        category:'creative',
-        tags:['免费'],
-        popular:false,
-        desc:'专业绘画指导，从素描到油画、从插画到原画，30+种绘画风格指导，零基础也能学！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.4万'
-    },
-    {
-        id:'creative-5',
-        name:'全国旅游攻略大师',
-        emoji:'✈️',
-        category:'creative',
-        tags:['免费'],
-        popular:false,
-        desc:'全国各地旅游景点攻略，行程规划、美食推荐、住宿建议、避坑指南，旅行必备！',
-        url:'https://www.coze.cn/skills?skill_share_pid=7598891740867002409',
-        views:'1.2万'
-    },
+    
+    // 创意娱乐类（用户添加）
     {
         id:'creative-6',
         name:'AI音乐制作技能',
@@ -746,9 +459,6 @@ function renderSkillCard(skill) {
 function getCategoryName(cat) {
     const names = {
         'content': '内容创作',
-        'lifestyle': '生活百科',
-        'fortune': '运势玄学',
-        'business': '创业商业',
         'creative': '创意娱乐'
     };
     return names[cat] || cat;
@@ -757,15 +467,9 @@ function getCategoryName(cat) {
 // ===== RENDER GRIDS =====
 function renderAllGrids() {
     const contentSkills = skills.filter(s => s.category === 'content');
-    const lifestyleSkills = skills.filter(s => s.category === 'lifestyle');
-    const fortuneSkills = skills.filter(s => s.category === 'fortune');
-    const businessSkills = skills.filter(s => s.category === 'business');
     const creativeSkills = skills.filter(s => s.category === 'creative');
 
     document.getElementById('content-grid').innerHTML = contentSkills.map(renderSkillCard).join('');
-    document.getElementById('lifestyle-grid').innerHTML = lifestyleSkills.map(renderSkillCard).join('');
-    document.getElementById('fortune-grid').innerHTML = fortuneSkills.map(renderSkillCard).join('');
-    document.getElementById('business-grid').innerHTML = businessSkills.map(renderSkillCard).join('');
     document.getElementById('creative-grid').innerHTML = creativeSkills.map(renderSkillCard).join('');
 }
 
