@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>积分充值 - AI工具场</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --primary:#6366f1;--primary-dark:#4f46e5;
+            --success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+            --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+            --gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;
+            --gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;
+        }
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif;background:var(--gray-50);color:var(--gray-800);min-height:100vh}
+        
+        .header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--gray-200);padding:16px 20px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
+        .back-btn{font-size:24px;color:var(--gray-600);cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;transition:background 0.2s}
+        .back-btn:hover{background:var(--gray-100)}
+        .header-title{font-size:18px;font-weight:700;flex:1;text-align:center;margin-right:40px}
+        
+        .container{max-width:500px;margin:0 auto;padding:20px}
+        
+        /* 余额卡片 */
+        .balance-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:20px;padding:30px;color:white;text-align:center;margin-bottom:24px;position:relative;overflow:hidden}
+        .balance-card::before{content:'';position:absolute;top:-50%;right:-30%;width:200px;height:200px;background:rgba(255,255,255,0.1);border-radius:50%}
+        .balance-label{font-size:14px;opacity:0.9;margin-bottom:8px}
+        .balance-value{font-size:48px;font-weight:800;margin-bottom:4px}
+        .balance-unit{font-size:16px;opacity:0.8}
+        
+        /* 充值套餐 */
+        .section-title{font-size:16px;font-weight:700;color:var(--gray-800);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .recharge-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px}
+        .recharge-item{background:white;border:2px solid var(--gray-200);border-radius:16px;padding:20px;text-align:center;cursor:pointer;transition:all 0.3s}
+        .recharge-item:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 4px 12px rgba(99,102,241,0.15)}
+        .recharge-item.selected{border-color:var(--primary);background:rgba(99,102,241,0.05)}
+        .recharge-item.gift{position:relative}
+        .recharge-item.gift::before{content:'🎁';position:absolute;top:-8px;right:-8px;font-size:20px}
+        .recharge-amount{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:4px}
+        .recharge-price{font-size:14px;color:var(--gray-500)}
+        .recharge-gift{font-size:12px;color:var(--danger);margin-top:6px;font-weight:600}
+        
+        /* 自定义金额 */
+        .custom-amount{background:white;border:2px solid var(--gray-200);border-radius:16px;padding:16px;margin-bottom:24px}
+        .custom-amount label{display:block;font-size:14px;color:var(--gray-600);margin-bottom:8px}
+        .custom-input{display:flex;align-items:center;gap:8px}
+        .custom-input input{flex:1;padding:12px 16px;border:1px solid var(--gray-300);border-radius:10px;font-size:18px;outline:none}
+        .custom-input input:focus{border-color:var(--primary)}
+        .custom-input span{font-size:18px;color:var(--gray-500)}
+        
+        /* 支付方式 */
+        .payment-methods{background:white;border-radius:16px;padding:16px;margin-bottom:24px}
+        .payment-method{display:flex;align-items:center;padding:14px;border:1px solid var(--gray-200);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all 0.2s}
+        .payment-method:last-child{margin-bottom:0}
+        .payment-method:hover{border-color:var(--primary)}
+        .payment-method.selected{border-color:var(--primary);background:rgba(99,102,241,0.05)}
+        .payment-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-right:12px}
+        .payment-icon.alipay{background:#1677ff}
+        .payment-icon.wechat{background:#07c160}
+        .payment-name{flex:1;font-size:15px;font-weight:600}
+        .payment-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center}
+        .payment-method.selected .payment-check{border-color:var(--primary);background:var(--primary)}
+        .payment-method.selected .payment-check::after{content:'✓';color:white;font-size:12px}
+        
+        /* 充值说明 */
+        .info-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:16px;margin-bottom:24px}
+        .info-box h3{font-size:14px;color:#92400e;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+        .info-box ul{list-style:none;font-size:13px;color:#92400e}
+        .info-box li{padding:4px 0;padding-left:16px;position:relative}
+        .info-box li::before{content:'•';position:absolute;left:0}
+        
+        /* 提交按钮 */
+        .submit-btn{width:100%;padding:16px;background:var(--primary);color:white;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;transition:all 0.3s}
+        .submit-btn:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 4px 12px rgba(99,102,241,0.3)}
+        .submit-btn:disabled{background:var(--gray-300);cursor:not-allowed;transform:none;box-shadow:none}
+        
+        /* 充值记录 */
+        .history-section{background:white;border-radius:16px;padding:20px;margin-top:30px}
+        .history-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .history-list{}
+        .history-item{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid var(--gray-100)}
+        .history-item:last-child{border-bottom:none}
+        .history-icon{width:36px;height:36px;border-radius:8px;background:var(--success);color:white;display:flex;align-items:center;justify-content:center;margin-right:12px;font-size:18px}
+        .history-info{flex:1}
+        .history-name{font-size:14px;font-weight:600;color:var(--gray-800)}
+        .history-time{font-size:12px;color:var(--gray-400);margin-top:2px}
+        .history-amount{font-size:16px;font-weight:700;color:var(--success)}
+        
+        .empty-history{text-align:center;padding:40px 20px;color:var(--gray-400)}
+        .empty-history .icon{font-size:48px;margin-bottom:12px}
+        
+        /* 支付弹窗 */
+        .modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+        .modal{background:white;border-radius:20px;width:100%;max-width:360px;text-align:center;padding:30px}
+        .modal-icon{font-size:64px;margin-bottom:16px}
+        .modal h3{font-size:18px;margin-bottom:8px}
+        .modal p{font-size:14px;color:var(--gray-500);margin-bottom:20px}
+        .modal-qr{width:200px;height:200px;background:var(--gray-100);border-radius:12px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--gray-400)}
+        .modal-qr img{max-width:100%;max-height:100%}
+        .modal .btn-row{display:flex;gap:12px}
+        .modal .btn-row button{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none}
+        .modal .btn-cancel{background:var(--gray-100);color:var(--gray-600)}
+        .modal .btn-confirm{background:var(--success);color:white}
+        
+        /* Toast提示 */
+        .toast{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);color:white;padding:12px 24px;border-radius:8px;font-size:14px;z-index:2000;animation:fadeIn 0.3s}
+        @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="back-btn" onclick="history.back()">←</div>
+        <div class="header-title">积分充值</div>
+    </div>
+    
+    <div class="container">
+        <!-- 当前余额 -->
+        <div class="balance-card">
+            <div class="balance-label">我的积分</div>
+            <div class="balance-value" id="currentPoints">0</div>
+            <div class="balance-unit">可用积分</div>
+        </div>
+        
+        <!-- 充值套餐 -->
+        <div class="section-title">💰 选择充值金额</div>
+        <div class="recharge-grid">
+            <div class="recharge-item" onclick="selectPackage(10, 1000, this)">
+                <div class="recharge-amount">1000</div>
+                <div class="recharge-price">¥10</div>
+            </div>
+            <div class="recharge-item" onclick="selectPackage(30, 3200, this)">
+                <div class="recharge-amount">3200</div>
+                <div class="recharge-price">¥30</div>
+                <div class="recharge-gift">送200积分</div>
+            </div>
+            <div class="recharge-item gift" onclick="selectPackage(50, 5500, this)">
+                <div class="recharge-amount">5500</div>
+                <div class="recharge-price">¥50</div>
+                <div class="recharge-gift">送500积分</div>
+            </div>
+            <div class="recharge-item gift" onclick="selectPackage(100, 12000, this)">
+                <div class="recharge-amount">12000</div>
+                <div class="recharge-price">¥100</div>
+                <div class="recharge-gift">送2000积分</div>
+            </div>
+        </div>
+        
+        <!-- 自定义金额 -->
+        <div class="custom-amount">
+            <label>💎 自定义充值金额</label>
+            <div class="custom-input">
+                <span>¥</span>
+                <input type="number" id="customAmount" placeholder="输入金额" min="1" oninput="selectCustom()">
+                <span>≈ <span id="customPoints">0</span> 积分</span>
+            </div>
+        </div>
+        
+        <!-- 支付方式 -->
+        <div class="section-title">💳 选择支付方式</div>
+        <div class="payment-methods">
+            <div class="payment-method selected" onclick="selectPayment('alipay', this)">
+                <div class="payment-icon alipay">💙</div>
+                <div class="payment-name">支付宝</div>
+                <div class="payment-check"></div>
+            </div>
+            <div class="payment-method" onclick="selectPayment('wechat', this)">
+                <div class="payment-icon wechat">💚</div>
+                <div class="payment-name">微信支付</div>
+                <div class="payment-check"></div>
+            </div>
+        </div>
+        
+        <!-- 充值说明 -->
+        <div class="info-box">
+            <h3>📋 充值须知</h3>
+            <ul>
+                <li>1元 = 100积分，充值后积分不可提现</li>
+                <li>积分可用于购买视频教程、激活码等</li>
+                <li>大额充值享额外赠送，详见套餐</li>
+                <li>如有问题请联系客服</li>
+            </ul>
+        </div>
+        
+        <button class="submit-btn" id="submitBtn" onclick="showPayModal()">立即充值 ¥10</button>
+        
+        <!-- 充值记录 -->
+        <div class="history-section">
+            <div class="history-title">📜 充值记录</div>
+            <div class="history-list" id="historyList">
+                <!-- 动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 支付弹窗 -->
+    <div class="modal-overlay hidden" id="payModal" onclick="if(event.target===this)closePayModal()">
+        <div class="modal">
+            <div class="modal-icon" id="payIcon">💙</div>
+            <h3 id="payTitle">支付宝支付</h3>
+            <p>请使用支付宝扫描下方二维码</p>
+            <div class="modal-qr" id="qrCode">
+                <!-- 管理员配置的收款码 -->
+                <span id="qrPlaceholder">请在后台配置收款二维码</span>
+            </div>
+            <p style="font-size:18px;font-weight:700;">支付金额：¥<span id="payAmount">10</span></p>
+            <div style="margin-top:12px;font-size:13px;color:var(--gray-500);">支付完成后点击下方按钮确认</div>
+            <div class="btn-row" style="margin-top:16px;">
+                <button class="btn-cancel" onclick="closePayModal()">取消</button>
+                <button class="btn-confirm" onclick="confirmPayment()">已完成支付</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 数据初始化
+        const CURRENT_USER = localStorage.getItem('ai_gongju_chang_current_user') || '';
+        const STORAGE_KEY = 'ai_gongju_chang_users';
+        const RECHARGE_CONFIG_KEY = 'ai_gongju_chang_recharge_config';
+        
+        let selectedAmount = 10;
+        let selectedPoints = 1000;
+        let selectedPayment = 'alipay';
+        let rechargeConfig = null;
+        
+        // 初始化
+        function init() {
+            loadRechargeConfig();
+            loadUserPoints();
+            loadRechargeHistory();
+        }
+        
+        // 加载充值配置（管理员设置的收款码）
+        function loadRechargeConfig() {
+            const config = localStorage.getItem('admin_payment_config');
+            if (config) {
+                rechargeConfig = JSON.parse(config);
+            }
+        }
+        
+        // 加载用户积分
+        function loadUserPoints() {
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            const user = users[CURRENT_USER];
+            const points = user?.points || 0;
+            document.getElementById('currentPoints').textContent = points.toLocaleString();
+        }
+        
+        // 加载充值记录
+        function loadRechargeHistory() {
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            const user = users[CURRENT_USER];
+            const history = user?.rechargeHistory || [];
+            const container = document.getElementById('historyList');
+            
+            if (history.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-history">
+                        <div class="icon">📜</div>
+                        <div>暂无充值记录</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = history.slice(0, 10).map(item => `
+                <div class="history-item">
+                    <div class="history-icon">💰</div>
+                    <div class="history-info">
+                        <div class="history-name">充值 ${item.points} 积分</div>
+                        <div class="history-time">${new Date(item.time).toLocaleString()}</div>
+                    </div>
+                    <div class="history-amount">+${item.points}</div>
+                </div>
+            `).join('');
+        }
+        
+        // 选择套餐
+        function selectPackage(amount, points, el) {
+            document.querySelectorAll('.recharge-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            el.classList.add('selected');
+            document.getElementById('customAmount').value = '';
+            selectedAmount = amount;
+            selectedPoints = points;
+            updateSubmitBtn();
+        }
+        
+        // 选择自定义金额
+        function selectCustom() {
+            document.querySelectorAll('.recharge-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            const amount = parseInt(document.getElementById('customAmount').value) || 0;
+            selectedAmount = amount;
+            selectedPoints = amount * 100; // 1元 = 100积分
+            document.getElementById('customPoints').textContent = selectedPoints.toLocaleString();
+            updateSubmitBtn();
+        }
+        
+        // 更新提交按钮
+        function updateSubmitBtn() {
+            const btn = document.getElementById('submitBtn');
+            if (selectedAmount > 0) {
+                btn.textContent = `立即充值 ¥${selectedAmount}`;
+                btn.disabled = false;
+            } else {
+                btn.textContent = '请选择或输入充值金额';
+                btn.disabled = true;
+            }
+        }
+        
+        // 选择支付方式
+        function selectPayment(method, el) {
+            document.querySelectorAll('.payment-method').forEach(item => {
+                item.classList.remove('selected');
+            });
+            el.classList.add('selected');
+            selectedPayment = method;
+        }
+        
+        // 显示支付弹窗
+        function showPayModal() {
+            const modal = document.getElementById('payModal');
+            const payIcon = document.getElementById('payIcon');
+            const payTitle = document.getElementById('payTitle');
+            const payAmount = document.getElementById('payAmount');
+            const qrPlaceholder = document.getElementById('qrPlaceholder');
+            const qrCode = document.getElementById('qrCode');
+            
+            payAmount.textContent = selectedAmount;
+            
+            if (selectedPayment === 'alipay') {
+                payIcon.textContent = '💙';
+                payTitle.textContent = '支付宝支付';
+            } else {
+                payIcon.textContent = '💚';
+                payTitle.textContent = '微信支付';
+            }
+            
+            // 显示收款码
+            if (rechargeConfig) {
+                const qrData = selectedPayment === 'alipay' ? rechargeConfig.alipayQr : rechargeConfig.wechatQr;
+                if (qrData) {
+                    qrCode.innerHTML = `<img src="${qrData}" alt="收款码">`;
+                } else {
+                    qrCode.innerHTML = `<span>管理员未设置${selectedPayment === 'alipay' ? '支付宝' : '微信'}收款码</span>`;
+                }
+            } else {
+                qrCode.innerHTML = `<span>请在后台配置收款二维码</span>`;
+            }
+            
+            modal.classList.remove('hidden');
+        }
+        
+        // 关闭支付弹窗
+        function closePayModal() {
+            document.getElementById('payModal').classList.add('hidden');
+        }
+        
+        // 确认支付
+        function confirmPayment() {
+            closePayModal();
+            
+            // 更新用户积分
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            if (!users[CURRENT_USER]) {
+                users[CURRENT_USER] = { points: 0, rechargeHistory: [], ... };
+            }
+            if (!users[CURRENT_USER].points) users[CURRENT_USER].points = 0;
+            if (!users[CURRENT_USER].rechargeHistory) users[CURRENT_USER].rechargeHistory = [];
+            
+            users[CURRENT_USER].points += selectedPoints;
+            users[CURRENT_USER].rechargeHistory.unshift({
+                amount: selectedAmount,
+                points: selectedPoints,
+                payment: selectedPayment,
+                time: Date.now()
+            });
+            
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+            
+            // 显示成功提示
+            showToast(`充值成功！获得 ${selectedPoints.toLocaleString()} 积分`);
+            
+            // 刷新页面
+            loadUserPoints();
+            loadRechargeHistory();
+        }
+        
+        // 显示Toast
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        init();
+    </script>
+</body>
+</html>

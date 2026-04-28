@@ -491,6 +491,7 @@
             <button class="tab-btn" onclick="switchTab('codes')">🔑 激活码管理</button>
             <button class="tab-btn" onclick="switchTab('distribution')">💰 分销管理</button>
             <button class="tab-btn" onclick="switchTab('payment')">💳 收款与提现</button>
+            <button class="tab-btn" onclick="switchTab('points')">💎 积分管理</button>
         </div>
 
         <!-- 教程管理Tab -->
@@ -1222,6 +1223,7 @@
             if (tab === 'codes') renderCodesTab();
             if (tab === 'distribution') renderDistributionTab();
             if (tab === 'payment') renderPaymentTab();
+            if (tab === 'points') renderPointsTab();
         };
         
         // ===== 二级分销系统管理 =====
@@ -1781,6 +1783,249 @@
             const withdrawals = getWithdrawals().filter(w => w.id !== id);
             saveWithdrawals(withdrawals);
             renderWithdrawalsList();
+        }
+        
+        // ===== 积分系统管理 =====
+        const POINTS_DB_KEY = 'ai_gongju_chang_users';
+        
+        // 获取所有用户
+        function getAllUsers() {
+            const data = localStorage.getItem(POINTS_DB_KEY);
+            return data ? JSON.parse(data) : {};
+        }
+        
+        // 渲染积分管理Tab
+        function renderPointsTab() {
+            let pointsTab = document.getElementById('tab-points');
+            if (!pointsTab) {
+                pointsTab = document.createElement('div');
+                pointsTab.id = 'tab-points';
+                pointsTab.className = 'tab-content';
+                document.getElementById('adminPage').appendChild(pointsTab);
+            }
+            
+            const users = getAllUsers();
+            const usersList = Object.entries(users).map(([username, data]) => ({
+                username,
+                ...data
+            }));
+            
+            // 计算统计数据
+            const totalPoints = usersList.reduce((sum, u) => sum + (u.points || 0), 0);
+            const totalRecharge = usersList.reduce((sum, u) => {
+                return sum + (u.rechargeHistory || []).reduce((s, r) => s + r.amount, 0);
+            }, 0);
+            
+            pointsTab.innerHTML = `
+                <!-- 积分统计 -->
+                <div class="user-stats">
+                    <div class="stat-card">
+                        <div class="value">${usersList.length}</div>
+                        <div class="label">总用户数</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #6366f1;">
+                        <div class="value" style="color: #6366f1;">${totalPoints.toLocaleString()}</div>
+                        <div class="label">积分总量</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #22c55e;">
+                        <div class="value" style="color: #22c55e;">¥${totalRecharge.toFixed(2)}</div>
+                        <div class="label">充值总额</div>
+                    </div>
+                    <div class="stat-card" style="border-left: 4px solid #f59e0b;">
+                        <div class="value" style="color: #f59e0b;">${(totalPoints / 100).toFixed(2)}</div>
+                        <div class="label">可提现价值</div>
+                    </div>
+                </div>
+                
+                <!-- 充值配置 -->
+                <div class="add-form" style="margin-bottom: 20px;">
+                    <h2>💰 充值套餐设置</h2>
+                    <p style="color: #666; font-size: 13px; margin-bottom: 16px;">设置用户充值的积分比例和赠送规则</p>
+                    <div id="pointsAlert" class="alert hidden"></div>
+                    
+                    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                        <div style="font-weight: 600; color: #166534; margin-bottom: 12px;">📊 基础比例设置</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>1元 = ? 积分</label>
+                                <input type="number" id="pointsRate" value="100" min="1" style="width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                            </div>
+                            <div class="form-group">
+                                <label>最低充值金额</label>
+                                <input type="number" id="minRecharge" value="10" min="1" style="width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                        <div style="font-weight: 600; color: #1e40af; margin-bottom: 12px;">🎁 充值赠送规则</div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>充值30元赠送</label>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="number" id="gift30" value="200" style="width: 100px; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                                    <span>积分</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>充值50元赠送</label>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="number" id="gift50" value="500" style="width: 100px; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                                    <span>积分</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>充值100元赠送</label>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="number" id="gift100" value="2000" style="width: 100px; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                                    <span>积分</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="savePointsConfig()" style="width: auto; padding: 12px 32px;">
+                        💾 保存配置
+                    </button>
+                </div>
+                
+                <!-- 用户积分列表 -->
+                <div class="add-form">
+                    <h2>👥 用户积分管理</h2>
+                    <div class="search-box">
+                        <input type="text" id="pointsSearch" placeholder="搜索用户名..." oninput="renderPointsList(this.value)">
+                    </div>
+                    <div id="pointsList"></div>
+                </div>
+            `;
+            
+            // 加载配置
+            loadPointsConfig();
+            renderPointsList();
+        }
+        
+        // 加载积分配置
+        function loadPointsConfig() {
+            const config = JSON.parse(localStorage.getItem('ai_gongju_chang_points_config') || '{}');
+            if (config.rate) document.getElementById('pointsRate').value = config.rate;
+            if (config.minRecharge) document.getElementById('minRecharge').value = config.minRecharge;
+            if (config.gift30) document.getElementById('gift30').value = config.gift30;
+            if (config.gift50) document.getElementById('gift50').value = config.gift50;
+            if (config.gift100) document.getElementById('gift100').value = config.gift100;
+        }
+        
+        // 保存积分配置
+        function savePointsConfig() {
+            const config = {
+                rate: parseInt(document.getElementById('pointsRate').value) || 100,
+                minRecharge: parseInt(document.getElementById('minRecharge').value) || 10,
+                gift30: parseInt(document.getElementById('gift30').value) || 200,
+                gift50: parseInt(document.getElementById('gift50').value) || 500,
+                gift100: parseInt(document.getElementById('gift100').value) || 2000
+            };
+            localStorage.setItem('ai_gongju_chang_points_config', JSON.stringify(config));
+            showAlert('pointsAlert', '✅ 积分配置已保存！', 'success');
+        }
+        
+        // 渲染用户积分列表
+        function renderPointsList(searchTerm = '') {
+            const users = getAllUsers();
+            let usersList = Object.entries(users).map(([username, data]) => ({
+                username,
+                ...data
+            }));
+            
+            // 过滤
+            if (searchTerm) {
+                usersList = usersList.filter(u => 
+                    u.username.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            // 按积分排序
+            usersList.sort((a, b) => (b.points || 0) - (a.points || 0));
+            
+            const container = document.getElementById('pointsList');
+            if (!container) return;
+            
+            if (usersList.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">💎</div>
+                        <p>暂无用户数据</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="user-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>用户名</th>
+                                <th>积分余额</th>
+                                <th>充值总额</th>
+                                <th>充值次数</th>
+                                <th>注册时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${usersList.map(u => {
+                                const totalRecharge = (u.rechargeHistory || []).reduce((s, r) => s + r.amount, 0);
+                                return `
+                                    <tr>
+                                        <td><strong>${u.username}</strong></td>
+                                        <td style="color: #6366f1; font-weight: bold; font-size: 16px;">${(u.points || 0).toLocaleString()}</td>
+                                        <td style="color: #22c55e; font-weight: bold;">¥${totalRecharge.toFixed(2)}</td>
+                                        <td>${(u.rechargeHistory || []).length}次</td>
+                                        <td style="font-size: 12px; color: #666;">${new Date(u.registerTime || Date.now()).toLocaleDateString()}</td>
+                                        <td>
+                                            <button onclick="adjustUserPoints('${u.username}')" style="background: #6366f1; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-right: 4px;">✏️ 调整</button>
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+        
+        // 调整用户积分
+        function adjustUserPoints(username) {
+            const users = getAllUsers();
+            const user = users[username];
+            if (!user) return;
+            
+            const action = prompt(`请选择操作：\n1. 增加积分\n2. 减少积分\n\n输入数字：`);
+            if (!action) return;
+            
+            const amount = parseInt(prompt('请输入积分数量：'));
+            if (isNaN(amount) || amount <= 0) {
+                alert('请输入有效的积分数量！');
+                return;
+            }
+            
+            if (action === '1') {
+                user.points = (user.points || 0) + amount;
+            } else if (action === '2') {
+                user.points = Math.max(0, (user.points || 0) - amount);
+            }
+            
+            // 记录操作
+            if (!user.pointsHistory) user.pointsHistory = [];
+            user.pointsHistory.push({
+                type: action === '1' ? 'admin_add' : 'admin_sub',
+                amount: amount,
+                admin: 'admin',
+                time: Date.now()
+            });
+            
+            localStorage.setItem(POINTS_DB_KEY, JSON.stringify(users));
+            alert(`✅ 已${action === '1' ? '增加' : '减少'}用户 ${username} ${amount} 积分`);
+            renderPointsList(document.getElementById('pointsSearch')?.value || '');
         }
         </div><!-- End tab-course -->
     </script>

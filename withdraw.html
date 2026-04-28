@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>积分提现 - AI工具场</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --primary:#6366f1;--primary-dark:#4f46e5;
+            --success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+            --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+            --gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;
+            --gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;
+        }
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif;background:var(--gray-50);color:var(--gray-800);min-height:100vh}
+        
+        .header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--gray-200);padding:16px 20px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100}
+        .back-btn{font-size:24px;color:var(--gray-600);cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;transition:background 0.2s}
+        .back-btn:hover{background:var(--gray-100)}
+        .header-title{font-size:18px;font-weight:700;flex:1;text-align:center;margin-right:40px}
+        
+        .container{max-width:500px;margin:0 auto;padding:20px}
+        
+        /* 余额卡片 */
+        .balance-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:20px;padding:30px;color:white;text-align:center;margin-bottom:24px}
+        .balance-label{font-size:14px;opacity:0.9;margin-bottom:8px}
+        .balance-value{font-size:48px;font-weight:800;margin-bottom:4px}
+        .balance-unit{font-size:16px;opacity:0.8}
+        
+        /* 提现信息 */
+        .info-card{background:white;border-radius:16px;padding:20px;margin-bottom:24px}
+        .info-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--gray-100)}
+        .info-row:last-child{border-bottom:none}
+        .info-label{font-size:14px;color:var(--gray-600)}
+        .info-value{font-size:15px;font-weight:600;color:var(--gray-800)}
+        .info-value.highlight{color:var(--success);font-size:18px}
+        
+        /* 提现表单 */
+        .form-section{background:white;border-radius:16px;padding:20px;margin-bottom:24px}
+        .form-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        
+        .form-group{margin-bottom:16px}
+        .form-group label{display:block;font-size:14px;color:var(--gray-600);margin-bottom:8px}
+        .form-group input{width:100%;padding:12px 16px;border:1px solid var(--gray-300);border-radius:10px;font-size:15px;outline:none}
+        .form-group input:focus{border-color:var(--primary)}
+        
+        .amount-input{display:flex;align-items:center;gap:12px}
+        .amount-input input{flex:1;padding:14px 16px;border:2px solid var(--primary);border-radius:10px;font-size:20px;font-weight:700;text-align:center}
+        .amount-input span{font-size:16px;color:var(--gray-500)}
+        
+        .quick-amounts{display:flex;gap:8px;margin-top:12px}
+        .quick-btn{padding:8px 16px;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;font-size:13px;cursor:pointer;transition:all 0.2s}
+        .quick-btn:hover,.quick-btn.active{background:var(--primary);color:white;border-color:var(--primary)}
+        
+        /* 到账方式 */
+        .method-section{margin-top:20px}
+        .method-title{font-size:14px;color:var(--gray-600);margin-bottom:12px}
+        .method-list{}
+        .method-item{display:flex;align-items:center;padding:14px;border:1px solid var(--gray-200);border-radius:12px;margin-bottom:10px;cursor:pointer;transition:all 0.2s}
+        .method-item:hover{border-color:var(--primary)}
+        .method-item.selected{border-color:var(--primary);background:rgba(99,102,241,0.05)}
+        .method-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-right:12px}
+        .method-icon.alipay{background:#1677ff}
+        .method-icon.wechat{background:#07c160}
+        .method-icon.bank{background:#dc2626;color:white;font-size:14px;font-weight:bold}
+        .method-name{flex:1}
+        .method-name .name{font-size:15px;font-weight:600}
+        .method-name .desc{font-size:12px;color:var(--gray-400);margin-top:2px}
+        .method-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center}
+        .method-item.selected .method-check{border-color:var(--primary);background:var(--primary)}
+        .method-item.selected .method-check::after{content:'✓';color:white;font-size:12px}
+        
+        /* 银行信息表单 */
+        .bank-form{margin-top:16px;padding:16px;background:var(--gray-50);border-radius:12px;display:none}
+        .bank-form.show{display:block}
+        .bank-form .form-group{margin-bottom:12px}
+        .bank-form .form-group:last-child{margin-bottom:0}
+        
+        /* 提示信息 */
+        .tips-box{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:16px;margin-bottom:24px}
+        .tips-box h3{font-size:14px;color:#92400e;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+        .tips-box ul{list-style:none;font-size:13px;color:#92400e}
+        .tips-box li{padding:4px 0;padding-left:16px;position:relative}
+        .tips-box li::before{content:'•';position:absolute;left:0}
+        
+        /* 提交按钮 */
+        .submit-btn{width:100%;padding:16px;background:var(--primary);color:white;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;transition:all 0.3s}
+        .submit-btn:hover{background:var(--primary-dark);transform:translateY(-2px);box-shadow:0 4px 12px rgba(99,102,241,0.3)}
+        .submit-btn:disabled{background:var(--gray-300);cursor:not-allowed;transform:none;box-shadow:none}
+        
+        /* 提现记录 */
+        .history-section{background:white;border-radius:16px;padding:20px;margin-top:30px}
+        .history-title{font-size:16px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .history-list{}
+        .history-item{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid var(--gray-100)}
+        .history-item:last-child{border-bottom:none}
+        .history-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-right:12px;font-size:18px}
+        .history-icon.pending{background:#fef3c7}
+        .history-icon.success{background:var(--success)}
+        .history-icon.failed{background:var(--danger)}
+        .history-info{flex:1}
+        .history-name{font-size:14px;font-weight:600;color:var(--gray-800)}
+        .history-time{font-size:12px;color:var(--gray-400);margin-top:2px}
+        .history-amount{font-size:16px;font-weight:700}
+        .history-amount.pending{color:var(--warning)}
+        .history-amount.success{color:var(--success)}
+        .history-amount.failed{color:var(--danger)}
+        .history-status{font-size:11px;padding:3px 8px;border-radius:10px;margin-left:8px}
+        .history-status.pending{background:#fef3c7;color:#92400e}
+        .history-status.success{background:#dcfce7;color:#166534}
+        .history-status.failed{background:#fee2e2;color:#991b1b}
+        
+        .empty-history{text-align:center;padding:40px 20px;color:var(--gray-400)}
+        .empty-history .icon{font-size:48px;margin-bottom:12px}
+        
+        /* Toast提示 */
+        .toast{position:fixed;top:20%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);color:white;padding:12px 24px;border-radius:8px;font-size:14px;z-index:2000;animation:fadeIn 0.3s}
+        @keyframes fadeIn{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+        
+        /* 确认弹窗 */
+        .confirm-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+        .confirm-modal.hidden{display:none}
+        .confirm-box{background:white;border-radius:20px;width:100%;max-width:340px;text-align:center;padding:30px}
+        .confirm-icon{font-size:64px;margin-bottom:16px}
+        .confirm-box h3{font-size:18px;margin-bottom:8px}
+        .confirm-box p{font-size:14px;color:var(--gray-500);margin-bottom:20px}
+        .confirm-amount{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:20px}
+        .confirm-box .btn-row{display:flex;gap:12px}
+        .confirm-box .btn-row button{flex:1;padding:14px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none}
+        .confirm-box .btn-cancel{background:var(--gray-100);color:var(--gray-600)}
+        .confirm-box .btn-confirm{background:var(--primary);color:white}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="back-btn" onclick="history.back()">←</div>
+        <div class="header-title">积分提现</div>
+    </div>
+    
+    <div class="container">
+        <!-- 当前余额 -->
+        <div class="balance-card">
+            <div class="balance-label">可提现积分</div>
+            <div class="balance-value" id="currentPoints">0</div>
+            <div class="balance-unit">≈ ¥<span id="currentMoney">0</span></div>
+        </div>
+        
+        <!-- 提现信息 -->
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-label">提现比例</span>
+                <span class="info-value">100积分 = ¥1</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">最低提现</span>
+                <span class="info-value">1000积分（¥10）</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">到账时间</span>
+                <span class="info-value">1-3个工作日</span>
+            </div>
+        </div>
+        
+        <!-- 提现表单 -->
+        <div class="form-section">
+            <div class="form-title">💸 输入提现金额</div>
+            
+            <div class="amount-input">
+                <input type="number" id="withdrawAmount" placeholder="0" min="1000" step="100" oninput="updateWithdrawInfo()">
+                <span>积分</span>
+            </div>
+            
+            <div class="quick-amounts">
+                <button class="quick-btn" onclick="setQuickAmount(1000)">¥10</button>
+                <button class="quick-btn" onclick="setQuickAmount(5000)">¥50</button>
+                <button class="quick-btn" onclick="setQuickAmount(10000)">¥100</button>
+                <button class="quick-btn" onclick="setQuickAmount(20000)">¥200</button>
+                <button class="quick-btn" onclick="setQuickAmount('all')">全部</button>
+            </div>
+            
+            <div style="margin-top:16px;padding:12px;background:var(--gray-50);border-radius:8px;">
+                <div style="display:flex;justify-content:space-between;font-size:14px;">
+                    <span style="color:var(--gray-500);">实际到账</span>
+                    <span style="font-weight:700;color:var(--primary);font-size:18px;">¥<span id="actualMoney">0</span></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 到账方式 -->
+        <div class="form-section method-section">
+            <div class="method-title">💳 选择到账方式</div>
+            <div class="method-list">
+                <div class="method-item selected" onclick="selectMethod('alipay', this)">
+                    <div class="method-icon alipay">💙</div>
+                    <div class="method-name">
+                        <div class="name">支付宝</div>
+                        <div class="desc">推荐，最快到账</div>
+                    </div>
+                    <div class="method-check"></div>
+                </div>
+                <div class="method-item" onclick="selectMethod('wechat', this)">
+                    <div class="method-icon wechat">💚</div>
+                    <div class="method-name">
+                        <div class="name">微信</div>
+                        <div class="desc">24小时内到账</div>
+                    </div>
+                    <div class="method-check"></div>
+                </div>
+                <div class="method-item" onclick="selectMethod('bank', this)">
+                    <div class="method-icon bank">💳</div>
+                    <div class="method-name">
+                        <div class="name">银行卡</div>
+                        <div class="desc">1-3个工作日到账</div>
+                    </div>
+                    <div class="method-check"></div>
+                </div>
+            </div>
+            
+            <!-- 支付宝/微信收款信息 -->
+            <div id="simpleForm" class="bank-form show" style="margin-top:16px;">
+                <div class="form-group">
+                    <label>收款账户</label>
+                    <input type="text" id="receiveAccount" placeholder="请输入支付宝账号">
+                </div>
+                <div class="form-group">
+                    <label>真实姓名</label>
+                    <input type="text" id="realName" placeholder="请输入您的真实姓名">
+                </div>
+            </div>
+            
+            <!-- 银行卡信息 -->
+            <div id="bankForm" class="bank-form">
+                <div class="form-group">
+                    <label>开户银行</label>
+                    <input type="text" id="bankName" placeholder="如：中国工商银行">
+                </div>
+                <div class="form-group">
+                    <label>银行卡号</label>
+                    <input type="text" id="bankCard" placeholder="请输入银行卡号">
+                </div>
+                <div class="form-group">
+                    <label>开户姓名</label>
+                    <input type="text" id="bankName2" placeholder="请输入开户姓名">
+                </div>
+            </div>
+        </div>
+        
+        <!-- 提现须知 -->
+        <div class="tips-box">
+            <h3>⚠️ 提现须知</h3>
+            <ul>
+                <li>最低提现1000积分（¥10），每日限提现1次</li>
+                <li>提现申请提交后，管理员将在1-3个工作日内处理</li>
+                <li>请确保收款信息准确，损失自负</li>
+                <li>如有疑问请联系客服处理</li>
+            </ul>
+        </div>
+        
+        <button class="submit-btn" id="submitBtn" onclick="showConfirmModal()">提交提现申请</button>
+        
+        <!-- 提现记录 -->
+        <div class="history-section">
+            <div class="history-title">📜 提现记录</div>
+            <div class="history-list" id="historyList">
+                <!-- 动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- 确认弹窗 -->
+    <div class="confirm-modal hidden" id="confirmModal">
+        <div class="confirm-box">
+            <div class="confirm-icon">💸</div>
+            <h3>确认提现</h3>
+            <p>请确认以下信息是否正确</p>
+            <div class="confirm-amount">¥<span id="confirmMoney">0</span></div>
+            <div style="font-size:14px;color:var(--gray-500);margin-bottom:20px;">
+                <span id="confirmMethod">支付宝</span> · <span id="confirmAccount">--</span>
+            </div>
+            <div class="btn-row">
+                <button class="btn-cancel" onclick="closeConfirmModal()">取消</button>
+                <button class="btn-confirm" onclick="submitWithdraw()">确认提现</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const STORAGE_KEY = 'ai_gongju_chang_users';
+        const WITHDRAW_KEY = 'ai_gongju_chang_withdrawals';
+        const CURRENT_USER = localStorage.getItem('ai_gongju_chang_current_user') || '';
+        
+        let selectedMethod = 'alipay';
+        let withdrawPoints = 0;
+        let maxWithdraw = 0;
+        
+        function init() {
+            loadUserPoints();
+            loadWithdrawHistory();
+        }
+        
+        function loadUserPoints() {
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            const user = users[CURRENT_USER] || {};
+            const points = user.points || 0;
+            maxWithdraw = points;
+            
+            document.getElementById('currentPoints').textContent = points.toLocaleString();
+            document.getElementById('currentMoney').textContent = (points / 100).toFixed(2);
+        }
+        
+        function updateWithdrawInfo() {
+            const input = document.getElementById('withdrawAmount');
+            withdrawPoints = parseInt(input.value) || 0;
+            const money = (withdrawPoints / 100).toFixed(2);
+            document.getElementById('actualMoney').textContent = money;
+            
+            validateForm();
+        }
+        
+        function setQuickAmount(amount) {
+            if (amount === 'all') {
+                amount = maxWithdraw;
+            } else {
+                amount = amount; // 已经是积分
+            }
+            document.getElementById('withdrawAmount').value = amount;
+            updateWithdrawInfo();
+            
+            // 更新快捷按钮选中状态
+            document.querySelectorAll('.quick-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+        
+        function selectMethod(method, el) {
+            document.querySelectorAll('.method-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            el.classList.add('selected');
+            selectedMethod = method;
+            
+            const simpleForm = document.getElementById('simpleForm');
+            const bankForm = document.getElementById('bankForm');
+            
+            if (method === 'bank') {
+                simpleForm.classList.remove('show');
+                bankForm.classList.add('show');
+            } else {
+                simpleForm.classList.add('show');
+                bankForm.classList.remove('show');
+            }
+        }
+        
+        function validateForm() {
+            const btn = document.getElementById('submitBtn');
+            const points = withdrawPoints;
+            
+            if (points < 1000) {
+                btn.textContent = '最低提现1000积分';
+                btn.disabled = true;
+            } else if (points > maxWithdraw) {
+                btn.textContent = '积分不足';
+                btn.disabled = true;
+            } else {
+                btn.textContent = `提交提现申请（¥${(points/100).toFixed(2)}）`;
+                btn.disabled = false;
+            }
+        }
+        
+        function showConfirmModal() {
+            const money = (withdrawPoints / 100).toFixed(2);
+            const account = selectedMethod === 'bank' 
+                ? document.getElementById('bankCard').value 
+                : document.getElementById('receiveAccount').value;
+            
+            document.getElementById('confirmMoney').textContent = money;
+            document.getElementById('confirmMethod').textContent = 
+                selectedMethod === 'alipay' ? '支付宝' : 
+                selectedMethod === 'wechat' ? '微信' : '银行卡';
+            document.getElementById('confirmAccount').textContent = 
+                account ? (account.substring(0,3) + '****' + account.slice(-4)) : '--';
+            
+            document.getElementById('confirmModal').classList.remove('hidden');
+        }
+        
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.add('hidden');
+        }
+        
+        function submitWithdraw() {
+            // 扣除积分
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            if (!users[CURRENT_USER]) {
+                users[CURRENT_USER] = { points: 0 };
+            }
+            users[CURRENT_USER].points -= withdrawPoints;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+            
+            // 添加提现记录
+            const withdrawals = JSON.parse(localStorage.getItem(WITHDRAW_KEY) || '[]');
+            const record = {
+                id: Date.now(),
+                user: CURRENT_USER,
+                points: withdrawPoints,
+                money: (withdrawPoints / 100).toFixed(2),
+                method: selectedMethod,
+                account: selectedMethod === 'bank' 
+                    ? document.getElementById('bankCard').value
+                    : document.getElementById('receiveAccount').value,
+                name: selectedMethod === 'bank'
+                    ? document.getElementById('bankName2').value
+                    : document.getElementById('realName').value,
+                bankName: document.getElementById('bankName')?.value || '',
+                status: 'pending',
+                time: Date.now()
+            };
+            withdrawals.unshift(record);
+            localStorage.setItem(WITHDRAW_KEY, JSON.stringify(withdrawals));
+            
+            closeConfirmModal();
+            showToast('提现申请已提交！');
+            
+            // 重置表单
+            document.getElementById('withdrawAmount').value = '';
+            document.getElementById('receiveAccount').value = '';
+            document.getElementById('realName').value = '';
+            document.getElementById('bankCard').value = '';
+            withdrawPoints = 0;
+            
+            // 刷新
+            loadUserPoints();
+            updateWithdrawInfo();
+            loadWithdrawHistory();
+        }
+        
+        function loadWithdrawHistory() {
+            const allWithdrawals = JSON.parse(localStorage.getItem(WITHDRAW_KEY) || '[]');
+            const myWithdrawals = allWithdrawals.filter(w => w.user === CURRENT_USER);
+            const container = document.getElementById('historyList');
+            
+            if (myWithdrawals.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-history">
+                        <div class="icon">📜</div>
+                        <div>暂无提现记录</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = myWithdrawals.slice(0, 10).map(item => {
+                const statusMap = {
+                    pending: { text: '处理中', class: 'pending' },
+                    approved: { text: '已打款', class: 'success' },
+                    rejected: { text: '已拒绝', class: 'failed' }
+                };
+                const status = statusMap[item.status] || statusMap.pending;
+                const methodName = item.method === 'alipay' ? '支付宝' : 
+                                   item.method === 'wechat' ? '微信' : '银行卡';
+                
+                return `
+                    <div class="history-item">
+                        <div class="history-icon ${status.class}">💸</div>
+                        <div class="history-info">
+                            <div class="history-name">提现 ${methodName}</div>
+                            <div class="history-time">${new Date(item.time).toLocaleString()}</div>
+                        </div>
+                        <div>
+                            <div class="history-amount ${status.class}">-${item.money}</div>
+                            <span class="history-status ${status.class}">${status.text}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+        
+        init();
+    </script>
+</body>
+</html>

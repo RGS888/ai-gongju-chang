@@ -331,6 +331,27 @@
             </div>
             <div class="menu-arrow">›</div>
         </div>
+        
+        <!-- 积分充值入口 -->
+        <div class="menu-item" onclick="location.href='recharge.html'">
+            <div class="menu-icon green">💎</div>
+            <div class="menu-text">
+                <div class="menu-title">积分充值</div>
+                <div class="menu-desc">当前积分：<span id="userPoints">0</span></div>
+            </div>
+            <div class="menu-arrow">›</div>
+        </div>
+        
+        <!-- 积分提现入口 -->
+        <div class="menu-item" onclick="location.href='withdraw.html'">
+            <div class="menu-icon orange">💸</div>
+            <div class="menu-text">
+                <div class="menu-title">积分提现</div>
+                <div class="menu-desc">可提现至支付宝/微信</div>
+            </div>
+            <div class="menu-arrow">›</div>
+        </div>
+        
         <div class="menu-item" onclick="clearMember()">
             <div class="menu-icon red">🗑️</div>
             <div class="menu-text">
@@ -434,6 +455,20 @@
             const records = JSON.parse(localStorage.getItem('codeRecords') || '[]');
             document.getElementById('statViews').textContent = views;
             document.getElementById('statCodes').textContent = records.length;
+        }
+        
+        // 加载用户积分
+        function loadUserPoints() {
+            const CURRENT_USER = localStorage.getItem('ai_gongju_chang_current_user') || 'guest';
+            const users = JSON.parse(localStorage.getItem('ai_gongju_chang_users') || '{}');
+            const user = users[CURRENT_USER] || {};
+            const points = user.points || 0;
+            
+            // 更新积分显示
+            const pointsEl = document.getElementById('userPoints');
+            if (pointsEl) {
+                pointsEl.textContent = points.toLocaleString();
+            }
         }
         
         // 清除会员
@@ -910,7 +945,10 @@
         initDistribution = function() {
             originalInitDistribution();
             initWithdrawDisplay();
+            loadUserPoints();
         };
     </script>
+</body>
+</html>
 </body>
 </html>
