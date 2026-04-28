@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会员资料区 - AI工具场</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .vip-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+        }
+        .vip-header h1 { margin: 0 0 10px 0; font-size: 28px; }
+        .vip-header p { margin: 0; opacity: 0.9; font-size: 14px; }
+        
+        .member-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+        }
+        .member-status {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .member-status.active {
+            color: #10b981;
+            font-weight: bold;
+        }
+        .member-status.expired {
+            color: #ef4444;
+        }
+        .member-level {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .member-expire {
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .category-tabs {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px 20px;
+            gap: 10px;
+            background: #f8f9fa;
+        }
+        .category-tab {
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .category-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        
+        .materials-list {
+            padding: 20px;
+        }
+        .material-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .material-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .material-icon.video { background: #fee2e2; }
+        .material-icon.tool { background: #dbeafe; }
+        .material-icon.doc { background: #d1fae5; }
+        .material-icon.template { background: #fef3c7; }
+        
+        .material-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .material-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .material-desc {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+        .material-meta {
+            font-size: 12px;
+            color: #aaa;
+        }
+        .material-action {
+            flex-shrink: 0;
+        }
+        .btn-view {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+        .btn-view.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn-view.disabled {
+            background: #e5e7eb;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        .locked-overlay {
+            background: rgba(0,0,0,0.7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .locked-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+        }
+        .locked-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .locked-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .locked-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .locked-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+        .locked-btn.primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .locked-btn.secondary {
+            background: #f3f4f6;
+            color: #666;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .nav-item.active {
+            color: #667eea;
+        }
+        .nav-icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .content-area {
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="vip-header">
+        <h1>👑 会员资料区</h1>
+        <p>精选自媒体教程/软件工具/视频课程</p>
+    </div>
+    
+    <div class="member-card" id="memberCard">
+        <div class="member-status" id="memberStatus">未开通会员</div>
+        <div class="member-level" id="memberLevel" style="display:none;">普通会员</div>
+        <div class="member-expire" id="memberExpire" style="display:none;"></div>
+    </div>
+    
+    <div class="category-tabs">
+        <button class="category-tab active" data-category="all">全部</button>
+        <button class="category-tab" data-category="video">📹 视频教程</button>
+        <button class="category-tab" data-category="tool">💻 软件工具</button>
+        <button class="category-tab" data-category="doc">📄 文档资料</button>
+        <button class="category-tab" data-category="template">📋 模板素材</button>
+    </div>
+    
+    <div class="materials-list" id="materialsList">
+        <!-- 动态渲染 -->
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            首页
+        </a>
+        <a href="vip.html" class="nav-item active">
+            <span class="nav-icon">👑</span>
+            会员区
+        </a>
+        <a href="activate.html" class="nav-item">
+            <span class="nav-icon">🔑</span>
+            激活码
+        </a>
+        <a href="user.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            我的
+        </a>
+    </div>
+    
+    <!-- 未登录/未激活弹窗 -->
+    <div class="locked-overlay" id="lockedOverlay" style="display:none;">
+        <div class="locked-box">
+            <div class="locked-icon">🔐</div>
+            <div class="locked-title">会员专享内容</div>
+            <div class="locked-desc">
+                该资料为会员专属内容<br>
+                开通会员即可解锁全部资料
+            </div>
+            <button class="locked-btn primary" onclick="location.href='activate.html'">立即开通会员</button>
+            <button class="locked-btn secondary" onclick="location.href='user.html'">已有激活码？激活</button>
+        </div>
+    </div>
+
+    <script>
+        // 资料数据
+        const materials = [
+            { id: 1, title: '抖音爆款视频制作教程', category: 'video', icon: 'video', desc: '从0到1教你打造百万播放', author: '官方', views: 12580, biliUrl: 'https://www.bilibili.com/video/BV1xxx' },
+            { id: 2, title: '小红书运营实战笔记', category: 'doc', icon: 'doc', desc: '完整运营SOP流程文档', author: '官方', views: 8960, biliUrl: 'https://www.bilibili.com/video/BV2xxx' },
+            { id: 3, title: 'AI剪辑神器VIP版', category: 'tool', icon: 'tool', desc: '一键自动剪辑工具', author: '官方', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV3xxx' },
+            { id: 4, title: '自媒体变现全攻略', category: 'video', icon: 'video', desc: '月入过万的秘密', author: '官方', views: 23450, biliUrl: 'https://www.bilibili.com/video/BV4xxx' },
+            { id: 5, title: 'PPT模板素材包', category: 'template', icon: 'template', desc: '500+精美PPT模板', author: '官方', views: 11230, biliUrl: 'https://www.bilibili.com/video/BV5xxx' },
+            { id: 6, title: '短视频文案写作技巧', category: 'doc', icon: 'doc', desc: '100个爆款文案模板', author: '官方', views: 7890, biliUrl: 'https://www.bilibili.com/video/BV6xxx' },
+            { id: 7, title: '直播带货话术大全', category: 'video', icon: 'video', desc: '金牌主播都在用的话术', author: '官方', views: 19870, biliUrl: 'https://www.bilibili.com/video/BV7xxx' },
+            { id: 8, title: '数据分析工具合集', category: 'tool', icon: 'tool', desc: '运营必备数据分析工具', author: '官方', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV8xxx' },
+        ];
+        
+        let currentCategory = 'all';
+        let isMember = false;
+        let memberInfo = null;
+        
+        // 检查会员状态
+        function checkMemberStatus() {
+            const memberData = localStorage.getItem('memberInfo');
+            if (memberData) {
+                memberInfo = JSON.parse(memberData);
+                const now = Date.now();
+                if (memberInfo.expireTime && now < memberInfo.expireTime) {
+                    isMember = true;
+                    return true;
+                }
+            }
+            isMember = false;
+            return false;
+        }
+        
+        // 更新会员状态显示
+        function updateMemberUI() {
+            const statusEl = document.getElementById('memberStatus');
+            const levelEl = document.getElementById('memberLevel');
+            const expireEl = document.getElementById('memberExpire');
+            const lockedOverlay = document.getElementById('lockedOverlay');
+            
+            if (isMember && memberInfo) {
+                statusEl.textContent = '👑 会员已开通';
+                statusEl.className = 'member-status active';
+                levelEl.style.display = 'inline-block';
+                levelEl.textContent = getLevelName(memberInfo.level);
+                expireEl.style.display = 'block';
+                expireEl.textContent = `有效期至：${new Date(memberInfo.expireTime).toLocaleDateString()}`;
+                lockedOverlay.style.display = 'none';
+            } else {
+                statusEl.textContent = '⚠️ 未开通会员';
+                statusEl.className = 'member-status expired';
+                levelEl.style.display = 'none';
+                expireEl.style.display = 'none';
+                lockedOverlay.style.display = 'none';
+            }
+        }
+        
+        function getLevelName(level) {
+            const names = { 'month': '月卡会员', 'quarter': '季卡会员', 'year': '年卡会员', 'forever': '永久会员' };
+            return names[level] || '会员';
+        }
+        
+        // 渲染资料列表
+        function renderMaterials() {
+            const list = document.getElementById('materialsList');
+            let filtered = materials;
+            
+            if (currentCategory !== 'all') {
+                filtered = materials.filter(m => m.category === currentCategory);
+            }
+            
+            list.innerHTML = filtered.map(m => `
+                <div class="material-card">
+                    <div class="material-icon ${m.icon}">
+                        ${m.icon === 'video' ? '📹' : m.icon === 'tool' ? '💻' : m.icon === 'doc' ? '📄' : '📋'}
+                    </div>
+                    <div class="material-info">
+                        <div class="material-title">${m.title}</div>
+                        <div class="material-desc">${m.desc}</div>
+                        <div class="material-meta">👤 ${m.author} · 👁️ ${m.views}次浏览</div>
+                    </div>
+                    <div class="material-action">
+                        ${isMember ? 
+                            `<button class="btn-view primary" onclick="openMaterial(${m.id})">查看</button>` : 
+                            `<button class="btn-view disabled" onclick="showLocked()">🔒</button>`
+                        }
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 分类切换
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.category;
+                renderMaterials();
+            });
+        });
+        
+        // 查看资料
+        function openMaterial(id) {
+            const material = materials.find(m => m.id === id);
+            if (material && material.biliUrl) {
+                // 打开B站链接
+                window.location.href = material.biliUrl;
+            }
+        }
+        
+        // 显示锁定提示
+        function showLocked() {
+            document.getElementById('lockedOverlay').style.display = 'flex';
+        }
+        
+        // 关闭弹窗
+        document.getElementById('lockedOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+        
+        // 初始化
+        checkMemberStatus();
+        updateMemberUI();
+        renderMaterials();
+        
+        // 定期检查会员状态
+        setInterval(() => {
+            checkMemberStatus();
+            updateMemberUI();
+            renderMaterials();
+        }, 5000);
+    </script>
+</body>
+</html>

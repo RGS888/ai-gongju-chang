@@ -3,834 +3,889 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用户注册/登录 - AI工具场</title>
+    <title>我的 - AI工具场</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+        .user-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 420px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        /* 头部 */
-        .card-header {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            padding: 30px;
-            text-align: center;
             color: white;
-        }
-
-        .card-header h1 {
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .card-header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* 表单区 */
-        .card-body {
-            padding: 30px;
-        }
-
-        .tab-switch {
-            display: flex;
-            margin-bottom: 24px;
-            background: #f3f4f6;
-            border-radius: 10px;
-            padding: 4px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #6b7280;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .tab-btn.active {
-            background: white;
-            color: #6366f1;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .form-group .hint {
-            font-size: 12px;
-            color: #9ca3af;
-            margin-top: 6px;
-        }
-
-        .form-tips {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 6px;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 14px 24px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #374151;
-            margin-top: 12px;
-        }
-
-        .alert {
-            padding: 12px 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .alert-success {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .back-home {
+            padding: 40px 20px;
             text-align: center;
-            margin-top: 20px;
         }
-
-        .back-home a {
-            color: #6366f1;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        /* 用户中心 */
-        .user-center {
-            display: none;
-        }
-
         .user-avatar {
             width: 80px;
             height: 80px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            margin: 0 auto 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 16px;
-            font-size: 32px;
-            color: white;
+            font-size: 36px;
         }
-
         .user-name {
-            text-align: center;
-            font-size: 20px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 4px;
+            font-size: 18px;
+            font-weight: bold;
         }
-
-        .user-id {
+        .user-level {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .stats-card {
+            display: flex;
+            background: white;
+            margin: -30px 15px 15px;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+        .stat-item {
+            flex: 1;
             text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
             font-size: 12px;
-            color: #9ca3af;
-            margin-bottom: 24px;
+            color: #888;
+            margin-top: 5px;
         }
-
-        .menu-list {
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            overflow: hidden;
+        .stat-divider {
+            width: 1px;
+            background: #eee;
+            margin: 0 10px;
         }
-
+        
+        .menu-section {
+            padding: 20px;
+        }
         .menu-item {
             display: flex;
             align-items: center;
-            padding: 16px;
-            border-bottom: 1px solid #e5e7eb;
+            padding: 15px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 10px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.3s;
         }
-
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-
         .menu-item:hover {
-            background: #f9fafb;
+            background: #f8f9fa;
         }
-
         .menu-icon {
             width: 40px;
             height: 40px;
-            background: #f3f4f6;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            margin-right: 12px;
+            font-size: 20px;
+            margin-right: 15px;
         }
-
+        .menu-icon.blue { background: #dbeafe; }
+        .menu-icon.green { background: #d1fae5; }
+        .menu-icon.orange { background: #fef3c7; }
+        .menu-icon.purple { background: #f3e8ff; }
+        .menu-icon.red { background: #fee2e2; }
         .menu-text {
             flex: 1;
         }
-
-        .menu-text h4 {
+        .menu-title {
             font-size: 15px;
-            color: #1f2937;
-            margin-bottom: 2px;
+            color: #333;
         }
-
-        .menu-text p {
+        .menu-desc {
             font-size: 12px;
-            color: #9ca3af;
+            color: #999;
+            margin-top: 2px;
         }
-
         .menu-arrow {
-            color: #d1d5db;
+            color: #ccc;
+            font-size: 18px;
         }
-
-        .btn-logout {
-            background: #fee2e2;
-            color: #dc2626;
-            margin-top: 20px;
-        }
-
-        /* 分享海报 */
-        .poster-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .poster-content {
-            background: white;
+        
+        .member-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
             border-radius: 16px;
-            max-width: 360px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
+            padding: 20px;
+            margin: 0 20px 20px;
         }
-
-        .poster-header {
-            padding: 16px;
+        .member-card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 15px;
         }
-
-        .poster-header h3 {
+        .member-title {
             font-size: 16px;
-        }
-
-        .poster-close {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: #f3f4f6;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .poster-body {
-            padding: 20px;
-        }
-
-        .poster-image {
-            width: 100%;
-            aspect-ratio: 3/4;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            padding: 30px;
-            margin-bottom: 16px;
-        }
-
-        .poster-logo {
-            font-size: 48px;
-            margin-bottom: 16px;
-        }
-
-        .poster-title {
-            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 8px;
-            text-align: center;
         }
-
-        .poster-desc {
-            font-size: 14px;
-            opacity: 0.9;
-            text-align: center;
-            margin-bottom: 20px;
+        .member-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
         }
-
-        .poster-qr {
-            width: 120px;
-            height: 120px;
-            background: white;
-            border-radius: 8px;
+        .member-info {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #6366f1;
-            font-size: 12px;
+            justify-content: space-between;
+            font-size: 13px;
+            opacity: 0.9;
         }
-
-        .poster-link {
-            background: #f3f4f6;
+        .member-btn {
+            display: block;
+            width: 100%;
             padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 16px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
         }
-
-        .poster-link label {
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            color: #888;
+            text-decoration: none;
             font-size: 12px;
-            color: #6b7280;
+        }
+        .nav-item.active {
+            color: #667eea;
+        }
+        .nav-icon {
+            font-size: 24px;
             display: block;
             margin-bottom: 4px;
         }
-
-        .poster-link input {
-            width: 100%;
-            padding: 8px;
-            border: none;
-            background: white;
-            border-radius: 4px;
-            font-size: 13px;
-        }
-
-        .poster-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .poster-actions .btn {
-            flex: 1;
-            padding: 12px;
-            font-size: 14px;
-        }
-
-        .btn-copy {
-            background: #6366f1;
-            color: white;
-        }
-
-        .btn-save {
-            background: #22c55e;
-            color: white;
-        }
-
-        /* 修改密码弹窗 */
-        .password-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .password-content {
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .password-content h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            text-align: center;
+        
+        .content-area {
+            padding-bottom: 80px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <!-- 登录注册表单 -->
-            <div id="authForm">
-                <div class="card-header">
-                    <h1>🔐 加入AI工具场</h1>
-                    <p>注册获取专属推广链接和海报</p>
-                </div>
-                <div class="card-body">
-                    <div class="alert" id="alertBox"></div>
-                    
-                    <div class="tab-switch">
-                        <button class="tab-btn active" onclick="switchTab('login')">登录</button>
-                        <button class="tab-btn" onclick="switchTab('register')">注册</button>
-                    </div>
-
-                    <!-- 登录表单 -->
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label>手机号</label>
-                            <input type="tel" id="loginPhone" placeholder="请输入手机号" maxlength="11">
-                        </div>
-                        <div class="form-group">
-                            <label>密码</label>
-                            <input type="password" id="loginPassword" placeholder="请输入密码">
-                        </div>
-                        <button type="submit" class="btn btn-primary">登录</button>
-                        <button type="button" class="btn btn-secondary" onclick="showForgotPassword()">忘记密码？</button>
-                    </form>
-
-                    <!-- 注册表单 -->
-                    <form id="registerForm" style="display: none;">
-                        <div class="form-group">
-                            <label>手机号 *</label>
-                            <input type="tel" id="regPhone" placeholder="请输入手机号" maxlength="11" required>
-                        </div>
-                        <div class="form-group">
-                            <label>微信号 *</label>
-                            <input type="text" id="regWechat" placeholder="请输入微信号" required>
-                        </div>
-                        <div class="form-group">
-                            <label>设置密码 *</label>
-                            <input type="password" id="regPassword" placeholder="请设置密码（至少6位）" minlength="6" required>
-                            <p class="form-tips">⚠️ 默认密码123456，建议登录后立即修改</p>
-                        </div>
-                        <button type="submit" class="btn btn-primary">注册</button>
-                    </form>
-
-                    <div class="back-home">
-                        <a href="index.html">← 返回首页</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 用户中心 -->
-            <div class="user-center" id="userCenter">
-                <div class="card-header">
-                    <h1>👤 个人中心</h1>
-                    <p>管理您的账号和推广信息</p>
-                </div>
-                <div class="card-body">
-                    <div class="user-avatar" id="userAvatar">👤</div>
-                    <div class="user-name" id="userName">用户</div>
-                    <div class="user-id" id="userId">ID: 100001</div>
-
-                    <div class="menu-list">
-                        <div class="menu-item" onclick="showSharePoster()">
-                            <div class="menu-icon">📊</div>
-                            <div class="menu-text">
-                                <h4>我的推广海报</h4>
-                                <p>专属海报，一键分享</p>
-                            </div>
-                            <span class="menu-arrow">→</span>
-                        </div>
-                        <div class="menu-item" onclick="copyShareLink()">
-                            <div class="menu-icon">🔗</div>
-                            <div class="menu-text">
-                                <h4>复制推广链接</h4>
-                                <p id="shareLinkText">点击复制专属链接</p>
-                            </div>
-                            <span class="menu-arrow">→</span>
-                        </div>
-                        <div class="menu-item" onclick="showEditInfo()">
-                            <div class="menu-icon">✏️</div>
-                            <div class="menu-text">
-                                <h4>修改资料</h4>
-                                <p>修改微信号等信息</p>
-                            </div>
-                            <span class="menu-arrow">→</span>
-                        </div>
-                        <div class="menu-item" onclick="showChangePassword()">
-                            <div class="menu-icon">🔑</div>
-                            <div class="menu-text">
-                                <h4>修改密码</h4>
-                                <p>保障账号安全</p>
-                            </div>
-                            <span class="menu-arrow">→</span>
-                        </div>
-                    </div>
-
-                    <button class="btn btn-logout" onclick="logout()">退出登录</button>
-                    <div class="back-home">
-                        <a href="index.html">← 返回首页</a>
-                    </div>
-                </div>
-            </div>
+    <div class="user-header">
+        <div class="user-avatar">👤</div>
+        <div class="user-name" id="userName">游客用户</div>
+        <div class="user-level" id="userLevel">未开通会员</div>
+    </div>
+    
+    <div class="stats-card">
+        <div class="stat-item">
+            <div class="stat-value" id="statDays">0</div>
+            <div class="stat-label">剩余天数</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <div class="stat-value" id="statViews">0</div>
+            <div class="stat-label">观看次数</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <div class="stat-value" id="statCodes">0</div>
+            <div class="stat-label">激活码</div>
         </div>
     </div>
-
-    <!-- 分享海报弹窗 -->
-    <div class="poster-modal" id="posterModal">
-        <div class="poster-content">
-            <div class="poster-header">
-                <h3>📊 推广海报</h3>
-                <button class="poster-close" onclick="closePosterModal()">×</button>
+    
+    <div id="memberSection">
+        <!-- 动态显示会员信息或开通按钮 -->
+    </div>
+    
+    <div class="menu-section">
+        <!-- 二级分销功能 -->
+        <div id="distributionSection" style="display:none;">
+            <div style="background: linear-gradient(135deg, #10b981, #059669); color: white; border-radius: 16px; padding: 20px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <span style="font-size: 16px; font-weight: bold;">💰 我的佣金</span>
+                    <span style="background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 15px; font-size: 12px;">分销商</span>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; text-align: center;">
+                    <div>
+                        <div style="font-size: 20px; font-weight: bold;" id="totalCommission">¥0</div>
+                        <div style="font-size: 11px; opacity: 0.8;">累计佣金</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 20px; font-weight: bold;" id="level1Count">0</div>
+                        <div style="font-size: 11px; opacity: 0.8;">一代用户</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 20px; font-weight: bold;" id="level2Count">0</div>
+                        <div style="font-size: 11px; opacity: 0.8;">二代用户</div>
+                    </div>
+                </div>
+                <div style="margin-top: 12px; font-size: 12px; opacity: 0.9;">
+                    我的邀请码：<span id="myInviteCode" style="font-weight: bold; letter-spacing: 2px;"></span>
+                </div>
             </div>
-            <div class="poster-body">
-                <div class="poster-image" id="posterImage">
-                    <div class="poster-logo">🛠️</div>
-                    <div class="poster-title">AI工具场</div>
-                    <div class="poster-desc">自媒体创作者必备工具导航<br>80+款免费工具汇总</div>
-                    <div class="poster-qr">二维码区域<br>（需接入生成）</div>
+            
+            <!-- 分享邀请区域 -->
+            <div style="background: white; border-radius: 12px; padding: 15px; margin-bottom: 10px;">
+                <div style="font-size: 14px; color: #333; margin-bottom: 12px; font-weight: bold;">
+                    🎁 邀请好友赚佣金
                 </div>
-                <div class="poster-link">
-                    <label>推广链接</label>
-                    <input type="text" id="posterLink" readonly>
+                <div style="font-size: 12px; color: #666; margin-bottom: 10px; line-height: 1.6;">
+                    <span style="color: #10b981; font-weight: bold;">直接推荐</span>：好友付费 × <span style="color: #ef4444;">10%</span><br>
+                    <span style="color: #f59e0b; font-weight: bold;">间接推荐</span>：好友的好友付费 × <span style="color: #ef4444;">8%</span>
                 </div>
-                <div class="poster-actions">
-                    <button class="btn btn-copy" onclick="copyPosterLink()">复制链接</button>
-                    <button class="btn btn-save" onclick="savePoster()">保存海报</button>
+                <div style="display: flex; gap: 8px;">
+                    <button onclick="copyInviteLink()" style="flex: 1; padding: 10px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 13px; cursor: pointer;">
+                        📋 复制邀请链接
+                    </button>
+                    <button onclick="showInviteQR()" style="flex: 1; padding: 10px; background: #667eea; color: white; border: none; border-radius: 8px; font-size: 13px; cursor: pointer;">
+                        📱 生成二维码
+                    </button>
                 </div>
             </div>
+            
+            <!-- 佣金记录 -->
+            <div style="background: white; border-radius: 12px; padding: 15px; margin-bottom: 10px;">
+                <div style="font-size: 14px; color: #333; margin-bottom: 12px; font-weight: bold;">
+                    📜 佣金记录
+                </div>
+                <div id="commissionList" style="max-height: 200px; overflow-y: auto;">
+                    <div style="text-align: center; color: #999; font-size: 13px; padding: 20px;">
+                        暂无佣金记录<br>
+                        <span style="font-size: 12px;">邀请好友开通会员即可获得佣金</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 提现区域 -->
+            <div id="withdrawSection" style="background: white; border-radius: 12px; padding: 15px; margin-bottom: 10px;">
+                <div style="font-size: 14px; color: #333; margin-bottom: 12px; font-weight: bold;">
+                    💸 申请提现
+                </div>
+                <div id="withdrawableInfo" style="background: #f0fdf4; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #666; font-size: 13px;">可提现金额</span>
+                        <span style="color: #10b981; font-size: 20px; font-weight: bold;" id="withdrawableAmount">¥0.00</span>
+                    </div>
+                </div>
+                <button onclick="showWithdrawModal()" id="withdrawBtn" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer;">
+                    💰 申请提现
+                </button>
+            </div>
+        </div>
+        
+        <div class="menu-item" onclick="location.href='activate.html'">
+            <div class="menu-icon purple">🔑</div>
+            <div class="menu-text">
+                <div class="menu-title">我的激活码</div>
+                <div class="menu-desc">查看和管理激活码</div>
+            </div>
+            <div class="menu-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="location.href='vip.html'">
+            <div class="menu-icon blue">👑</div>
+            <div class="menu-text">
+                <div class="menu-title">会员专区</div>
+                <div class="menu-desc">浏览全部资料</div>
+            </div>
+            <div class="menu-arrow">›</div>
+        </div>
+        <div class="menu-item" onclick="clearMember()">
+            <div class="menu-icon red">🗑️</div>
+            <div class="menu-text">
+                <div class="menu-title">退出会员</div>
+                <div class="menu-desc">清除会员信息</div>
+            </div>
+            <div class="menu-arrow">›</div>
         </div>
     </div>
-
-    <!-- 修改密码弹窗 -->
-    <div class="password-modal" id="passwordModal">
-        <div class="password-content">
-            <h3>🔑 修改密码</h3>
-            <div class="form-group">
-                <label>当前密码</label>
-                <input type="password" id="oldPassword" placeholder="请输入当前密码">
-            </div>
-            <div class="form-group">
-                <label>新密码</label>
-                <input type="password" id="newPassword" placeholder="请输入新密码（至少6位）">
-            </div>
-            <div class="form-group">
-                <label>确认新密码</label>
-                <input type="password" id="confirmPassword" placeholder="请再次输入新密码">
-            </div>
-            <button class="btn btn-primary" onclick="changePassword()" style="margin-bottom: 12px;">确认修改</button>
-            <button class="btn btn-secondary" onclick="closePasswordModal()">取消</button>
-        </div>
+    
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            首页
+        </a>
+        <a href="vip.html" class="nav-item">
+            <span class="nav-icon">👑</span>
+            会员区
+        </a>
+        <a href="activate.html" class="nav-item">
+            <span class="nav-icon">🔑</span>
+            激活码
+        </a>
+        <a href="user.html" class="nav-item active">
+            <span class="nav-icon">👤</span>
+            我的
+        </a>
     </div>
 
     <script>
+        // 检查会员状态
+        function checkMemberStatus() {
+            const memberData = localStorage.getItem('memberInfo');
+            const userName = document.getElementById('userName');
+            const userLevel = document.getElementById('userLevel');
+            const memberSection = document.getElementById('memberSection');
+            
+            if (memberData) {
+                const member = JSON.parse(memberData);
+                const now = Date.now();
+                
+                if (member.expireTime && now < member.expireTime) {
+                    // 会员有效
+                    const levelNames = {
+                        'month': '月卡会员',
+                        'quarter': '季卡会员', 
+                        'year': '年卡会员',
+                        'forever': '永久会员'
+                    };
+                    
+                    userName.textContent = '会员用户';
+                    userLevel.textContent = levelNames[member.level] || '会员';
+                    
+                    const remainDays = Math.ceil((member.expireTime - now) / (24 * 60 * 60 * 1000));
+                    document.getElementById('statDays').textContent = member.level === 'forever' ? '∞' : remainDays;
+                    
+                    // 会员卡片
+                    memberSection.innerHTML = `
+                        <div class="member-card">
+                            <div class="member-card-header">
+                                <span class="member-title">👑 ${levelNames[member.level]}</span>
+                                <span class="member-badge">有效</span>
+                            </div>
+                            <div class="member-info">
+                                <span>激活码：${member.activateCode || 'N/A'}</span>
+                                <span>到期：${new Date(member.expireTime).toLocaleDateString()}</span>
+                            </div>
+                            <button class="member-btn" onclick="location.href='vip.html'">进入会员专区</button>
+                        </div>
+                    `;
+                    return true;
+                }
+            }
+            
+            // 未开通会员
+            userName.textContent = '游客用户';
+            userLevel.textContent = '未开通会员';
+            document.getElementById('statDays').textContent = '0';
+            
+            memberSection.innerHTML = `
+                <div class="member-card" style="background: linear-gradient(135deg, #9ca3af, #6b7280);">
+                    <div class="member-card-header">
+                        <span class="member-title">👑 开通会员</span>
+                        <span class="member-badge" style="background:rgba(255,255,255,0.2);">未开通</span>
+                    </div>
+                    <div class="member-info">
+                        <span>解锁全部资料</span>
+                        <span>最低29元/月</span>
+                    </div>
+                    <button class="member-btn" onclick="location.href='activate.html'" style="background:white;color:#6b7280;">
+                        立即开通
+                    </button>
+                </div>
+            `;
+            return false;
+        }
+        
+        // 更新统计数据
+        function updateStats() {
+            const views = parseInt(localStorage.getItem('viewCount') || '0');
+            const records = JSON.parse(localStorage.getItem('codeRecords') || '[]');
+            document.getElementById('statViews').textContent = views;
+            document.getElementById('statCodes').textContent = records.length;
+        }
+        
+        // 清除会员
+        function clearMember() {
+            if (confirm('确定要退出会员吗？')) {
+                localStorage.removeItem('memberInfo');
+                checkMemberStatus();
+                updateStats();
+                alert('已退出会员');
+            }
+        }
+        
         // 初始化
-        document.addEventListener('DOMContentLoaded', () => {
-            checkLogin();
-        });
-
-        // 检查登录状态
-        function checkLogin() {
-            const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) {
-                showUserCenter(JSON.parse(currentUser));
-            } else {
-                showAuthForm();
+        checkMemberStatus();
+        updateStats();
+        initDistribution();
+        initWithdrawDisplay();
+        
+        // 定期更新
+        setInterval(() => {
+            checkMemberStatus();
+            updateStats();
+        }, 5000);
+        
+        // ===== 二级分销系统 =====
+        const DIST_DB_KEY = 'ai_gongju_chang_dist';
+        
+        // 佣金比例配置
+        const COMMISSION_RATE = {
+            level1: 0.10,  // 第一代10%
+            level2: 0.08    // 第二代8%
+        };
+        
+        // 套餐价格配置
+        const PLAN_PRICES = {
+            'month': 29,
+            'quarter': 79,
+            'year': 199,
+            'forever': 399
+        };
+        
+        // 获取分销数据库
+        function getDistDb() {
+            const data = localStorage.getItem(DIST_DB_KEY);
+            return data ? JSON.parse(data) : { users: {}, commissions: [] };
+        }
+        
+        // 保存分销数据库
+        function saveDistDb(db) {
+            localStorage.setItem(DIST_DB_KEY, JSON.stringify(db));
+        }
+        
+        // 生成唯一邀请码
+        function generateInviteCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
             }
+            return code;
         }
-
-        // 显示登录表单
-        function showAuthForm() {
-            document.getElementById('authForm').style.display = 'block';
-            document.getElementById('userCenter').style.display = 'none';
-        }
-
-        // 显示用户中心
-        function showUserCenter(user) {
-            document.getElementById('authForm').style.display = 'none';
-            document.getElementById('userCenter').style.display = 'block';
-            
-            document.getElementById('userName').textContent = user.phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
-            document.getElementById('userId').textContent = 'ID: ' + user.id;
-            document.getElementById('userAvatar').textContent = user.phone.charAt(0);
-            document.getElementById('shareLinkText').textContent = 'AI工具场/?ref=' + user.id;
-            document.getElementById('posterLink').value = window.location.origin + '/?ref=' + user.id;
-        }
-
-        // 切换标签
-        function switchTab(tab) {
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach((t, i) => {
-                t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
-            });
-            
-            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
-            document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
-        }
-
-        // 显示提示
-        function showAlert(message, type = 'error') {
-            const alert = document.getElementById('alertBox');
-            alert.textContent = message;
-            alert.className = 'alert alert-' + type;
-            alert.style.display = 'block';
-            setTimeout(() => alert.style.display = 'none', 3000);
-        }
-
-        // 注册
-        document.getElementById('registerForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const phone = document.getElementById('regPhone').value.trim();
-            const wechat = document.getElementById('regWechat').value.trim();
-            const password = document.getElementById('regPassword').value;
-            
-            if (!phone || phone.length !== 11) {
-                showAlert('请输入正确的11位手机号');
-                return;
+        
+        // 获取或创建用户邀请码
+        function getUserInviteCode(username) {
+            const db = getDistDb();
+            if (!db.users[username]) {
+                db.users[username] = {
+                    username: username,
+                    inviteCode: generateInviteCode(),
+                    invitedBy: null,
+                    level1Commission: 0,
+                    level2Commission: 0,
+                    level1Count: 0,
+                    level2Count: 0,
+                    registerTime: Date.now()
+                };
+                saveDistDb(db);
             }
-            if (!wechat) {
-                showAlert('请输入微信号');
-                return;
-            }
-            if (password.length < 6) {
-                showAlert('密码至少6位');
-                return;
-            }
-            
-            // 检查手机号是否已注册
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            if (users.find(u => u.phone === phone)) {
-                showAlert('该手机号已注册，请直接登录');
-                return;
-            }
-            
-            // 创建用户
-            const newUser = {
-                id: 'U' + Date.now().toString().slice(-6),
-                phone: phone,
-                wechat: wechat,
-                password: password,
-                createdAt: new Date().toISOString()
-            };
-            
-            users.push(newUser);
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify(newUser));
-            
-            showAlert('注册成功！即将进入个人中心...', 'success');
-            setTimeout(() => checkLogin(), 1500);
-        });
-
-        // 登录
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const phone = document.getElementById('loginPhone').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(u => u.phone === phone && u.password === password);
-            
-            if (user) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                showAlert('登录成功！', 'success');
-                setTimeout(() => checkLogin(), 1000);
-            } else {
-                showAlert('手机号或密码错误');
-            }
-        });
-
-        // 退出登录
-        function logout() {
-            if (confirm('确定要退出登录吗？')) {
-                localStorage.removeItem('currentUser');
-                checkLogin();
-            }
+            return db.users[username];
         }
-
-        // 显示分享海报
-        function showSharePoster() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            document.getElementById('posterLink').value = window.location.origin + '/?ref=' + user.id;
-            document.getElementById('posterModal').style.display = 'flex';
-        }
-
-        // 关闭海报弹窗
-        function closePosterModal() {
-            document.getElementById('posterModal').style.display = 'none';
-        }
-
-        // 复制推广链接
-        function copyShareLink() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            const link = window.location.origin + '/?ref=' + user.id;
-            copyToClipboard(link);
-            alert('推广链接已复制到剪贴板！');
-        }
-
-        // 复制海报链接
-        function copyPosterLink() {
-            const link = document.getElementById('posterLink').value;
-            copyToClipboard(link);
-            alert('链接已复制到剪贴板！');
-        }
-
-        // 保存海报（模拟）
-        function savePoster() {
-            alert('海报保存功能需要接入后端服务，当前为演示版本');
-        }
-
-        // 复制到剪贴板
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).catch(() => {
-                const input = document.createElement('input');
-                input.value = text;
-                document.body.appendChild(input);
-                input.select();
-                document.execCommand('copy');
-                document.body.removeChild(input);
-            });
-        }
-
-        // 修改密码
-        function showChangePassword() {
-            document.getElementById('passwordModal').style.display = 'flex';
-        }
-
-        function closePasswordModal() {
-            document.getElementById('passwordModal').style.display = 'none';
-            document.getElementById('oldPassword').value = '';
-            document.getElementById('newPassword').value = '';
-            document.getElementById('confirmPassword').value = '';
-        }
-
-        function changePassword() {
-            const oldPass = document.getElementById('oldPassword').value;
-            const newPass = document.getElementById('newPassword').value;
-            const confirmPass = document.getElementById('confirmPassword').value;
+        
+        // 处理分销佣金（被邀请者购买时调用）
+        function processDistribution(invitedByCode, planId, planName) {
+            if (!invitedByCode) return;
             
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const db = getDistDb();
+            const price = PLAN_PRICES[planId] || 29;
             
-            if (oldPass !== currentUser.password) {
-                alert('当前密码错误');
-                return;
-            }
-            if (newPass.length < 6) {
-                alert('新密码至少6位');
-                return;
-            }
-            if (newPass !== confirmPass) {
-                alert('两次密码不一致');
-                return;
+            // 查找一代推荐人
+            let level1User = null;
+            for (let username in db.users) {
+                if (db.users[username].inviteCode === invitedByCode) {
+                    level1User = db.users[username];
+                    break;
+                }
             }
             
-            // 更新密码
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const userIndex = users.findIndex(u => u.phone === currentUser.phone);
-            if (userIndex !== -1) {
-                users[userIndex].password = newPass;
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
-                alert('密码修改成功！');
-                closePasswordModal();
+            if (level1User) {
+                // 发放一代佣金
+                const level1Commission = price * COMMISSION_RATE.level1;
+                level1User.level1Commission += level1Commission;
+                level1User.level1Count += 1;
+                
+                // 记录佣金
+                db.commissions.push({
+                    id: 'COMM' + Date.now(),
+                    from: invitedByCode,
+                    to: level1User.username,
+                    level: 1,
+                    amount: level1Commission,
+                    planName: planName,
+                    planPrice: price,
+                    time: Date.now()
+                });
+                
+                // 查找二代推荐人
+                if (level1User.invitedBy) {
+                    let level2User = null;
+                    for (let username in db.users) {
+                        if (db.users[username].inviteCode === level1User.invitedBy) {
+                            level2User = db.users[username];
+                            break;
+                        }
+                    }
+                    
+                    if (level2User) {
+                        // 发放二代佣金
+                        const level2Commission = price * COMMISSION_RATE.level2;
+                        level2User.level2Commission += level2Commission;
+                        level2User.level2Count += 1;
+                        
+                        db.commissions.push({
+                            id: 'COMM' + (Date.now() + 1),
+                            from: invitedByCode,
+                            to: level2User.username,
+                            level: 2,
+                            amount: level2Commission,
+                            planName: planName,
+                            planPrice: price,
+                            time: Date.now()
+                        });
+                    }
+                }
+                
+                saveDistDb(db);
             }
         }
-
-        // 修改资料
-        function showEditInfo() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            const newWechat = prompt('请输入新的微信号：', user.wechat);
-            if (newWechat && newWechat !== user.wechat) {
-                const users = JSON.parse(localStorage.getItem('users') || '[]');
-                const userIndex = users.findIndex(u => u.phone === user.phone);
-                if (userIndex !== -1) {
-                    users[userIndex].wechat = newWechat;
-                    localStorage.setItem('users', JSON.stringify(users));
-                    localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
-                    alert('微信号修改成功！');
+        
+        // 初始化分销功能
+        function initDistribution() {
+            const memberData = localStorage.getItem('memberInfo');
+            const distSection = document.getElementById('distributionSection');
+            
+            if (memberData) {
+                const member = JSON.parse(memberData);
+                if (member.expireTime && Date.now() < member.expireTime) {
+                    // 是会员，显示分销功能
+                    distSection.style.display = 'block';
+                    
+                    // 获取或创建用户
+                    const username = 'user_' + (member.activateCode || Date.now());
+                    const userData = getUserInviteCode(username);
+                    
+                    // 显示邀请码
+                    document.getElementById('myInviteCode').textContent = userData.inviteCode;
+                    
+                    // 显示佣金统计
+                    const total = userData.level1Commission + userData.level2Commission;
+                    document.getElementById('totalCommission').textContent = '¥' + total.toFixed(2);
+                    document.getElementById('level1Count').textContent = userData.level1Count;
+                    document.getElementById('level2Count').textContent = userData.level2Count;
+                    
+                    // 渲染佣金记录
+                    renderCommissionList(username);
                 }
             }
         }
-
-        // 忘记密码
-        function showForgotPassword() {
-            alert('请联系客服重置密码\n微信号：AI工具场客服');
+        
+        // 渲染佣金记录
+        function renderCommissionList(username) {
+            const db = getDistDb();
+            const userCommissions = db.commissions.filter(c => c.to === username);
+            const listContainer = document.getElementById('commissionList');
+            
+            if (userCommissions.length === 0) {
+                listContainer.innerHTML = `
+                    <div style="text-align: center; color: #999; font-size: 13px; padding: 20px;">
+                        暂无佣金记录<br>
+                        <span style="font-size: 12px;">邀请好友开通会员即可获得佣金</span>
+                    </div>
+                `;
+                return;
+            }
+            
+            listContainer.innerHTML = userCommissions.slice(0, 10).map(c => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0;">
+                    <div>
+                        <div style="font-size: 13px; color: #333;">
+                            ${c.level === 1 ? '🎯 一代' : '🎯🎯 二代'} - ${c.planName}
+                        </div>
+                        <div style="font-size: 11px; color: #999;">
+                            ${new Date(c.time).toLocaleDateString()}
+                        </div>
+                    </div>
+                    <div style="color: #10b981; font-weight: bold; font-size: 14px;">
+                        +¥${c.amount.toFixed(2)}
+                    </div>
+                </div>
+            `).join('');
         }
+        
+        // 复制邀请链接
+        function copyInviteLink() {
+            const inviteCode = document.getElementById('myInviteCode').textContent;
+            const inviteUrl = location.origin + location.pathname.replace('user.html', '') + 'activate.html?invite=' + inviteCode;
+            
+            navigator.clipboard.writeText(inviteUrl).then(() => {
+                alert('邀请链接已复制到剪贴板！\n\n分享给好友，好友购买后你可获得佣金。\n\n' + inviteUrl);
+            }).catch(() => {
+                // fallback
+                prompt('请复制以下邀请链接:', inviteUrl);
+            });
+        }
+        
+        // 显示二维码弹窗（简化版，实际可用二维码生成库）
+        function showInviteQR() {
+            const inviteCode = document.getElementById('myInviteCode').textContent;
+            const inviteUrl = location.origin + location.pathname.replace('user.html', '') + 'activate.html?invite=' + inviteCode;
+            
+            alert('邀请链接：\n' + inviteUrl + '\n\n将此链接分享给好友，好友购买会员后你可获得佣金奖励！');
+        }
+        
+        // ===== 提现功能 =====
+        const WITHDRAW_DB_KEY = 'ai_gongju_chang_withdraw';
+        const MIN_WITHDRAW = 10; // 最低提现10元
+        
+        // 获取收款配置
+        function getPaymentConfig() {
+            const data = localStorage.getItem('admin_payment_config');
+            return data ? JSON.parse(data) : null;
+        }
+        
+        // 获取提现列表
+        function getWithdrawals() {
+            const data = localStorage.getItem(WITHDRAW_DB_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+        
+        // 保存提现列表
+        function saveWithdrawals(list) {
+            localStorage.setItem(WITHDRAW_DB_KEY, JSON.stringify(list));
+        }
+        
+        // 计算可提现金额
+        function calculateWithdrawable(username) {
+            const db = getDistDb();
+            const userData = db.users[username];
+            if (!userData) return 0;
+            
+            const total = userData.level1Commission + userData.level2Commission;
+            const withdrawn = userData.withdrawn || 0;
+            return Math.max(0, total - withdrawn);
+        }
+        
+        // 更新提现显示
+        function updateWithdrawDisplay(username) {
+            const withdrawable = calculateWithdrawable(username);
+            document.getElementById('withdrawableAmount').textContent = '¥' + withdrawable.toFixed(2);
+            
+            const withdrawBtn = document.getElementById('withdrawBtn');
+            if (withdrawable < MIN_WITHDRAW) {
+                withdrawBtn.disabled = true;
+                withdrawBtn.style.opacity = '0.6';
+                withdrawBtn.textContent = '💰 最低' + MIN_WITHDRAW + '元起提现';
+            } else {
+                withdrawBtn.disabled = false;
+                withdrawBtn.style.opacity = '1';
+                withdrawBtn.textContent = '💰 申请提现';
+            }
+        }
+        
+        // 显示提现弹窗
+        function showWithdrawModal() {
+            const memberData = localStorage.getItem('memberInfo');
+            const member = JSON.parse(memberData);
+            const username = 'user_' + (member.activateCode || Date.now());
+            
+            const withdrawable = calculateWithdrawable(username);
+            if (withdrawable < MIN_WITHDRAW) {
+                alert('可提现金额不足，最低需要' + MIN_WITHDRAW + '元才能申请提现！');
+                return;
+            }
+            
+            const config = getPaymentConfig();
+            if (!config) {
+                alert('管理员暂未设置收款方式，请稍后再试！');
+                return;
+            }
+            
+            // 构建收款方式HTML
+            let methodsHtml = '';
+            if (config.wechatPay.enabled) {
+                methodsHtml += `<label style="display: flex; align-items: center; padding: 12px; border: 2px solid #dcfce7; border-radius: 8px; margin-bottom: 10px; cursor: pointer;">
+                    <input type="radio" name="withdrawMethod" value="wechat" style="margin-right: 10px;">
+                    <span style="font-size: 20px; margin-right: 8px;">💚</span>
+                    <span>微信收款（${config.wechatPay.name || '未设置姓名'}）</span>
+                </label>`;
+            }
+            if (config.alipay.enabled) {
+                methodsHtml += `<label style="display: flex; align-items: center; padding: 12px; border: 2px solid #fef3c7; border-radius: 8px; margin-bottom: 10px; cursor: pointer;">
+                    <input type="radio" name="withdrawMethod" value="alipay" style="margin-right: 10px;">
+                    <span style="font-size: 20px; margin-right: 8px;">💙</span>
+                    <span>支付宝收款（${config.alipay.name || '未设置姓名'}）</span>
+                </label>`;
+            }
+            if (config.bank.enabled) {
+                methodsHtml += `<label style="display: flex; align-items: center; padding: 12px; border: 2px solid #e0e7ff; border-radius: 8px; margin-bottom: 10px; cursor: pointer;">
+                    <input type="radio" name="withdrawMethod" value="bank" style="margin-right: 10px;">
+                    <span style="font-size: 20px; margin-right: 8px;">🏦</span>
+                    <span>银行卡转账（${config.bank.name || ''}）</span>
+                </label>`;
+            }
+            
+            const modalHtml = `
+            <div id="withdrawModal" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+                <div style="background: white; border-radius: 16px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto;">
+                    <div style="padding: 20px; border-bottom: 1px solid #eee;">
+                        <h3 style="margin: 0; font-size: 18px; color: #333;">💸 申请提现</h3>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="background: #f0fdf4; border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 20px;">
+                            <div style="color: #666; font-size: 13px;">可提现金额</div>
+                            <div style="color: #10b981; font-size: 32px; font-weight: bold;">¥${withdrawable.toFixed(2)}</div>
+                        </div>
+                        
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-size: 14px; color: #333; margin-bottom: 8px; font-weight: 500;">选择收款方式</label>
+                            ${methodsHtml}
+                            <div id="paymentDetails" style="display: none; margin-top: 10px;">
+                                ${config.bank && config.bank.enabled ? `
+                                <div id="bankDetails" style="display: none; background: #f9fafb; padding: 12px; border-radius: 8px;">
+                                    <div class="form-group" style="margin-bottom: 10px;">
+                                        <label style="font-size: 12px; color: #666;">真实姓名</label>
+                                        <input type="text" id="bankRealName" placeholder="请输入银行卡开户姓名" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px;">
+                                    </div>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        
+                        <div id="qrcodeDisplay" style="display: none; text-align: center; margin-bottom: 16px;">
+                            <p style="font-size: 13px; color: #666; margin-bottom: 10px;">请扫码付款（金额：¥<span id="withdrawAmount">${withdrawable.toFixed(2)}</span>）</p>
+                            <img id="paymentQrcode" src="" style="width: 200px; height: 200px; border-radius: 8px; background: #f3f4f6;">
+                        </div>
+                        
+                        <div id="withdrawAlert" style="display: none; padding: 10px; border-radius: 8px; font-size: 13px; margin-bottom: 16px;"></div>
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="closeWithdrawModal()" style="flex: 1; padding: 12px; background: #f3f4f6; color: #666; border: none; border-radius: 8px; font-size: 14px; cursor: pointer;">
+                                取消
+                            </button>
+                            <button onclick="submitWithdrawal('${username}', ${withdrawable})" id="submitWithdrawBtn" style="flex: 1; padding: 12px; background: #f59e0b; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer;">
+                                确认提交
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // 添加收款方式切换事件
+            document.querySelectorAll('input[name="withdrawMethod"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const details = document.getElementById('paymentDetails');
+                    const qrDisplay = document.getElementById('qrcodeDisplay');
+                    
+                    if (this.value === 'bank') {
+                        details.style.display = 'block';
+                        document.getElementById('bankDetails').style.display = 'block';
+                        qrDisplay.style.display = 'none';
+                    } else {
+                        details.style.display = 'none';
+                        qrDisplay.style.display = 'block';
+                        // 更新二维码
+                        const qrcode = this.value === 'wechat' ? config.wechatPay.qrcode : config.alipay.qrcode;
+                        document.getElementById('paymentQrcode').src = qrcode || '';
+                    }
+                });
+            });
+        }
+        
+        // 关闭提现弹窗
+        function closeWithdrawModal() {
+            const modal = document.getElementById('withdrawModal');
+            if (modal) modal.remove();
+        }
+        
+        // 提交提现申请
+        function submitWithdrawal(username, amount) {
+            const selectedMethod = document.querySelector('input[name="withdrawMethod"]:checked');
+            if (!selectedMethod) {
+                showWithdrawAlert('请选择收款方式！', 'error');
+                return;
+            }
+            
+            const method = selectedMethod.value;
+            const config = getPaymentConfig();
+            
+            // 银行卡需要填写姓名
+            if (method === 'bank') {
+                const realName = document.getElementById('bankRealName').value.trim();
+                if (!realName) {
+                    showWithdrawAlert('请输入您的真实姓名！', 'error');
+                    return;
+                }
+            }
+            
+            const withdrawal = {
+                id: 'WD' + Date.now(),
+                username: username,
+                amount: amount,
+                method: method,
+                realName: method === 'bank' ? document.getElementById('bankRealName').value.trim() : (config[method === 'wechat' ? 'wechatPay' : 'alipay'].name || ''),
+                bankName: method === 'bank' ? config.bank.bankName : '',
+                cardNumber: method === 'bank' ? config.bank.cardNumber : '',
+                applyTime: Date.now(),
+                status: 'pending'
+            };
+            
+            const withdrawals = getWithdrawals();
+            withdrawals.push(withdrawal);
+            saveWithdrawals(withdrawals);
+            
+            // 更新用户的已提现金额
+            const db = getDistDb();
+            if (db.users[username]) {
+                db.users[username].withdrawn = (db.users[username].withdrawn || 0) + amount;
+                saveDistDb(db);
+            }
+            
+            showWithdrawAlert('✅ 提现申请已提交！\n请等待管理员审核处理。', 'success');
+            
+            setTimeout(() => {
+                closeWithdrawModal();
+                updateWithdrawDisplay(username);
+            }, 2000);
+        }
+        
+        // 显示提现提示
+        function showWithdrawAlert(message, type) {
+            const alert = document.getElementById('withdrawAlert');
+            alert.style.display = 'block';
+            alert.style.background = type === 'success' ? '#dcfce7' : '#fee2e2';
+            alert.style.color = type === 'success' ? '#166534' : '#991b1b';
+            alert.innerHTML = message.replace('\n', '<br>');
+        }
+        
+        // 初始化提现显示
+        function initWithdrawDisplay() {
+            const memberData = localStorage.getItem('memberInfo');
+            if (memberData) {
+                const member = JSON.parse(memberData);
+                if (member.expireTime && Date.now() < member.expireTime) {
+                    const username = 'user_' + (member.activateCode || Date.now());
+                    updateWithdrawDisplay(username);
+                }
+            }
+        }
+        
+        // 在initDistribution中添加初始化
+        const originalInitDistribution = initDistribution;
+        initDistribution = function() {
+            originalInitDistribution();
+            initWithdrawDisplay();
+        };
     </script>
 </body>
 </html>

@@ -482,6 +482,9 @@
         <div class="tab-nav">
             <button class="tab-btn active" onclick="switchTab('course')">📚 教程管理</button>
             <button class="tab-btn" onclick="switchTab('user')">👥 用户管理</button>
+            <button class="tab-btn" onclick="switchTab('codes')">🔑 激活码管理</button>
+            <button class="tab-btn" onclick="switchTab('distribution')">💰 分销管理</button>
+            <button class="tab-btn" onclick="switchTab('payment')">💳 收款与提现</button>
         </div>
 
         <!-- 教程管理Tab -->
@@ -949,6 +952,829 @@
             downloadJSON({ courses: courses });
             renderCourses(courses);
             showAlert('formAlert', '✅ 教程已删除！请下载新的JSON文件上传到网站', 'success');
+        }
+
+        // ===== 激活码管理 =====
+        const CODES_DB_KEY = 'ai_gongju_chang_codes';
+        
+        // 套餐配置
+        const PLANS = [
+            { id: 'month', name: '月卡会员', price: 29, days: 30 },
+            { id: 'quarter', name: '季卡会员', price: 79, days: 90 },
+            { id: 'year', name: '年卡会员', price: 199, days: 365 },
+            { id: 'forever', name: '永久会员', price: 399, days: 9999 }
+        ];
+
+        function getCodes() {
+            const data = localStorage.getItem(CODES_DB_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveCodes(codes) {
+            localStorage.setItem(CODES_DB_KEY, JSON.stringify(codes));
+        }
+
+        function generateCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 16; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        function renderCodesTab() {
+            const codes = getCodes();
+            const usedCodes = codes.filter(c => c.used);
+            const unusedCodes = codes.filter(c => !c.used);
+            
+            let html = `
+            <!-- 激活码统计 -->
+            <div class="user-stats">
+                <div class="stat-card">
+                    <div class="value">${codes.length}</div>
+                    <div class="label">总生成数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">${unusedCodes.length}</div>
+                    <div class="label">未使用</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">${usedCodes.length}</div>
+                    <div class="label">已使用</div>
+                </div>
+                <div class="stat-card">
+                    <div class="value">¥${usedCodes.reduce((sum, c) => sum + (c.price || 0), 0)}</div>
+                    <div class="label">收入合计</div>
+                </div>
+            </div>
+
+            <!-- 生成激活码 -->
+            <div class="add-form" style="margin-top: 20px;">
+                <h2>🎫 生成激活码</h2>
+                <div id="codeAlert" class="alert hidden"></div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>选择套餐 *</label>
+                        <select id="codePlan" style="width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                            ${PLANS.map(p => `<option value="${p.id}">${p.name} - ¥${p.price}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>生成数量 *</label>
+                        <input type="number" id="codeCount" value="10" min="1" max="100" style="width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="generateCodes()" style="margin-top: 16px;">
+                    🎫 生成激活码
+                </button>
+                
+                <!-- 生成的激活码列表 -->
+                <div id="generatedCodes" style="margin-top: 20px; display: none;">
+                    <h3 style="font-size: 16px; margin-bottom: 10px;">✅ 新生成的激活码（可复制或导出）</h3>
+                    <div id="newCodesList" style="background: #f0fdf4; padding: 15px; border-radius: 8px; max-height: 200px; overflow-y: auto;"></div>
+                    <button class="btn" onclick="exportCodes()" style="margin-top: 10px; background: #22c55e; color: white;">
+                        📥 导出为TXT
+                    </button>
+                </div>
+            </div>
+
+            <!-- 激活码列表 -->
+            <div class="courses-list" style="margin-top: 20px;">
+                <h2>📋 激活码列表</h2>
+                <div class="search-box">
+                    <input type="text" id="codeSearch" placeholder="搜索激活码..." oninput="renderCodesList(this.value)">
+                    <select id="codeFilter" onchange="renderCodesList(document.getElementById('codeSearch').value)" style="padding: 10px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                        <option value="all">全部</option>
+                        <option value="unused">未使用</option>
+                        <option value="used">已使用</option>
+                    </select>
+                </div>
+                <div id="codesList"></div>
+            </div>
+            `;
+            
+            // Create or update codes tab
+            let codesTab = document.getElementById('tab-codes');
+            if (!codesTab) {
+                codesTab = document.createElement('div');
+                codesTab.id = 'tab-codes';
+                codesTab.className = 'tab-content';
+                document.getElementById('adminPage').appendChild(codesTab);
+            }
+            codesTab.innerHTML = html;
+            
+            renderCodesList();
+        }
+
+        function renderCodesList(searchTerm = '') {
+            const codes = getCodes();
+            const filter = document.getElementById('codeFilter')?.value || 'all';
+            
+            let filtered = codes;
+            if (filter === 'unused') filtered = filtered.filter(c => !c.used);
+            if (filter === 'used') filtered = filtered.filter(c => c.used);
+            if (searchTerm) {
+                filtered = filtered.filter(c => 
+                    c.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    (c.user && c.user.includes(searchTerm)));
+            }
+
+            const container = document.getElementById('codesList');
+            if (!container) return;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔑</div>
+                        <p>暂无激活码，请先生成</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 按时间倒序
+            filtered.sort((a, b) => b.time - a.time);
+
+            container.innerHTML = `
+                <div class="user-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>激活码</th>
+                                <th>套餐</th>
+                                <th>价格</th>
+                                <th>状态</th>
+                                <th>使用人</th>
+                                <th>生成时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filtered.map(code => `
+                                <tr>
+                                    <td><code style="background: #f3f4f6; padding: 4px 8px; border-radius: 4px; font-family: monospace;">${code.code}</code></td>
+                                    <td>${code.plan || '-'}</td>
+                                    <td>¥${code.price || 0}</td>
+                                    <td>
+                                        <span class="badge" style="background: ${code.used ? '#dcfce7' : '#fee2e2'}; color: ${code.used ? '#166534' : '#991b1b'};">
+                                            ${code.used ? '已使用' : '未使用'}
+                                        </span>
+                                    </td>
+                                    <td>${code.user || '-'}</td>
+                                    <td>${new Date(code.time).toLocaleString('zh-CN')}</td>
+                                    <td>
+                                        <button class="btn btn-danger" onclick="deleteCode('${code.code}')" style="padding: 4px 8px; font-size: 12px;">删除</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        function generateCodes() {
+            const planId = document.getElementById('codePlan').value;
+            const count = parseInt(document.getElementById('codeCount').value) || 10;
+            const plan = PLANS.find(p => p.id === planId);
+            
+            if (count < 1 || count > 100) {
+                showAlert('codeAlert', '数量应在1-100之间', 'error');
+                return;
+            }
+            
+            const codes = getCodes();
+            const newCodes = [];
+            
+            for (let i = 0; i < count; i++) {
+                const code = {
+                    code: generateCode(),
+                    planId: planId,
+                    plan: plan.name,
+                    price: plan.price,
+                    days: plan.days,
+                    time: Date.now(),
+                    used: false,
+                    user: null
+                };
+                codes.push(code);
+                newCodes.push(code);
+            }
+            
+            saveCodes(codes);
+            
+            // 显示新生成的激活码
+            const container = document.getElementById('generatedCodes');
+            const listContainer = document.getElementById('newCodesList');
+            container.style.display = 'block';
+            listContainer.innerHTML = newCodes.map(c => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #ccc;">
+                    <code style="font-size: 14px;">${c.code}</code>
+                    <span style="font-size: 12px; color: #666;">${c.plan}</span>
+                </div>
+            `).join('');
+            
+            showAlert('codeAlert', `✅ 成功生成 ${count} 个激活码！`, 'success');
+            renderCodesList();
+        }
+
+        function deleteCode(code) {
+            if (!confirm('确定要删除这个激活码吗？')) return;
+            
+            const codes = getCodes().filter(c => c.code !== code);
+            saveCodes(codes);
+            renderCodesList();
+        }
+
+        function exportCodes() {
+            const newCodesDiv = document.getElementById('newCodesList');
+            if (!newCodesDiv) return;
+            
+            const codes = Array.from(newCodesDiv.querySelectorAll('code')).map(c => c.textContent);
+            const text = codes.join('\n');
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `激活码_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // 更新tab切换函数
+        const originalSwitchTab = switchTab;
+        switchTab = function(tab) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            if (tab === 'user') renderUserList();
+            if (tab === 'codes') renderCodesTab();
+            if (tab === 'distribution') renderDistributionTab();
+            if (tab === 'payment') renderPaymentTab();
+        };
+        
+        // ===== 二级分销系统管理 =====
+        const DIST_DB_KEY = 'ai_gongju_chang_dist';
+        
+        // 获取分销数据库
+        function getDistDb() {
+            const data = localStorage.getItem(DIST_DB_KEY);
+            return data ? JSON.parse(data) : { users: {}, commissions: [] };
+        }
+        
+        // 保存分销数据库
+        function saveDistDb(db) {
+            localStorage.setItem(DIST_DB_KEY, JSON.stringify(db));
+        }
+        
+        // 渲染分销管理Tab
+        function renderDistributionTab() {
+            const db = getDistDb();
+            const users = Object.values(db.users);
+            
+            // 计算统计数据
+            const totalCommission = users.reduce((sum, u) => sum + u.level1Commission + u.level2Commission, 0);
+            const totalLevel1 = users.reduce((sum, u) => sum + u.level1Count, 0);
+            const totalLevel2 = users.reduce((sum, u) => sum + u.level2Count, 0);
+            
+            // Create or update distribution tab
+            let distTab = document.getElementById('tab-distribution');
+            if (!distTab) {
+                distTab = document.createElement('div');
+                distTab.id = 'tab-distribution';
+                distTab.className = 'tab-content';
+                document.getElementById('adminPage').appendChild(distTab);
+            }
+            
+            distTab.innerHTML = `
+                <!-- 分销统计 -->
+                <div class="user-stats">
+                    <div class="stat-card">
+                        <div class="value">${users.length}</div>
+                        <div class="label">分销用户</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">¥${totalCommission.toFixed(2)}</div>
+                        <div class="label">累计佣金</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">${totalLevel1}</div>
+                        <div class="label">一代用户</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="value">${totalLevel2}</div>
+                        <div class="label">二代用户</div>
+                    </div>
+                </div>
+                
+                <!-- 佣金比例说明 -->
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px; margin: 20px 0;">
+                    <h3 style="font-size: 14px; color: #166534; margin-bottom: 12px;">💰 佣金比例设置</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div style="background: white; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 13px; color: #166534; font-weight: bold;">🎯 第一代（直接推荐）</div>
+                            <div style="font-size: 24px; color: #10b981; font-weight: bold; margin: 8px 0;">10%</div>
+                            <div style="font-size: 11px; color: #666;">好友付费金额的10%</div>
+                        </div>
+                        <div style="background: white; padding: 12px; border-radius: 8px;">
+                            <div style="font-size: 13px; color: #166534; font-weight: bold;">🎯🎯 第二代（间接推荐）</div>
+                            <div style="font-size: 24px; color: #f59e0b; font-weight: bold; margin: 8px 0;">8%</div>
+                            <div style="font-size: 11px; color: #666;">好友的好友付费的8%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 佣金记录 -->
+                <div class="add-form" style="margin-top: 20px;">
+                    <h2>📜 佣金记录</h2>
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" id="distSearch" placeholder="搜索用户名..." 
+                               style="width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;"
+                               oninput="renderDistributionList()">
+                    </div>
+                    <div id="distributionList" style="background: white; border-radius: 12px; overflow: hidden;">
+                    </div>
+                </div>
+            `;
+            
+            renderDistributionList();
+        }
+        
+        // 渲染分销列表
+        function renderDistributionList(searchTerm = '') {
+            const db = getDistDb();
+            const users = Object.values(db.users);
+            const container = document.getElementById('distributionList');
+            if (!container) return;
+            
+            // 过滤
+            let filtered = users;
+            if (searchTerm) {
+                filtered = filtered.filter(u => 
+                    u.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    u.inviteCode.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+            }
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">👥</div>
+                        <p>暂无分销用户数据</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 按佣金金额排序
+            filtered.sort((a, b) => (b.level1Commission + b.level2Commission) - (a.level1Commission + a.level2Commission));
+            
+            container.innerHTML = `
+                <div class="user-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>用户名</th>
+                                <th>邀请码</th>
+                                <th>一代</th>
+                                <th>二代</th>
+                                <th>一代佣金</th>
+                                <th>二代佣金</th>
+                                <th>注册时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filtered.map(u => `
+                                <tr>
+                                    <td>${u.username}</td>
+                                    <td style="font-family: monospace; letter-spacing: 1px;">${u.inviteCode}</td>
+                                    <td><span style="background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 4px;">${u.level1Count}人</span></td>
+                                    <td><span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px;">${u.level2Count}人</span></td>
+                                    <td style="color: #10b981; font-weight: bold;">¥${u.level1Commission.toFixed(2)}</td>
+                                    <td style="color: #f59e0b; font-weight: bold;">¥${u.level2Commission.toFixed(2)}</td>
+                                    <td>${new Date(u.registerTime).toLocaleDateString()}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+        
+        // 导出分销数据
+        function exportDistributionData() {
+            const db = getDistDb();
+            const users = Object.values(db.users);
+            
+            let csv = '用户名,邀请码,一代用户数,二代用户数,一代佣金,二代佣金,注册时间\n';
+            users.forEach(u => {
+                csv += `${u.username},${u.inviteCode},${u.level1Count},${u.level2Count},${u.level1Commission.toFixed(2)},${u.level2Commission.toFixed(2)},${new Date(u.registerTime).toLocaleDateString()}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `分销数据_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // 清空分销数据（慎用）
+        function clearDistributionData() {
+            if (!confirm('⚠️ 确定要清空所有分销数据吗？此操作不可恢复！')) return;
+            if (!confirm('再次确认：清空后所有佣金记录将永久删除！')) return;
+            
+            localStorage.removeItem(DIST_DB_KEY);
+            alert('分销数据已清空');
+            renderDistributionTab();
+        }
+        
+        // ===== 收款系统与提现管理 =====
+        const PAYMENT_DB_KEY = 'ai_gongju_chang_payment';
+        
+        // 获取收款配置
+        function getPaymentConfig() {
+            const data = localStorage.getItem('admin_payment_config');
+            return data ? JSON.parse(data) : {
+                wechatPay: { enabled: false, name: '', qrcode: '' },
+                alipay: { enabled: false, name: '', qrcode: '' },
+                bank: { enabled: false, name: '', bankName: '', cardNumber: '' }
+            };
+        }
+        
+        // 保存收款配置
+        function savePaymentConfig(config) {
+            localStorage.setItem('admin_payment_config', JSON.stringify(config));
+        }
+        
+        // 获取提现申请列表
+        function getWithdrawals() {
+            const data = localStorage.getItem(PAYMENT_DB_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+        
+        // 保存提现申请列表
+        function saveWithdrawals(list) {
+            localStorage.setItem(PAYMENT_DB_KEY, JSON.stringify(list));
+        }
+        
+        // 渲染收款与提现Tab
+        function renderPaymentTab() {
+            let paymentTab = document.getElementById('tab-payment');
+            if (!paymentTab) {
+                paymentTab = document.createElement('div');
+                paymentTab.id = 'tab-payment';
+                paymentTab.className = 'tab-content';
+                document.getElementById('adminPage').appendChild(paymentTab);
+            }
+            
+            const config = getPaymentConfig();
+            const withdrawals = getWithdrawals();
+            const pendingCount = withdrawals.filter(w => w.status === 'pending').length;
+            const approvedCount = withdrawals.filter(w => w.status === 'approved').length;
+            const rejectedCount = withdrawals.filter(w => w.status === 'rejected').length;
+            const totalPaid = withdrawals.filter(w => w.status === 'approved').reduce((sum, w) => sum + w.amount, 0);
+            
+            paymentTab.innerHTML = `
+                <!-- 收款设置 -->
+                <div class="add-form" style="margin-bottom: 20px;">
+                    <h2>🏧 收款账户设置</h2>
+                    <p style="color: #666; font-size: 13px; margin-bottom: 16px;">设置您的收款方式，用户申请提现时会看到以下信息</p>
+                    <div id="paymentAlert" class="alert hidden"></div>
+                    
+                    <!-- 微信收款 -->
+                    <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjMTcxYjExIj48cGF0aCBkPSJNMTIgMjFDNi4wNzQgMjEgMSAxNyA5LjUgNS41QzEwLjUgMiAxNSA1IDIwIDVDMjIgNy41IDIxIDE0LjUgMTcgMTcuNUMxNSAxOS41IDE0LjUgMjEgMTIgMjF6Ii8+PC9zdmc+" alt="微信" style="width: 24px; height: 24px;">
+                            <span style="font-weight: 600; color: #0369a1;">💚 微信收款</span>
+                            <label style="display: flex; align-items: center; gap: 6px; margin-left: auto; cursor: pointer;">
+                                <input type="checkbox" id="wechatEnabled" ${config.wechatPay.enabled ? 'checked' : ''} onchange="togglePaymentMethod('wechat')">
+                                <span style="font-size: 13px;">启用</span>
+                            </label>
+                        </div>
+                        <div id="wechatConfig" style="${config.wechatPay.enabled ? '' : 'display: none;'}">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>收款微信昵称/姓名</label>
+                                    <input type="text" id="wechatName" placeholder="请输入微信昵称或真实姓名" value="${config.wechatPay.name || ''}">
+                                </div>
+                                <div class="form-group">
+                                    <label>收款二维码链接</label>
+                                    <input type="url" id="wechatQrcode" placeholder="https://example.com/wechat_qr.png" value="${config.wechatPay.qrcode || ''}">
+                                    <p class="form-tips">上传微信收款码到图床，粘贴图片链接</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 支付宝收款 -->
+                    <div style="background: #fef3c7; border: 1px solid #fde68a; border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjNDZhM2Q2Ij48cGF0aCBkPSJNMSAyMWgtMlYySDEgVjIxeiBNMyAyMWgtMlYySDMgVjIxeiBNNSAyMWgtMlYySDUgVjIxeiBNNyAyMWgtMlYySDEyVjIxaDJWMjF6Ii8+PC9zdmc+" alt="支付宝" style="width: 24px; height: 24px;">
+                            <span style="font-weight: 600; color: #92400e;">💙 支付宝收款</span>
+                            <label style="display: flex; align-items: center; gap: 6px; margin-left: auto; cursor: pointer;">
+                                <input type="checkbox" id="alipayEnabled" ${config.alipay.enabled ? 'checked' : ''} onchange="togglePaymentMethod('alipay')">
+                                <span style="font-size: 13px;">启用</span>
+                            </label>
+                        </div>
+                        <div id="alipayConfig" style="${config.alipay.enabled ? '' : 'display: none;'}">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>收款支付宝姓名</label>
+                                    <input type="text" id="alipayName" placeholder="请输入支付宝实名姓名" value="${config.alipay.name || ''}">
+                                </div>
+                                <div class="form-group">
+                                    <label>收款二维码链接</label>
+                                    <input type="url" id="alipayQrcode" placeholder="https://example.com/alipay_qr.png" value="${config.alipay.qrcode || ''}">
+                                    <p class="form-tips">上传支付宝收款码到图床，粘贴图片链接</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 银行卡收款 -->
+                    <div style="background: #f3f4f6; border: 1px solid #d1d5db; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                            <span style="font-size: 24px;">🏦</span>
+                            <span style="font-weight: 600; color: #374151;">💳 银行卡转账</span>
+                            <label style="display: flex; align-items: center; gap: 6px; margin-left: auto; cursor: pointer;">
+                                <input type="checkbox" id="bankEnabled" ${config.bank.enabled ? 'checked' : ''} onchange="togglePaymentMethod('bank')">
+                                <span style="font-size: 13px;">启用</span>
+                            </label>
+                        </div>
+                        <div id="bankConfig" style="${config.bank.enabled ? '' : 'display: none;'}">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>开户姓名</label>
+                                    <input type="text" id="bankName" placeholder="请输入开户姓名" value="${config.bank.name || ''}">
+                                </div>
+                                <div class="form-group">
+                                    <label>开户银行</label>
+                                    <input type="text" id="bankBankName" placeholder="如：中国工商银行北京分行" value="${config.bank.bankName || ''}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>银行卡号</label>
+                                <input type="text" id="bankCardNumber" placeholder="请输入银行卡号" value="${config.bank.cardNumber || ''}">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="savePaymentSettings()" style="width: auto; padding: 12px 32px;">
+                        💾 保存收款设置
+                    </button>
+                </div>
+                
+                <!-- 提现申请管理 -->
+                <div class="add-form">
+                    <h2>📋 提现申请管理</h2>
+                    
+                    <!-- 提现统计 -->
+                    <div class="user-stats" style="margin-bottom: 20px;">
+                        <div class="stat-card" style="border-left: 4px solid #f59e0b;">
+                            <div class="value" style="color: #f59e0b;">${pendingCount}</div>
+                            <div class="label">待处理</div>
+                        </div>
+                        <div class="stat-card" style="border-left: 4px solid #22c55e;">
+                            <div class="value" style="color: #22c55e;">${approvedCount}</div>
+                            <div class="label">已打款</div>
+                        </div>
+                        <div class="stat-card" style="border-left: 4px solid #ef4444;">
+                            <div class="value" style="color: #ef4444;">${rejectedCount}</div>
+                            <div class="label">已拒绝</div>
+                        </div>
+                        <div class="stat-card" style="border-left: 4px solid #6366f1;">
+                            <div class="value" style="color: #6366f1;">¥${totalPaid.toFixed(2)}</div>
+                            <div class="label">已打款总额</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 筛选 -->
+                    <div class="search-box" style="margin-bottom: 16px;">
+                        <select id="withdrawFilter" onchange="renderWithdrawalsList()" style="padding: 10px 16px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px;">
+                            <option value="all">全部申请</option>
+                            <option value="pending">待处理</option>
+                            <option value="approved">已打款</option>
+                            <option value="rejected">已拒绝</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 提现列表 -->
+                    <div id="withdrawalsList"></div>
+                </div>
+            `;
+            
+            renderWithdrawalsList();
+        }
+        
+        // 切换收款方式显示
+        function togglePaymentMethod(type) {
+            const enabled = document.getElementById(type + 'Enabled').checked;
+            const configDiv = document.getElementById(type + 'Config');
+            if (configDiv) {
+                configDiv.style.display = enabled ? '' : 'none';
+            }
+        }
+        
+        // 保存收款设置
+        function savePaymentSettings() {
+            const config = {
+                wechatPay: {
+                    enabled: document.getElementById('wechatEnabled').checked,
+                    name: document.getElementById('wechatName').value.trim(),
+                    qrcode: document.getElementById('wechatQrcode').value.trim()
+                },
+                alipay: {
+                    enabled: document.getElementById('alipayEnabled').checked,
+                    name: document.getElementById('alipayName').value.trim(),
+                    qrcode: document.getElementById('alipayQrcode').value.trim()
+                },
+                bank: {
+                    enabled: document.getElementById('bankEnabled').checked,
+                    name: document.getElementById('bankName').value.trim(),
+                    bankName: document.getElementById('bankBankName').value.trim(),
+                    cardNumber: document.getElementById('bankCardNumber').value.trim()
+                }
+            };
+            
+            savePaymentConfig(config);
+            showAlert('paymentAlert', '✅ 收款设置已保存！', 'success');
+        }
+        
+        // 渲染提现申请列表
+        function renderWithdrawalsList() {
+            const withdrawals = getWithdrawals();
+            const filter = document.getElementById('withdrawFilter')?.value || 'all';
+            
+            let filtered = withdrawals;
+            if (filter !== 'all') {
+                filtered = filtered.filter(w => w.status === filter);
+            }
+            
+            // 按时间倒序
+            filtered.sort((a, b) => b.applyTime - a.applyTime);
+            
+            const container = document.getElementById('withdrawalsList');
+            if (!container) return;
+            
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">💰</div>
+                        <p>暂无提现申请</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="user-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>申请人</th>
+                                <th>申请金额</th>
+                                <th>收款方式</th>
+                                <th>收款信息</th>
+                                <th>申请时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filtered.map(w => `
+                                <tr>
+                                    <td><strong>${w.username}</strong></td>
+                                    <td style="color: #10b981; font-weight: bold; font-size: 16px;">¥${w.amount.toFixed(2)}</td>
+                                    <td>
+                                        <span style="display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 500; background: ${getMethodBgColor(w.method)}; color: ${getMethodColor(w.method)};">
+                                            ${getMethodIcon(w.method)} ${getMethodName(w.method)}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div style="font-size: 12px; color: #666;">
+                                            ${w.method === 'bank' ? `<div>${w.bankName || ''}</div><div style="font-family: monospace;">${w.cardNumber || ''}</div>` : `<div>${w.realName || ''}</div>`}
+                                        </div>
+                                    </td>
+                                    <td style="font-size: 12px; color: #666;">${new Date(w.applyTime).toLocaleString('zh-CN')}</td>
+                                    <td>
+                                        <span style="display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; background: ${getStatusBgColor(w.status)}; color: ${getStatusColor(w.status)};">
+                                            ${getStatusIcon(w.status)} ${getStatusName(w.status)}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        ${w.status === 'pending' ? `
+                                            <button onclick="approveWithdrawal(${w.id})" style="background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; margin-right: 4px;">✅ 通过</button>
+                                            <button onclick="rejectWithdrawal(${w.id})" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">❌ 拒绝</button>
+                                        ` : `
+                                            <span style="color: #999; font-size: 12px;">-</span>
+                                        `}
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+        
+        function getMethodBgColor(method) {
+            const colors = { wechat: '#dcfce7', alipay: '#fef3c7', bank: '#e0e7ff' };
+            return colors[method] || '#f3f4f6';
+        }
+        
+        function getMethodColor(method) {
+            const colors = { wechat: '#166534', alipay: '#92400e', bank: '#4338ca' };
+            return colors[method] || '#374151';
+        }
+        
+        function getMethodIcon(method) {
+            const icons = { wechat: '💚', alipay: '💙', bank: '🏦' };
+            return icons[method] || '💳';
+        }
+        
+        function getMethodName(method) {
+            const names = { wechat: '微信', alipay: '支付宝', bank: '银行卡' };
+            return names[method] || method;
+        }
+        
+        function getStatusBgColor(status) {
+            const colors = { pending: '#fef3c7', approved: '#dcfce7', rejected: '#fee2e2' };
+            return colors[status] || '#f3f4f6';
+        }
+        
+        function getStatusColor(status) {
+            const colors = { pending: '#92400e', approved: '#166534', rejected: '#991b1b' };
+            return colors[status] || '#374151';
+        }
+        
+        function getStatusIcon(status) {
+            const icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            return icons[status] || '📋';
+        }
+        
+        function getStatusName(status) {
+            const names = { pending: '待处理', approved: '已打款', rejected: '已拒绝' };
+            return names[status] || status;
+        }
+        
+        // 批准提现申请
+        function approveWithdrawal(id) {
+            if (!confirm('确认要批准此提现申请吗？\n\n请先确认已向用户转账，再点击确认。')) return;
+            
+            const withdrawals = getWithdrawals();
+            const index = withdrawals.findIndex(w => w.id === id);
+            if (index !== -1) {
+                withdrawals[index].status = 'approved';
+                withdrawals[index].processTime = Date.now();
+                saveWithdrawals(withdrawals);
+                alert('✅ 已标记为已打款！');
+                renderWithdrawalsList();
+            }
+        }
+        
+        // 拒绝提现申请
+        function rejectWithdrawal(id) {
+            const reason = prompt('请输入拒绝原因（选填）：');
+            
+            const withdrawals = getWithdrawals();
+            const index = withdrawals.findIndex(w => w.id === id);
+            if (index !== -1) {
+                withdrawals[index].status = 'rejected';
+                withdrawals[index].processTime = Date.now();
+                withdrawals[index].rejectReason = reason || '未说明原因';
+                
+                // 退还佣金给用户
+                const distDb = getDistDb();
+                const username = withdrawals[index].username;
+                const amount = withdrawals[index].amount;
+                if (distDb.users[username]) {
+                    // 从可提现金额中扣除已拒绝的金额
+                    distDb.users[username].withdrawn = Math.max(0, (distDb.users[username].withdrawn || 0) - amount);
+                }
+                saveDistDb(distDb);
+                
+                saveWithdrawals(withdrawals);
+                alert('❌ 已拒绝提现申请！');
+                renderWithdrawalsList();
+            }
+        }
+        
+        // 删除提现记录
+        function deleteWithdrawal(id) {
+            if (!confirm('确定要删除这条提现记录吗？')) return;
+            
+            const withdrawals = getWithdrawals().filter(w => w.id !== id);
+            saveWithdrawals(withdrawals);
+            renderWithdrawalsList();
         }
         </div><!-- End tab-course -->
     </script>

@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>激活码中心 - AI工具场</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .header h1 { margin: 0 0 10px 0; font-size: 24px; }
+        .header p { margin: 0; opacity: 0.9; font-size: 14px; }
+        
+        .section {
+            padding: 20px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        /* 激活码兑换 */
+        .activate-box {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .activate-box h3 {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .activate-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .activate-input input {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+            letter-spacing: 3px;
+        }
+        .activate-input input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        .activate-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .activate-hint {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        /* 会员套餐 */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .plan-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px 15px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        .plan-card.popular {
+            border-color: #667eea;
+        }
+        .plan-card.popular::before {
+            content: '推荐';
+            position: absolute;
+            top: 10px;
+            right: -25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 10px;
+            padding: 3px 30px;
+            transform: rotate(45deg);
+        }
+        .plan-name {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .plan-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        .plan-price span {
+            font-size: 14px;
+            color: #999;
+        }
+        .plan-features {
+            font-size: 11px;
+            color: #999;
+            margin-top: 8px;
+        }
+        .plan-card.selected {
+            background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+            border-color: #667eea;
+        }
+        
+        /* 支付按钮 */
+        .pay-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .pay-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        /* 支付弹窗 */
+        .pay-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .pay-modal.show {
+            display: flex;
+        }
+        .pay-box {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+        }
+        .pay-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .pay-price {
+            font-size: 32px;
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+        .qr-box {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .qr-box img {
+            width: 200px;
+            height: 200px;
+        }
+        .qr-hint {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .qr-wechat {
+            font-size: 14px;
+            color: #888;
+        }
+        .pay-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+        }
+        
+        /* 成功提示 */
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+        .success-modal.show {
+            display: flex;
+        }
+        .success-box {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 320px;
+        }
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        .success-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 10px;
+        }
+        .success-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .success-btn {
+            padding: 12px 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        /* 提示信息 */
+        .alert {
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .alert.error {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .alert.success {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .nav-item.active {
+            color: #667eea;
+        }
+        .nav-icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .content-area {
+            padding-bottom: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔑 激活码中心</h1>
+        <p>开通会员，解锁全部资料</p>
+        <!-- 邀请人提示 -->
+        <div id="inviteHint" style="display:none; background: rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 16px; margin-top: 10px; font-size: 13px;">
+            🎁 您的好友 <span id="inviterName" style="font-weight:bold;"></span> 邀请您开通会员
+        </div>
+    </div>
+    
+    <div class="content-area">
+        <div class="section">
+            <div class="section-title">📥 激活码兑换</div>
+            <div class="activate-box">
+                <h3>输入激活码立即开通</h3>
+                <div class="alert" id="activateAlert"></div>
+                <div class="activate-input">
+                    <input type="text" id="activateCode" placeholder="请输入激活码" maxlength="20">
+                </div>
+                <button class="activate-btn" onclick="activateCode()">立即激活</button>
+                <div class="activate-hint">激活码格式示例：ABC123XYZ456</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">💳 开通会员</div>
+            <div class="plans-grid" id="plansGrid">
+                <!-- 动态渲染 -->
+            </div>
+            <button class="pay-btn" id="payBtn" onclick="showPayModal()" disabled>
+                请选择套餐
+            </button>
+        </div>
+    </div>
+    
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            首页
+        </a>
+        <a href="vip.html" class="nav-item">
+            <span class="nav-icon">👑</span>
+            会员区
+        </a>
+        <a href="activate.html" class="nav-item active">
+            <span class="nav-icon">🔑</span>
+            激活码
+        </a>
+        <a href="user.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            我的
+        </a>
+    </div>
+    
+    <!-- 支付弹窗 -->
+    <div class="pay-modal" id="payModal">
+        <div class="pay-box">
+            <div class="pay-close" onclick="closePayModal()">&times;</div>
+            <div class="pay-title" id="payTitle">购买月卡会员</div>
+            <div class="pay-price" id="payPrice">¥29</div>
+            <div class="qr-box">
+                <div class="qr-hint">请使用微信扫码支付</div>
+                <div id="qrcode"></div>
+                <!-- 二维码图片 -->
+                <img id="qrImage" style="display:none;">
+            </div>
+            <div class="qr-hint">支付成功后自动发货激活码</div>
+            <div class="qr-wechat">客服微信：LZJD8768</div>
+        </div>
+    </div>
+    
+    <!-- 成功弹窗 -->
+    <div class="success-modal" id="successModal">
+        <div class="success-box">
+            <div class="success-icon">🎉</div>
+            <div class="success-title">开通成功！</div>
+            <div class="success-desc" id="successDesc">您的会员已开通，有效期至2026年5月28日</div>
+            <button class="success-btn" onclick="goToVip()">进入会员区</button>
+        </div>
+    </div>
+
+    <script>
+        // 会员套餐配置
+        const plans = [
+            { id: 'month', name: '月卡会员', price: 29, days: 30, desc: '一个月任意看' },
+            { id: 'quarter', name: '季卡会员', price: 79, days: 90, desc: '三个月任意看', popular: true },
+            { id: 'year', name: '年卡会员', price: 199, days: 365, desc: '一年任意看' },
+            { id: 'forever', name: '永久会员', price: 399, days: 9999, desc: '永久会员' },
+        ];
+        
+        let selectedPlan = null;
+        let currentCode = '';
+        let pollInterval = null;
+        let currentInviteCode = null; // 当前邀请码
+        
+        // ===== 二级分销系统 =====
+        const DIST_DB_KEY = 'ai_gongju_chang_dist';
+        const COMMISSION_RATE = { level1: 0.10, level2: 0.08 }; // 第一代10%，第二代8%
+        const PLAN_PRICES = { 'month': 29, 'quarter': 79, 'year': 199, 'forever': 399 };
+        
+        // 获取分销数据库
+        function getDistDb() {
+            const data = localStorage.getItem(DIST_DB_KEY);
+            return data ? JSON.parse(data) : { users: {}, commissions: [] };
+        }
+        
+        // 保存分销数据库
+        function saveDistDb(db) {
+            localStorage.setItem(DIST_DB_KEY, JSON.stringify(db));
+        }
+        
+        // 生成邀请码
+        function generateInviteCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+        
+        // 获取或创建用户
+        function getOrCreateUser(username) {
+            const db = getDistDb();
+            if (!db.users[username]) {
+                db.users[username] = {
+                    username: username,
+                    inviteCode: generateInviteCode(),
+                    invitedBy: null,
+                    level1Commission: 0,
+                    level2Commission: 0,
+                    level1Count: 0,
+                    level2Count: 0,
+                    registerTime: Date.now()
+                };
+                saveDistDb(db);
+            }
+            return db.users[username];
+        }
+        
+        // 处理分销佣金
+        function processDistribution(invitedByCode, planId, planName) {
+            if (!invitedByCode) return;
+            
+            const db = getDistDb();
+            const price = PLAN_PRICES[planId] || 29;
+            
+            // 查找一代推荐人
+            let level1User = null;
+            for (let username in db.users) {
+                if (db.users[username].inviteCode === invitedByCode) {
+                    level1User = db.users[username];
+                    break;
+                }
+            }
+            
+            if (level1User) {
+                // 发放一代佣金
+                const level1Commission = price * COMMISSION_RATE.level1;
+                level1User.level1Commission += level1Commission;
+                level1User.level1Count += 1;
+                
+                db.commissions.push({
+                    id: 'COMM' + Date.now(),
+                    from: invitedByCode,
+                    to: level1User.username,
+                    level: 1,
+                    amount: level1Commission,
+                    planName: planName,
+                    planPrice: price,
+                    time: Date.now()
+                });
+                
+                // 查找二代推荐人
+                if (level1User.invitedBy) {
+                    let level2User = null;
+                    for (let username in db.users) {
+                        if (db.users[username].inviteCode === level1User.invitedBy) {
+                            level2User = db.users[username];
+                            break;
+                        }
+                    }
+                    
+                    if (level2User) {
+                        const level2Commission = price * COMMISSION_RATE.level2;
+                        level2User.level2Commission += level2Commission;
+                        level2User.level2Count += 1;
+                        
+                        db.commissions.push({
+                            id: 'COMM' + (Date.now() + 1),
+                            from: invitedByCode,
+                            to: level2User.username,
+                            level: 2,
+                            amount: level2Commission,
+                            planName: planName,
+                            planPrice: price,
+                            time: Date.now()
+                        });
+                    }
+                }
+                
+                saveDistDb(db);
+            }
+        }
+        
+        // 初始化 - 检查URL中的邀请码
+        function initInvite() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const inviteCode = urlParams.get('invite');
+            
+            if (inviteCode) {
+                currentInviteCode = inviteCode;
+                document.getElementById('inviteHint').style.display = 'block';
+                document.getElementById('inviterName').textContent = inviteCode.slice(0, 4) + '***';
+            }
+        }
+        
+        // 渲染套餐
+        function renderPlans() {
+            const grid = document.getElementById('plansGrid');
+            grid.innerHTML = plans.map(p => `
+                <div class="plan-card ${p.popular ? 'popular' : ''}" data-id="${p.id}" onclick="selectPlan('${p.id}')">
+                    <div class="plan-name">${p.name}</div>
+                    <div class="plan-price">${p.price}<span>元</span></div>
+                    <div class="plan-features">${p.desc}</div>
+                </div>
+            `).join('');
+        }
+        
+        // 选择套餐
+        function selectPlan(id) {
+            selectedPlan = plans.find(p => p.id === id);
+            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+            document.querySelector(`[data-id="${id}"]`).classList.add('selected');
+            
+            const btn = document.getElementById('payBtn');
+            btn.textContent = `立即支付 ¥${selectedPlan.price}`;
+            btn.disabled = false;
+        }
+        
+        // 显示支付弹窗
+        function showPayModal() {
+            if (!selectedPlan) return;
+            
+            document.getElementById('payTitle').textContent = `购买${selectedPlan.name}`;
+            document.getElementById('payPrice').textContent = `¥${selectedPlan.price}`;
+            
+            // 生成订单和激活码
+            const orderId = 'ORD' + Date.now();
+            currentCode = generateCode();
+            
+            // 显示模拟二维码（实际需要对接微信支付API生成真实二维码）
+            const qrDiv = document.getElementById('qrcode');
+            qrDiv.innerHTML = `
+                <div style="width:200px;height:200px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;margin:0 auto;">
+                    <div style="text-align:center;">
+                        <div style="font-size:40px;">📱</div>
+                        <div style="font-size:12px;color:#666;margin-top:5px;">模拟二维码</div>
+                        <div style="font-size:10px;color:#999;margin-top:3px;">订单号：${orderId.slice(-8)}</div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('payModal').classList.add('show');
+            
+            // 模拟支付成功（实际需要接入微信支付回调）
+            // 这里演示：5秒后自动触发支付成功
+            simulatePayment();
+        }
+        
+        // 模拟支付流程
+        function simulatePayment() {
+            let countdown = 5;
+            const qrHint = document.querySelector('.qr-hint');
+            
+            const timer = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    qrHint.textContent = `模拟支付倒计时：${countdown}秒后自动开通（实际需扫码支付）`;
+                } else {
+                    clearInterval(timer);
+                    // 模拟支付成功
+                    activateMember(selectedPlan, currentCode);
+                }
+            }, 1000);
+        }
+        
+        // 关闭支付弹窗
+        function closePayModal() {
+            document.getElementById('payModal').classList.remove('show');
+        }
+        
+        // 激活会员
+        function activateMember(plan, code) {
+            const now = Date.now();
+            let expireTime;
+            
+            if (plan.id === 'forever') {
+                expireTime = now + 365 * 24 * 60 * 60 * 1000; // 永久用1年表示
+            } else {
+                expireTime = now + plan.days * 24 * 60 * 60 * 1000;
+            }
+            
+            const memberInfo = {
+                level: plan.id,
+                activateCode: code,
+                activateTime: now,
+                expireTime: expireTime,
+                planName: plan.name
+            };
+            
+            localStorage.setItem('memberInfo', JSON.stringify(memberInfo));
+            
+            // ===== 处理二级分销 =====
+            // 1. 为当前用户创建或更新邀请码（如果有邀请人，记录invitedBy）
+            const username = 'user_' + code;
+            const db = getDistDb();
+            
+            if (!db.users[username]) {
+                db.users[username] = {
+                    username: username,
+                    inviteCode: generateInviteCode(),
+                    invitedBy: currentInviteCode, // 记录邀请人
+                    level1Commission: 0,
+                    level2Commission: 0,
+                    level1Count: 0,
+                    level2Count: 0,
+                    registerTime: Date.now()
+                };
+            }
+            saveDistDb(db);
+            
+            // 2. 如果有邀请人，处理佣金
+            if (currentInviteCode) {
+                processDistribution(currentInviteCode, plan.id, plan.name);
+            }
+            
+            // 保存激活码记录
+            saveCodeRecord(code, plan);
+            
+            closePayModal();
+            
+            // 显示成功弹窗
+            let descText = `您的${plan.name}已开通！\n激活码：${code}\n有效期至：${new Date(expireTime).toLocaleDateString()}`;
+            if (currentInviteCode) {
+                descText += '\n\n🎉 感谢好友推荐，您已成为我们的会员！';
+            }
+            document.getElementById('successDesc').textContent = descText;
+            document.getElementById('successModal').classList.add('show');
+        }
+        
+        // 保存激活码记录
+        function saveCodeRecord(code, plan) {
+            const records = JSON.parse(localStorage.getItem('codeRecords') || '[]');
+            records.unshift({
+                code: code,
+                plan: plan.name,
+                price: plan.price,
+                time: Date.now(),
+                used: true,
+                user: '在线购买'
+            });
+            localStorage.setItem('codeRecords', JSON.stringify(records));
+        }
+        
+        // 激活码兑换
+        function activateCode() {
+            const code = document.getElementById('activateCode').value.trim().toUpperCase();
+            const alert = document.getElementById('activateAlert');
+            
+            if (!code) {
+                alert.textContent = '请输入激活码';
+                alert.className = 'alert error';
+                alert.style.display = 'block';
+                return;
+            }
+            
+            // 查找激活码记录
+            const records = JSON.parse(localStorage.getItem('codeRecords') || '[]');
+            const record = records.find(r => r.code === code);
+            
+            if (record && record.used) {
+                // 激活码已使用，更新会员信息
+                const plan = plans.find(p => p.name === record.plan);
+                if (plan) {
+                    activateMember(plan, code);
+                    return;
+                }
+            }
+            
+            // 检查是否是未使用的激活码
+            const unusedCodes = JSON.parse(localStorage.getItem('unusedCodes') || '[]');
+            const unusedRecord = unusedCodes.find(r => r.code === code);
+            
+            if (unusedRecord) {
+                // 标记为已使用
+                unusedCodes.forEach(r => {
+                    if (r.code === code) r.used = true;
+                });
+                localStorage.setItem('unusedCodes', JSON.stringify(unusedCodes));
+                
+                // 激活会员
+                const plan = plans.find(p => p.id === unusedRecord.planId);
+                if (plan) {
+                    activateMember(plan, code);
+                    return;
+                }
+            }
+            
+            // 激活码无效
+            alert.textContent = '激活码无效或已过期';
+            alert.className = 'alert error';
+            alert.style.display = 'block';
+        }
+        
+        // 生成激活码
+        function generateCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let code = '';
+            for (let i = 0; i < 16; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+        
+        // 跳转到会员区
+        function goToVip() {
+            document.getElementById('successModal').classList.remove('show');
+            location.href = 'vip.html';
+        }
+        
+        // 初始化
+        renderPlans();
+        initInvite(); // 检查邀请码
+    </script>
+</body>
+</html>
