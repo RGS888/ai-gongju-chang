@@ -334,6 +334,9 @@
             <div class="sidebar-item" onclick="filterCategory('life')">
                 <span class="emoji">🌟</span><span>AI趣味工具</span><span class="count">15+</span>
             </div>
+            <div class="sidebar-item" onclick="filterCategory('live')">
+                <span class="emoji">📺</span><span>直播工具</span><span class="count" style="background:var(--danger);color:#fff;">HOT</span>
+            </div>
             <div class="sidebar-item" onclick="window.open('https://www.aliyun.com/minisite/goods?userCode=8ont37k6','_blank')">
                 <span class="emoji">☁️</span><span style="color:#ff6a00;font-weight:600">阿里云优惠</span>
             </div>
@@ -355,7 +358,7 @@
             </a>
             <div class="banner-stats">
                 <div class="banner-stat"><div class="banner-stat-value">700+</div><div class="banner-stat-label">精选工具</div></div>
-                <div class="banner-stat"><div class="banner-stat-value">13</div><div class="banner-stat-label">工具分类</div></div>
+                <div class="banner-stat"><div class="banner-stat-value">14</div><div class="banner-stat-label">工具分类</div></div>
                 <div class="banner-stat"><div class="banner-stat-value">30+</div><div class="banner-stat-label">视频教程</div></div>
                 <div class="banner-stat"><div class="banner-stat-value">24h</div><div class="banner-stat-label">持续更新</div></div>
             </div>
@@ -542,6 +545,18 @@
                 </div>
             </div>
             <div class="tool-grid" id="life-grid"></div>
+        </section>
+
+        <!-- 直播工具 -->
+        <section class="section hot-section" id="section-live">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">📺</span>直播工具<span class="section-count">NEW</span></div>
+                <div class="section-filters">
+                    <button class="filter-btn active" onclick="filterSub(this,'live','all')">全部</button>
+                    <button class="filter-btn" onclick="filterSub(this,'live','hot')">热门</button>
+                </div>
+            </div>
+            <div class="tool-grid" id="live-grid"></div>
         </section>
 
         <!-- TUTORIAL SECTION -->
@@ -953,9 +968,11 @@ const tools = [
     {id:'f13',name:'AI测脸龄',emoji:'👶',cat:'life',tags:['free'],desc:'AI测颜值和年龄',url:'https://www.howold.net',urlText:'访问官网'},
     {id:'f14',name:'AI头像定制',emoji:'👤',cat:'life',tags:['hot'],desc:'AI定制专属头像，多种风格',url:'https://www.avatary.com',urlText:'访问官网'},
     {id:'f15',name:'AI艺术字',emoji:'✏️',cat:'life',tags:['free'],desc:'AI生成艺术字体图片',url:'https://wordart.com',urlText:'访问官网'},
-];
 
-// ===== RENDER FUNCTIONS =====
+    // ===== 直播工具 =====
+    {id:'lv1',name:'绿幕助手',emoji:'🎬',cat:'live',tags:['hot','new'],popular:true,desc:'专业虚拟直播特效工具，轻松玩转绿幕抠图和直播特效，支持多平台直播',url:'https://dwz.cn/QUovH5gQ',urlText:'立即下载',agentId:'A5668'},
+
+    // ===== RENDER FUNCTIONS =====
 function renderToolCard(tool) {
     const tagMap = {hot:'🔥 热门',free:'✅ 免费',new:'🆕 新上线'};
     const tags = tool.tags.map(t => `<span class="tool-tag ${t}">${tagMap[t]||t}</span>`).join('');
@@ -963,13 +980,15 @@ function renderToolCard(tool) {
     if(tool.popular) cardClass.push('popular');
     if(tool.tags.includes('new')) cardClass.push('new');
     if(tool.tags.includes('free')) cardClass.push('free-tag');
-    const btnClass = tool.aliyun ? 'tool-link aliyun' : 'tool-link';
+    const btnClass = tool.aliyun ? 'tool-link aliyun' : (tool.agentId ? 'tool-link' : 'tool-link');
     const btnText = tool.urlText || '访问官网';
+    // 如果有agentId，添加推广标记
+    const agentBadge = tool.agentId ? `<span style="background:#22c55e;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;">推广赚佣</span>` : '';
     return `<div class="${cardClass.join(' ')}" data-cat="${tool.cat}" data-tags="${tool.tags.join(',')}">
         <div class="tool-card-header">
             <div class="tool-icon">${tool.emoji}</div>
             <div>
-                <div class="tool-name">${tool.name}</div>
+                <div class="tool-name">${tool.name}${agentBadge}</div>
             </div>
         </div>
         <p class="tool-desc">${tool.desc}</p>
@@ -1084,7 +1103,7 @@ function init() {
     // Hot tools
     document.getElementById('hot-grid').innerHTML = tools.filter(t => t.popular).map(renderToolCard).join('');
     // Category grids
-    ['chat','image','video','music','office','coding','agent','writing','design','enterprise','ecommerce','learning','life'].forEach(cat => {
+    ['chat','image','video','music','office','coding','agent','writing','design','enterprise','ecommerce','learning','life','live'].forEach(cat => {
         renderGrid(cat + '-grid', cat);
     });
     // Update total count
@@ -1282,7 +1301,7 @@ function init() {
     // Hot tools
     document.getElementById('hot-grid').innerHTML = tools.filter(t => t.popular).map(renderToolCard).join('');
     // Category grids
-    ['chat','image','video','music','office','coding','agent','writing','design','enterprise','ecommerce','learning','life'].forEach(cat => {
+    ['chat','image','video','music','office','coding','agent','writing','design','enterprise','ecommerce','learning','life','live'].forEach(cat => {
         renderGrid(cat + '-grid', cat);
     });
     // Update total count
