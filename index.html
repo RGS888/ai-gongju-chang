@@ -24,7 +24,7 @@
 
         /* ===== HEADER ===== */
         .header{background:rgba(255,255,255,0.97);border-bottom:1px solid var(--gray-200);position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:1000;backdrop-filter:blur(10px)}
-        .header-inner{max-width:1400px;margin:0 auto;padding:0 20px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+        .header-inner{max-width:1400px;margin:0 auto;padding:0 16px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;padding-left:56px}
         .logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:var(--gray-900);white-space:nowrap}
         .logo-icon{font-size:26px}
         .header-center{flex:1;max-width:500px}
@@ -188,7 +188,8 @@
         .footer p{margin-top:8px}
 
         /* ===== MOBILE TOGGLE ===== */
-        .mobile-toggle{display:none;position:fixed;bottom:20px;right:20px;width:50px;height:50px;background:var(--primary);color:#fff;border:none;border-radius:50%;font-size:24px;cursor:pointer;z-index:1001;box-shadow:0 4px 12px rgba(99,102,241,0.4)}
+        .mobile-toggle{display:none;position:absolute;left:12px;top:50%;transform:translateY(-50%);width:40px;height:40px;background:var(--gray-100);color:var(--gray-600);border:none;border-radius:8px;font-size:20px;cursor:pointer;z-index:1001;align-items:center;justify-content:center}
+        .mobile-toggle:hover{background:var(--gray-200)}
         .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99}
 
         /* ===== SCROLL TO TOP ===== */
@@ -196,19 +197,109 @@
         .scroll-top.visible{display:flex}
 
         /* ===== RESPONSIVE ===== */
+        /* 平板端适配 */
+        @media(max-width:1024px){
+            .tool-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+            .banner h1{font-size:30px}
+            .banner-stats{gap:32px}
+        }
+        
+        /* 手机端适配 */
         @media(max-width:768px){
-            :root{--sidebar-w:280px}
+            :root{--sidebar-w:280px;--header-h:56px}
             .sidebar{transform:translateX(-100%)}
             .sidebar.open{transform:translateX(0)}
             .sidebar-overlay.open{display:block}
             .mobile-toggle{display:flex}
+            .header-inner{padding-left:52px}
+            
+            /* Header移动端优化 */
+            .header-inner{padding:0 12px 0 52px;gap:8px}
+            .logo{font-size:16px}
+            .logo-icon{font-size:20px}
+            .header-center{flex:1;min-width:0}
+            .header-search input{padding:6px 12px;font-size:13px}
+            .header-search button{padding:6px 12px;font-size:12px}
             .header-ads,.header-links{display:none}
-            .banner h1{font-size:26px}
-            .banner-stats{gap:24px}
-            .tool-grid{grid-template-columns:1fr}
-            .fortune-grid{grid-template-columns:repeat(3,1fr)}
-            .fortune-item{padding:12px 8px;font-size:12px}
+            
+            /* 移动端底部快捷导航 */
+            .mobile-nav{display:flex!important;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e5e7eb;z-index:999;padding:8px 0;justify-content:space-around;box-shadow:0 -4px 12px rgba(0,0,0,0.08)}
+            .mobile-nav a{flex:1;text-align:center;font-size:11px;color:#6b7280;text-decoration:none;padding:4px 0}
+            .mobile-nav a span{display:block;font-size:20px;margin-bottom:2px}
+            .mobile-nav a.active{color:var(--primary)}
+            
+            /* Banner移动端优化 */
+            .banner{padding:24px 16px}
+            .banner h1{font-size:24px}
+            .banner p{font-size:14px}
+            .banner-stats{gap:20px;flex-wrap:wrap}
+            .banner-stat-value{font-size:20px}
+            .banner-aliyun{padding:10px 16px;font-size:12px}
+            
+            /* 工具卡片移动端优化 */
+            .section{padding:20px 12px}
+            .section-title{font-size:18px}
+            .tool-grid{grid-template-columns:1fr;gap:12px}
+            .tool-card{padding:16px}
+            .tool-icon{width:40px;height:40px;font-size:20px}
+            .tool-name{font-size:14px}
+            .tool-desc{font-size:12px;-webkit-line-clamp:2}
+            .tool-link{padding:8px 14px;font-size:12px;width:100%;justify-content:center}
+            
+            /* 分类标签移动端优化 */
+            .cat-tabs{padding:0 12px 4px}
+            .cat-tab{padding:5px 12px;font-size:12px}
+            
+            /* 运势测试移动端优化 */
+            .fortune-section{padding:32px 16px}
+            .fortune-section h2{font-size:22px}
+            .fortune-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+            .fortune-item{padding:16px 8px;font-size:11px}
             .fortune-item .emoji{font-size:24px}
+            .fortune-cta{padding:12px 24px;font-size:14px}
+            
+            /* 教程专区移动端优化 */
+            .tutorial-section{padding:32px 16px}
+            .tutorial-header h2{font-size:22px}
+            .tutorial-grid{grid-template-columns:1fr}
+            
+            /* 支付弹窗移动端优化 */
+            .payment-modal{padding:12px}
+            .payment-modal-content{padding:24px 16px;border-radius:16px}
+            .payment-amount{font-size:28px}
+            .payment-methods{flex-direction:column;gap:12px}
+            .payment-method-btn{max-width:100%}
+            .payment-qrcode img{width:160px;height:160px}
+            
+            /* 视频播放器移动端优化 */
+            .pay-video-container{border-radius:8px}
+            .pay-countdown{font-size:36px}
+            .pay-btn{padding:12px 24px;font-size:14px}
+            
+            /* 底部导航 */
+            .footer{padding:24px 16px;font-size:12px}
+            .footer a{margin:0 4px}
+        }
+        
+        /* 小屏手机适配 */
+        @media(max-width:480px){
+            :root{--header-h:52px}
+            .logo span:last-child{display:none}
+            .banner h1{font-size:20px}
+            .banner p{font-size:13px}
+            .section-title{font-size:16px}
+            .tool-grid{grid-template-columns:1fr}
+            .tool-card{font-size:13px}
+            .payment-modal-content{padding:20px 12px}
+            .payment-amount{font-size:24px}
+            .payment-qrcode img{width:140px;height:140px}
+            .payment-qrcode{padding:16px}
+        }
+        
+        /* 触摸友好 - 增大点击区域 */
+        @media(hover:none) and (pointer:coarse){
+            .tool-card:hover{transform:none}
+            .filter-btn,.cat-tab,.sidebar-item{min-height:44px}
         }
 
         /* ===== NOTIFICATION BAR ===== */
@@ -233,6 +324,7 @@
 <!-- HEADER -->
 <header class="header">
     <div class="header-inner">
+        <button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()" style="display:none">☰</button>
         <div class="logo">
             <span class="logo-icon">🚀</span>
             <span>AI工具场</span>
@@ -1496,6 +1588,34 @@ document.addEventListener('click', function(e) {
         closePaymentModal();
     }
 });
+
+// 移动端菜单切换
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
+// 关闭侧边栏
+function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+}
 </script>
+
+<!-- 移动端遮罩层 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- 移动端底部快捷导航 -->
+<div class="mobile-nav" style="display:none">
+    <a href="index.html" class="active"><span>🏠</span>首页</a>
+    <a href="vip.html"><span>👑</span>会员</a>
+    <a href="business.html"><span>💼</span>商机</a>
+    <a href="iot.html"><span>📶</span>物联</a>
+    <a href="user.html"><span>👤</span>我的</a>
+</div>
 </body>
 </html>

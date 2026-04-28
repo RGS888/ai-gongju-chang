@@ -310,6 +310,29 @@
         .content-area {
             padding-bottom: 80px;
         }
+        
+        /* ===== 响应式设计 ===== */
+        @media(max-width:768px){
+            body{padding:12px}
+            .header{padding:20px 16px;border-radius:0 0 12px 12px}
+            .header h1{font-size:22px}
+            .header p{font-size:13px}
+            .pricing-cards{grid-template-columns:1fr;padding:0}
+            .pricing-card{padding:16px}
+            .pricing-card .price{font-size:28px}
+            .input-group{flex-direction:column}
+            .input-group input,.input-group button{width:100%;border-radius:8px}
+            .input-group button{margin-top:10px}
+            .result-card{padding:20px 16px}
+            .result-icon{font-size:48px}
+            .nav-item{font-size:11px}
+            .nav-icon{font-size:20px}
+        }
+        @media(max-width:480px){
+            .header h1{font-size:18px}
+            .pricing-card{font-size:13px}
+            .pricing-card .badge{font-size:10px}
+        }
     </style>
 </head>
 <body>

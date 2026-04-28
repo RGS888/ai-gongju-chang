@@ -301,6 +301,31 @@
         .empty-state p {
             font-size: 14px;
         }
+        
+        /* ===== 响应式设计 ===== */
+        @media(max-width:768px){
+            .iot-header{padding:24px 16px;border-radius:0 0 16px 16px}
+            .iot-header h1{font-size:22px}
+            .iot-header p{font-size:13px}
+            .quick-tools{grid-template-columns:repeat(3,1fr);gap:10px}
+            .quick-tool{padding:14px 8px;font-size:12px}
+            .quick-tool .icon{font-size:24px}
+            .product-grid{grid-template-columns:1fr;padding:0 12px}
+            .product-card{padding:16px}
+            .product-name{font-size:15px}
+            .product-price{font-size:18px}
+            .platform-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+            .platform-card{padding:14px 10px;font-size:12px}
+            .platform-card .icon{font-size:22px}
+            .bottom-nav{padding:8px 0}
+            .nav-item{font-size:11px;padding:6px}
+            .nav-icon{font-size:20px}
+        }
+        @media(max-width:480px){
+            .iot-header h1{font-size:18px}
+            .quick-tools{grid-template-columns:repeat(2,1fr)}
+            .platform-grid{grid-template-columns:1fr 1fr}
+        }
     </style>
 </head>
 <body>

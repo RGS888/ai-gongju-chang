@@ -184,6 +184,31 @@
         .content-area {
             padding-bottom: 80px;
         }
+        
+        /* ===== 响应式设计 ===== */
+        @media(max-width:768px){
+            .user-header{padding:30px 16px;flex-direction:column;text-align:center}
+            .user-avatar{width:72px;height:72px;font-size:36px}
+            .user-info{margin-left:0;margin-top:12px}
+            .card{padding:16px}
+            .card-title{font-size:15px}
+            .stat-value{font-size:24px}
+            .stat-label{font-size:12px}
+            .invite-link-box{flex-direction:column;padding:14px}
+            .invite-link{font-size:12px;word-break:break-all}
+            .btn-copy{padding:10px 16px;font-size:13px}
+            .commission-list li{padding:12px}
+            .commission-item{flex-direction:column;gap:8px;text-align:center}
+            .bottom-nav{padding:8px 0}
+            .nav-item{font-size:11px;padding:6px}
+            .nav-icon{font-size:20px}
+        }
+        @media(max-width:480px){
+            .user-header{padding:24px 12px}
+            .user-name{font-size:18px}
+            .stat-box{width:100%}
+            .invite-section h3{font-size:14px}
+        }
     </style>
 </head>
 <body>

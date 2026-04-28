@@ -720,14 +720,47 @@
   .cs-text strong { color: var(--gold-light); }
 
   /* 响应式 */
-  @media (max-width: 600px) {
-    section { padding: 60px 20px; }
-    .hero { padding: 60px 20px; }
+  @media (max-width: 768px) {
+    section { padding: 48px 16px; }
+    .hero { padding: 80px 16px 60px; }
     .pkg-vip { transform: none; }
     .step { flex-direction: column; gap: 16px; }
-    .consult-card { padding: 28px 22px; }
-    .position-block { padding: 32px 24px; }
-    .back-nav { top: 10px; left: 10px; padding: 8px 16px; font-size: 12px; }
+    .consult-card { padding: 24px 16px; }
+    .position-block { padding: 28px 16px; }
+    .back-nav { top: 12px; left: 12px; padding: 8px 14px; font-size: 12px; }
+    .hero-title{font-size:clamp(28px,6vw,48px)}
+    .hero-subtitle{font-size:14px}
+    .hero-stats{gap:24px}
+    .hero-stat .num{font-size:28px}
+    .pain-grid{grid-template-columns:1fr}
+    .packages{grid-template-columns:1fr}
+    .pkg{padding:28px 20px}
+    .pkg-price{font-size:42px}
+    .income-grid{grid-template-columns:1fr 1fr}
+    .proof-grid{grid-template-columns:1fr 1fr}
+    .company-pillars{grid-template-columns:1fr 1fr}
+    .visual-block svg{height:auto;min-height:300px}
+    .position-points{grid-template-columns:1fr}
+    .pp-item{padding:14px 12px}
+    .cta-section{padding:60px 20px}
+    .cta-section h2{font-size:clamp(22px,5vw,32px)}
+    .btn-primary{padding:14px 32px;font-size:15px}
+    .cs-item{padding:12px 14px}
+    .cs-num{width:28px;height:28px;font-size:12px}
+  }
+  @media (max-width: 480px) {
+    section { padding: 40px 12px; }
+    .hero { padding: 70px 12px 50px; }
+    h2{font-size:clamp(22px,5vw,28px)}
+    .hero-stats{gap:16px;flex-wrap:wrap}
+    .hero-stat{width:45%}
+    .pkg{padding:24px 16px}
+    .pkg-price{font-size:36px}
+    .pkg-features li{font-size:13px}
+    .income-grid{grid-template-columns:1fr}
+    .proof-grid{grid-template-columns:1fr}
+    .company-pillars{grid-template-columns:1fr 1fr;gap:16px}
+    .cta-btns{flex-direction:column;gap:12px}
   }
 </style>
 </head>
