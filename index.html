@@ -230,6 +230,17 @@
     <!-- SIDEBAR -->
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-section">
+            <div class="sidebar-title">🎯 快捷入口</div>
+            <div class="sidebar-item" onclick="scrollToSection('tutorial')" style="background:rgba(99,102,241,0.08);color:var(--primary);border-left-color:var(--primary);font-weight:600">
+                <span class="emoji">📚</span><span>视频教程</span><span class="count" style="background:var(--primary);color:#fff">HOT</span>
+            </div>
+            <div class="sidebar-item" onclick="scrollToSection('fortune')" style="background:rgba(99,102,241,0.08);color:var(--primary);border-left-color:var(--primary);font-weight:600">
+                <span class="emoji">🔮</span><span>运势解析</span><span class="count" style="background:var(--danger);color:#fff">NEW</span>
+            </div>
+            <div class="sidebar-item" onclick="scrollToSection('payment')">
+                <span class="emoji">💰</span><span>支持我们</span>
+            </div>
+            <div class="sidebar-divider"></div>
             <div class="sidebar-title">📂 工具分类</div>
             <div class="sidebar-item active" onclick="filterCategory('all')">
                 <span class="emoji">🏠</span><span>全部工具</span><span class="count" id="count-all">700+</span>
@@ -272,17 +283,6 @@
             </div>
             <div class="sidebar-item" onclick="filterCategory('life')">
                 <span class="emoji">🌟</span><span>AI趣味工具</span><span class="count">15+</span>
-            </div>
-            <div class="sidebar-divider"></div>
-            <div class="sidebar-title">🎯 快捷入口</div>
-            <div class="sidebar-item" onclick="scrollToSection('tutorial')">
-                <span class="emoji">📚</span><span>视频教程</span>
-            </div>
-            <div class="sidebar-item" onclick="scrollToSection('fortune')">
-                <span class="emoji">🔮</span><span>运势测试</span>
-            </div>
-            <div class="sidebar-item" onclick="scrollToSection('payment')">
-                <span class="emoji">💰</span><span>支持我们</span>
             </div>
             <div class="sidebar-item" onclick="window.open('https://www.aliyun.com/minisite/goods?userCode=8ont37k6','_blank')">
                 <span class="emoji">☁️</span><span style="color:#ff6a00;font-weight:600">阿里云优惠</span>
@@ -509,7 +509,7 @@
                 <div style="margin-top:24px;text-align:center">
                     <a href="https://www.bilibili.com/video/BV1Wzo1BkEhT" target="_blank" class="fortune-cta">📹 前往B站观看更多教程 →</a>
                 </div>
-                <p style="margin-top:16px;font-size:13px;color:#666">打赏后联系微信：LZJD8768 获取完整教程资料</p>
+                
             </div>
         </section>
 
@@ -1016,6 +1016,212 @@ function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
     document.getElementById('sidebarOverlay').classList.toggle('open');
 }
+
+// ===== SCROLL TO TOP =====
+window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTop');
+    btn.classList.toggle('visible', window.scrollY > 600);
+});
+
+// ===== INIT =====
+function init() {
+    // Hot tools
+    document.getElementById('hot-grid').innerHTML = tools.filter(t => t.popular).map(renderToolCard).join('');
+    // Category grids
+    ['chat','image','video','music','office','coding','agent','writing','design','enterprise','ecommerce','learning','life'].forEach(cat => {
+        renderGrid(cat + '-grid', cat);
+    });
+    // Update total count
+    document.getElementById('count-all').textContent = tools.length + '+';
+    document.querySelector('.banner-stat-value:last-child').previousElementSibling.textContent = tools.length + '+';
+}
+
+init();
+
+// ===== USER LOGIN SYSTEM =====
+const USER_DB_KEY = 'ai_gongju_chang_users';
+
+// User Modal
+const userModal = document.createElement('div');
+userModal.id = 'userModal';
+userModal.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;';
+userModal.innerHTML = `
+<div style="background:#fff;border-radius:16px;padding:32px;width:90%;max-width:400px;position:relative">
+    <button onclick="closeUserModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:24px;cursor:pointer;color:#999">×</button>
+    <h2 id="modalTitle" style="text-align:center;margin-bottom:24px;font-size:20px">用户登录</h2>
+    <form id="userForm" onsubmit="handleUserSubmit(event)">
+        <div style="margin-bottom:16px">
+            <label style="display:block;margin-bottom:6px;font-size:14px;color:#666">用户名</label>
+            <input type="text" id="username" required style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none" placeholder="请输入用户名">
+        </div>
+        <div style="margin-bottom:16px" id="passwordField">
+            <label style="display:block;margin-bottom:6px;font-size:14px;color:#666">密码</label>
+            <input type="password" id="password" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none" placeholder="请输入密码">
+        </div>
+        <div style="margin-bottom:16px" id="wechatField">
+            <label style="display:block;margin-bottom:6px;font-size:14px;color:#666">微信号</label>
+            <input type="text" id="wechat" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none" placeholder="请输入微信号">
+        </div>
+        <div style="margin-bottom:16px" id="phoneField">
+            <label style="display:block;margin-bottom:6px;font-size:14px;color:#666">手机号</label>
+            <input type="tel" id="phone" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none" placeholder="请输入手机号">
+        </div>
+        <button type="submit" style="width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:600">登 录</button>
+        <p style="text-align:center;margin-top:16px;font-size:14px;color:#666">
+            <span id="toggleText">还没有账号？</span>
+            <a href="#" onclick="toggleMode(event)" style="color:var(--primary);text-decoration:none;font-weight:600" id="toggleLink">立即注册</a>
+        </p>
+    </form>
+</div>
+`;
+document.body.appendChild(userModal);
+
+let isRegisterMode = false;
+
+function toggleMode(e) {
+    e.preventDefault();
+    isRegisterMode = !isRegisterMode;
+    document.getElementById('modalTitle').textContent = isRegisterMode ? '用户注册' : '用户登录';
+    document.getElementById('passwordField').style.display = isRegisterMode ? 'block' : 'none';
+    document.getElementById('wechatField').style.display = isRegisterMode ? 'block' : 'none';
+    document.getElementById('phoneField').style.display = isRegisterMode ? 'block' : 'none';
+    document.getElementById('toggleText').textContent = isRegisterMode ? '已有账号？' : '还没有账号？';
+    document.getElementById('toggleLink').textContent = isRegisterMode ? '立即登录' : '立即注册';
+    document.querySelector('#userForm button[type="submit"]').textContent = isRegisterMode ? '注 册' : '登 录';
+}
+
+function openUserModal(requireWechat = false) {
+    userModal.style.display = 'flex';
+    // Reset to login mode
+    isRegisterMode = false;
+    document.getElementById('modalTitle').textContent = '用户登录';
+    document.getElementById('passwordField').style.display = 'none';
+    document.getElementById('wechatField').style.display = 'none';
+    document.getElementById('phoneField').style.display = 'none';
+    document.getElementById('toggleText').textContent = '还没有账号？';
+    document.getElementById('toggleLink').textContent = '立即注册';
+    document.querySelector('#userForm button[type="submit"]').textContent = '登 录';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('wechat').value = '';
+    document.getElementById('phone').value = '';
+}
+
+function closeUserModal() {
+    userModal.style.display = 'none';
+}
+
+function getUsers() {
+    const data = localStorage.getItem(USER_DB_KEY);
+    return data ? JSON.parse(data) : [];
+}
+
+function saveUsers(users) {
+    localStorage.setItem(USER_DB_KEY, JSON.stringify(users));
+}
+
+function handleUserSubmit(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const wechat = document.getElementById('wechat').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    
+    const users = getUsers();
+    
+    if (isRegisterMode) {
+        // Register
+        if (users.find(u => u.username === username)) {
+            alert('用户名已存在！');
+            return;
+        }
+        if (!wechat || !phone) {
+            alert('请填写完整信息！');
+            return;
+        }
+        const newUser = {
+            username,
+            password: '123456',
+            wechat,
+            phone,
+            registerTime: new Date().toISOString()
+        };
+        users.push(newUser);
+        saveUsers(users);
+        alert('注册成功！默认密码：123456');
+        // Auto login
+        sessionStorage.setItem('currentUser', JSON.stringify(newUser));
+        closeUserModal();
+        updateUserStatus();
+        location.reload();
+    } else {
+        // Login
+        const user = users.find(u => u.username === username);
+        if (!user) {
+            alert('用户不存在！');
+            return;
+        }
+        if (password && password !== '123456') {
+            alert('密码错误！');
+            return;
+        }
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+        closeUserModal();
+        updateUserStatus();
+        alert('登录成功！');
+    }
+}
+
+function getCurrentUser() {
+    const data = sessionStorage.getItem('currentUser');
+    return data ? JSON.parse(data) : null;
+}
+
+function logout() {
+    sessionStorage.removeItem('currentUser');
+    updateUserStatus();
+    location.reload();
+}
+
+function updateUserStatus() {
+    const user = getCurrentUser();
+    const userArea = document.querySelector('.header-right');
+    if (user) {
+        userArea.innerHTML = `
+            <span style="font-size:14px;color:var(--gray-600)">欢迎，${user.username}</span>
+            <span class="header-link" onclick="logout()" style="cursor:pointer">退出</span>
+            ${user.username === 'admin' ? '<a href="admin.html" class="header-link" style="color:var(--primary)">管理后台</a>' : ''}
+        `;
+    }
+}
+
+// Protect sections - show login modal when accessing protected content
+function requireLogin(callback) {
+    const user = getCurrentUser();
+    if (user) {
+        callback();
+    } else {
+        openUserModal();
+    }
+}
+
+// Override scrollToSection to require login for tutorial and fortune
+const originalScrollToSection = scrollToSection;
+scrollToSection = function(id) {
+    if (id === 'tutorial' || id === 'fortune') {
+        requireLogin(() => originalScrollToSection(id));
+    } else {
+        originalScrollToSection(id);
+    }
+};
+
+// Update user status on load
+updateUserStatus();
+
+// Close modal on outside click
+userModal.addEventListener('click', (e) => {
+    if (e.target === userModal) closeUserModal();
+});
 
 // ===== SCROLL TO TOP =====
 window.addEventListener('scroll', () => {
