@@ -245,7 +245,7 @@
         </div>
         <div class="header-right">
             <div class="header-links">
-                <span class="header-link" onclick="scrollToSection('tutorial')">📚 视频教程</span>
+                <a href="vip.html" class="header-link">📚 视频教程</a>
                 <span class="header-link" onclick="scrollToSection('fortune')">🔮 运势测试</span>
                 <span class="header-link" onclick="scrollToSection('payment')">💰 支持我们</span>
             </div>
@@ -268,9 +268,9 @@
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-section">
             <div class="sidebar-title">🎯 快捷入口</div>
-            <div class="sidebar-item" onclick="scrollToSection('tutorial')" style="background:rgba(99,102,241,0.08);color:var(--primary);border-left-color:var(--primary);font-weight:600">
+            <a href="vip.html" class="sidebar-item" style="background:rgba(99,102,241,0.08);color:var(--primary);border-left-color:var(--primary);font-weight:600">
                 <span class="emoji">📚</span><span>视频教程</span><span class="count" style="background:var(--primary);color:#fff">HOT</span>
-            </div>
+            </a>
             <div class="sidebar-item" onclick="scrollToSection('fortune')" style="background:rgba(99,102,241,0.08);color:var(--primary);border-left-color:var(--primary);font-weight:600">
                 <span class="emoji">🔮</span><span>运势解析</span><span class="count" style="background:var(--danger);color:#fff">NEW</span>
             </div>
@@ -541,37 +541,7 @@
         </section>
 
         <!-- TUTORIAL SECTION -->
-        <section class="tutorial-section" id="section-tutorial">
-            <div class="tutorial-inner">
-                <div class="tutorial-header">
-                    <h2>📚 自媒体创作视频教程</h2>
-                    <p>包含即梦AI、必剪、快影、剪映等工具从入门到精通的完整教程</p>
-                </div>
-                <div class="tutorial-grid" id="tutorial-grid">
-                    <div class="pay-video-container" id="payVideoContainer">
-                        <!-- 会员徽章 -->
-                        <div class="vip-badge" id="vipBadge" style="display:none;">👑 会员免费看</div>
-                        <div class="unlocked-badge" id="unlockedBadge" style="display:none;">✅ 已解锁</div>
-                        <!-- 视频播放器 -->
-                        <iframe id="tutorialVideo" src="https://player.bilibili.com/player.html?bvid=BV1Wzo1BkEhT&page=1&high_quality=1&autoplay=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-                        <!-- 预览遮罩层 -->
-                        <div class="pay-video-overlay" id="payOverlay">
-                            <div class="pay-countdown" id="countdownText"><span>5</span>秒后可继续观看</div>
-                            <p class="pay-tip">📺 视频价值<span style="color:#ffd700;font-weight:700">99元</span>，限时优惠</p>
-                            <button class="pay-btn" id="payBtn" onclick="showPaymentModal()">
-                                💰 支付 <span id="payAmount">9.9</span>元 解锁完整视频
-                            </button>
-                            <button class="vip-unlock-btn" id="vipBtn" onclick="goToVip()" style="display:none;">
-                                👑 开通会员 免费观看所有视频
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div style="margin-top:24px;text-align:center">
-                    <a href="https://www.bilibili.com/video/BV1Wzo1BkEhT" target="_blank" class="fortune-cta">📹 前往B站观看更多教程 →</a>
-                </div>
-            </div>
-        </section>
+        <!-- 视频教程已移至会员专区 vip.html -->
 
         <!-- PAYMENT MODAL -->
         <div class="payment-modal" id="paymentModal">
@@ -1085,7 +1055,7 @@ function clearSearch() {
 
 // ===== SCROLL =====
 function scrollToSection(id) {
-    const map = {tutorial:'section-tutorial',fortune:'section-fortune',payment:'section-payment'};
+    const map = {fortune:'section-fortune',payment:'section-payment'};
     const target = document.getElementById(map[id] || id);
     if(target) target.scrollIntoView({behavior:'smooth'});
     // close mobile sidebar
@@ -1287,15 +1257,7 @@ function requireLogin(callback) {
     }
 }
 
-// Override scrollToSection to require login for tutorial and fortune
-const originalScrollToSection = scrollToSection;
-scrollToSection = function(id) {
-    if (id === 'tutorial' || id === 'fortune') {
-        requireLogin(() => originalScrollToSection(id));
-    } else {
-        originalScrollToSection(id);
-    }
-};
+// scrollToSection now handles navigation - tutorial moved to vip.html
 
 // Update user status on load
 updateUserStatus();
@@ -1322,8 +1284,6 @@ function init() {
     // Update total count
     document.getElementById('count-all').textContent = tools.length + '+';
     document.querySelector('.banner-stat-value:last-child').previousElementSibling.textContent = tools.length + '+';
-    // Init pay video
-    initPayVideo();
 }
 
 init();
