@@ -338,6 +338,7 @@
         <div class="header-right">
             <div class="header-links">
                 <a href="vip.html" class="header-link">📚 视频教程</a>
+                <a href="skills.html" class="header-link" style="color:#ffd700;font-weight:600">🧩 扣子技能</a>
                 <a href="business.html" class="header-link">💼 创业商机</a>
                 <span class="header-link" onclick="scrollToSection('fortune')">🔮 运势测试</span>
                 <span class="header-link" onclick="scrollToSection('payment')">💰 支持我们</span>
@@ -350,8 +351,8 @@
 </header>
 
 <!-- NOTICE BAR -->
-<div class="notice-bar">
-    <span>🔥 限时福利：点击"阿里云优惠"链接，新用户首单最高返45%佣金，全场云产品均享优惠，立即前往 →</span>
+<div class="notice-bar" style="background:linear-gradient(135deg,#4263EB15,#7C3AED15);border-bottom:1px solid #4263EB30;color:#4263EB;">
+    <span>🧩 NEW | 扣子技能专区上线！22+精品AI技能免费体验，点击查看 →</span>
 </div>
 
 <!-- LAYOUT -->
@@ -373,6 +374,9 @@
             <div class="sidebar-item" onclick="location.href='vip.html'" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-left-color:#667eea;">
                 <span class="emoji">👑</span><span>会员专区</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">NEW</span>
             </div>
+            <a href="skills.html" class="sidebar-item" style="background:linear-gradient(135deg,#4263EB,#7C3AED);color:#fff;border-left-color:#4263EB;font-weight:600;">
+                <span class="emoji">🧩</span><span>扣子技能</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">HOT</span>
+            </a>
             <div class="sidebar-item" onclick="location.href='vip-ai-tools.html'">
                 <span class="emoji">🚀</span><span>AI工具库</span><span class="count" style="background:var(--success);color:#fff;">HOT</span>
             </div>
@@ -448,9 +452,12 @@
             <a href="https://www.aliyun.com/minisite/goods?userCode=8ont37k6" target="_blank" class="banner-aliyun">
                 ☁️ <strong>阿里云限时优惠</strong> — 新用户首单返25%-45%，点击领取专属优惠 →
             </a>
+            <a href="skills.html" class="banner-aliyun" style="background:linear-gradient(135deg,#4263EB50,#7C3AED50);">
+                🧩 <strong>扣子技能专区</strong> — 22+精品AI技能免费体验 →
+            </a>
             <div class="banner-stats">
                 <div class="banner-stat"><div class="banner-stat-value">700+</div><div class="banner-stat-label">精选工具</div></div>
-                <div class="banner-stat"><div class="banner-stat-value">14</div><div class="banner-stat-label">工具分类</div></div>
+                <div class="banner-stat"><div class="banner-stat-value">22+</div><div class="banner-stat-label">扣子技能</div></div>
                 <div class="banner-stat"><div class="banner-stat-value">30+</div><div class="banner-stat-label">视频教程</div></div>
                 <div class="banner-stat"><div class="banner-stat-value">24h</div><div class="banner-stat-label">持续更新</div></div>
             </div>
@@ -468,6 +475,41 @@
                 </div>
             </div>
             <div class="tool-grid" id="hot-grid"></div>
+        </section>
+
+        <!-- 扣子技能专区入口 -->
+        <section class="section" style="background:linear-gradient(135deg,#4263EB10,#7C3AED10);border-radius:20px;margin:0 24px;padding:32px;">
+            <div class="section-header" style="margin-bottom:16px;">
+                <div class="section-title"><span class="emoji">🧩</span>扣子技能专区<span class="section-count" style="background:linear-gradient(135deg,#4263EB,#7C3AED);">NEW</span></div>
+                <a href="skills.html" class="filter-btn active" style="background:var(--coze-primary);color:#fff;border-color:var(--coze-primary);">查看全部 →</a>
+            </div>
+            <p style="color:var(--gray-500);margin-bottom:20px;font-size:14px;">精选22+款精品AI技能，涵盖内容创作、生活百科、运势玄学、创业商业、创意娱乐，无需编程即开即用！</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">📰</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">公众号爆款分析</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">✍️</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">小说生成器</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">🔮</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">星座命运分析</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">🚀</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">自媒体创业</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">😄</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">表情包生成</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">🎨</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">更多技能 →</div>
+                </div>
+            </div>
         </section>
 
         <!-- AI智能对话 -->
