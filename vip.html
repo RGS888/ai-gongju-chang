@@ -16,138 +16,86 @@
         .vip-header h1 { margin: 0 0 10px 0; font-size: 28px; }
         .vip-header p { margin: 0; opacity: 0.9; font-size: 14px; }
         
-        /* 套餐选择区域 */
-        .pricing-section {
-            padding: 20px;
-            background: #f8f9fa;
-        }
-        .pricing-title {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 16px;
-        }
-        .pricing-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        .pricing-card {
-            background: white;
-            border-radius: 16px;
+        /* 会员升级引导区 */
+        .upgrade-banner {
+            background: linear-gradient(135deg, #fff7ed, #fff2e8);
             padding: 16px;
+            margin: 12px;
+            border-radius: 12px;
+            border: 1px solid #fed7aa;
+        }
+        .upgrade-banner h3 {
             text-align: center;
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s;
+            font-size: 15px;
+            color: #c2410c;
+            margin: 0 0 10px 0;
+        }
+        .upgrade-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #f59e0b, #e65100);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
         }
-        .pricing-card.single {
-            border-color: #fbbf24;
-        }
-        .pricing-card.single.recommended {
-            border-color: #667eea;
-            background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
-        }
-        .pricing-card .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .pricing-card.single .badge {
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: white;
-        }
-        .pricing-card.recommended .badge {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-        .pricing-card .price {
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-            margin: 8px 0;
-        }
-        .pricing-card .price small {
-            font-size: 14px;
-            color: #888;
-            font-weight: normal;
-        }
-        .pricing-card .original-price {
-            font-size: 12px;
-            color: #999;
-            text-decoration: line-through;
-            margin-bottom: 4px;
-        }
-        .pricing-card .desc {
-            font-size: 12px;
-            color: #666;
-            line-height: 1.4;
-        }
-        .pricing-card .save-tag {
-            display: inline-block;
-            background: #fef3c7;
-            color: #d97706;
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 11px;
-            margin-top: 8px;
+        .upgrade-btn:active {
+            transform: scale(0.98);
         }
         
+        /* 会员已开通状态 */
         .member-card {
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
             border-radius: 16px;
-            padding: 20px;
-            margin: 20px;
+            padding: 16px;
+            margin: 12px;
             text-align: center;
         }
-        .member-status {
+        .member-card .member-status {
             font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-        }
-        .member-status.active {
             color: #10b981;
             font-weight: bold;
+            margin-bottom: 8px;
         }
-        .member-status.expired {
-            color: #ef4444;
-        }
-        .member-level {
+        .member-card .member-level {
             display: inline-block;
             padding: 8px 20px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border-radius: 20px;
             font-weight: bold;
-            margin-bottom: 15px;
+            font-size: 14px;
         }
-        .member-expire {
-            font-size: 13px;
+        .member-card .member-expire {
+            font-size: 12px;
             color: #888;
+            margin-top: 8px;
         }
         
         .category-tabs {
             display: flex;
             overflow-x: auto;
-            padding: 15px 20px;
+            padding: 15px 12px;
             gap: 10px;
             background: #f8f9fa;
+            -webkit-overflow-scrolling: touch;
         }
         .category-tab {
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 20px;
             background: white;
             border: none;
             cursor: pointer;
             white-space: nowrap;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.3s;
+            flex-shrink: 0;
         }
         .category-tab.active {
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -155,26 +103,33 @@
         }
         
         .materials-list {
-            padding: 20px;
+            padding: 12px;
+            padding-bottom: 80px;
         }
+        
+        /* 资料卡片 */
         .material-card {
             background: white;
             border-radius: 12px;
-            padding: 16px;
+            padding: 14px;
             margin-bottom: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .material-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            margin-bottom: 10px;
         }
         .material-icon {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
             flex-shrink: 0;
         }
         .material-icon.video { background: #fee2e2; }
@@ -188,57 +143,134 @@
         }
         .material-title {
             font-weight: bold;
-            margin-bottom: 4px;
-            color: #333;
             font-size: 14px;
+            color: #333;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .material-desc {
             font-size: 12px;
             color: #888;
-            margin-bottom: 4px;
-        }
-        .material-meta {
-            font-size: 11px;
-            color: #aaa;
-        }
-        .material-action {
-            flex-shrink: 0;
-        }
-        .material-price {
-            font-size: 14px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 4px;
-        }
-        .material-price.owned {
-            color: #10b981;
-            font-size: 12px;
-        }
-        .btn-buy {
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            transition: all 0.3s;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-        .btn-buy:hover {
-            transform: scale(1.05);
-        }
-        .btn-view {
-            padding: 8px 14px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            background: #10b981;
-            color: white;
         }
         
+        /* 视频预览区 */
+        .preview-area {
+            background: #1a1a2e;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        .preview-area iframe,
+        .preview-area video {
+            width: 100%;
+            height: 200px;
+            display: block;
+        }
+        .preview-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        
+        /* 预览遮罩层 */
+        .preview-blur {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        .preview-countdown {
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .preview-hint {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* 开通激活按钮 */
+        .activate-section {
+            background: linear-gradient(135deg, #fef3c7, #fff7ed);
+            border: 2px dashed #f59e0b;
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .activate-section p {
+            font-size: 13px;
+            color: #92400e;
+            margin: 0 0 10px 0;
+        }
+        .activate-section .price-info {
+            font-size: 12px;
+            color: #b45309;
+            margin-bottom: 10px;
+        }
+        .activate-btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #f59e0b, #e65100);
+            color: white;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+        .activate-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* 已解锁状态 */
+        .unlocked-card {
+            border: 2px solid #10b981;
+        }
+        .unlocked-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .view-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 8px;
+        }
+        
+        /* 底部导航 */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -248,6 +280,7 @@
             display: flex;
             padding: 10px 0;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
         }
         .nav-item {
             flex: 1;
@@ -255,23 +288,19 @@
             padding: 8px;
             color: #888;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 11px;
         }
         .nav-item.active {
             color: #667eea;
         }
         .nav-icon {
-            font-size: 24px;
+            font-size: 22px;
             display: block;
             margin-bottom: 4px;
         }
         
-        .content-area {
-            padding-bottom: 80px;
-        }
-        
-        /* 支付弹窗 */
-        .payment-modal {
+        /* 激活套餐选择弹窗 */
+        .activate-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -280,95 +309,122 @@
             bottom: 0;
             background: rgba(0,0,0,0.8);
             z-index: 2000;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
-            padding: 20px;
         }
-        .payment-modal.active {
+        .activate-modal.active {
             display: flex;
         }
-        .payment-modal-content {
+        .activate-modal-content {
             background: white;
-            border-radius: 20px;
-            padding: 24px;
-            max-width: 400px;
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            max-width: 500px;
             width: 100%;
-            text-align: center;
-            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
         }
-        .payment-modal-close {
-            position: absolute;
-            top: 12px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #999;
+        .activate-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
-        .payment-modal h3 {
-            margin: 0 0 16px 0;
+        .activate-modal-header h3 {
+            margin: 0;
             font-size: 18px;
             color: #333;
         }
-        .payment-amount {
-            font-size: 36px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 20px;
-        }
-        .payment-amount small {
-            font-size: 16px;
-            color: #888;
-        }
-        .payment-methods {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .payment-method-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
+        .activate-modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
             cursor: pointer;
-            text-align: center;
+            padding: 0;
+            line-height: 1;
+        }
+        
+        /* 套餐卡片 */
+        .package-cards {
+            display: grid;
+            gap: 12px;
+        }
+        .package-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 16px;
+            cursor: pointer;
             transition: all 0.3s;
         }
-        .payment-method-btn.active {
-            border-color: #667eea;
-            background: rgba(102,126,234,0.1);
+        .package-card:hover {
+            border-color: #f59e0b;
+            transform: translateY(-2px);
         }
-        .payment-method-btn img {
-            width: 40px;
-            height: 40px;
-            margin-bottom: 6px;
+        .package-card.selected {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fff7ed, #fff2e8);
         }
-        .payment-method-btn p {
-            margin: 0;
+        .package-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .package-name {
+            font-weight: bold;
+            font-size: 15px;
+            color: #333;
+        }
+        .package-tag {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .package-tag.hot {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+        .package-tag.best {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .package-tag.normal {
+            background: #f3f4f6;
+            color: #666;
+        }
+        .package-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #f59e0b;
+        }
+        .package-price small {
+            font-size: 14px;
+            color: #888;
+            font-weight: normal;
+        }
+        .package-desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: 6px;
+        }
+        .package-benefits {
+            margin-top: 10px;
             font-size: 12px;
             color: #666;
         }
-        .payment-qrcode {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
+        .package-benefits span {
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 4px;
         }
-        .payment-qrcode img {
-            width: 160px;
-            height: 160px;
-            margin-bottom: 8px;
-        }
-        .payment-qrcode p {
-            margin: 0;
-            font-size: 13px;
-            color: #666;
-        }
-        .confirm-pay-btn {
+        .confirm-package-btn {
             width: 100%;
+            margin-top: 16px;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #f59e0b, #e65100);
             color: white;
             border: none;
             border-radius: 12px;
@@ -376,135 +432,81 @@
             font-weight: bold;
             cursor: pointer;
         }
-        .payment-success {
-            display: none;
-            text-align: center;
-            padding: 20px;
-        }
-        .payment-success.show {
-            display: block;
-        }
-        .payment-success .icon {
-            font-size: 60px;
-            margin-bottom: 16px;
-        }
         
-        /* 已解锁徽章 */
-        .owned-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 6px;
+        /* 管理员入口 */
+        .admin-link {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .admin-link a {
             font-size: 11px;
-            font-weight: bold;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 4px 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 6px;
+        }
+        .admin-link a:hover {
+            color: white;
+            background: rgba(0,0,0,0.5);
         }
         
-        /* ===== 响应式设计 ===== */
+        /* 响应式 */
         @media(max-width:768px){
-            .vip-header{padding:24px 16px;border-radius:0 0 16px 16px}
+            .vip-header{padding:30px 16px}
             .vip-header h1{font-size:22px}
             .vip-header p{font-size:12px}
-            .pricing-section{padding:16px 12px}
-            .pricing-title{font-size:16px;margin-bottom:12px}
-            .pricing-cards{grid-template-columns:1fr;max-width:100%;padding:0 12px;gap:10px}
-            .pricing-card{padding:14px;border-radius:12px}
-            .pricing-card .price{font-size:24px}
-            .pricing-card .badge{font-size:11px;padding:3px 8px}
-            .pricing-card .desc{font-size:12px}
-            .member-card{margin:12px;padding:14px}
-            .category-tabs{padding:10px 12px;gap:8px;overflow-x:auto}
-            .category-tab{padding:8px 14px;font-size:12px;border-radius:16px;white-space:nowrap}
-            .materials-list{padding:12px}
-            .material-card{padding:12px;gap:10px;border-radius:10px}
-            .material-icon{width:40px;height:40px;font-size:16px;border-radius:8px}
-            .material-title{font-size:13px;font-weight:600}
-            .material-desc{font-size:11px;color:#888}
-            .material-meta{font-size:10px}
-            .material-action{flex-shrink:0}
-            .material-price{font-size:13px;font-weight:600;margin-bottom:4px}
-            .btn-buy,.btn-view{padding:6px 12px;font-size:11px;border-radius:6px}
-            .bottom-nav{padding:6px 0}
-            .nav-item{font-size:10px;padding:4px}
+            .upgrade-banner{padding:14px;margin:10px}
+            .upgrade-banner h3{font-size:14px}
+            .upgrade-btn{padding:10px;font-size:14px}
+            .member-card{margin:10px;padding:14px}
+            .category-tabs{padding:10px}
+            .materials-list{padding:10px;padding-bottom:70px}
+            .material-card{padding:12px;margin-bottom:10px;border-radius:10px}
+            .material-icon{width:40px;height:40px;font-size:18px}
+            .material-title{font-size:13px}
+            .material-desc{font-size:11px}
+            .preview-area iframe,.preview-area video{height:180px}
+            .activate-section{padding:14px}
+            .activate-section p{font-size:12px}
+            .activate-btn{padding:10px 24px;font-size:13px}
+            .bottom-nav{padding:8px 0}
+            .nav-item{font-size:10px;padding:6px}
             .nav-icon{font-size:20px}
-            .content-area{padding-bottom:60px}
-            .payment-modal{padding:12px;align-items:flex-end}
-            .payment-modal-content{padding:16px 12px;border-radius:16px 16px 0 0;max-width:100%}
-            .payment-modal h3{font-size:16px}
-            .payment-amount{font-size:24px}
-            .payment-methods{gap:8px}
-            .payment-method-btn{padding:10px}
-            .payment-method-btn img{width:50px;height:50px}
-            .confirm-pay-btn{padding:12px;font-size:14px;border-radius:10px}
-        }
-        @media(max-width:480px){
-            .vip-header h1{font-size:18px}
-            .vip-header p{font-size:11px}
-            .pricing-card{font-size:12px}
-            .pricing-card .badge{font-size:10px}
-            .pricing-card .original-price{font-size:11px}
-            .pricing-card .save-tag{font-size:10px;padding:2px 6px}
-            .material-card{flex-wrap:wrap}
-            .material-action{width:100%;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0}
-            .material-price{margin-bottom:0}
+            .activate-modal-content{padding:16px}
+            .package-card{padding:14px}
+            .package-name{font-size:14px}
+            .package-price{font-size:24px}
+            .confirm-package-btn{padding:12px;font-size:14px}
         }
     </style>
 </head>
 <body>
+    <!-- 管理员入口 -->
+    <div class="admin-link">
+        <a href="admin.html">🔐 管理</a>
+    </div>
+    
     <div class="vip-header">
         <h1>👑 会员资料区</h1>
-        <p>精选自媒体教程/软件工具/视频课程 | 免费学习至2031年</p>
-    </div>
-    
-    <!-- 管理员入口 -->
-    <div style="padding:8px 16px;text-align:right;">
-        <a href="admin.html" style="font-size:12px;color:#999;text-decoration:none;">🔐 管理员登录</a>
-    </div>
-    
-    <!-- 会员开通引导 -->
-    <div style="background:linear-gradient(135deg,#fff7ed,#fff2e8);padding:20px;margin:12px;border-radius:12px;">
-        <div style="text-align:center;margin-bottom:12px;">
-            <span style="background:linear-gradient(135deg,#f59e0b,#e65100);color:#fff;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:bold;">💎 会员专属权益</span>
-        </div>
-        <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:13px;color:#666;">
-            <span>✅ 全部22个资料免费看</span>
-            <span>✅ 优先更新特权</span>
-            <span>✅ 专属客服支持</span>
-        </div>
-        <div style="text-align:center;margin-top:12px;">
-            <a href="activate.html" style="display:inline-block;background:linear-gradient(135deg,#f59e0b,#e65100);color:#fff;padding:10px 24px;border-radius:20px;font-size:14px;font-weight:bold;text-decoration:none;">立即开通会员 ¥29/月起</a>
-        </div>
-    </div>
-    
-    <!-- 套餐选择区域 -->
-    <div class="pricing-section" id="pricingSection">
-        <div class="pricing-title">💎 选择付费方式</div>
-        <div class="pricing-cards">
-            <div class="pricing-card single" id="singleCard" onclick="selectPricing('single')">
-                <span class="badge">单课购买</span>
-                <div class="price">¥9.9<small>/个</small></div>
-                <div class="desc">按需购买单个资料<br>适合偶尔使用</div>
-            </div>
-            <div class="pricing-card recommended" id="monthCard" onclick="selectPricing('month')">
-                <span class="badge">⭐ 月卡推荐</span>
-                <div class="original-price">原价¥118.8</div>
-                <div class="price">¥29<small>/月</small></div>
-                <div class="desc">12个资料全部解锁<br>无限观看下载</div>
-                <div class="save-tag">省89元 超划算</div>
-            </div>
-        </div>
+        <p>精选自媒体教程/软件工具/视频课程</p>
     </div>
     
     <!-- 会员已开通状态 -->
     <div class="member-card" id="memberCard" style="display:none;">
-        <div class="member-status active" id="memberStatus">👑 会员已开通</div>
+        <div class="member-status">🎉 会员已开通</div>
         <div class="member-level" id="memberLevel">月卡会员</div>
         <div class="member-expire" id="memberExpire">有效期至：-</div>
     </div>
     
-    <!-- 免费学习提示 -->
-    <div style="background:#f0f9ff;border:1px solid #0ea5e9;padding:12px 16px;margin:12px;border-radius:10px;text-align:center;">
-        <span style="font-size:13px;color:#0369a1;">💡 <strong>免费学习期：</strong>所有资料均可免费学习至 <strong>2031年4月29日</strong>，之后需开通会员</span>
+    <!-- 开通引导（未开通时显示） -->
+    <div class="upgrade-banner" id="upgradeBanner">
+        <h3>🔓 开通会员，解锁全部资料</h3>
+        <a href="activate.html" class="upgrade-btn">
+            👉 立即开通会员 ¥29/月起
+        </a>
     </div>
     
     <div class="category-tabs">
@@ -519,15 +521,7 @@
         <!-- 动态渲染 -->
     </div>
     
-    <!-- 微信公众号二维码 -->
-    <div style="padding:20px;text-align:center;background:#f8f9fa;">
-        <div style="background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08);max-width:300px;margin:0 auto;">
-            <p style="font-size:14px;color:#666;margin-bottom:12px;">📢 关注微信公众号，获取更多教程</p>
-            <img src="wechat-qrcode.jpg" alt="微信公众号" style="width:140px;border-radius:8px;border:2px solid #07c160;">
-            <p style="font-size:12px;color:#999;margin-top:8px;">扫码关注「AI工具场」</p>
-        </div>
-    </div>
-    
+    <!-- 底部导航 -->
     <div class="bottom-nav">
         <a href="index.html" class="nav-item">
             <span class="nav-icon">🏠</span>
@@ -547,95 +541,127 @@
         </a>
     </div>
     
-    <!-- 支付弹窗 -->
-    <div class="payment-modal" id="paymentModal">
-        <div class="payment-modal-content">
-            <button class="payment-modal-close" onclick="closePaymentModal()">&times;</button>
-            
-            <!-- 支付表单 -->
-            <div id="paymentForm">
-                <h3 id="paymentTitle">💳 解锁单个资料</h3>
-                <div class="payment-amount"><span id="modalAmount">9.9</span><small> 元</small></div>
-                <div class="payment-methods">
-                    <div class="payment-method-btn active" id="alipayBtn" onclick="selectPaymentMethod('alipay')">
-                        <img src="assets/alipay.jpg" alt="支付宝" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22><rect fill=%22%231671e8%22 width=%2280%22 height=%2280%22 rx=%228%22/><text x=%2250%%22 y=%2255%%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>支付宝</text></svg>'">
-                        <p>支付宝</p>
-                    </div>
-                    <div class="payment-method-btn" id="wechatBtn" onclick="selectPaymentMethod('wechat')">
-                        <img src="assets/wechat.jpg" alt="微信" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22><rect fill=%22%2307c160%22 width=%2280%22 height=%2280%22 rx=%228%22/><text x=%2250%%22 y=%2255%%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>微信</text></svg>'">
-                        <p>微信支付</p>
-                    </div>
-                </div>
-                <div class="payment-qrcode" id="qrcodeArea">
-                    <img id="qrcodeImg" src="assets/alipay.jpg" alt="付款码">
-                    <p>📱 请使用<span id="qrcodeMethod">支付宝</span>扫码支付</p>
-                </div>
-                <button class="confirm-pay-btn" onclick="confirmPayment()">✅ 已支付，立即解锁</button>
+    <!-- 激活套餐选择弹窗 -->
+    <div class="activate-modal" id="activateModal">
+        <div class="activate-modal-content">
+            <div class="activate-modal-header">
+                <h3>💎 选择会员套餐</h3>
+                <button class="activate-modal-close" onclick="closeActivateModal()">&times;</button>
             </div>
             
-            <!-- 支付成功 -->
-            <div class="payment-success" id="paymentSuccess">
-                <div class="icon">🎉</div>
-                <h3>支付成功！</h3>
-                <p id="successMsg">资料已解锁，可直接观看</p>
-                <button class="confirm-pay-btn" onclick="closePaymentModal();location.reload();" style="margin-top:16px;">开始学习</button>
+            <div class="package-cards">
+                <!-- 月卡 -->
+                <div class="package-card" data-package="month" data-price="29" onclick="selectPackage(this)">
+                    <div class="package-card-header">
+                        <span class="package-name">月卡会员</span>
+                        <span class="package-tag hot">热门</span>
+                    </div>
+                    <div class="package-price">¥29<small>/月</small></div>
+                    <div class="package-desc">适合短期学习需求</div>
+                    <div class="package-benefits">
+                        <span>✅</span> 解锁全部12个资料<br>
+                        <span>✅</span> 有效期30天<br>
+                        <span>✅</span> 持续更新内容
+                    </div>
+                </div>
+                
+                <!-- 季卡 -->
+                <div class="package-card" data-package="quarter" data-price="79" onclick="selectPackage(this)">
+                    <div class="package-card-header">
+                        <span class="package-name">季卡会员</span>
+                        <span class="package-tag normal">推荐</span>
+                    </div>
+                    <div class="package-price">¥79<small>/季</small></div>
+                    <div class="package-desc">适合持续学习3个月</div>
+                    <div class="package-benefits">
+                        <span>✅</span> 解锁全部12个资料<br>
+                        <span>✅</span> 有效期90天<br>
+                        <span>✅</span> 节省¥8元
+                    </div>
+                </div>
+                
+                <!-- 年卡 -->
+                <div class="package-card" data-package="year" data-price="199" onclick="selectPackage(this)">
+                    <div class="package-card-header">
+                        <span class="package-name">年卡会员</span>
+                        <span class="package-tag best">超值</span>
+                    </div>
+                    <div class="package-price">¥199<small>/年</small></div>
+                    <div class="package-desc">适合长期学习用户</div>
+                    <div class="package-benefits">
+                        <span>✅</span> 解锁全部12个资料<br>
+                        <span>✅</span> 有效期365天<br>
+                        <span>✅</span> 节省¥149元
+                    </div>
+                </div>
+                
+                <!-- 永久卡 -->
+                <div class="package-card" data-package="forever" data-price="399" onclick="selectPackage(this)">
+                    <div class="package-card-header">
+                        <span class="package-name">永久会员</span>
+                        <span class="package-tag normal">尊享</span>
+                    </div>
+                    <div class="package-price">¥399<small>/永久</small></div>
+                    <div class="package-desc">一次购买，终身使用</div>
+                    <div class="package-benefits">
+                        <span>✅</span> 解锁全部12个资料<br>
+                        <span>✅</span> 永久有效<br>
+                        <span>✅</span> 永久更新特权
+                    </div>
+                </div>
             </div>
+            
+            <button class="confirm-package-btn" id="confirmPackageBtn" onclick="goToActivate()">
+                立即开通 月卡 ¥29
+            </button>
         </div>
     </div>
 
     <script>
         // 资料数据
-        const SINGLE_PRICE = 9.9;
-        const MONTH_PRICE = 29;
-        const TOTAL_MATERIALS = 22;
-        
         const materials = [
-            { id: 0, title: '🤖 扣子技能下载购买教程', category: 'video', desc: '开发者金沐沐（原祯宝贝）教你如何下载购买扣子技能', views: 9800, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW' },
-            { id: 0, title: '💡 爆款文案提示词使用教程', category: 'video', desc: '金沐沐教你如何使用爆款文案视频提示词工具', views: 9200, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEaV', tag: 'NEW' },
-            { id: 0, title: '📜 抖音提取文案方法', category: 'video', desc: '快速从抖音视频中提取文案内容的技巧', views: 9500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEEj', tag: 'NEW' },
-            { id: 0, title: '📱 快手提取文案教程', category: 'video', desc: '快手视频文案提取教程', views: 8900, biliUrl: 'https://www.bilibili.com/video/BV1Ge9yBjEm2', tag: 'NEW' },
-            { id: 0, title: '💬 元宝好友提取文案教程', category: 'video', desc: '添加元宝AI好友快速提取文案的方法', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESv', tag: 'NEW' },
-            { id: 0, title: '🎨 即梦出镜人设置教程', category: 'video', desc: '即梦AI出镜人功能设置完整教程', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCEZy', tag: 'NEW' },
-            { id: 0, title: '✏️ 即梦生成视频修改方式', category: 'video', desc: '即梦AI生成视频不满意时的修改方法教程', views: 8300, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEB6', tag: 'NEW' },
-            { id: 0, title: '💾 即梦视频下载保存教程', category: 'video', desc: '即梦AI生成视频下载保存到手机相册教程', views: 8100, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEmY', tag: 'NEW' },
-            { id: 0, title: '👤 即梦修改昵称教程', category: 'video', desc: '即梦AI账号昵称修改操作教程', views: 7900, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCE46', tag: 'NEW' },
-            { id: 0, title: '📲 享脉下载设置教程', category: 'video', desc: '详细讲解享脉App下载和基础设置操作', views: 8500, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEiW', tag: 'NEW' },
-            { id: 13, title: '📱 手机下载软件教程', category: 'video', desc: '教你如何在手机上下载安装所需软件', views: 5600, biliUrl: 'https://www.bilibili.com/video/BV1Ye9yBjEjq', tag: 'NEW' },
-            { id: 14, title: '✂️ 下载视频二次剪辑上传教程', category: 'video', desc: '如何下载视频并进行二次剪辑上传到视频号', views: 5200, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BKEtH', tag: 'NEW' },
-            { id: 15, title: '🚫 小程序免费去水印方法', category: 'video', desc: '教你免费去除视频水印的实用方法', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Fmo1BMEBk', tag: 'NEW' },
-            { id: 16, title: '💡 爆款文案视频提示词生成', category: 'video', desc: '快速生成制作视频用到的爆款文案提示词', views: 6200, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEBn', tag: 'NEW' },
-            { id: 17, title: '📝 必剪免费生成字幕教程', category: 'video', desc: '使用必剪APP免费自动生成视频字幕', views: 4500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: 'NEW' },
-            { id: 18, title: '🎬 视频二次剪辑详细教程', category: 'video', desc: '完整的视频二次剪辑制作教程', views: 5400, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESj', tag: 'NEW' },
-            { id: 19, title: '📱 视频上传到快手操作步骤', category: 'video', desc: '教你如何将视频上传到快手平台', views: 4600, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTECq', tag: 'NEW' },
-            { id: 20, title: '🎵 视频快速上传到抖音教程', category: 'video', desc: '教你如何快速将视频上传到抖音平台', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEeq', tag: 'NEW' },
-            { id: 21, title: '📺 视频上传到视频号教程', category: 'video', desc: '详细讲解视频上传到微信视频号的操作步骤', views: 5000, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTE8x', tag: 'NEW' },
-            { id: 1, title: '🎬 抖音爆款视频制作教程', category: 'video', desc: '从0到1教你打造百万播放爆款视频', views: 12580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT', tag: '热门' },
-            { id: 2, title: '📱 剪映专业版完整教程', category: 'video', desc: '从入门到精通，涵盖所有剪辑技巧', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1iZYiYnJp4', tag: '推荐' },
-            { id: 3, title: '🎨 即梦AI使用教程', category: 'video', desc: 'AI图片和视频生成从入门到精通', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9', tag: '热门' },
-            { id: 4, title: '💰 自媒体变现全攻略', category: 'video', desc: '月入过万的秘密，多种变现方式详解', views: 23450, biliUrl: 'https://www.bilibili.com/video/BV1example1', tag: '精华' },
-            { id: 5, title: '🎙️ 直播带货话术大全', category: 'video', desc: '金牌主播都在用的高转化话术', views: 19870, biliUrl: 'https://www.bilibili.com/video/BV1example2', tag: '热门' },
-            { id: 6, title: '📸 小红书爆款封面制作', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, biliUrl: 'https://www.bilibili.com/video/BV1example3', tag: '推荐' },
-            { id: 7, title: '✍️ 短视频文案写作技巧', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, biliUrl: 'https://www.bilibili.com/video/BV6xxx', tag: '实用' },
-            { id: 8, title: '📋 小红书运营实战笔记', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, biliUrl: 'https://www.bilibili.com/video/BV2xxx', tag: '精华' },
-            { id: 9, title: '🛠️ AI剪辑神器VIP版', category: 'tool', desc: '一键自动剪辑工具，提高效率10倍', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV3xxx', tag: '工具' },
-            { id: 10, title: '📊 数据分析工具合集', category: 'tool', desc: '运营必备数据分析工具', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV8xxx', tag: '工具' },
-            { id: 11, title: '📑 PPT模板素材包', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, biliUrl: 'https://www.bilibili.com/video/BV5xxx', tag: '素材' },
-            { id: 12, title: '🎨 视频封面模板库', category: 'template', desc: '200+爆款封面PSD源文件', views: 9870, biliUrl: 'https://www.bilibili.com/video/BV6xxx', tag: '素材' },
+            { id: 0, title: '🤖 扣子技能下载购买教程', category: 'video', desc: '开发者金沐沐教你如何下载购买扣子技能', views: 9800, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW' },
+            { id: 1, title: '💡 爆款文案提示词使用教程', category: 'video', desc: '金沐沐教你如何使用爆款文案视频提示词工具', views: 9200, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEaV', tag: 'NEW' },
+            { id: 2, title: '📜 抖音提取文案方法', category: 'video', desc: '快速从抖音视频中提取文案内容的技巧', views: 9500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEEj', tag: 'NEW' },
+            { id: 3, title: '📱 快手提取文案教程', category: 'video', desc: '快手视频文案提取教程', views: 8900, biliUrl: 'https://www.bilibili.com/video/BV1Ge9yBjEm2', tag: 'NEW' },
+            { id: 4, title: '💬 元宝好友提取文案教程', category: 'video', desc: '添加元宝AI好友快速提取文案的方法', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESv', tag: 'NEW' },
+            { id: 5, title: '🎨 即梦出镜人设置教程', category: 'video', desc: '即梦AI出镜人功能设置完整教程', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCEZy', tag: 'NEW' },
+            { id: 6, title: '✏️ 即梦生成视频修改方式', category: 'video', desc: '即梦AI生成视频不满意时的修改方法教程', views: 8300, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEB6', tag: 'NEW' },
+            { id: 7, title: '💾 即梦视频下载保存教程', category: 'video', desc: '即梦AI生成视频下载保存到手机相册教程', views: 8100, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEmY', tag: 'NEW' },
+            { id: 8, title: '👤 即梦修改昵称教程', category: 'video', desc: '即梦AI账号昵称修改操作教程', views: 7900, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCE46', tag: 'NEW' },
+            { id: 9, title: '📲 享脉下载设置教程', category: 'video', desc: '详细讲解享脉App下载和基础设置操作', views: 8500, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEiW', tag: 'NEW' },
+            { id: 10, title: '📱 手机下载软件教程', category: 'video', desc: '教你如何在手机上下载安装所需软件', views: 5600, biliUrl: 'https://www.bilibili.com/video/BV1Ye9yBjEjq', tag: 'NEW' },
+            { id: 11, title: '✂️ 下载视频二次剪辑上传教程', category: 'video', desc: '如何下载视频并进行二次剪辑上传到视频号', views: 5200, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BKEtH', tag: 'NEW' },
+            { id: 12, title: '🚫 小程序免费去水印方法', category: 'video', desc: '教你免费去除视频水印的实用方法', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Fmo1BMEBk', tag: 'NEW' },
+            { id: 13, title: '💡 爆款文案视频提示词生成', category: 'video', desc: '快速生成制作视频用到的爆款文案提示词', views: 6200, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEBn', tag: 'NEW' },
+            { id: 14, title: '📝 必剪免费生成字幕教程', category: 'video', desc: '使用必剪APP免费自动生成视频字幕', views: 4500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: 'NEW' },
+            { id: 15, title: '🎬 视频二次剪辑详细教程', category: 'video', desc: '完整的视频二次剪辑制作教程', views: 5400, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESj', tag: 'NEW' },
+            { id: 16, title: '📱 视频上传到快手操作步骤', category: 'video', desc: '教你如何将视频上传到快手平台', views: 4600, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTECq', tag: 'NEW' },
+            { id: 17, title: '🎵 视频快速上传到抖音教程', category: 'video', desc: '教你如何快速将视频上传到抖音平台', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEeq', tag: 'NEW' },
+            { id: 18, title: '📺 视频上传到视频号教程', category: 'video', desc: '详细讲解视频上传到微信视频号的操作步骤', views: 5000, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTE8x', tag: 'NEW' },
+            { id: 19, title: '🎬 抖音爆款视频制作教程', category: 'video', desc: '从0到1教你打造百万播放爆款视频', views: 12580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT', tag: '热门' },
+            { id: 20, title: '📱 剪映专业版完整教程', category: 'video', desc: '从入门到精通，涵盖所有剪辑技巧', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1iZYiYnJp4', tag: '推荐' },
+            { id: 21, title: '🎨 即梦AI使用教程', category: 'video', desc: 'AI图片和视频生成从入门到精通', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9', tag: '热门' },
+            { id: 22, title: '💰 自媒体变现全攻略', category: 'video', desc: '月入过万的秘密，多种变现方式详解', views: 23450, biliUrl: 'https://www.bilibili.com/video/BV1example1', tag: '精华' },
+            { id: 23, title: '🎙️ 直播带货话术大全', category: 'video', desc: '金牌主播都在用的高转化话术', views: 19870, biliUrl: 'https://www.bilibili.com/video/BV1example2', tag: '热门' },
+            { id: 24, title: '📸 小红书爆款封面制作', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, biliUrl: 'https://www.bilibili.com/video/BV1example3', tag: '推荐' },
+            { id: 25, title: '✍️ 短视频文案写作技巧', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, biliUrl: 'https://www.bilibili.com/video/BV6xxx', tag: '实用' },
+            { id: 26, title: '📋 小红书运营实战笔记', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, biliUrl: 'https://www.bilibili.com/video/BV2xxx', tag: '精华' },
+            { id: 27, title: '🛠️ AI剪辑神器VIP版', category: 'tool', desc: '一键自动剪辑工具，提高效率10倍', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV3xxx', tag: '工具' },
+            { id: 28, title: '📊 数据分析工具合集', category: 'tool', desc: '运营必备数据分析工具', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV8xxx', tag: '工具' },
+            { id: 29, title: '📑 PPT模板素材包', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, biliUrl: 'https://www.bilibili.com/video/BV5xxx', tag: '素材' },
+            { id: 30, title: '🎨 视频封面模板库', category: 'template', desc: '200+爆款封面PSD源文件', views: 9870, biliUrl: 'https://www.bilibili.com/video/BV6xxx', tag: '素材' },
         ];
         
         let currentCategory = 'all';
-        let selectedPricing = 'month'; // 默认月套餐
-        let currentPaymentMaterial = null; // 当前支付单个资料
-        let selectedPaymentMethod = 'alipay';
+        let selectedPackage = 'month';
+        let selectedPackagePrice = 29;
         
-        // 获取已购买的资料ID列表
-        function getOwnedMaterials() {
-            const owned = localStorage.getItem('ownedMaterials');
-            return owned ? JSON.parse(owned) : [];
-        }
-        
-        // 会员信息 - 免费期至2031年
-        const FREE_EXPIRE_TIME = new Date('2031-04-29').getTime();
+        // 预览相关
+        const PREVIEW_SECONDS = 5;
+        let currentPreviewId = null;
+        let previewTimer = null;
+        let countdownInterval = null;
         
         // 获取会员信息
         function getMemberInfo() {
@@ -650,52 +676,37 @@
             return null;
         }
         
-        // 检查是否在免费期内
-        function isFreeAccess() {
-            return Date.now() < FREE_EXPIRE_TIME;
-        }
-        
-        // 检查是否有月卡
-        function hasMonthCard() {
-            return getMemberInfo() !== null;
+        // 获取等级名称
+        function getLevelName(level) {
+            const names = { 
+                'month': '月卡会员', 
+                'quarter': '季卡会员', 
+                'year': '年卡会员', 
+                'forever': '永久会员' 
+            };
+            return names[level] || '会员';
         }
         
         // 更新UI状态
         function updateUI() {
-            const owned = getOwnedMaterials();
             const member = getMemberInfo();
-            const pricingSection = document.getElementById('pricingSection');
             const memberCard = document.getElementById('memberCard');
+            const upgradeBanner = document.getElementById('upgradeBanner');
             
             if (member) {
-                // 月卡会员 - 隐藏套餐选择
-                pricingSection.style.display = 'none';
+                // 已开通会员
                 memberCard.style.display = 'block';
+                upgradeBanner.style.display = 'none';
                 document.getElementById('memberLevel').textContent = getLevelName(member.level);
-                document.getElementById('memberExpire').textContent = '有效期至：' + new Date(member.expireTime).toLocaleDateString();
+                document.getElementById('memberExpire').textContent = member.level === 'forever' ? 
+                    '永久有效' : '有效期至：' + new Date(member.expireTime).toLocaleDateString();
             } else {
-                pricingSection.style.display = 'block';
+                // 未开通
                 memberCard.style.display = 'none';
+                upgradeBanner.style.display = 'block';
             }
             
             renderMaterials();
-        }
-        
-        function getLevelName(level) {
-            const names = { 'month': '月卡会员', 'quarter': '季卡会员', 'year': '年卡会员', 'forever': '永久会员' };
-            return names[level] || '会员';
-        }
-        
-        // 选择套餐
-        function selectPricing(type) {
-            selectedPricing = type;
-            document.getElementById('singleCard').classList.toggle('recommended', type === 'single');
-            document.getElementById('monthCard').classList.toggle('recommended', type === 'month');
-            
-            if (type === 'month') {
-                // 直接跳转激活码页面购买月卡
-                location.href = 'activate.html';
-            }
         }
         
         // 渲染资料列表
@@ -707,35 +718,104 @@
                 filtered = materials.filter(m => m.category === currentCategory);
             }
             
-            const owned = getOwnedMaterials();
-            const hasMonth = hasMonthCard();
-            const isFree = isFreeAccess(); // 免费期内
-            const isUnlocked = hasMonth || isFree; // 月卡或免费期
+            const member = getMemberInfo();
+            const isMember = member !== null;
             
             list.innerHTML = filtered.map(m => {
-                const isOwned = owned.includes(m.id) || isUnlocked;
                 const iconClass = m.category === 'video' ? 'video' : m.category === 'tool' ? 'tool' : m.category === 'doc' ? 'doc' : 'template';
                 const iconEmoji = m.category === 'video' ? '📹' : m.category === 'tool' ? '💻' : m.category === 'doc' ? '📄' : '📋';
+                const tagBg = m.tag === '热门' ? 'background:linear-gradient(135deg,#ef4444,#dc2626)' : 
+                              m.tag === '推荐' ? 'background:linear-gradient(135deg,#667eea,#764ba2)' :
+                              m.tag === '精华' ? 'background:linear-gradient(135deg,#f59e0b,#e65100)' : 
+                              'background:linear-gradient(135deg,#10b981,#059669)';
                 
-                return `
-                    <div class="material-card">
-                        <div class="material-icon ${iconClass}">${iconEmoji}</div>
-                        <div class="material-info">
-                            <div class="material-title">${m.title}</div>
-                            <div class="material-desc">${m.desc}</div>
-                            <div class="material-meta">👁️ ${m.views}次浏览 ${m.tag ? '· <span style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:2px 8px;border-radius:10px;font-size:10px;">' + m.tag + '</span>' : ''}</div>
+                if (isMember) {
+                    // 会员 - 直接显示解锁状态
+                    return `
+                        <div class="material-card unlocked-card">
+                            <div class="material-header">
+                                <div class="material-icon ${iconClass}">${iconEmoji}</div>
+                                <div class="material-info">
+                                    <div class="material-title">
+                                        ${m.title.substring(4)}
+                                        <span class="unlocked-badge">✓ 已解锁</span>
+                                    </div>
+                                    <div class="material-desc">${m.desc}</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;padding:10px 0;">
+                                <a href="${m.biliUrl}" target="_blank" class="view-btn">▶️ 立即观看完整教程</a>
+                            </div>
                         </div>
-                        <div class="material-action">
-                            ${isOwned ? 
-                                `<div class="material-price owned">${isUnlocked && !hasMonth ? '🆓 免费学至2031' : '<span class="owned-badge">已购买</span>'}</div>
-                                 <button class="btn-view" onclick="openMaterial(${m.id})">▶️</button>` :
-                                `<div class="material-price">¥${SINGLE_PRICE}</div>
-                                 <button class="btn-buy" onclick="buyMaterial(${m.id})">购买</button>`
-                            }
+                    `;
+                } else {
+                    // 非会员 - 显示预览+开通引导
+                    return `
+                        <div class="material-card" id="card-${m.id}">
+                            <div class="material-header">
+                                <div class="material-icon ${iconClass}">${iconEmoji}</div>
+                                <div class="material-info">
+                                    <div class="material-title">
+                                        ${m.title.substring(4)}
+                                        ${m.tag ? `<span style="${tagBg};color:#fff;padding:2px 8px;border-radius:10px;font-size:10px;">${m.tag}</span>` : ''}
+                                    </div>
+                                    <div class="material-desc">👁️ ${m.views.toLocaleString()}次浏览</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 视频预览区 -->
+                            <div class="preview-area">
+                                <iframe src="${m.biliUrl}" frameborder="0" allowfullscreen style="height:200px;"></iframe>
+                                <div class="preview-overlay">
+                                    <div style="color:white;font-size:12px;text-align:center;padding:10px;">
+                                        <div style="font-size:11px;opacity:0.8;">👆 付费内容仅展示预览</div>
+                                    </div>
+                                </div>
+                                <!-- 预览遮罩 -->
+                                <div class="preview-blur" id="blur-${m.id}">
+                                    <div class="preview-countdown" id="countdown-${m.id}">${PREVIEW_SECONDS}</div>
+                                    <div class="preview-hint">免费试看${PREVIEW_SECONDS}秒</div>
+                                </div>
+                            </div>
+                            
+                            <!-- 开通激活区 -->
+                            <div class="activate-section">
+                                <p>📺 视频内容：${m.desc}</p>
+                                <div class="price-info">💡 开通会员即可观看完整版，最低 ¥29/月</div>
+                                <a href="activate.html" class="activate-btn">🔓 开通会员解锁全部${materials.length}个资料</a>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                }
             }).join('');
+            
+            // 启动预览计时器
+            if (!isMember) {
+                startPreviewTimers();
+            }
+        }
+        
+        // 启动所有预览计时器
+        function startPreviewTimers() {
+            materials.forEach(m => {
+                const blur = document.getElementById('blur-' + m.id);
+                const countdown = document.getElementById('countdown-' + m.id);
+                if (blur && countdown) {
+                    let seconds = PREVIEW_SECONDS;
+                    countdownInterval = setInterval(() => {
+                        seconds--;
+                        if (countdown) {
+                            countdown.textContent = seconds;
+                        }
+                        if (seconds <= 0) {
+                            clearInterval(countdownInterval);
+                            if (blur) {
+                                blur.style.display = 'none';
+                            }
+                        }
+                    }, 1000);
+                }
+            });
         }
         
         // 分类切换
@@ -748,73 +828,48 @@
             });
         });
         
-        // 购买单个资料
-        function buyMaterial(id) {
-            currentPaymentMaterial = id;
-            const material = materials.find(m => m.id === id);
-            if (material) {
-                document.getElementById('paymentTitle').textContent = '💳 解锁：' + material.title.substring(4);
-                document.getElementById('modalAmount').textContent = SINGLE_PRICE;
-                document.getElementById('paymentForm').style.display = 'block';
-                document.getElementById('paymentSuccess').classList.remove('show');
-                document.getElementById('paymentModal').classList.add('active');
+        // 选择套餐
+        function selectPackage(el) {
+            document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedPackage = el.dataset.package;
+            selectedPackagePrice = parseInt(el.dataset.price);
+            const packageName = el.querySelector('.package-name').textContent;
+            document.getElementById('confirmPackageBtn').textContent = `立即开通 ${packageName} ¥${selectedPackagePrice}`;
+        }
+        
+        // 打开激活弹窗
+        function openActivateModal() {
+            document.getElementById('activateModal').classList.add('active');
+            // 默认选中月卡
+            const monthCard = document.querySelector('.package-card[data-package="month"]');
+            if (monthCard) {
+                selectPackage(monthCard);
             }
         }
         
-        // 打开资料
-        function openMaterial(id) {
-            const material = materials.find(m => m.id === id);
-            if (material) {
-                window.location.href = material.biliUrl;
-            }
+        // 关闭激活弹窗
+        function closeActivateModal() {
+            document.getElementById('activateModal').classList.remove('active');
         }
         
-        // 选择支付方式
-        function selectPaymentMethod(method) {
-            selectedPaymentMethod = method;
-            document.getElementById('alipayBtn').classList.toggle('active', method === 'alipay');
-            document.getElementById('wechatBtn').classList.toggle('active', method === 'wechat');
-            document.getElementById('qrcodeMethod').textContent = method === 'alipay' ? '支付宝' : '微信支付';
+        // 跳转激活页面
+        function goToActivate() {
+            window.location.href = `activate.html?package=${selectedPackage}`;
         }
         
-        // 确认支付
-        function confirmPayment() {
-            // 标记资料已购买
-            if (currentPaymentMaterial) {
-                const owned = getOwnedMaterials();
-                if (!owned.includes(currentPaymentMaterial)) {
-                    owned.push(currentPaymentMaterial);
-                    localStorage.setItem('ownedMaterials', JSON.stringify(owned));
-                }
-            }
-            
-            // 显示成功
-            document.getElementById('paymentForm').style.display = 'none';
-            document.getElementById('paymentSuccess').classList.add('show');
-            document.getElementById('successMsg').textContent = '资料已解锁，可直接观看';
-        }
-        
-        // 关闭支付弹窗
-        function closePaymentModal() {
-            document.getElementById('paymentModal').classList.remove('active');
-            currentPaymentMaterial = null;
-        }
-        
-        // 点击外部关闭
-        document.getElementById('paymentModal').addEventListener('click', function(e) {
+        // 点击外部关闭弹窗
+        document.getElementById('activateModal').addEventListener('click', function(e) {
             if (e.target === this) {
-                closePaymentModal();
+                closeActivateModal();
             }
         });
         
         // 初始化
         updateUI();
         
-        // 默认选中月卡
-        selectPricing('month');
-        
-        // 定期更新
-        setInterval(updateUI, 3000);
+        // 定期检查会员状态
+        setInterval(updateUI, 2000);
     </script>
 </body>
 </html>
