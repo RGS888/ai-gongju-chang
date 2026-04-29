@@ -420,51 +420,51 @@
             </div>
             <div class="sidebar-divider"></div>
             <div class="sidebar-title">📂 工具分类</div>
-            <div class="sidebar-item active" onclick="filterCategory('all')">
+            <a href="#" class="sidebar-item active" onclick="filterCategory('all');return false;">
                 <span class="emoji">🏠</span><span>全部工具</span><span class="count" id="count-all">700+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('chat')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('chat');return false;">
                 <span class="emoji">💬</span><span>AI智能对话</span><span class="count">25+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('image')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('image');return false;">
                 <span class="emoji">🎨</span><span>AI图像生成</span><span class="count">35+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('video')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('video');return false;">
                 <span class="emoji">🎬</span><span>AI视频创作</span><span class="count">30+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('music')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('music');return false;">
                 <span class="emoji">🎵</span><span>AI音乐语音</span><span class="count">20+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('office')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('office');return false;">
                 <span class="emoji">💼</span><span>AI智慧办公</span><span class="count">30+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('coding')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('coding');return false;">
                 <span class="emoji">💻</span><span>AI编程开发</span><span class="count">20+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('agent')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('agent');return false;">
                 <span class="emoji">🤖</span><span>AI智能体平台</span><span class="count">20+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('writing')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('writing');return false;">
                 <span class="emoji">📝</span><span>AI写作工具</span><span class="count">25+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('design')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('design');return false;">
                 <span class="emoji">🖼️</span><span>AI商业设计</span><span class="count">20+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('enterprise')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('enterprise');return false;">
                 <span class="emoji">🏢</span><span>AI企业服务</span><span class="count">20+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('ecommerce')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('ecommerce');return false;">
                 <span class="emoji">🛒</span><span>AI电商工具</span><span class="count">15+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('learning')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('learning');return false;">
                 <span class="emoji">📖</span><span>AI学习教育</span><span class="count">15+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('life')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('life');return false;">
                 <span class="emoji">🌟</span><span>AI趣味工具</span><span class="count">15+</span>
-            </div>
-            <div class="sidebar-item" onclick="filterCategory('live')">
+            </a>
+            <a href="#" class="sidebar-item" onclick="filterCategory('live');return false;">
                 <span class="emoji">📺</span><span>直播工具</span><span class="count" style="background:var(--danger);color:#fff;">HOT</span>
-            </div>
+            </a>
             <div class="sidebar-item" onclick="window.open('https://www.aliyun.com/minisite/goods?userCode=8ont37k6','_blank')">
                 <span class="emoji">☁️</span><span style="color:#ff6a00;font-weight:600">阿里云优惠</span>
             </div>
@@ -1184,7 +1184,14 @@ let activeTag = 'all';
 function filterCategory(cat) {
     activeCat = cat;
     document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-    event && event.currentTarget && event.currentTarget.classList.add('active');
+    // 支持 <a> 标签和 <div> 标签
+    if(event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    } else {
+        // 兼容通过 URL hash 触发的场景
+        const activeLink = document.querySelector(`.sidebar-item[onclick*="filterCategory('${cat}')"]`);
+        if(activeLink) activeLink.classList.add('active');
+    }
     if(cat === 'all') {
         document.querySelectorAll('[id$="-grid"]').forEach(g => g.style.display='');
         document.querySelector('.hot-section').style.display='';
