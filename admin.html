@@ -652,7 +652,7 @@
         function handleLogin() {
             const username = document.getElementById('usernameInput').value.trim();
             const password = document.getElementById('passwordInput').value;
-            const savedPassword = localStorage.getItem('adminPassword') || 'admin123';
+            const savedPassword = localStorage.getItem('adminPassword') || 'Jd123321';
             
             if (!username) {
                 showAlert('loginAlert', '请输入管理员账号！', 'error');
@@ -727,9 +727,11 @@
             alert.className = 'alert alert-' + type;
             alert.classList.remove('hidden');
             
+            // 错误提示停留更长时间
+            const duration = type === 'error' ? 5000 : 3000;
             setTimeout(() => {
                 alert.classList.add('hidden');
-            }, 3000);
+            }, duration);
         }
 
         // 加载教程列表
