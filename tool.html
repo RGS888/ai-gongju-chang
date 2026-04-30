@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具详情 - AI工具场</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+        a{color:inherit;text-decoration:none}
+        
+        /* Header */
+        .header{background:rgba(15,17,23,0.95);border-bottom:1px solid rgba(99,102,241,0.2);position:fixed;top:0;left:0;right:0;height:60px;z-index:1000;backdrop-filter:blur(20px);display:flex;align-items:center;padding:0 24px}
+        .header-logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:#fff}
+        .header-logo .icon{font-size:26px;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .header-back{display:flex;align-items:center;gap:8px;margin-left:auto;color:rgba(255,255,255,0.7);font-size:14px;cursor:pointer;transition:color 0.2s}
+        .header-back:hover{color:#a78bfa}
+        
+        /* Main */
+        .main{padding-top:80px;max-width:900px;margin:0 auto;padding:80px 24px 48px}
+        
+        /* Tool Header */
+        .tool-header{background:#161b27;border:1px solid rgba(99,102,241,0.15);border-radius:20px;padding:32px;margin-bottom:24px;position:relative;overflow:hidden}
+        .tool-header::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--cat-color,#6366f1),var(--cat-color-end,#a855f7))}
+        .tool-header-inner{display:flex;gap:24px;align-items:flex-start}
+        .tool-icon{width:80px;height:80px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;background:linear-gradient(135deg,var(--cat-color,#6366f1),var(--cat-color-end,#a855f7))}
+        .tool-info{flex:1}
+        .tool-name{font-size:28px;font-weight:800;color:#fff;margin-bottom:8px}
+        .tool-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+        .tool-tag{padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500}
+        .tool-tag.hot{background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.2)}
+        .tool-tag.free{background:rgba(34,197,94,0.12);color:#86efac;border:1px solid rgba(34,197,94,0.2)}
+        .tool-tag.new{background:rgba(59,130,246,0.12);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
+        .tool-tag.fee{background:rgba(251,191,36,0.12);color:#fde68a;border:1px solid rgba(251,191,36,0.2)}
+        .tool-category-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2);border-radius:20px;font-size:13px;color:#a78bfa}
+        .tool-category-badge i{margin-right:4px}
+        
+        /* Action Button */
+        .tool-actions{position:absolute;top:32px;right:32px}
+        .go-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,#6366f1,#7c3aed);color:#fff;border:none;border-radius:30px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(99,102,241,0.4);text-decoration:none}
+        .go-btn:hover{transform:scale(1.05);box-shadow:0 6px 30px rgba(99,102,241,0.6)}
+        .go-btn i{font-size:14px}
+        
+        /* Section */
+        .section{background:#161b27;border:1px solid rgba(99,102,241,0.15);border-radius:20px;padding:28px;margin-bottom:24px}
+        .section-title{display:flex;align-items:center;gap:12px;font-size:18px;font-weight:700;color:#f1f5f9;margin-bottom:20px}
+        .section-title i{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--cat-color,#6366f1),var(--cat-color-end,#a855f7));color:#fff;font-size:16px}
+        
+        /* Description */
+        .desc-text{font-size:16px;line-height:1.8;color:#cbd5e1}
+        
+        /* Features */
+        .features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+        .feature-item{display:flex;align-items:flex-start;gap:12px;padding:16px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
+        .feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--cat-color,#6366f1),var(--cat-color-end,#a855f7));color:#fff;flex-shrink:0;font-size:16px}
+        .feature-text{font-size:14px;color:#94a3b8;line-height:1.5}
+        .feature-text strong{display:block;color:#e2e8f0;margin-bottom:4px}
+        
+        /* Pricing */
+        .pricing-info{display:flex;gap:16px;flex-wrap:wrap}
+        .price-item{flex:1;min-width:150px;padding:20px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.06);text-align:center}
+        .price-label{font-size:13px;color:#64748b;margin-bottom:8px}
+        .price-value{font-size:24px;font-weight:800;color:#22c55e}
+        .price-item.paid .price-value{color:#f59e0b}
+        .price-note{font-size:12px;color:#475569;margin-top:6px}
+        
+        /* Usage */
+        .usage-list{list-style:none}
+        .usage-item{display:flex;align-items:flex-start;gap:12px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+        .usage-item:last-child{border-bottom:none}
+        .usage-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--cat-color,#6366f1),var(--cat-color-end,#a855f7));color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .usage-text{font-size:14px;color:#94a3b8;line-height:1.6}
+        
+        /* Tips */
+        .tips-list{list-style:none}
+        .tip-item{display:flex;align-items:flex-start;gap:10px;padding:12px 0}
+        .tip-icon{color:#fbbf24;font-size:16px;flex-shrink:0;margin-top:2px}
+        .tip-text{font-size:14px;color:#94a3b8;line-height:1.6}
+        
+        /* Loading */
+        .loading{text-align:center;padding:80px 0;color:#64748b}
+        .loading i{font-size:48px;margin-bottom:16px;animation:spin 1s linear infinite}
+        @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+        
+        /* Not Found */
+        .not-found{text-align:center;padding:80px 0;color:#64748b}
+        .not-found i{font-size:64px;margin-bottom:16px;color:#ef4444}
+        .not-found h2{font-size:24px;color:#e2e8f0;margin-bottom:8px}
+        
+        /* Responsive */
+        @media(max-width:768px){
+            .tool-header-inner{flex-direction:column;align-items:center;text-align:center}
+            .tool-actions{position:static;margin-top:20px}
+            .go-btn{width:100%;justify-content:center}
+            .tool-name{font-size:24px}
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="header-logo">
+            <i class="fas fa-robot icon"></i>
+            <span>AI工具场</span>
+        </a>
+        <a href="index.html" class="header-back">
+            <i class="fas fa-arrow-left"></i>
+            <span>返回导航</span>
+        </a>
+    </header>
+    
+    <main class="main" id="content">
+        <div class="loading">
+            <i class="fas fa-spinner"></i>
+            <p>正在加载...</p>
+        </div>
+    </main>
+    
+    <script>
+        // 工具分类主题色
+        const catColors = {
+            'chat': {from:'#4f46e5',to:'#818cf8'},
+            'image': {from:'#7c3aed',to:'#c084fc'},
+            'video': {from:'#db2777',to:'#f472b6'},
+            'music': {from:'#0891b2',to:'#22d3ee'},
+            'office': {from:'#1d4ed8',to:'#60a5fa'},
+            'coding': {from:'#065f46',to:'#34d399'},
+            'agent': {from:'#c2410c',to:'#fb923c'},
+            'writing': {from:'#4d7c0f',to:'#a3e635'},
+            'design': {from:'#9f1239',to:'#fb7185'},
+            'enterprise': {from:'#1e3a5f',to:'#3b82f6'},
+            'ecommerce': {from:'#b45309',to:'#fbbf24'},
+            'learning': {from:'#0369a1',to:'#38bdf8'},
+            'life': {from:'#d97706',to:'#fcd34d'},
+            'live': {from:'#991b1b',to:'#f87171'}
+        };
+        
+        const catNames = {
+            'chat':'AI智能对话','image':'AI图像生成','video':'AI视频创作','music':'AI音乐创作',
+            'office':'效率办公','coding':'AI编程','agent':'AI智能体','writing':'AI写作',
+            'design':'设计工具','enterprise':'企业服务','ecommerce':'电商营销','learning':'学习教育',
+            'life':'趣味生活','live':'直播工具'
+        };
+        
+        // 从URL获取工具ID
+        const params = new URLSearchParams(window.location.search);
+        const toolId = params.get('id');
+        
+        // 存储工具数据
+        const tools = [
+            // ===== 热门推荐 =====
+            {id:'h0',name:'WorkBuddy',emoji:'🦐',cat:'chat',tags:['hot','free','new'],popular:true,desc:'你一虾我一虾，Credits赚回家！AI智能助手平台，邀请好友赚积分，积分可兑换各类AI服务',url:'https://www.codebuddy.cn/fission/?inviteCode=i1m55roilxyo9usx',detail:'你一虾我一虾，Credits赚回家！\n\n【核心特点】\n• 多模型AI助手，支持对话、写作、分析\n• 邀请好友即可获得积分奖励\n• 积分可兑换各类AI服务和功能\n• 支持多种专业领域的AI技能\n• 持续更新迭代，功能不断丰富\n\n【适用场景】\n• 日常办公写作\n• 内容创作辅助\n• 数据分析与报告\n• 代码编写与调试\n• 学习知识问答\n\n【使用建议】\n新手建议先完成新手任务获取初始积分，然后通过邀请好友快速积累积分池。',features:['多模型支持','邀请得积分','积分兑换','持续更新'],pricing:'free',usage:['注册账号完成新手任务','获取初始积分奖励','邀请好友获得更多积分','使用积分兑换AI服务']},
+            {id:'h1',name:'Kimi',emoji:'🤖',cat:'chat',tags:['hot','free'],popular:true,desc:'月之暗面出品，支持20万字超长上下文，支持文件阅读和联网搜索',url:'https://kimi.moonshot.cn',detail:'月之暗面出品，国产AI对话助手标杆。\n\n【核心特点】\n• 支持20万字超长上下文输入\n• 支持PDF、Word、网页等文件阅读\n• 联网搜索，实时获取最新信息\n• 长文本总结和改写能力出色\n• 中文理解能力强，表达自然\n\n【适用场景】\n• 长文档阅读和分析\n• 论文资料整理\n• 书籍阅读辅助\n• 复杂项目分析\n• 多轮深度对话\n\n【使用建议】\n处理长文本时建议分段落上传，可获得更准确的回答。支持直接粘贴链接进行分析。',features:['20万字上下文','文件阅读','联网搜索','长文本分析'],pricing:'free',usage:['打开Kimi官网并登录','上传长文档或粘贴内容','输入问题开始对话','可开启联网搜索获取实时信息']},
+            {id:'h2',name:'豆包',emoji:'🫛',cat:'chat',tags:['hot','free'],popular:true,desc:'字节跳动出品，智能对话、写作助手、翻译等全能AI助手',url:'https://www.doubao.com',detail:'字节跳动旗下全能AI助手。\n\n【核心特点】\n• 智能对话，理解能力强\n• AI写作助手，支持多种文体\n• 多语言翻译，精准自然\n• 语音交互，解放双手\n• 字节生态，抖音数据加持\n\n【适用场景】\n• 内容创作和文案撰写\n• 学习辅导和问题解答\n• 日常翻译需求\n• 语音交互场景\n• 抖音账号运营辅助\n\n【使用建议】\n豆包支持语音输入，适合开车或做饭时使用。配合剪映使用效果更佳。',features:['智能对话','AI写作','多语言翻译','语音交互'],pricing:'free',usage:['下载豆包APP或访问网页版','支持语音和文字两种输入方式','选择不同角色获取专业回答','结合抖音生态使用']},
+            {id:'h3',name:'可灵AI',emoji:'⚡',cat:'video',tags:['hot'],popular:true,desc:'快手出品，国际爆火，画质优秀，支持图生视频和视频续写',url:'https://klingai.com',detail:'快手可灵，国产AI视频生成领军者。\n\n【核心特点】\n• 5秒和10秒两种视频时长可选\n• 图生视频，一键让图片动起来\n• 视频续写，延续创意灵感\n• 画质优秀，动作流畅自然\n• 国际爆火，出海首选\n\n【适用场景】\n• 自媒体短视频创作\n• 电商产品展示视频\n• 个人IP虚拟形象\n• 创意内容生产\n• 广告宣传片制作\n\n【使用建议】\n图生视频建议使用清晰、正面的人物图片效果最佳。可灵会员性价比高，建议按需购买。',features:['文生视频','图生视频','视频续写','高清画质'],pricing:'paid',usage:['访问可灵AI官网并登录','选择视频生成模式','输入提示词或上传图片','等待生成并下载']},
+            {id:'h4',name:'即梦AI',emoji:'🎨',cat:'image',tags:['hot','free'],popular:true,desc:'字节跳动出品，文生图、文生视频效果出色，中文界面友好',url:'https://jimeng.jianying.com',detail:'字节跳动旗下AI创作平台。\n\n【核心特点】\n• 中文提示词理解准确\n• 文生图效果惊艳，细节丰富\n• 支持图生视频功能\n• 与剪映生态深度整合\n• 每日赠送免费额度\n\n【适用场景】\n• 创意图片生成\n• 营销海报设计\n• 插画和配图创作\n• AI视频短片制作\n• 小红书图文内容\n\n【使用建议】\n中文提示词效果最佳，建议用详细的中文描述场景和风格。与剪映结合可完成从图片到视频的完整创作。',features:['中文提示词','文生图','图生视频','每日免费'],pricing:'free',usage:['打开即梦AI官网并登录','输入详细的中文提示词','选择图片比例和风格','下载生成结果或继续编辑']},
+            {id:'h5',name:'通义灵码',emoji:'💻',cat:'coding',tags:['hot','free','new'],popular:true,desc:'阿里云出品，AI编程助手，支持代码补全、解释、Debug',url:'https://tongyi.li',detail:'阿里云AI编程神器。\n\n【核心特点】\n• 智能代码补全，提高编码效率\n• 代码解释，快速理解逻辑\n• Bug诊断和修复建议\n• 支持多种编程语言\n• 深度集成IDE和编辑器\n\n【适用场景】\n• 日常代码编写辅助\n• 新技术栈快速上手\n• 代码审查和优化\n• Bug定位和修复\n• 学习编程过程中答疑\n\n【使用建议】\n安装IDE插件后使用体验最佳。支持VS Code、IntelliJ IDEA等主流编辑器。',features:['代码补全','代码解释','Bug修复','多语言支持'],pricing:'free',usage:['下载并安装IDE插件','登录阿里云账号','开始编码，享受智能提示','选中文本右键获取解释']},
+            {id:'h6',name:'腾讯混元',emoji:'🌊',cat:'chat',tags:['hot','free'],popular:true,desc:'腾讯出品，国产顶级AI，支持文生视频和图生视频，完全免费',url:'https://hunyuan.tencent.com',detail:'腾讯混元大模型，国产AI旗舰。\n\n【核心特点】\n• 国产顶级大模型，技术领先\n• 完全免费使用，性价比极高\n• 支持文生视频和图生视频\n• 腾讯生态深度整合\n• 中文能力出众\n\n【适用场景】\n• 日常对话和问答\n• 内容创作辅助\n• AI视频生成\n• 腾讯文档和腾讯会议集成\n• 企业级AI应用\n\n【使用建议】\n视频生成功能完全免费，建议充分利用。与腾讯系产品配合使用体验更佳。',features:['国产大模型','完全免费','视频生成','腾讯生态'],pricing:'free',usage:['访问腾讯混元官网','注册登录后即可使用','支持网页和API调用','结合腾讯文档使用']},
+            {id:'h7',name:'Suno AI',emoji:'🎵',cat:'music',tags:['hot','new'],popular:true,desc:'全球最火AI音乐生成器，输入歌词即可生成原创歌曲',url:'https://suno.ai',detail:'全球领先的AI音乐生成平台。\n\n【核心特点】\n• 输入歌词即可生成原创歌曲\n• 支持多种音乐风格\n• 男女声可选\n• 完全AI作曲和演唱\n• 社交分享方便\n\n【适用场景】\n• 音乐创作和灵感探索\n• 视频背景音乐制作\n• 个人歌曲定制\n• 广告音乐制作\n• 音乐学习参考\n\n【使用建议】\n用英文写歌词效果最佳，中文歌词支持逐渐完善。可以先听别人分享的作品获取灵感。',features:['歌词作曲','多风格','AI演唱','免费生成'],pricing:'free',usage:['访问Suno AI官网','注册账号并登录','输入歌词或使用自动生成','选择音乐风格并生成']},
+            {id:'h8',name:'DeepSeek',emoji:'🔮',cat:'chat',tags:['hot','free'],popular:true,desc:'国产最强开源大模型，性价比极高，API价格最低',url:'https://deepseek.com',detail:'国产开源大模型之光。\n\n【核心特点】\n• 国产最强开源大模型\n• API价格行业最低\n• 推理能力强，逻辑清晰\n• 支持代码生成和优化\n• 上下文理解深入\n\n【适用场景】\n• AI应用开发\n• 代码编写和调试\n• 复杂问题分析\n• 长文本处理\n• 学术研究辅助\n\n【使用建议】\nAPI价格极低，适合开发者大规模使用。模型性能媲美GPT-4，性价比极高。',features:['开源免费','低价API','强力推理','代码专家'],pricing:'free',usage:['访问DeepSeek官网','注册获取API Key','调用API或使用网页版','参考官方文档集成']},
+
+            // ===== AI智能对话 =====
+            {id:'c1',name:'文心一言',emoji:'📖',cat:'chat',tags:['hot','free'],desc:'百度出品，知识增强大语言模型，支持文生图等功能',url:'https://yiyan.baidu.com',detail:'百度文心大模型，国产生态标杆。\n\n【核心特点】\n• 百度自研知识增强大模型\n• 支持文生图功能\n• 百度搜索数据加持\n• 中文理解和生成能力强\n• 丰富的插件生态\n\n【适用场景】\n• 日常问答和对话\n• 文案创作和润色\n• 图片生成需求\n• 百度系产品集成\n• 企业AI应用\n\n【使用建议】\n文心一言4.0版本能力更强，但需付费。基础版免费使用足够日常需求。',features:['知识增强','文生图','百度搜索','插件生态'],pricing:'free',usage:['访问文心一言官网','登录百度账号','开始对话或创作','使用文生图功能']},
+            {id:'c2',name:'腾讯元宝',emoji:'🐧',cat:'chat',tags:['hot','free'],desc:'腾讯混元大模型加持，支持AI搜索、总结、写作',url:'https://yuanbao.tencent.com',detail:'腾讯混元大模型加持的AI助手。\n\n【核心特点】\n• 腾讯混元大模型驱动\n• AI搜索，快速获取信息\n• 内容总结和提炼\n• 腾讯生态无缝对接\n• 微信小程序便捷访问\n\n【适用场景】\n• 信息搜索和整理\n• 文档总结和提炼\n• 公众号文章辅助\n• 微信生态运营\n• 日常对话交互\n\n【使用建议】\n通过微信小程序访问最便捷，适合碎片化时间使用。',features:['AI搜索','内容总结','腾讯生态','小程序访问'],pricing:'free',usage:['微信搜索"腾讯元宝"小程序','或访问网页版','登录微信使用','体验AI搜索和对话']},
+            {id:'c3',name:'智谱清言',emoji:'⚡',cat:'chat',tags:['hot','free'],desc:'清华大学出品，GLM-4大模型，支持代码生成和多模态',url:'https://www.zhipuai.cn',detail:'清华大学智谱AI，学术与实用兼备。\n\n【核心特点】\n• 清华大学技术背景\n• GLM-4大模型能力\n• 代码生成和解释优秀\n• 多模态理解支持\n• 学术论文辅助\n\n【适用场景】\n• 学术研究和论文写作\n• 代码编写和学习\n• 复杂问题分析\n• 多语言翻译\n• 专业领域咨询\n\n【使用建议】\n学术场景使用体验最佳。GLM-4 Turbo版本性能更强，适合专业场景。',features:['学术背景','GLM-4模型','代码专家','多模态'],pricing:'free',usage:['访问智谱清言官网','注册并登录','选择GLM-4模型','开始专业对话']},
+            {id:'c4',name:'讯飞星火',emoji:'🔥',cat:'chat',tags:['hot','free'],desc:'科大讯飞出品，语音交互强，支持多轮对话和内容创作',url:'https://xinghuo.xfyun.cn',detail:'科大讯飞星火认知大模型。\n\n【核心特点】\n• 语音识别和交互领先\n• 多轮对话连贯自然\n• 内容创作能力强\n• 多语言实时翻译\n• 语音合成自然\n\n【适用场景】\n• 语音输入场景\n• 多语言翻译\n• 会议记录整理\n• 内容创作辅助\n• 教育学习辅导\n\n【使用建议】\n语音输入是其特色功能，适合不想打字或需要快速记录的场景。',features:['语音交互','多轮对话','实时翻译','内容创作'],pricing:'free',usage:['访问讯飞星火官网','开启语音输入模式','说话即可获取回答','支持多语言翻译']},
+            {id:'c5',name:'天工AI',emoji:'⚔️',cat:'chat',tags:['free','new'],desc:'昆仑万维出品，支持AI搜索、对话、写作、文档处理',url:'https://www.tiangong.cn',detail:'昆仑万维天工大模型。\n\n【核心特点】\n• AI搜索功能强大\n• 对话和写作全能\n• 文档处理支持\n• 音乐生成集成\n• 完全免费使用\n\n【适用场景】\n• 信息搜索和整理\n• 文档阅读和分析\n• 写作辅助\n• 音乐创作参考\n• 日常问答\n\n【使用建议】\n天工AI音乐功能是特色，可以体验AI作曲。与搜索结合使用效率更高。',features:['AI搜索','文档处理','音乐生成','免费使用'],pricing:'free',usage:['访问天工AI官网','使用AI搜索功能','上传文档进行分析','体验音乐生成']},
+            {id:'c6',name:'百小应',emoji:'🎯',cat:'chat',tags:['hot','new'],desc:'百川智能出品，支持超长上下文，擅长专业领域问答',url:'https://www.baichuan-ai.com',detail:'百川智能推出的AI助手。\n\n【核心特点】\n• 超长上下文支持\n• 专业领域问答精准\n• 知识覆盖面广\n• 逻辑推理能力强\n• 开源模型领先\n\n【适用场景】\n• 长文档分析\n• 专业领域咨询\n• 学术研究辅助\n• 代码开发\n• 复杂问题解决\n\n【使用建议】\n长文本处理能力突出，适合需要分析大量资料的场景。',features:['超长上下文','专业问答','开源领先','逻辑推理'],pricing:'free',usage:['访问百小应官网','登录后开始使用','上传长文档分析','获取专业回答']},
+            {id:'c7',name:'知乎直答',emoji:'💡',cat:'chat',tags:['free'],desc:'知乎AI搜索，基于知乎优质内容提供专业回答',url:'https://zhida.zhihu.com',detail:'知乎推出的AI搜索产品。\n\n【核心特点】\n• 基于知乎海量优质内容\n• 专业领域回答权威\n• 搜索体验流畅\n• 引用来源透明\n• 社区智慧聚合\n\n【适用场景】\n• 专业问题查询\n• 行业经验参考\n• 产品评测对比\n• 学习方法探索\n• 职业发展建议\n\n【使用建议】\n适合查询有争议性或需要多角度分析的问题，能看到不同立场的观点。',features:['知乎内容','专业权威','来源透明','社区智慧'],pricing:'free',usage:['访问知乎直答','输入问题搜索','查看AI回答和来源','参考知乎社区讨论']},
+            {id:'c8',name:'海螺AI',emoji:'🐚',cat:'chat',tags:['new'],desc:'稀宇科技出品，AI对话助手，支持长文本分析和创作',url:'https://hailuoai.video',detail:'稀宇科技海螺AI助手。\n\n【核心特点】\n• 长文本分析能力强\n• 视频生成集成\n• 对话流畅自然\n• 创意内容生成\n• 完全免费使用\n\n【适用场景】\n• 长文本总结\n• 视频脚本创作\n• 日常对话\n• 内容策划\n• 创意灵感\n\n【使用建议】\n与海螺视频功能打通，可以一站式完成内容创作。',features:['长文本分析','视频生成','创意写作','免费使用'],pricing:'free',usage:['访问海螺AI官网','登录后开始使用','上传长文本分析','体验视频生成']},
+            {id:'c9',name:'跃问',emoji:'⬆️',cat:'chat',tags:['new'],desc:'识空科技出品，AI知识问答助手',url:'https://yuewen.cn',detail:'跃问AI知识助手。\n\n【核心特点】\n• 知识问答精准\n• 理解能力强\n• 回答简洁清晰\n• 持续更新学习\n• 免费使用\n\n【适用场景】\n• 知识查询\n• 日常问答\n• 学习辅导\n• 问题解答\n• 资料整理\n\n【使用建议】\n日常简单问答体验不错，适合快速获取信息。',features:['知识问答','理解精准','简洁回答','持续学习'],pricing:'free',usage:['访问跃问官网','输入问题获取回答','查看相关知识链接','收藏重要回答']},
+            {id:'c10',name:'商量',emoji:'🤝',cat:'chat',tags:['hot'],desc:'商汤科技出品，多模态AI助手，支持对话和推理',url:'https://chat.sensetime.com',detail:'商汤科技商量大模型。\n\n【核心特点】\n• 商汤自研大模型\n• 多模态理解\n• 逻辑推理能力强\n• 视觉分析出色\n• 企业级应用\n\n【适用场景】\n• 图像分析\n• 逻辑推理\n• 代码生成\n• 专业咨询\n• 企业AI\n\n【使用建议】\n多模态能力是其特色，图像分析和理解表现优秀。',features:['多模态','视觉分析','逻辑推理','企业级'],pricing:'free',usage:['访问商量官网','登录后开始使用','体验多模态对话','图像分析功能']},
+            {id:'c11',name:'Moonshot',emoji:'🌙',cat:'chat',tags:['hot'],desc:'Kimi母公司，国际版AI助手，支持超长上下文',url:'https://moonshot.cn',detail:'Moonshot AI国际版。\n\n【核心特点】\n• Kimi同款技术\n• 国际版本\n• 超长上下文\n• 多语言支持\n• API服务\n\n【适用场景】\n• 国际业务\n• 多语言对话\n• 长文本处理\n• API开发\n• 全球用户服务\n\n【使用建议】\n面向全球用户，提供API服务方便开发者集成。',features:['国际版','超长上下文','多语言','API服务'],pricing:'paid',usage:['访问Moonshot官网','注册获取API Key','国际版网页体验','开发文档集成']},
+            {id:'c12',name:'紫东太初',emoji:'🌅',cat:'chat',tags:[],desc:'中科院自动化所出品，国产多模态大模型',url:'https://taichu.ai',detail:'中科院自动化所紫东太初大模型。\n\n【核心特点】\n• 中科院技术背景\n• 国产多模态大模型\n• 科研能力强\n• 图文音融合\n• 开源开放\n\n【适用场景】\n• 科研辅助\n• 学术研究\n• 图文音分析\n• 教育学习\n• 专业咨询\n\n【使用建议】\n学术研究场景使用体验最佳，有较强的科研属性。',features:['中科院背景','多模态','科研辅助','开源开放'],pricing:'free',usage:['访问紫东太初官网','注册账号使用','体验多模态功能','科研场景应用']},
+            {id:'c13',name:'万知',emoji:'📚',cat:'chat',tags:['free'],desc:'零一万物出品，AI知识助手，支持文档阅读和写作',url:'https://wanzhi01.com',detail:'零一万物万知AI。\n\n【核心特点】\n• 零一万物技术\n• 文档阅读理解\n• 写作辅助强\n• 知识覆盖面广\n• 免费使用\n\n【适用场景】\n• 文档分析\n• 写作辅助\n• 知识问答\n• 资料整理\n• 学习辅导\n\n【使用建议】\n文档处理能力不错，适合需要阅读和分析大量文档的场景。',features:['文档阅读','写作辅助','知识问答','免费使用'],pricing:'free',usage:['访问万知官网','上传或粘贴文档','获取分析和总结','写作辅助功能']},
+            {id:'c14',name:'扣子Coze',emoji:'🧩',cat:'chat',tags:['hot','free'],desc:'字节跳动AI应用平台，无需编程即可创建AI Bot',url:'https://www.coze.cn',detail:'字节跳动Coze扣子平台。\n\n【核心特点】\n• 可视化Bot创建\n• 丰富插件市场\n• 知识库配置\n• 工作流编排\n• 免费使用\n\n【适用场景】\n• 创建AI助手\n• 企业客服搭建\n• 内容发布自动化\n• 个人Bot定制\n• 业务流程自动化\n\n【使用建议】\n无需编程基础，拖拽即可创建专属AI Bot。插件市场有丰富扩展。',features:['可视化创建','插件市场','知识库','工作流','免费使用'],pricing:'free',usage:['访问Coze官网','创建Bot并配置','添加插件和知识库','发布到平台']},
+            {id:'c15',name:'通义千问',emoji:'🌐',cat:'chat',tags:['hot','free'],desc:'阿里云大模型，支持多轮对话、代码、翻译等',url:'https://tongyi.aliyun.com',detail:'阿里云通义千问大模型。\n\n【核心特点】\n• 阿里云强大算力\n• 多轮对话连贯\n• 代码能力出色\n• 多语言翻译\n• 阿里生态集成\n\n【适用场景】\n• 日常对话\n• 代码开发\n• 翻译需求\n• 阿里云集成\n• 企业应用\n\n【使用建议】\n与阿里云其他产品配合使用体验更佳，如通义灵码、通义听悟等。',features:['阿里云生态','多轮对话','代码能力','多语言'],pricing:'free',usage:['访问通义千问官网','登录阿里云账号','开始对话和创作','结合阿里云产品使用']},
+            {id:'c16',name:'质谱AI',emoji:'🔬',cat:'chat',tags:['new'],desc:'新型AI对话助手，支持创意写作和知识问答',url:'https://zmai.cn',detail:'质谱AI助手。\n\n【核心特点】\n• 新兴AI产品\n• 对话流畅\n• 创意写作支持\n• 知识问答\n• 持续迭代\n\n【适用场景】\n• 日常对话\n• 创意写作\n• 知识查询\n• 内容创作\n• 问题解答\n\n【使用建议】\n新兴产品，持续迭代优化中，可以关注后续更新。',features:['对话流畅','创意写作','知识问答','持续更新'],pricing:'free',usage:['访问质谱AI官网','注册账号使用','体验对话功能','关注产品更新']},
+            {id:'c17',name:'秘塔AI搜索',emoji:'🔍',cat:'chat',tags:['free'],desc:'无广告AI搜索引擎，支持全网和学术搜索',url:'https://metaso.cn',detail:'秘塔AI搜索引擎。\n\n【核心特点】\n• 无广告干扰\n• AI智能总结\n• 学术搜索支持\n• 引用来源清晰\n• 完全免费\n\n【适用场景】\n• 学术研究\n• 信息检索\n• 竞品分析\n• 资料收集\n• 深度调研\n\n【使用建议】\n学术搜索体验出色，适合需要深度调研和研究的场景。',features:['无广告','AI总结','学术搜索','来源清晰'],pricing:'free',usage:['访问秘塔AI搜索','输入关键词搜索','查看AI总结','学术模式切换']},
+            {id:'c18',name:'夸克AI',emoji:'🦚',cat:'chat',tags:['hot'],desc:'阿里旗下夸克浏览器内置AI，支持搜索和写作',url:'https://www.quark.cn',detail:'夸克浏览器AI助手。\n\n【核心特点】\n• 内置于夸克浏览器\n• 搜索结果AI总结\n• 写作辅助\n• 文档处理\n• 跨端同步\n\n【适用场景】\n• 信息搜索\n• 写作辅助\n• 文档处理\n• 学习办公\n• 日常使用\n\n【使用建议】\n作为浏览器内置功能，使用便捷，适合日常快速查询。',features:['内置浏览器','搜索总结','写作辅助','跨端同步'],pricing:'free',usage:['下载夸克浏览器','开启AI功能','搜索或写作时使用','跨设备同步']},
+            {id:'c19',name:'问小白',emoji:'❓',cat:'chat',tags:['new'],desc:'快手可灵团队出品，AI搜索和问答助手',url:'https://wenxiaobai.com',detail:'快手问小白AI。\n\n【核心特点】\n• 快手技术团队\n• AI搜索精准\n• 问答清晰\n• 短视频结合\n• 持续学习\n\n【适用场景】\n• 日常问答\n• 知识查询\n• 短视频相关\n• 生活助手\n• 问题解答\n\n【使用建议】\n快手生态产品，可以与可灵等视频工具结合使用。',features:['快手团队','AI搜索','问答助手','短视频结合'],pricing:'free',usage:['访问问小白官网','输入问题搜索','获取AI回答','结合快手生态使用']},
+            {id:'c20',name:'海螺问问',emoji:'🐚',cat:'chat',tags:['new'],desc:'稀宇科技AI搜索产品，即时回答各类问题',url:'https://hailuoai.com',detail:'海螺问问AI搜索。\n\n【核心特点】\n• 即时回答\n• 搜索精准\n• 多领域覆盖\n• 简洁明了\n• 免费使用\n\n【适用场景】\n• 快速问答\n• 知识查询\n• 问题解决\n• 信息获取\n• 日常咨询\n\n【使用建议】\n适合快速获取答案的场景，无需复杂操作。',features:['即时回答','多领域','简洁明了','免费使用'],pricing:'free',usage:['访问海螺问问','输入问题','即时获取回答','收藏有用答案']},
+            {id:'c21',name:'天工巧问',emoji:'🎨',cat:'chat',tags:['new'],desc:'天工AI旗下创意对话工具',url:'https://qiao.tiangong.cn',detail:'天工巧问创意助手。\n\n【核心特点】\n• 创意对话\n• 天工技术\n• 灵感激发\n• 内容创作\n• 免费使用\n\n【适用场景】\n• 创意灵感\n• 内容策划\n• 头脑风暴\n• 写作辅助\n• 问题探讨\n\n【使用建议】\n创意场景使用体验不错，适合需要灵感和创意的场景。',features:['创意对话','灵感激发','内容策划','免费使用'],pricing:'free',usage:['访问天工巧问','开始创意对话','获取灵感建议','辅助内容创作']},
+            {id:'c22',name:'问问',emoji:'💬',cat:'chat',tags:[],desc:'MiniMax出品，AI对话助手',url:'https://minimax.chat',detail:'MiniMax问问AI。\n\n【核心特点】\n• MiniMax技术\n• 对话能力\n• 语音交互\n• 内容生成\n• 持续优化\n\n【适用场景】\n• 日常对话\n• 内容创作\n• 语音交互\n• 问题解答\n• 学习辅助\n\n【使用建议】\nMiniMax在语音合成方面有优势，可以体验语音对话功能。',features:['MiniMax技术','语音交互','内容生成','持续优化'],pricing:'free',usage:['访问问问官网','体验对话功能','尝试语音交互','关注产品更新']},
+            {id:'c23',name:'听听',emoji:'👂',cat:'chat',tags:['new'],desc:'AI语音对话助手，支持语音交互',url:'https://tingting.ai',detail:'AI语音对话助手。\n\n【核心特点】\n• 语音优先\n• 对话自然\n• 解放双手\n• 实时交互\n• 多场景适用\n\n【适用场景】\n• 语音对话\n• 开车使用\n• 家务时使用\n• 学习辅导\n• 日常助手\n\n【使用建议】\n语音输入输出，适合不方便看屏幕的场景，如开车、做饭等。',features:['语音优先','对话自然','解放双手','多场景适用'],pricing:'free',usage:['下载听听APP','语音输入问题','听取AI回答','解放双手使用']},
+            {id:'c24',name:'小悟空',emoji:'🐒',cat:'chat',tags:['hot'],desc:'字节跳动出品，AI工具合集，对话+工具一条龙',url:'https://xiaowukong.cn',detail:'字节跳动小悟空AI工具箱。\n\n【核心特点】\n• AI工具集合\n• 多种能力集成\n• 日常工具丰富\n• 免费使用\n• 抖音账号登录\n\n【适用场景】\n• 工具查找\n• 日常办公\n• 学习教育\n• 生活助手\n• 创意灵感\n\n【使用建议】\n作为工具箱使用，可以找到各种AI工具，适合不知道用什么工具时浏览。',features:['工具集合','多种能力','日常工具','免费使用'],pricing:'free',usage:['访问小悟空官网','浏览工具分类','选择需要的工具','抖音账号登录使用']},
+            {id:'c25',name:'灵犀',emoji:'🦄',cat:'chat',tags:['new'],desc:'新型AI助手，支持创意和知识场景',url:'https://lingxi.ai',detail:'灵犀AI助手。\n\n【核心特点】\n• 新兴AI产品\n• 对话流畅\n• 创意支持\n• 知识丰富\n• 持续迭代\n\n【适用场景】\n• 日常对话\n• 创意灵感\n• 知识问答\n• 问题解答\n• 学习辅助\n\n【使用建议】\n新兴产品，可以关注其发展，适合日常简单使用。',features:['新兴产品','对话流畅','创意支持','持续迭代'],pricing:'free',usage:['访问灵犀官网','开始对话使用','体验创意功能','关注产品发展']},
+
+            // ===== AI图像生成 =====
+            {id:'i1',name:'可图AI',emoji:'🖼️',cat:'image',tags:['hot','free'],desc:'快手可图，AI图像生成，支持文生图和图生图',url:'https://klingai.com/kolors',detail:'快手可图大模型。\n\n【核心特点】\n• 快手自研大模型\n• 文生图效果出色\n• 图生图能力强\n• 中文理解精准\n• 完全免费使用\n\n【适用场景】\n• 创意图片生成\n• 营销素材制作\n• 个人形象照\n• 产品展示图\n• 社交媒体配图\n\n【使用建议】\n中文提示词效果最佳，建议详细描述场景、风格、人物等细节。',features:['快手大模型','文生图','图生图','免费使用'],pricing:'free',usage:['访问可图AI','输入中文提示词','选择风格和比例','下载生成图片']},
+            {id:'i2',name:'堆友AI',emoji:'👤',cat:'image',tags:['hot','free'],desc:'阿里旗下AI图像工具，支持人像生成和电商图',url:'https://d.design',detail:'阿里堆友AI设计平台。\n\n【核心特点】\n• 阿里设计资源\n• 人像生成专业\n• 电商场景优化\n• 批量处理支持\n• 免费额度多\n\n【适用场景】\n• 人像写真\n• 电商主图\n• 产品展示\n• 营销海报\n• 头像定制\n\n【使用建议】\n电商场景优化，适合需要批量生成商品图的商家。人像写真效果自然。',features:['人像生成','电商优化','批量处理','免费额度'],pricing:'free',usage:['访问堆友AI','选择功能模块','上传素材或输入描述','生成并下载']},
+            {id:'i3',name:'稿定AI',emoji:'📐',cat:'image',tags:['free'],desc:'一站式AI设计工具，支持图片生成、海报设计',url:'https://www.gaoding.com',detail:'稿定AI设计平台。\n\n【核心特点】\n• 海报设计集成\n• 模板丰富\n• AI辅助设计\n• 尺寸适配\n• 操作简单\n\n【适用场景】\n• 营销海报\n• 社交配图\n• 电商素材\n• PPT配图\n• 节日主题\n\n【使用建议】\n结合模板使用效率更高，适合需要快速出图的设计需求。',features:['海报设计','丰富模板','AI辅助','尺寸适配'],pricing:'free',usage:['访问稿定AI','选择设计类型','AI辅助生成','调整并下载']},
+            {id:'i4',name:'LiblibAI',emoji:'🖥️',cat:'image',tags:['hot','free'],desc:'国内最大SD生图社区，模型丰富，免费额度多',url:'https://www.liblibai.com',detail:'国内最大的Stable Diffusion生图社区。\n\n【核心特点】\n• 模型广场丰富\n• LoRA模型众多\n• 社区交流活跃\n• 每日免费额度\n• 高级参数可调\n\n【适用场景】\n• 专业AI绘画\n• 模型爱好者\n• 二次元创作\n• 写实风格\n• 模型训练\n\n【使用建议】\n适合有一定基础的用户，可以微调参数获得理想效果。社区有大量优秀作品参考。',features:['SD社区','丰富模型','每日免费','参数可调'],pricing:'free',usage:['访问LiblibAI','浏览模型广场','选择模型生图','参考社区作品']},
+            {id:'i5',name:'Midjourney',emoji:'🎨',cat:'image',tags:['hot'],desc:'全球最火AI绘画工具，效果惊艳',url:'https://www.midjourney.com',detail:'全球领先的AI绘画工具。\n\n【核心特点】\n• 效果惊艳\n• 艺术感强\n• 风格多样\n• 社区分享\n• 持续迭代\n\n【适用场景】\n• 艺术创作\n• 商业插画\n• 游戏美术\n• 概念设计\n• 高端素材\n\n【使用建议】\n需要付费订阅，但效果确实是业界标杆。英文提示词效果最佳。',features:['效果惊艳','艺术感','多样风格','社区分享'],pricing:'paid',usage:['注册Discord账号','加入Midjourney服务器','输入英文提示词','使用命令生成']},
+            {id:'i6',name:'Stable Diffusion',emoji:'⚡',cat:'image',tags:['hot','free'],desc:'开源最强AI绘画模型，本地部署完全免费',url:'https://stability.ai',detail:'全球最强的开源AI绘画模型。\n\n【核心特点】\n• 完全开源免费\n• 本地部署可用\n• 模型可定制\n• 插件生态丰富\n• 无使用限制\n\n【适用场景】\n• 专业AI创作\n• 商业应用\n• 模型训练\n• 批量生成\n• 技术研究\n\n【使用建议】\n本地部署需要较高配置，推荐使用云服务版本如LiblibAI、Tensor.art等。',features:['开源免费','完全可定制','无限使用','插件生态'],pricing:'free',usage:['访问Stability AI官网','或本地部署SD','选择模型和参数','生成高质量图片']},
+            {id:'i7',name:'DALL-E',emoji:'🖼️',cat:'image',tags:['hot'],desc:'OpenAI出品，AI图像生成，质量顶级',url:'https://openai.com/dall-e-3',detail:'OpenAI DALL-E 3图像生成。\n\n【核心特点】\n• OpenAI技术\n• 图文匹配精准\n• 细节丰富\n• 安全过滤\n• 商用授权\n\n【适用场景】\n• 高质量素材\n• 商业设计\n• 创意概念\n• 产品展示\n• 内容配图\n\n【使用建议】\n通过ChatGPT Plus订阅使用，图文匹配能力是业界最佳。',features:['OpenAI技术','精准匹配','细节丰富','商用授权'],pricing:'paid',usage:['订阅ChatGPT Plus','在ChatGPT中使用','输入详细描述','生成高质量图片']},
+            {id:'i8',name:'奇域AI',emoji:'🧭',cat:'image',tags:['hot','free','new'],desc:'国产AI绘画，支持国风、插画等多种风格',url:'https://www.qiyuai.net',detail:'国产AI绘画平台。\n\n【核心特点】\n• 国风风格突出\n• 插画效果出色\n• 中文提示词友好\n• 每日免费额度\n• 社区氛围好\n\n【适用场景】\n• 国风创作\n• 中式插画\n• 水墨风格\n• 传统美学\n• 新中式设计\n\n【使用建议】\n国风创作首选平台，水墨、敦煌等风格效果惊艳。',features:['国风突出','插画出色','中文友好','每日免费'],pricing:'free',usage:['访问奇域AI','输入中文提示词','选择国风等风格','生成并分享']},
+            {id:'i9',name:'通义万相',emoji:'🌀',cat:'image',tags:['free'],desc:'阿里云AI绘画，支持文生图、风格迁移',url:'https://wanx.aliyun.com',detail:'阿里云通义万相。\n\n【核心特点】\n• 阿里云技术\n• 文生图能力\n• 风格迁移\n• API服务\n• 阿里生态\n\n【适用场景】\n• 创意图片\n• 风格迁移\n• 电商素材\n• 内容配图\n• 企业应用\n\n【使用建议】\n可调用API，适合企业级批量应用。与阿里云其他服务集成方便。',features:['阿里云技术','文生图','风格迁移','API服务'],pricing:'free',usage:['访问通义万相','网页体验或API调用','生成创意图片','企业用户集成']},
+            {id:'i10',name:'秒画',emoji:'⚡',cat:'image',tags:['free'],desc:'商汤科技出品，AI图像生成，支持自定义模型',url:'https://miaohua.sensetime.com',detail:'商汤科技秒画。\n\n【核心特点】\n• 商汤技术背景\n• 自定义模型\n• 效果出色\n• 多种风格\n• 免费使用\n\n【适用场景】\n• 创意绘画\n• 概念设计\n• 产品渲染\n• 艺术创作\n• 定制化需求\n\n【使用建议】\n支持自定义模型训练，适合有特定风格需求的用户。',features:['商汤技术','自定义模型','效果出色','多种风格'],pricing:'free',usage:['访问秒画官网','选择基础模型','或训练自定义模型','生成图片']}
+        ];
+        
+        // 根据ID查找工具
+        const tool = tools.find(t => t.id === toolId);
+        
+        const content = document.getElementById('content');
+        
+        if (!tool) {
+            content.innerHTML = `
+                <div class="not-found">
+                    <i class="fas fa-search"></i>
+                    <h2>未找到该工具</h2>
+                    <p>可能已被移除或链接有误</p>
+                    <a href="index.html" class="go-btn" style="margin-top:20px">
+                        <i class="fas fa-home"></i> 返回导航首页
+                    </a>
+                </div>
+            `;
+        } else {
+            // 设置主题色
+            const colors = catColors[tool.cat] || {from:'#6366f1',to:'#a855f7'};
+            document.documentElement.style.setProperty('--cat-color', colors.from);
+            document.documentElement.style.setProperty('--cat-color-end', colors.to);
+            
+            // 标签HTML
+            let tagsHtml = '';
+            if (tool.tags) {
+                tool.tags.forEach(tag => {
+                    const tagNames = {hot:'热门',free:'免费',new:'新上线',fee:'付费'};
+                    tagsHtml += `<span class="tool-tag ${tag}">${tagNames[tag] || tag}</span>`;
+                });
+            }
+            
+            // 功能特点HTML
+            let featuresHtml = '';
+            if (tool.features) {
+                tool.features.forEach(f => {
+                    featuresHtml += `
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check"></i></div>
+                            <div class="feature-text"><strong>${f}</strong></div>
+                        </div>
+                    `;
+                });
+            }
+            
+            // 定价HTML
+            let pricingHtml = '';
+            if (tool.pricing === 'free') {
+                pricingHtml = `
+                    <div class="price-item">
+                        <div class="price-label">价格</div>
+                        <div class="price-value">免费</div>
+                        <div class="price-note\">基础功能免费使用</div>
+                    </div>
+                `;
+            } else if (tool.pricing === 'paid') {
+                pricingHtml = `
+                    <div class="price-item paid">
+                        <div class="price-label">价格</div>
+                        <div class="price-value">付费</div>
+                        <div class="price-note">部分功能需订阅</div>
+                    </div>
+                `;
+            }
+            
+            // 使用步骤HTML
+            let usageHtml = '';
+            if (tool.usage) {
+                tool.usage.forEach((step, i) => {
+                    usageHtml += `
+                        <li class="usage-item">
+                            <span class="usage-num">${i+1}</span>
+                            <span class="usage-text">${step}</span>
+                        </li>
+                    `;
+                });
+            }
+            
+            // 渲染页面
+            content.innerHTML = `
+                <div class="tool-header">
+                    <div class="tool-header-inner">
+                        <div class="tool-icon">${tool.emoji}</div>
+                        <div class="tool-info">
+                            <h1 class="tool-name">${tool.name}</h1>
+                            <div class="tool-tags">${tagsHtml}</div>
+                            <span class="tool-category-badge">
+                                <i class="fas fa-folder"></i>
+                                ${catNames[tool.cat] || 'AI工具'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="tool-actions">
+                        <a href="${tool.url}" target="_blank" class="go-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            访问官网
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-info-circle"></i>
+                        详细介绍
+                    </h2>
+                    <div class="desc-text" style="white-space:pre-line">${tool.detail || tool.desc}</div>
+                </div>
+                
+                ${featuresHtml ? `
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-star"></i>
+                        核心功能
+                    </h2>
+                    <div class="features-grid">${featuresHtml}</div>
+                </div>
+                ` : ''}
+                
+                ${pricingHtml ? `
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-tag"></i>
+                        费用说明
+                    </h2>
+                    <div class="pricing-info">${pricingHtml}</div>
+                </div>
+                ` : ''}
+                
+                ${usageHtml ? `
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-list-ol"></i>
+                        使用步骤
+                    </h2>
+                    <ol class="usage-list">${usageHtml}</ol>
+                </div>
+                ` : ''}
+                
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-lightbulb"></i>
+                        使用技巧
+                    </h2>
+                    <ul class="tips-list">
+                        <li class="tip-item">
+                            <span class="tip-icon"><i class="fas fa-lightbulb"></i></span>
+                            <span class="tip-text">详细描述需求可以获得更准确的回答或生成结果</span>
+                        </li>
+                        <li class="tip-item">
+                            <span class="tip-icon"><i class="fas fa-lightbulb"></i></span>
+                            <span class="tip-text">收藏常用工具，下次访问更方便</span>
+                        </li>
+                        <li class="tip-item">
+                            <span class="tip-icon"><i class="fas fa-lightbulb"></i></span>
+                            <span class="tip-text">关注AI工具场获取更多优质工具推荐</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div style="text-align:center;padding:32px 0">
+                    <a href="index.html" class="go-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        返回工具导航
+                    </a>
+                </div>
+            `;
+            
+            // 更新页面标题
+            document.title = `${tool.name} - AI工具场`;
+        }
+    </script>
+</body>
+</html>

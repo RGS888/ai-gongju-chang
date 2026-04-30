@@ -183,30 +183,199 @@
             pointer-events: none;
         }
         
-        /* 预览遮罩层 */
-        .preview-blur {
+        /* 开通弹窗 */
+        .unlock-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .unlock-modal.active {
+            display: flex;
+        }
+        .unlock-modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        .unlock-modal-icon {
+            font-size: 60px;
+            margin-bottom: 16px;
+        }
+        .unlock-modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .unlock-modal-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .unlock-options {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .unlock-option {
+            flex: 1;
+            padding: 16px 12px;
+            border-radius: 14px;
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .unlock-option:hover {
+            border-color: #667eea;
+        }
+        .unlock-option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f5f7ff, #eef1ff);
+        }
+        .unlock-option-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        .unlock-option-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .unlock-option-desc {
+            font-size: 11px;
+            color: #888;
+        }
+        .unlock-option-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 6px;
+        }
+        .unlock-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .unlock-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+        .unlock-btn-cancel {
+            background: #f3f4f6;
+            color: #666;
+        }
+        .unlock-btn-confirm {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .unlock-btn-confirm:active, .unlock-btn-cancel:active {
+            transform: scale(0.98);
+        }
+        
+        /* 积分余额显示 */
+        .points-balance {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: linear-gradient(135deg, #fef3c7, #fff7ed);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #92400e;
+            margin-left: 10px;
+        }
+        
+        /* 视频播放区域 */
+        .video-container {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: 10px;
+        }
+        .video-container iframe {
+            width: 100%;
+            height: 200px;
+            display: block;
+        }
+        .video-cover {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.9);
+            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.9) 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 10;
+            transition: opacity 0.5s;
         }
-        .preview-countdown {
-            font-size: 48px;
+        .video-cover.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .video-countdown {
+            font-size: 56px;
             font-weight: bold;
             color: white;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            animation: pulse 1s infinite;
         }
-        .preview-hint {
-            font-size: 13px;
-            color: rgba(255,255,255,0.8);
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .video-countdown-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            margin-top: 8px;
+        }
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .video-play-btn:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: white;
+        }
+        .video-timer-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 1s linear;
         }
         
         /* 开通激活按钮 */
@@ -492,6 +661,9 @@
     <div class="vip-header">
         <h1>👑 会员资料区</h1>
         <p>精选自媒体教程/软件工具/视频课程</p>
+        <div id="pointsBalance" class="points-balance" style="display:none;">
+            💰 我的积分：<span id="myPoints">0</span>
+        </div>
     </div>
     
     <!-- 会员已开通状态 -->
@@ -559,7 +731,7 @@
                     <div class="package-price">¥29<small>/月</small></div>
                     <div class="package-desc">适合短期学习需求</div>
                     <div class="package-benefits">
-                        <span>✅</span> 解锁全部12个资料<br>
+                        <span>✅</span> 解锁全部${materials.length}个资料<br>
                         <span>✅</span> 有效期30天<br>
                         <span>✅</span> 持续更新内容
                     </div>
@@ -574,7 +746,7 @@
                     <div class="package-price">¥79<small>/季</small></div>
                     <div class="package-desc">适合持续学习3个月</div>
                     <div class="package-benefits">
-                        <span>✅</span> 解锁全部12个资料<br>
+                        <span>✅</span> 解锁全部${materials.length}个资料<br>
                         <span>✅</span> 有效期90天<br>
                         <span>✅</span> 节省¥8元
                     </div>
@@ -589,7 +761,7 @@
                     <div class="package-price">¥199<small>/年</small></div>
                     <div class="package-desc">适合长期学习用户</div>
                     <div class="package-benefits">
-                        <span>✅</span> 解锁全部12个资料<br>
+                        <span>✅</span> 解锁全部${materials.length}个资料<br>
                         <span>✅</span> 有效期365天<br>
                         <span>✅</span> 节省¥149元
                     </div>
@@ -604,7 +776,7 @@
                     <div class="package-price">¥399<small>/永久</small></div>
                     <div class="package-desc">一次购买，终身使用</div>
                     <div class="package-benefits">
-                        <span>✅</span> 解锁全部12个资料<br>
+                        <span>✅</span> 解锁全部${materials.length}个资料<br>
                         <span>✅</span> 永久有效<br>
                         <span>✅</span> 永久更新特权
                     </div>
@@ -616,41 +788,70 @@
             </button>
         </div>
     </div>
+    
+    <!-- 内容解锁弹窗 -->
+    <div class="unlock-modal" id="unlockModal">
+        <div class="unlock-modal-content">
+            <div class="unlock-modal-icon">🔐</div>
+            <div class="unlock-modal-title" id="unlockTitle">🔓 解锁完整内容</div>
+            <div class="unlock-modal-desc" id="unlockDesc">完整版内容已准备好！</div>
+            
+            <div class="unlock-options">
+                <div class="unlock-option selected" onclick="selectPayType('cash')">
+                    <div class="unlock-option-icon">💳</div>
+                    <div class="unlock-option-title">现金购买</div>
+                    <div class="unlock-option-desc">开通月卡会员</div>
+                    <div class="unlock-option-price">¥29</div>
+                </div>
+                <div class="unlock-option" id="pointsOption" onclick="selectPayType('points')">
+                    <div class="unlock-option-icon">💰</div>
+                    <div class="unlock-option-title">积分兑换</div>
+                    <div class="unlock-option-desc">我的积分: <span id="userPointsSpan">0</span></div>
+                    <div class="unlock-option-price" id="pointsPrice">1000积分</div>
+                </div>
+            </div>
+            
+            <div class="unlock-btns">
+                <button class="unlock-btn unlock-btn-cancel" onclick="closeUnlockModal()">稍后再说</button>
+                <button class="unlock-btn unlock-btn-confirm" id="unlockConfirmBtn" onclick="goToActivate()">💳 现金购买 月卡 ¥29</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // 资料数据
         const materials = [
-            { id: 0, title: '🤖 扣子技能下载购买教程', category: 'video', desc: '开发者金沐沐教你如何下载购买扣子技能', views: 9800, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW' },
-            { id: 1, title: '💡 爆款文案提示词使用教程', category: 'video', desc: '金沐沐教你如何使用爆款文案视频提示词工具', views: 9200, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEaV', tag: 'NEW' },
-            { id: 2, title: '📜 抖音提取文案方法', category: 'video', desc: '快速从抖音视频中提取文案内容的技巧', views: 9500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEEj', tag: 'NEW' },
-            { id: 3, title: '📱 快手提取文案教程', category: 'video', desc: '快手视频文案提取教程', views: 8900, biliUrl: 'https://www.bilibili.com/video/BV1Ge9yBjEm2', tag: 'NEW' },
-            { id: 4, title: '💬 元宝好友提取文案教程', category: 'video', desc: '添加元宝AI好友快速提取文案的方法', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESv', tag: 'NEW' },
-            { id: 5, title: '🎨 即梦出镜人设置教程', category: 'video', desc: '即梦AI出镜人功能设置完整教程', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCEZy', tag: 'NEW' },
-            { id: 6, title: '✏️ 即梦生成视频修改方式', category: 'video', desc: '即梦AI生成视频不满意时的修改方法教程', views: 8300, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEB6', tag: 'NEW' },
-            { id: 7, title: '💾 即梦视频下载保存教程', category: 'video', desc: '即梦AI生成视频下载保存到手机相册教程', views: 8100, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEmY', tag: 'NEW' },
-            { id: 8, title: '👤 即梦修改昵称教程', category: 'video', desc: '即梦AI账号昵称修改操作教程', views: 7900, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCE46', tag: 'NEW' },
-            { id: 9, title: '📲 享脉下载设置教程', category: 'video', desc: '详细讲解享脉App下载和基础设置操作', views: 8500, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEiW', tag: 'NEW' },
-            { id: 10, title: '📱 手机下载软件教程', category: 'video', desc: '教你如何在手机上下载安装所需软件', views: 5600, biliUrl: 'https://www.bilibili.com/video/BV1Ye9yBjEjq', tag: 'NEW' },
-            { id: 11, title: '✂️ 下载视频二次剪辑上传教程', category: 'video', desc: '如何下载视频并进行二次剪辑上传到视频号', views: 5200, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BKEtH', tag: 'NEW' },
-            { id: 12, title: '🚫 小程序免费去水印方法', category: 'video', desc: '教你免费去除视频水印的实用方法', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Fmo1BMEBk', tag: 'NEW' },
-            { id: 13, title: '💡 爆款文案视频提示词生成', category: 'video', desc: '快速生成制作视频用到的爆款文案提示词', views: 6200, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEBn', tag: 'NEW' },
-            { id: 14, title: '📝 必剪免费生成字幕教程', category: 'video', desc: '使用必剪APP免费自动生成视频字幕', views: 4500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: 'NEW' },
-            { id: 15, title: '🎬 视频二次剪辑详细教程', category: 'video', desc: '完整的视频二次剪辑制作教程', views: 5400, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESj', tag: 'NEW' },
-            { id: 16, title: '📱 视频上传到快手操作步骤', category: 'video', desc: '教你如何将视频上传到快手平台', views: 4600, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTECq', tag: 'NEW' },
-            { id: 17, title: '🎵 视频快速上传到抖音教程', category: 'video', desc: '教你如何快速将视频上传到抖音平台', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEeq', tag: 'NEW' },
-            { id: 18, title: '📺 视频上传到视频号教程', category: 'video', desc: '详细讲解视频上传到微信视频号的操作步骤', views: 5000, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTE8x', tag: 'NEW' },
-            { id: 19, title: '🎬 抖音爆款视频制作教程', category: 'video', desc: '从0到1教你打造百万播放爆款视频', views: 12580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT', tag: '热门' },
-            { id: 20, title: '📱 剪映专业版完整教程', category: 'video', desc: '从入门到精通，涵盖所有剪辑技巧', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1iZYiYnJp4', tag: '推荐' },
-            { id: 21, title: '🎨 即梦AI使用教程', category: 'video', desc: 'AI图片和视频生成从入门到精通', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9', tag: '热门' },
-            { id: 22, title: '💰 自媒体变现全攻略', category: 'video', desc: '月入过万的秘密，多种变现方式详解', views: 23450, biliUrl: 'https://www.bilibili.com/video/BV1example1', tag: '精华' },
-            { id: 23, title: '🎙️ 直播带货话术大全', category: 'video', desc: '金牌主播都在用的高转化话术', views: 19870, biliUrl: 'https://www.bilibili.com/video/BV1example2', tag: '热门' },
-            { id: 24, title: '📸 小红书爆款封面制作', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, biliUrl: 'https://www.bilibili.com/video/BV1example3', tag: '推荐' },
-            { id: 25, title: '✍️ 短视频文案写作技巧', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, biliUrl: 'https://www.bilibili.com/video/BV6xxx', tag: '实用' },
-            { id: 26, title: '📋 小红书运营实战笔记', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, biliUrl: 'https://www.bilibili.com/video/BV2xxx', tag: '精华' },
-            { id: 27, title: '🛠️ AI剪辑神器VIP版', category: 'tool', desc: '一键自动剪辑工具，提高效率10倍', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV3xxx', tag: '工具' },
-            { id: 28, title: '📊 数据分析工具合集', category: 'tool', desc: '运营必备数据分析工具', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV8xxx', tag: '工具' },
-            { id: 29, title: '📑 PPT模板素材包', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, biliUrl: 'https://www.bilibili.com/video/BV5xxx', tag: '素材' },
-            { id: 30, title: '🎨 视频封面模板库', category: 'template', desc: '200+爆款封面PSD源文件', views: 9870, biliUrl: 'https://www.bilibili.com/video/BV6xxx', tag: '素材' },
+            { id: 0, title: '扣子技能下载购买教程', icon: '🤖', category: 'video', desc: '开发者金沐沐教你如何下载购买扣子技能', views: 9800, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 990 },
+            { id: 1, title: '爆款文案提示词使用教程', icon: '💡', category: 'video', desc: '金沐沐教你如何使用爆款文案视频提示词工具', views: 9200, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEaV', tag: 'NEW', points: 990 },
+            { id: 2, title: '抖音提取文案方法', icon: '📜', category: 'video', desc: '快速从抖音视频中提取文案内容的技巧', views: 9500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEEj', tag: 'NEW', points: 990 },
+            { id: 3, title: '快手提取文案教程', icon: '📱', category: 'video', desc: '快手视频文案提取教程', views: 8900, biliUrl: 'https://www.bilibili.com/video/BV1Ge9yBjEm2', tag: 'NEW', points: 990 },
+            { id: 4, title: '元宝好友提取文案教程', icon: '💬', category: 'video', desc: '添加元宝AI好友快速提取文案的方法', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESv', tag: 'NEW', points: 990 },
+            { id: 5, title: '即梦出镜人设置教程', icon: '🎨', category: 'video', desc: '即梦AI出镜人功能设置完整教程', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCEZy', tag: 'NEW', points: 990 },
+            { id: 6, title: '即梦生成视频修改方式', icon: '✏️', category: 'video', desc: '即梦AI生成视频不满意时的修改方法教程', views: 8300, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEB6', tag: 'NEW', points: 990 },
+            { id: 7, title: '即梦视频下载保存教程', icon: '💾', category: 'video', desc: '即梦AI生成视频下载保存到手机相册教程', views: 8100, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEmY', tag: 'NEW', points: 990 },
+            { id: 8, title: '即梦修改昵称教程', icon: '👤', category: 'video', desc: '即梦AI账号昵称修改操作教程', views: 7900, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCE46', tag: 'NEW', points: 990 },
+            { id: 9, title: '享脉下载设置教程', icon: '📲', category: 'video', desc: '详细讲解享脉App下载和基础设置操作', views: 8500, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEiW', tag: 'NEW', points: 990 },
+            { id: 10, title: '手机下载软件教程', icon: '📱', category: 'video', desc: '教你如何在手机上下载安装所需软件', views: 5600, biliUrl: 'https://www.bilibili.com/video/BV1Ye9yBjEjq', tag: 'NEW', points: 990 },
+            { id: 11, title: '下载视频二次剪辑上传教程', icon: '✂️', category: 'video', desc: '如何下载视频并进行二次剪辑上传到视频号', views: 5200, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BKEtH', tag: 'NEW', points: 990 },
+            { id: 12, title: '小程序免费去水印方法', icon: '🚫', category: 'video', desc: '教你免费去除视频水印的实用方法', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Fmo1BMEBk', tag: 'NEW', points: 990 },
+            { id: 13, title: '爆款文案视频提示词生成', icon: '💡', category: 'video', desc: '快速生成制作视频用到的爆款文案提示词', views: 6200, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEBn', tag: 'NEW', points: 990 },
+            { id: 14, title: '必剪免费生成字幕教程', icon: '📝', category: 'video', desc: '使用必剪APP免费自动生成视频字幕', views: 4500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: 'NEW', points: 990 },
+            { id: 15, title: '视频二次剪辑详细教程', icon: '🎬', category: 'video', desc: '完整的视频二次剪辑制作教程', views: 5400, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESj', tag: 'NEW', points: 990 },
+            { id: 16, title: '视频上传到快手操作步骤', icon: '📱', category: 'video', desc: '教你如何将视频上传到快手平台', views: 4600, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTECq', tag: 'NEW', points: 990 },
+            { id: 17, title: '视频快速上传到抖音教程', icon: '🎵', category: 'video', desc: '教你如何快速将视频上传到抖音平台', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEeq', tag: 'NEW', points: 990 },
+            { id: 18, title: '视频上传到视频号教程', icon: '📺', category: 'video', desc: '详细讲解视频上传到微信视频号的操作步骤', views: 5000, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTE8x', tag: 'NEW', points: 990 },
+            { id: 19, title: '抖音爆款视频制作教程', icon: '🎬', category: 'video', desc: '从0到1教你打造百万播放爆款视频', views: 12580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT', tag: '热门', points: 1290 },
+            { id: 20, title: '剪映专业版完整教程', icon: '📱', category: 'video', desc: '从入门到精通，涵盖所有剪辑技巧', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1iZYiYnJp4', tag: '推荐', points: 1290 },
+            { id: 21, title: '即梦AI使用教程', icon: '🎨', category: 'video', desc: 'AI图片和视频生成从入门到精通', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9', tag: '热门', points: 1290 },
+            { id: 22, title: '自媒体变现全攻略', icon: '💰', category: 'video', desc: '月入过万的秘密，多种变现方式详解', views: 23450, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '精华', points: 1990 },
+            { id: 23, title: '直播带货话术大全', icon: '🎙️', category: 'video', desc: '金牌主播都在用的高转化话术', views: 19870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '热门', points: 1990 },
+            { id: 24, title: '小红书爆款封面制作', icon: '📸', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '推荐', points: 990 },
+            { id: 25, title: '短视频文案写作技巧', icon: '✍️', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, tag: '实用', points: 690 },
+            { id: 26, title: '小红书运营实战笔记', icon: '📋', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, tag: '精华', points: 990 },
+            { id: 27, title: 'AI剪辑神器VIP版', icon: '🛠️', category: 'tool', desc: '一键自动剪辑工具，提高效率10倍', views: 15670, tag: '工具', points: 2990 },
+            { id: 28, title: '数据分析工具合集', icon: '📊', category: 'tool', desc: '运营必备数据分析工具', views: 6540, tag: '工具', points: 1990 },
+            { id: 29, title: 'PPT模板素材包', icon: '📑', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, tag: '素材', points: 990 },
+            { id: 30, title: '视频封面模板库', icon: '🎨', category: 'template', desc: '200+爆款封面PSD源文件', views: 9870, tag: '素材', points: 990 },
         ];
         
         let currentCategory = 'all';
@@ -658,10 +859,9 @@
         let selectedPackagePrice = 29;
         
         // 预览相关
-        const PREVIEW_SECONDS = 5;
+        const PREVIEW_SECONDS = 10;
         let currentPreviewId = null;
-        let previewTimer = null;
-        let countdownInterval = null;
+        let previewTimers = {};
         
         // 获取会员信息
         function getMemberInfo() {
@@ -674,6 +874,17 @@
                 }
             }
             return null;
+        }
+        
+        // 获取用户积分
+        function getUserPoints() {
+            const users = JSON.parse(localStorage.getItem('ai_gongju_chang_users') || '[]');
+            const currentUser = localStorage.getItem('ai_gongju_chang_current_user');
+            if (currentUser) {
+                const user = users.find(u => u.username === currentUser);
+                return user ? user.points || 0 : 0;
+            }
+            return 0;
         }
         
         // 获取等级名称
@@ -692,11 +903,14 @@
             const member = getMemberInfo();
             const memberCard = document.getElementById('memberCard');
             const upgradeBanner = document.getElementById('upgradeBanner');
+            const pointsBalance = document.getElementById('pointsBalance');
+            const myPoints = document.getElementById('myPoints');
             
             if (member) {
                 // 已开通会员
                 memberCard.style.display = 'block';
                 upgradeBanner.style.display = 'none';
+                pointsBalance.style.display = 'none';
                 document.getElementById('memberLevel').textContent = getLevelName(member.level);
                 document.getElementById('memberExpire').textContent = member.level === 'forever' ? 
                     '永久有效' : '有效期至：' + new Date(member.expireTime).toLocaleDateString();
@@ -704,6 +918,14 @@
                 // 未开通
                 memberCard.style.display = 'none';
                 upgradeBanner.style.display = 'block';
+                // 显示积分余额
+                const points = getUserPoints();
+                if (points > 0) {
+                    pointsBalance.style.display = 'inline-flex';
+                    myPoints.textContent = points;
+                } else {
+                    pointsBalance.style.display = 'none';
+                }
             }
             
             renderMaterials();
@@ -723,7 +945,7 @@
             
             list.innerHTML = filtered.map(m => {
                 const iconClass = m.category === 'video' ? 'video' : m.category === 'tool' ? 'tool' : m.category === 'doc' ? 'doc' : 'template';
-                const iconEmoji = m.category === 'video' ? '📹' : m.category === 'tool' ? '💻' : m.category === 'doc' ? '📄' : '📋';
+                const iconEmoji = m.icon || (m.category === 'video' ? '📹' : m.category === 'tool' ? '💻' : m.category === 'doc' ? '📄' : '📋');
                 const tagBg = m.tag === '热门' ? 'background:linear-gradient(135deg,#ef4444,#dc2626)' : 
                               m.tag === '推荐' ? 'background:linear-gradient(135deg,#667eea,#764ba2)' :
                               m.tag === '精华' ? 'background:linear-gradient(135deg,#f59e0b,#e65100)' : 
@@ -737,7 +959,7 @@
                                 <div class="material-icon ${iconClass}">${iconEmoji}</div>
                                 <div class="material-info">
                                     <div class="material-title">
-                                        ${m.title.substring(4)}
+                                        ${m.title}
                                         <span class="unlocked-badge">✓ 已解锁</span>
                                     </div>
                                     <div class="material-desc">${m.desc}</div>
@@ -749,14 +971,14 @@
                         </div>
                     `;
                 } else {
-                    // 非会员 - 显示预览+开通引导
+                    // 非会员 - 显示10秒预览
                     return `
                         <div class="material-card" id="card-${m.id}">
                             <div class="material-header">
                                 <div class="material-icon ${iconClass}">${iconEmoji}</div>
                                 <div class="material-info">
                                     <div class="material-title">
-                                        ${m.title.substring(4)}
+                                        ${m.title}
                                         ${m.tag ? `<span style="${tagBg};color:#fff;padding:2px 8px;border-radius:10px;font-size:10px;">${m.tag}</span>` : ''}
                                     </div>
                                     <div class="material-desc">👁️ ${m.views.toLocaleString()}次浏览</div>
@@ -764,58 +986,190 @@
                             </div>
                             
                             <!-- 视频预览区 -->
-                            <div class="preview-area">
+                            <div class="video-container" id="video-container-${m.id}">
                                 <iframe src="${m.biliUrl}" frameborder="0" allowfullscreen style="height:200px;"></iframe>
-                                <div class="preview-overlay">
-                                    <div style="color:white;font-size:12px;text-align:center;padding:10px;">
-                                        <div style="font-size:11px;opacity:0.8;">👆 付费内容仅展示预览</div>
+                                <div class="video-cover" id="cover-${m.id}">
+                                    <div class="video-play-btn" onclick="startPreview(${m.id})">▶</div>
+                                    <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);padding:4px 12px;border-radius:12px;font-size:12px;color:white;">
+                                        🔒 付费内容 · 免费试看10秒
                                     </div>
                                 </div>
-                                <!-- 预览遮罩 -->
-                                <div class="preview-blur" id="blur-${m.id}">
-                                    <div class="preview-countdown" id="countdown-${m.id}">${PREVIEW_SECONDS}</div>
-                                    <div class="preview-hint">免费试看${PREVIEW_SECONDS}秒</div>
-                                </div>
+                                <div class="video-countdown" id="countdown-${m.id}" style="display:none;">10</div>
+                                <div class="video-timer-bar" id="timer-bar-${m.id}" style="width:0%"></div>
                             </div>
                             
                             <!-- 开通激活区 -->
                             <div class="activate-section">
                                 <p>📺 视频内容：${m.desc}</p>
-                                <div class="price-info">💡 开通会员即可观看完整版，最低 ¥29/月</div>
-                                <a href="activate.html" class="activate-btn">🔓 开通会员解锁全部${materials.length}个资料</a>
+                                <div class="price-info">
+                                    💡 开通会员即可观看完整版 | 月卡¥29 或 ${m.points}积分兑换
+                                </div>
+                                <button class="activate-btn" onclick="showUnlockModal(${m.id}, '${m.title}')">
+                                    🔓 立即解锁观看完整版
+                                </button>
                             </div>
                         </div>
                     `;
                 }
             }).join('');
+        }
+        
+        // 开始预览
+        function startPreview(id) {
+            const cover = document.getElementById('cover-' + id);
+            const countdown = document.getElementById('countdown-' + id);
+            const timerBar = document.getElementById('timer-bar-' + id);
             
-            // 启动预览计时器
-            if (!isMember) {
-                startPreviewTimers();
+            // 隐藏封面，显示倒计时
+            cover.classList.add('hidden');
+            countdown.style.display = 'block';
+            
+            let seconds = PREVIEW_SECONDS;
+            countdown.textContent = seconds;
+            
+            // 清除该卡片之前的计时器
+            if (previewTimers[id]) {
+                clearInterval(previewTimers[id].interval);
+            }
+            
+            // 启动倒计时
+            previewTimers[id] = {
+                interval: setInterval(() => {
+                    seconds--;
+                    countdown.textContent = seconds;
+                    timerBar.style.width = ((PREVIEW_SECONDS - seconds) / PREVIEW_SECONDS * 100) + '%';
+                    
+                    if (seconds <= 0) {
+                        clearInterval(previewTimers[id].interval);
+                        // 倒计时结束，显示开通提醒
+                        showUnlockModal(id, materials.find(m => m.id === id)?.title || '');
+                    }
+                }, 1000)
+            };
+        }
+        
+        // 解锁弹窗相关
+        let unlockPayType = 'cash'; // cash 或 points
+        let currentUnlockId = null;
+        
+        // 显示解锁弹窗
+        function showUnlockModal(id, title) {
+            // 清除该卡片的计时器
+            if (previewTimers[id]) {
+                clearInterval(previewTimers[id].interval);
+            }
+            
+            currentUnlockId = id;
+            const m = materials.find(item => item.id === id);
+            const userPoints = getUserPoints();
+            const canUsePoints = userPoints >= (m?.points || 0);
+            
+            const modal = document.getElementById('unlockModal');
+            const modalTitle = document.getElementById('unlockTitle');
+            const modalDesc = document.getElementById('unlockDesc');
+            const pointsOption = document.getElementById('pointsOption');
+            const pointsPrice = document.getElementById('pointsPrice');
+            const userPointsSpan = document.getElementById('userPointsSpan');
+            
+            modalTitle.textContent = '🔓 解锁完整内容';
+            modalDesc.textContent = `《${title}》完整版已准备好！`;
+            
+            // 检查积分是否足够
+            if (canUsePoints) {
+                pointsOption.style.display = 'block';
+                pointsPrice.textContent = m.points + '积分';
+                userPointsSpan.textContent = userPoints;
+            } else {
+                pointsOption.style.display = 'block';
+                pointsPrice.textContent = m.points + '积分';
+                userPointsSpan.textContent = userPoints + ' (不足)';
+                pointsOption.style.opacity = '0.5';
+            }
+            
+            // 重置支付方式
+            unlockPayType = 'cash';
+            document.querySelectorAll('.unlock-option').forEach(o => o.classList.remove('selected'));
+            document.querySelector('.unlock-option').classList.add('selected');
+            
+            // 更新确认按钮
+            updateUnlockBtn();
+            
+            modal.classList.add('active');
+        }
+        
+        // 选择支付方式
+        function selectPayType(type) {
+            unlockPayType = type;
+            document.querySelectorAll('.unlock-option').forEach(o => o.classList.remove('selected'));
+            event.target.closest('.unlock-option').classList.add('selected');
+            updateUnlockBtn();
+        }
+        
+        // 更新解锁按钮
+        function updateUnlockBtn() {
+            const btn = document.getElementById('unlockConfirmBtn');
+            const m = materials.find(item => item.id === currentUnlockId);
+            if (!m) return;
+            
+            if (unlockPayType === 'cash') {
+                btn.textContent = '💳 现金购买 月卡 ¥29';
+                btn.onclick = () => goToActivate();
+            } else {
+                const userPoints = getUserPoints();
+                if (userPoints >= m.points) {
+                    btn.textContent = `💰 使用${m.points}积分解锁`;
+                    btn.onclick = () => unlockWithPoints(currentUnlockId);
+                } else {
+                    btn.textContent = `💰 积分不足 (${userPoints}/${m.points})`;
+                    btn.style.background = '#ccc';
+                    btn.onclick = () => {
+                        alert('积分不足，请先充值或选择现金购买');
+                    };
+                }
             }
         }
         
-        // 启动所有预览计时器
-        function startPreviewTimers() {
-            materials.forEach(m => {
-                const blur = document.getElementById('blur-' + m.id);
-                const countdown = document.getElementById('countdown-' + m.id);
-                if (blur && countdown) {
-                    let seconds = PREVIEW_SECONDS;
-                    countdownInterval = setInterval(() => {
-                        seconds--;
-                        if (countdown) {
-                            countdown.textContent = seconds;
-                        }
-                        if (seconds <= 0) {
-                            clearInterval(countdownInterval);
-                            if (blur) {
-                                blur.style.display = 'none';
-                            }
-                        }
-                    }, 1000);
-                }
-            });
+        // 使用积分解锁
+        function unlockWithPoints(id) {
+            const m = materials.find(item => item.id === id);
+            if (!m) return;
+            
+            const users = JSON.parse(localStorage.getItem('ai_gongju_chang_users') || '[]');
+            const currentUser = localStorage.getItem('ai_gongju_chang_current_user');
+            
+            if (!currentUser) {
+                alert('请先登录后再使用积分解锁');
+                return;
+            }
+            
+            const userIndex = users.findIndex(u => u.username === currentUser);
+            if (userIndex === -1) return;
+            
+            if (users[userIndex].points < m.points) {
+                alert('积分不足，无法解锁');
+                return;
+            }
+            
+            // 扣除积分
+            users[userIndex].points -= m.points;
+            localStorage.setItem('ai_gongju_chang_users', JSON.stringify(users));
+            
+            // 将该资料标记为已解锁
+            const unlockedItems = JSON.parse(localStorage.getItem('unlocked_items') || '[]');
+            if (!unlockedItems.includes(id)) {
+                unlockedItems.push(id);
+                localStorage.setItem('unlocked_items', JSON.stringify(unlockedItems));
+            }
+            
+            alert(`✅ 恭喜！已使用${m.points}积分解锁《${m.title}》`);
+            closeUnlockModal();
+            updateUI();
+        }
+        
+        // 关闭解锁弹窗
+        function closeUnlockModal() {
+            document.getElementById('unlockModal').classList.remove('active');
+            currentUnlockId = null;
         }
         
         // 分类切换
@@ -858,11 +1212,25 @@
             window.location.href = `activate.html?package=${selectedPackage}`;
         }
         
-        // 点击外部关闭弹窗
+        // 点击外部关闭激活弹窗
         document.getElementById('activateModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeActivateModal();
             }
+        });
+        
+        // 点击外部关闭解锁弹窗
+        document.getElementById('unlockModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeUnlockModal();
+            }
+        });
+        
+        // 页面离开时清理计时器
+        window.addEventListener('beforeunload', function() {
+            Object.values(previewTimers).forEach(timer => {
+                if (timer.interval) clearInterval(timer.interval);
+            });
         });
         
         // 初始化
