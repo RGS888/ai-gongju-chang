@@ -492,6 +492,7 @@
             <button class="tab-btn" onclick="switchTab('distribution')">💰 分销管理</button>
             <button class="tab-btn" onclick="switchTab('payment')">💳 收款与提现</button>
             <button class="tab-btn" onclick="switchTab('points')">💎 积分管理</button>
+            <button class="tab-btn" onclick="switchTab('analytics')">📊 数据分析</button>
         </div>
 
         <!-- 教程管理Tab -->
@@ -1224,6 +1225,7 @@
             if (tab === 'distribution') renderDistributionTab();
             if (tab === 'payment') renderPaymentTab();
             if (tab === 'points') renderPointsTab();
+            if (tab === 'analytics') renderAnalyticsTab();
         };
         
         // ===== 二级分销系统管理 =====
@@ -2026,6 +2028,199 @@
             localStorage.setItem(POINTS_DB_KEY, JSON.stringify(users));
             alert(`✅ 已${action === '1' ? '增加' : '减少'}用户 ${username} ${amount} 积分`);
             renderPointsList(document.getElementById('pointsSearch')?.value || '');
+        }
+
+        // ===== 数据分析系统 =====
+        function renderAnalyticsTab() {
+            // 获取所有数据
+            const users = getUsers();
+            const codesData = getCodesData();
+            const distDb = getDistDb();
+            const paymentDb = getPaymentDb();
+            const pointsDb = getPointsDb();
+            
+            // 计算各类统计数据
+            const totalUsers = users.length;
+            const vipUsers = users.filter(u => u.isVip).length;
+            const today = new Date();
+            const todayStr = today.toDateString();
+            
+            // 用户增长趋势（近7天）
+            const last7Days = [];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(today);
+                d.setDate(d.getDate() - i);
+                const dateStr = d.toDateString();
+                const count = users.filter(u => new Date(u.registerTime).toDateString() === dateStr).length;
+                last7Days.push({ date: d.toLocaleDateString('zh-CN', {month:'numeric', day:'numeric'}), count });
+            }
+            const todayUsers = last7Days[6].count;
+            
+            // 激活码统计
+            const totalCodes = Object.values(codesData).flat().length;
+            const usedCodes = Object.values(codesData).flat().filter(c => c.used).length;
+            const unusedCodes = totalCodes - usedCodes;
+            
+            // 收入统计
+            const totalRecharge = users.reduce((sum, u) => {
+                return sum + (u.rechargeHistory || []).reduce((s, r) => s + r.amount, 0);
+            }, 0);
+            
+            // 分销统计
+            const distUsers = Object.keys(distDb.users).length;
+            const totalCommission = Object.values(distDb.users).reduce((sum, u) => {
+                return sum + (u.level1Commission || 0) + (u.level2Commission || 0);
+            }, 0);
+            const pendingWithdrawals = (distDb.withdrawals || []).filter(w => w.status === 'pending').length;
+            
+            // 工具分类统计（静态数据）
+            const toolStats = [
+                { name: 'AI对话', count: 25, color: '#4f46e5' },
+                { name: 'AI图像', count: 10, color: '#7c3aed' },
+                { name: 'AI视频', count: 30, color: '#db2777' },
+                { name: 'AI音乐', count: 20, color: '#0891b2' },
+                { name: 'AI办公', count: 25, color: '#1d4ed8' },
+                { name: 'AI编程', count: 20, color: '#065f46' },
+                { name: 'AI智能体', count: 20, color: '#c2410c' },
+                { name: 'AI写作', count: 26, color: '#4d7c0f' },
+                { name: 'AI设计', count: 20, color: '#9f1239' },
+                { name: 'AI企业', count: 20, color: '#1e3a5f' },
+                { name: 'AI电商', count: 15, color: '#b45309' },
+                { name: 'AI学习教育', count: 15, color: '#0369a1' },
+                { name: 'AI趣味工具', count: 15, color: '#d97706' },
+                { name: '直播工具', count: 4, color: '#991b1b' }
+            ];
+            const totalTools = toolStats.reduce((sum, t) => sum + t.count, 0);
+            
+            // 渲染Tab内容
+            let analyticsTab = document.getElementById('tab-analytics');
+            if (!analyticsTab) {
+                analyticsTab = document.createElement('div');
+                analyticsTab.id = 'tab-analytics';
+                analyticsTab.className = 'tab-content';
+                document.getElementById('adminPage').appendChild(analyticsTab);
+            }
+            
+            analyticsTab.innerHTML = `
+                <!-- 核心指标卡片 -->
+                <div class="user-stats" style="margin-bottom:24px">
+                    <div class="stat-card" style="border-left:4px solid #4f46e5">
+                        <div class="value" style="color:#4f46e5">${totalUsers}</div>
+                        <div class="label">总用户数</div>
+                    </div>
+                    <div class="stat-card" style="border-left:4px solid #22c55e">
+                        <div class="value" style="color:#22c55e">${todayUsers}</div>
+                        <div class="label">今日新增</div>
+                    </div>
+                    <div class="stat-card" style="border-left:4px solid #f59e0b">
+                        <div class="value" style="color:#f59e0b">${vipUsers}</div>
+                        <div class="label">VIP会员</div>
+                    </div>
+                    <div class="stat-card" style="border-left:4px solid #ef4444">
+                        <div class="value" style="color:#ef4444">¥${totalRecharge}</div>
+                        <div class="label">总收入</div>
+                    </div>
+                </div>
+
+                <!-- 用户增长趋势 -->
+                <div class="add-form" style="margin-bottom:24px">
+                    <h2>📈 用户增长趋势（近7天）</h2>
+                    <div style="display:flex;align-items:flex-end;gap:8px;height:120px;padding:10px 0">
+                        ${last7Days.map((d, i) => {
+                            const max = Math.max(...last7Days.map(x => x.count), 1);
+                            const height = (d.count / max * 80) + 20;
+                            return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
+                                <span style="font-size:12px;color:#666">${d.count}</span>
+                                <div style="width:100%;height:${height}px;background:linear-gradient(to top,#6366f1,#818cf8);border-radius:4px 4px 0 0;transition:height 0.3s"></div>
+                                <span style="font-size:11px;color:#999">${d.date}</span>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <!-- 双列统计 -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px">
+                    <!-- 激活码统计 -->
+                    <div class="add-form">
+                        <h2>🔑 激活码统计</h2>
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;text-align:center">
+                            <div>
+                                <div style="font-size:28px;font-weight:700;color:#6366f1">${totalCodes}</div>
+                                <div style="font-size:13px;color:#999">总生成</div>
+                            </div>
+                            <div>
+                                <div style="font-size:28px;font-weight:700;color:#22c55e">${usedCodes}</div>
+                                <div style="font-size:13px;color:#999">已使用</div>
+                            </div>
+                            <div>
+                                <div style="font-size:28px;font-weight:700;color:#f59e0b">${unusedCodes}</div>
+                                <div style="font-size:13px;color:#999">未使用</div>
+                            </div>
+                        </div>
+                        <div style="margin-top:16px;background:#f3f4f6;border-radius:8px;padding:12px">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+                                <span style="color:#666">使用率</span>
+                                <span style="font-weight:600;color:#22c55e">${totalCodes > 0 ? Math.round(usedCodes/totalCodes*100) : 0}%</span>
+                            </div>
+                            <div style="height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden">
+                                <div style="height:100%;width:${totalCodes > 0 ? usedCodes/totalCodes*100 : 0}%;background:linear-gradient(90deg,#22c55e,#4ade80);transition:width 0.3s"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 分销统计 -->
+                    <div class="add-form">
+                        <h2>💰 分销统计</h2>
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;text-align:center">
+                            <div>
+                                <div style="font-size:28px;font-weight:700;color:#6366f1">${distUsers}</div>
+                                <div style="font-size:13px;color:#999">分销用户</div>
+                            </div>
+                            <div>
+                                <div style="font-size:28px;font-weight:700;color:#22c55e">¥${totalCommission.toFixed(2)}</div>
+                                <div style="font-size:13px;color:#999">佣金总额</div>
+                            </div>
+                            <div>
+                                <div style="font-size:28px;font-weight:700;color:#f59e0b">${pendingWithdrawals}</div>
+                                <div style="font-size:13px;color:#999">待审核提现</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 工具分类统计 -->
+                <div class="add-form">
+                    <h2>🛠️ 工具分类分布（${totalTools}个工具）</h2>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
+                        ${toolStats.map(t => {
+                            const percentage = (t.count / totalTools * 100).toFixed(1);
+                            return `<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f9fafb;border-radius:8px">
+                                <div style="width:8px;height:8px;border-radius:50%;background:${t.color}"></div>
+                                <span style="flex:1;font-size:14px;color:#374151">${t.name}</span>
+                                <span style="font-weight:600;color:${t.color}">${t.count}</span>
+                                <span style="font-size:12px;color:#9ca3af">${percentage}%</span>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </div>
+
+                <!-- 数据更新时间 -->
+                <div style="text-align:center;padding:20px;color:#9ca3af;font-size:13px">
+                    📊 数据更新时间：${new Date().toLocaleString('zh-CN')}
+                </div>
+            `;
+        }
+
+        // 辅助函数：获取支付数据库
+        function getPaymentDb() {
+            const data = localStorage.getItem('ai_gongju_chang_payment');
+            return data ? JSON.parse(data) : { withdrawals: [] };
+        }
+        
+        // 辅助函数：获取积分数据库
+        function getPointsDb() {
+            const data = localStorage.getItem('ai_gongju_chang_points');
+            return data ? JSON.parse(data) : {};
         }
         </div><!-- End tab-course -->
     </script>
