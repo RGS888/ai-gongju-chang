@@ -684,6 +684,10 @@
     <div class="category-tabs">
         <button class="category-tab active" data-category="all">全部</button>
         <button class="category-tab" data-category="video">📹 视频</button>
+        <button class="category-tab" data-category="ai">🤖 AI工具</button>
+        <button class="category-tab" data-category="media">📱 自媒体</button>
+        <button class="category-tab" data-category="ecommerce">🛒 电商</button>
+        <button class="category-tab" data-category="live">🎙️ 直播</button>
         <button class="category-tab" data-category="tool">💻 工具</button>
         <button class="category-tab" data-category="doc">📄 文档</button>
         <button class="category-tab" data-category="template">📋 模板</button>
@@ -821,37 +825,64 @@
     <script>
         // 资料数据
         const materials = [
-            { id: 0, title: '扣子技能下载购买教程', icon: '🤖', category: 'video', desc: '开发者金沐沐教你如何下载购买扣子技能', views: 9800, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 990 },
-            { id: 1, title: '爆款文案提示词使用教程', icon: '💡', category: 'video', desc: '金沐沐教你如何使用爆款文案视频提示词工具', views: 9200, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEaV', tag: 'NEW', points: 990 },
-            { id: 2, title: '抖音提取文案方法', icon: '📜', category: 'video', desc: '快速从抖音视频中提取文案内容的技巧', views: 9500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEEj', tag: 'NEW', points: 990 },
-            { id: 3, title: '快手提取文案教程', icon: '📱', category: 'video', desc: '快手视频文案提取教程', views: 8900, biliUrl: 'https://www.bilibili.com/video/BV1Ge9yBjEm2', tag: 'NEW', points: 990 },
-            { id: 4, title: '元宝好友提取文案教程', icon: '💬', category: 'video', desc: '添加元宝AI好友快速提取文案的方法', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESv', tag: 'NEW', points: 990 },
-            { id: 5, title: '即梦出镜人设置教程', icon: '🎨', category: 'video', desc: '即梦AI出镜人功能设置完整教程', views: 8700, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCEZy', tag: 'NEW', points: 990 },
-            { id: 6, title: '即梦生成视频修改方式', icon: '✏️', category: 'video', desc: '即梦AI生成视频不满意时的修改方法教程', views: 8300, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEB6', tag: 'NEW', points: 990 },
-            { id: 7, title: '即梦视频下载保存教程', icon: '💾', category: 'video', desc: '即梦AI生成视频下载保存到手机相册教程', views: 8100, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEmY', tag: 'NEW', points: 990 },
-            { id: 8, title: '即梦修改昵称教程', icon: '👤', category: 'video', desc: '即梦AI账号昵称修改操作教程', views: 7900, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BCE46', tag: 'NEW', points: 990 },
-            { id: 9, title: '享脉下载设置教程', icon: '📲', category: 'video', desc: '详细讲解享脉App下载和基础设置操作', views: 8500, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEiW', tag: 'NEW', points: 990 },
-            { id: 10, title: '手机下载软件教程', icon: '📱', category: 'video', desc: '教你如何在手机上下载安装所需软件', views: 5600, biliUrl: 'https://www.bilibili.com/video/BV1Ye9yBjEjq', tag: 'NEW', points: 990 },
-            { id: 11, title: '下载视频二次剪辑上传教程', icon: '✂️', category: 'video', desc: '如何下载视频并进行二次剪辑上传到视频号', views: 5200, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BKEtH', tag: 'NEW', points: 990 },
-            { id: 12, title: '小程序免费去水印方法', icon: '🚫', category: 'video', desc: '教你免费去除视频水印的实用方法', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Fmo1BMEBk', tag: 'NEW', points: 990 },
-            { id: 13, title: '爆款文案视频提示词生成', icon: '💡', category: 'video', desc: '快速生成制作视频用到的爆款文案提示词', views: 6200, biliUrl: 'https://www.bilibili.com/video/BV1Czo1BkEBn', tag: 'NEW', points: 990 },
-            { id: 14, title: '必剪免费生成字幕教程', icon: '📝', category: 'video', desc: '使用必剪APP免费自动生成视频字幕', views: 4500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: 'NEW', points: 990 },
-            { id: 15, title: '视频二次剪辑详细教程', icon: '🎬', category: 'video', desc: '完整的视频二次剪辑制作教程', views: 5400, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESj', tag: 'NEW', points: 990 },
-            { id: 16, title: '视频上传到快手操作步骤', icon: '📱', category: 'video', desc: '教你如何将视频上传到快手平台', views: 4600, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTECq', tag: 'NEW', points: 990 },
-            { id: 17, title: '视频快速上传到抖音教程', icon: '🎵', category: 'video', desc: '教你如何快速将视频上传到抖音平台', views: 4800, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEeq', tag: 'NEW', points: 990 },
-            { id: 18, title: '视频上传到视频号教程', icon: '📺', category: 'video', desc: '详细讲解视频上传到微信视频号的操作步骤', views: 5000, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTE8x', tag: 'NEW', points: 990 },
-            { id: 19, title: '抖音爆款视频制作教程', icon: '🎬', category: 'video', desc: '从0到1教你打造百万播放爆款视频', views: 12580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT', tag: '热门', points: 1290 },
-            { id: 20, title: '剪映专业版完整教程', icon: '📱', category: 'video', desc: '从入门到精通，涵盖所有剪辑技巧', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1iZYiYnJp4', tag: '推荐', points: 1290 },
-            { id: 21, title: '即梦AI使用教程', icon: '🎨', category: 'video', desc: 'AI图片和视频生成从入门到精通', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9', tag: '热门', points: 1290 },
-            { id: 22, title: '自媒体变现全攻略', icon: '💰', category: 'video', desc: '月入过万的秘密，多种变现方式详解', views: 23450, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '精华', points: 1990 },
-            { id: 23, title: '直播带货话术大全', icon: '🎙️', category: 'video', desc: '金牌主播都在用的高转化话术', views: 19870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '热门', points: 1990 },
-            { id: 24, title: '小红书爆款封面制作', icon: '📸', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '推荐', points: 990 },
-            { id: 25, title: '短视频文案写作技巧', icon: '✍️', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, tag: '实用', points: 690 },
-            { id: 26, title: '小红书运营实战笔记', icon: '📋', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, tag: '精华', points: 990 },
+            // ==================== AI智能工具类 ====================
+            { id: 0, title: 'AI短视频创作从入门到精通', icon: '🤖', category: 'video', desc: 'AI辅助短视频创作全流程实战教学', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 990 },
+            { id: 1, title: 'AI图片生成神器使用教程', icon: '🎨', category: 'video', desc: 'Midjourney/Stable Diffusion实操教学', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9', tag: '精华', points: 1290 },
+            { id: 2, title: 'AI智能体搭建实战课', icon: '🧠', category: 'video', desc: '扣子/Coze智能体搭建完整教程', views: 12890, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
+            { id: 3, title: 'ComfyUI人像写真工作流', icon: '📸', category: 'video', desc: 'AI摄影商业视觉实操教学', views: 9870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '推荐', points: 1490 },
+            { id: 4, title: 'AI视频生成即梦使用教程', icon: '🎬', category: 'video', desc: '即梦AI图片视频生成完整教程', views: 21560, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 990 },
+            
+            // ==================== 自媒体运营类 ====================
+            { id: 5, title: '抖音爆款视频制作教程', icon: '🎵', category: 'video', desc: '从0到1打造百万播放爆款视频', views: 18580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT', tag: '热门', points: 1290 },
+            { id: 6, title: '小红书运营实战笔记', icon: '📕', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, tag: '精华', points: 990 },
+            { id: 7, title: '小红书爆款封面制作', icon: '📸', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '推荐', points: 990 },
+            { id: 8, title: '小红书AI考题项目训练', icon: '📚', category: 'video', desc: 'AI辅助小红书内容批量生产', views: 7650, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
+            { id: 9, title: '公众号爆款文章写作课', icon: '✍️', category: 'video', desc: '10万+阅读量文章写作秘籍', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1490 },
+            
+            // ==================== 短视频剪辑类 ====================
+            { id: 10, title: '剪映专业版完整教程', icon: '✂️', category: 'video', desc: '从入门到精通，涵盖所有剪辑技巧', views: 25670, biliUrl: 'https://www.bilibili.com/video/BV1iZYiYnJp4', tag: '精华', points: 1290 },
+            { id: 11, title: '视频二次剪辑详细教程', icon: '🎬', category: 'video', desc: '完整的视频二次剪辑制作教程', views: 5400, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESj', tag: '推荐', points: 990 },
+            { id: 12, title: '必剪免费生成字幕教程', icon: '📝', category: 'video', desc: '使用必剪APP免费自动生成视频字幕', views: 4500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '实用', points: 690 },
+            { id: 13, title: 'AI短剧推广变现课', icon: '💰', category: 'video', desc: '短剧cps推广实操教程', views: 8900, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
+            { id: 14, title: '千川全域投放实操课', icon: '📊', category: 'video', desc: '抖音千川投流核心技巧', views: 12340, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 2990 },
+            
+            // ==================== 直播带货类 ====================
+            { id: 15, title: '直播带货话术大全', icon: '🎙️', category: 'video', desc: '金牌主播都在用的高转化话术', views: 19870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '热门', points: 1990 },
+            { id: 16, title: '多平台直播运营课', icon: '📡', category: 'video', desc: 'AI剪辑+数字人+直播变现全攻略', views: 11230, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '精华', points: 2990 },
+            { id: 17, title: '直播脚本模板合集', icon: '📋', category: 'template', desc: '各类直播场景脚本模板', views: 7650, tag: '素材', points: 990 },
+            
+            // ==================== 电商运营类 ====================
+            { id: 18, title: '拼多多无货源速成课', icon: '🏪', category: 'video', desc: '拼多多虚拟类目从0开始', views: 8970, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
+            { id: 19, title: '闲鱼无货源项目教程', icon: '📱', category: 'video', desc: '闲鱼二手平台赚钱实操', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '推荐', points: 1490 },
+            { id: 20, title: '亚马逊实战通关特训营', icon: '🌍', category: 'video', desc: '跨境电商亚马逊全攻略', views: 5430, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 3990 },
+            { id: 21, title: 'TikTok影视解说实战', icon: '🎬', category: 'video', desc: '海外TikTok内容搬运变现', views: 9870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 2990 },
+            { id: 22, title: '抖音小店运营全攻略', icon: '🏬', category: 'doc', desc: '抖音小店入驻到爆单完整指南', views: 7890, tag: '精华', points: 1990 },
+            
+            // ==================== 变现创业类 ====================
+            { id: 23, title: '自媒体变现全攻略', icon: '💰', category: 'video', desc: '月入过万的秘密，多种变现方式详解', views: 23450, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '精华', points: 1990 },
+            { id: 24, title: '虚拟资源项目实战', icon: '💎', category: 'video', desc: '虚拟产品销售躺赚模式', views: 11230, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 1990 },
+            { id: 25, title: '知识付费项目搭建课', icon: '📖', category: 'video', desc: '从0到1打造你的付费课程', views: 8760, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '推荐', points: 2990 },
+            { id: 26, title: '海外美金AI搬砖技术', icon: '💵', category: 'video', desc: 'Vegas交易训练营课程', views: 7650, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 3990 },
+            
+            // ==================== 工具软件类 ====================
             { id: 27, title: 'AI剪辑神器VIP版', icon: '🛠️', category: 'tool', desc: '一键自动剪辑工具，提高效率10倍', views: 15670, tag: '工具', points: 2990 },
-            { id: 28, title: '数据分析工具合集', icon: '📊', category: 'tool', desc: '运营必备数据分析工具', views: 6540, tag: '工具', points: 1990 },
-            { id: 29, title: 'PPT模板素材包', icon: '📑', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, tag: '素材', points: 990 },
-            { id: 30, title: '视频封面模板库', icon: '🎨', category: 'template', desc: '200+爆款封面PSD源文件', views: 9870, tag: '素材', points: 990 },
+            { id: 28, title: 'AI文案写作助手', icon: '✍️', category: 'tool', desc: '批量生成各平台营销文案', views: 12340, tag: '工具', points: 1990 },
+            { id: 29, title: '数据分析工具合集', icon: '📊', category: 'tool', desc: '运营必备数据分析工具', views: 6540, tag: '工具', points: 1990 },
+            { id: 30, title: 'AI去水印工具箱', icon: '🚫', category: 'tool', desc: '多平台视频去水印解决方案', views: 8900, tag: '工具', points: 990 },
+            
+            // ==================== 文档模板类 ====================
+            { id: 31, title: '短视频文案写作技巧', icon: '✍️', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, tag: '实用', points: 690 },
+            { id: 32, title: 'PPT模板素材包', icon: '📑', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, tag: '素材', points: 990 },
+            { id: 33, title: '视频封面模板库', icon: '🎨', category: 'template', desc: '200+爆款封面PSD源文件', views: 9870, tag: '素材', points: 990 },
+            { id: 34, title: '各平台违禁词库', icon: '⚠️', category: 'doc', desc: '小红书/抖音/微信违禁词大全', views: 5430, tag: '实用', points: 390 },
+            { id: 35, title: '自媒体创业计划书模板', icon: '📝', category: 'template', desc: '完整的自媒体创业计划书', views: 4320, tag: '模板', points: 590 },
+            
+            // ==================== 技能扣子类 ====================
+            { id: 36, title: '扣子技能下载购买教程', icon: '🤖', category: 'video', desc: '开发者教你如何下载购买扣子技能', views: 9800, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 990 },
+            { id: 37, title: '爆款文案提示词使用教程', icon: '💡', category: 'video', desc: '教你如何使用爆款文案视频提示词工具', views: 9200, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEaV', tag: 'NEW', points: 990 },
+            { id: 38, title: '抖音提取文案方法', icon: '📜', category: 'video', desc: '快速从抖音视频中提取文案内容的技巧', views: 9500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEEj', tag: 'NEW', points: 990 },
+            { id: 39, title: '享脉下载设置教程', icon: '📲', category: 'video', desc: '详细讲解享脉App下载和基础设置操作', views: 8500, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEiW', tag: 'NEW', points: 990 },
+            { id: 40, title: '手机下载软件教程', icon: '📱', category: 'video', desc: '教你如何在手机上下载安装所需软件', views: 5600, biliUrl: 'https://www.bilibili.com/video/BV1Ye9yBjEjq', tag: 'NEW', points: 990 },
         ];
         
         let currentCategory = 'all';
@@ -937,7 +968,21 @@
             let filtered = materials;
             
             if (currentCategory !== 'all') {
-                filtered = materials.filter(m => m.category === currentCategory);
+                if (currentCategory === 'ai') {
+                    // AI工具类：id 0-4
+                    filtered = materials.filter(m => m.id >= 0 && m.id <= 4);
+                } else if (currentCategory === 'media') {
+                    // 自媒体类：id 5-9
+                    filtered = materials.filter(m => m.id >= 5 && m.id <= 9);
+                } else if (currentCategory === 'ecommerce') {
+                    // 电商类：id 18-22
+                    filtered = materials.filter(m => m.id >= 18 && m.id <= 22);
+                } else if (currentCategory === 'live') {
+                    // 直播类：id 15-17
+                    filtered = materials.filter(m => m.id >= 15 && m.id <= 17);
+                } else {
+                    filtered = materials.filter(m => m.category === currentCategory);
+                }
             }
             
             const member = getMemberInfo();
@@ -1261,7 +1306,8 @@
             <button onclick="closeContact()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
             <h3 style="font-size:20px;margin-bottom:16px;">☎️ 联系我们</h3>
             <img src="wechat-qrcode.jpg" alt="客服二维码" style="width:200px;border-radius:8px;margin-bottom:12px;">
-            <p style="color:#07c160;font-weight:bold;margin:8px 0;">微信号：LZJD8768</p>
+            <p style="color:#07c160;font-weight:bold;margin:8px 0;">📱 微信号：LZJD8768</p>
+            <p style="color:#888;font-size:12px;margin:4px 0;">添加请备注：AI工具场会员</p>
             <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
                 <img src="assets/alipay.jpg" alt="支付宝" style="width:100px;border-radius:6px;">
                 <img src="assets/wechat.jpg" alt="微信" style="width:100px;border-radius:6px;">
