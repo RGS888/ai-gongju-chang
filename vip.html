@@ -155,32 +155,119 @@
             color: #888;
         }
         
-        /* 视频预览区 */
-        .preview-area {
+        /* 文章预览区 */
+        .article-preview {
+            position: relative;
+        }
+        .article-preview::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(transparent, #f8f9fa);
+            pointer-events: none;
+        }
+        .unlock-article-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .unlock-article-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .video-container {
+            position: relative;
             background: #1a1a2e;
             border-radius: 10px;
             overflow: hidden;
-            position: relative;
             margin-bottom: 10px;
         }
-        .preview-area iframe,
-        .preview-area video {
+        .video-container iframe {
             width: 100%;
             height: 200px;
             display: block;
         }
-        .preview-overlay {
+        .video-cover {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.8) 100%);
+            background: rgba(0,0,0,0.7);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .video-cover.hidden {
+            opacity: 0;
             pointer-events: none;
+        }
+        .video-play-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #667eea;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        .video-play-btn:active {
+            transform: scale(0.9);
+        }
+        .video-countdown {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,68,68,0.9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(255,68,68,0.4);
+        }
+        .video-timer-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ef4444, #f59e0b);
+            transition: width 1s linear;
+        }
+        
+        /* 会员已解锁状态 */
+        .unlocked-card {
+            border: 2px solid #10b981;
+        }
+        .unlocked-badge {
+            background: #10b981;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            margin-left: 8px;
         }
         
         /* 开通弹窗 */
@@ -826,15 +913,21 @@
         // 资料数据
         const materials = [
             // ==================== AI智能工具类 ====================
-            { id: 0, title: 'AI短视频创作从入门到精通', icon: '🤖', category: 'video', desc: 'AI辅助短视频创作全流程实战教学', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 990 },
-            { id: 1, title: 'AI图片生成神器使用教程', icon: '🎨', category: 'video', desc: 'Midjourney/Stable Diffusion实操教学', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9', tag: '精华', points: 1290 },
-            { id: 2, title: 'AI智能体搭建实战课', icon: '🧠', category: 'video', desc: '扣子/Coze智能体搭建完整教程', views: 12890, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
+            { id: 0, title: 'AI短视频创作从入门到精通', icon: '🤖', category: 'video', desc: 'AI辅助短视频创作全流程实战教学', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY/?autoplay=1', tag: '热门', points: 990 },
+            { id: 1, title: 'AI图片生成神器使用教程', icon: '🎨', category: 'video', desc: 'Midjourney/Stable Diffusion实操教学', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9/?autoplay=1', tag: '精华', points: 1290 },
+            { id: 2, title: 'AI智能体搭建实战课', icon: '🧠', category: 'video', desc: '扣子/Coze智能体搭建完整教程', views: 12890, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY/?autoplay=1', tag: 'NEW', points: 1990 },
             { id: 3, title: 'ComfyUI人像写真工作流', icon: '📸', category: 'video', desc: 'AI摄影商业视觉实操教学', views: 9870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '推荐', points: 1490 },
             { id: 4, title: 'AI视频生成即梦使用教程', icon: '🎬', category: 'video', desc: '即梦AI图片视频生成完整教程', views: 21560, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 990 },
             
             // ==================== 自媒体运营类 ====================
-            { id: 5, title: '抖音爆款视频制作教程', icon: '🎵', category: 'video', desc: '从0到1打造百万播放爆款视频', views: 18580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT', tag: '热门', points: 1290 },
-            { id: 6, title: '小红书运营实战笔记', icon: '📕', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, tag: '精华', points: 990 },
+            { id: 5, title: '抖音爆款视频制作教程', icon: '🎵', category: 'video', desc: '从0到1打造百万播放爆款视频', views: 18580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT/?autoplay=1', tag: '热门', points: 1290,
+              preview: '想要打造百万播放的爆款视频，关键在于掌握平台算法和用户心理。本教程将从选题、脚本、拍摄、剪辑、发布5个维度，手把手教你做出爆款内容。\n\n一、选题策略\n1. 热点追踪：利用抖音热点宝发现当下热门话题\n2. 痛点挖掘：找到目标用户的真实需求\n3. 差异化定位：别人都在做的，你要做得不一样\n\n【解锁后查看完整教程，含实战案例】',
+              fullContent: '想要打造百万播放的爆款视频，关键在于掌握平台算法和用户心理。本教程将从选题、脚本、拍摄、剪辑、发布5个维度，手把手教你做出爆款内容。\n\n一、选题策略\n1. 热点追踪：利用抖音热点宝发现当下热门话题\n   - 打开抖音创作者中心 → 热点宝\n   - 选择与你领域相关的热点\n   - 结合自己的内容角度进行创作\n2. 痛点挖掘：找到目标用户的真实需求\n   - 分析评论区高频问题\n   - 关注同行爆款视频的评论\n   - 在知乎、小红书搜索相关问题\n3. 差异化定位：别人都在做的，你要做得不一样\n   - 同样的美食教程，你可以用"失败集锦"的角度\n   - 同样的穿搭分享，你可以做"微胖女生专属"\n\n二、脚本创作（含5个爆款脚本模板）\n...\n\n三、拍摄技巧（含设备推荐和运镜手法）\n...\n\n四、剪辑要点（含剪映实操步骤）\n...\n\n五、发布策略（含最佳时间和标题优化）\n...\n\n【完整版包含10个实战案例分析和一对一答疑】'
+            },
+            { id: 6, title: '小红书运营实战笔记', icon: '📕', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, tag: '精华', points: 990,
+              preview: '小红书运营的核心在于"有价值的内容+精准的标签+持续的输出"。这份实战笔记将为你揭秘从0到1万粉的完整路径，包含账号定位、内容创作、流量获取、商业变现4大模块。\n\n一、账号定位\n1. 人设打造：让用户记住你\n2. 领域选择：选对赛道事半功倍\n3. 差异化策略：避开红海竞争\n\n【解锁后查看完整运营SOP】',
+              fullContent: '小红书运营的核心在于"有价值的内容+精准的标签+持续的输出"。这份实战笔记将为你揭秘从0到1万粉的完整路径...\n\n一、账号定位（含10个成功案例分析）\n二、内容创作（含50个选题方向）\n三、流量获取（含SEO优化技巧）\n四、商业变现（含10种变现方式）\n...\n【完整版共2万字，含实操模板】'
+            },
             { id: 7, title: '小红书爆款封面制作', icon: '📸', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '推荐', points: 990 },
             { id: 8, title: '小红书AI考题项目训练', icon: '📚', category: 'video', desc: 'AI辅助小红书内容批量生产', views: 7650, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
             { id: 9, title: '公众号爆款文章写作课', icon: '✍️', category: 'video', desc: '10万+阅读量文章写作秘籍', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1490 },
@@ -871,10 +964,16 @@
             { id: 30, title: 'AI去水印工具箱', icon: '🚫', category: 'tool', desc: '多平台视频去水印解决方案', views: 8900, tag: '工具', points: 990 },
             
             // ==================== 文档模板类 ====================
-            { id: 31, title: '短视频文案写作技巧', icon: '✍️', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, tag: '实用', points: 690 },
+            { id: 31, title: '短视频文案写作技巧', icon: '✍️', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, tag: '实用', points: 690,
+              preview: '想要写出爆款短视频文案，关键在于抓住用户的注意力。本文分享100个经过验证的文案模板，涵盖开头痛点、中间共情、结尾行动三大结构。\n\n一、开头痛点型模板\n1. "你是不是也遇到过..."\n2. "3个信号提醒你..."\n3. "90%的人都不知道..."\n\n二、中间共情型模板\n1. "我之前也和你一样..."\n2. "直到我发现了一个方法..."\n3. "其实关键在于..."\n\n【解锁后查看完整100个模板】',
+              fullContent: '想要写出爆款短视频文案，关键在于抓住用户的注意力。本文分享100个经过验证的文案模板，涵盖开头痛点、中间共情、结尾行动三大结构。\n\n一、开头痛点型模板\n1. "你是不是也遇到过..."\n2. "3个信号提醒你..."\n3. "90%的人都不知道..."\n4. "为什么别人能..."\n5. "终于明白了..."\n\n二、中间共情型模板\n1. "我之前也和你一样..."\n2. "直到我发现了一个方法..."\n3. "其实关键在于..."\n4. "很多人第一步就错了..."\n5. "这个坑我替你踩了..."\n\n三、结尾行动型模板\n1. "如果你也想..."\n2. "评论区告诉我..."\n3. "点关注，下期分享..."\n4. "收藏起来慢慢看..."\n5. "转发给需要的朋友..."\n\n四、完整100个模板详解（包含各行业具体案例）\n...\n\n【完整版包含各行业具体文案案例和实战演示】'
+            },
             { id: 32, title: 'PPT模板素材包', icon: '📑', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, tag: '素材', points: 990 },
             { id: 33, title: '视频封面模板库', icon: '🎨', category: 'template', desc: '200+爆款封面PSD源文件', views: 9870, tag: '素材', points: 990 },
-            { id: 34, title: '各平台违禁词库', icon: '⚠️', category: 'doc', desc: '小红书/抖音/微信违禁词大全', views: 5430, tag: '实用', points: 390 },
+            { id: 34, title: '各平台违禁词库', icon: '⚠️', category: 'doc', desc: '小红书/抖音/微信违禁词大全', views: 5430, tag: '实用', points: 390,
+              preview: '运营自媒体最怕的就是踩雷！各平台违禁词库帮你避开封号风险。本文汇总小红书、抖音、微信视频号、公众号等主流平台的违禁词和敏感词。\n\n一、小红书违禁词\n1. 绝对化用语：最高、最低、第一、唯一、国家级...\n2. 虚假宣传：秒杀、清仓、亏本、跳楼价...\n3. 医疗相关：治疗、治愈、消炎、镇痛...\n\n【解锁后查看完整违禁词库】',
+              fullContent: '运营自媒体最怕的就是踩雷！各平台违禁词库帮你避开封号风险。本文汇总小红书、抖音、微信视频号、公众号等主流平台的违禁词和敏感词。\n\n一、小红书违禁词\n1. 绝对化用语：最高、最低、第一、唯一、国家级、最高级、最佳...\n2. 虚假宣传：秒杀、清仓、亏本、跳楼价、史上最低...\n3. 医疗相关：治疗、治愈、消炎、镇痛、防癌、抗癌...\n4. 金融相关：收益率、无风险、稳赚不赔...\n5. 诱导互动：关注就送、转发抽奖、评论领红包...\n\n二、抖音违禁词\n1. 极限词：全网第一、行业领先、顶级工艺...\n2. 虚假承诺： guaranteed成功、100%有效...\n3. 医疗违规：使用前VS使用后、医疗效果对比...\n\n三、微信视频号违禁词\n...\n\n【完整版包含5000+违禁词详细列表】'
+            },
             { id: 35, title: '自媒体创业计划书模板', icon: '📝', category: 'template', desc: '完整的自媒体创业计划书', views: 4320, tag: '模板', points: 590 },
             
             // ==================== 技能扣子类 ====================
@@ -890,7 +989,7 @@
         let selectedPackagePrice = 29;
         
         // 预览相关
-        const PREVIEW_SECONDS = 10;
+        const PREVIEW_SECONDS = 30;
         let currentPreviewId = null;
         let previewTimers = {};
         
@@ -998,6 +1097,17 @@
                 
                 if (isMember) {
                     // 会员 - 直接显示解锁状态
+                    let contentHtml = '';
+                    if (m.category === 'video' && m.biliUrl) {
+                        contentHtml = `<div style="text-align:center;padding:10px 0;">
+                            <a href="${m.biliUrl}" target="_blank" class="view-btn">▶️ 立即观看完整教程</a>
+                        </div>`;
+                    } else if (m.fullContent) {
+                        contentHtml = `<div style="padding:10px;background:#f8f9fa;border-radius:8px;margin-top:10px;max-height:300px;overflow-y:auto;">
+                            <div style="white-space:pre-line;font-size:13px;line-height:1.8;color:#333;">${m.fullContent}</div>
+                        </div>`;
+                    }
+                    
                     return `
                         <div class="material-card unlocked-card">
                             <div class="material-header">
@@ -1010,13 +1120,40 @@
                                     <div class="material-desc">${m.desc}</div>
                                 </div>
                             </div>
-                            <div style="text-align:center;padding:10px 0;">
-                                <a href="${m.biliUrl}" target="_blank" class="view-btn">▶️ 立即观看完整教程</a>
-                            </div>
+                            ${contentHtml}
                         </div>
                     `;
                 } else {
-                    // 非会员 - 显示10秒预览
+                    // 非会员 - 显示预览
+                    let previewHtml = '';
+                    
+                    if (m.category === 'video') {
+                        // 视频类型 - 显示视频预览
+                        previewHtml = `
+                            <div class="video-container" id="video-container-${m.id}">
+                                <iframe src="${m.biliUrl || ''}" frameborder="0" allowfullscreen style="height:200px;"></iframe>
+                                <div class="video-cover" id="cover-${m.id}">
+                                    <div class="video-play-btn" onclick="startPreview(${m.id})">▶</div>
+                                    <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);padding:4px 12px;border-radius:12px;font-size:12px;color:white;">
+                                        🔒 付费内容 · 免费试看${PREVIEW_SECONDS}秒
+                                    </div>
+                                </div>
+                                <div class="video-countdown" id="countdown-${m.id}" style="display:none;">${PREVIEW_SECONDS}</div>
+                                <div class="video-timer-bar" id="timer-bar-${m.id}" style="width:0%"></div>
+                            </div>
+                        `;
+                    } else if (m.preview) {
+                        // 文章类型 - 显示文字预览
+                        previewHtml = `
+                            <div class="article-preview" id="article-preview-${m.id}" style="padding:12px;background:#f8f9fa;border-radius:8px;margin-bottom:10px;">
+                                <div style="white-space:pre-line;font-size:13px;line-height:1.8;color:#333;max-height:150px;overflow:hidden;position:relative;">
+                                    ${m.preview}
+                                    <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,#f8f9fa);"></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
                     return `
                         <div class="material-card" id="card-${m.id}">
                             <div class="material-header">
@@ -1029,28 +1166,14 @@
                                     <div class="material-desc">👁️ ${m.views.toLocaleString()}次浏览</div>
                                 </div>
                             </div>
-                            
-                            <!-- 视频预览区 -->
-                            <div class="video-container" id="video-container-${m.id}">
-                                <iframe src="${m.biliUrl}" frameborder="0" allowfullscreen style="height:200px;"></iframe>
-                                <div class="video-cover" id="cover-${m.id}">
-                                    <div class="video-play-btn" onclick="startPreview(${m.id})">▶</div>
-                                    <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);padding:4px 12px;border-radius:12px;font-size:12px;color:white;">
-                                        🔒 付费内容 · 免费试看10秒
-                                    </div>
-                                </div>
-                                <div class="video-countdown" id="countdown-${m.id}" style="display:none;">10</div>
-                                <div class="video-timer-bar" id="timer-bar-${m.id}" style="width:0%"></div>
-                            </div>
-                            
-                            <!-- 开通激活区 -->
+                            ${previewHtml}
                             <div class="activate-section">
-                                <p>📺 视频内容：${m.desc}</p>
+                                <p>📺 ${m.category === 'video' ? '视频内容' : '文章内容'}：${m.desc}</p>
                                 <div class="price-info">
-                                    💡 开通会员即可观看完整版 | 月卡¥29 或 ${m.points}积分兑换
+                                    💡 开通会员即可查看完整版 | 月卡¥29 或 ${m.points}积分兑换
                                 </div>
                                 <button class="activate-btn" onclick="showUnlockModal(${m.id}, '${m.title}')">
-                                    🔓 立即解锁观看完整版
+                                    🔓 立即解锁查看完整版
                                 </button>
                             </div>
                         </div>
@@ -1064,6 +1187,7 @@
             const cover = document.getElementById('cover-' + id);
             const countdown = document.getElementById('countdown-' + id);
             const timerBar = document.getElementById('timer-bar-' + id);
+            const videoContainer = document.getElementById('video-container-' + id);
             
             // 隐藏封面，显示倒计时
             cover.classList.add('hidden');
