@@ -705,13 +705,27 @@
         }
 
         function updateQRCode() {
-            // 使用实际收款码图片
+            // 根据价格选择对应的小程序收款码
+            const tool = fortuneTools[currentTool];
+            const price = tool.price;
             const method = currentPayment;
             const qrImg = document.getElementById('qrImage');
+            
             if (method === 'alipay') {
                 qrImg.src = 'assets/alipay.jpg';
             } else {
-                qrImg.src = 'assets/wechat.jpg';
+                // 根据价格选择对应的微信收款码
+                let wechatImg = 'assets/wechat.jpg'; // 默认
+                if (price == 6.6) wechatImg = 'assets/payment/price_6_6.jpg';
+                else if (price == 9.9) wechatImg = 'assets/payment/price_9_9.jpg';
+                else if (price == 19.9) wechatImg = 'assets/payment/price_19_9.jpg';
+                else if (price == 29 || price == 29.0) wechatImg = 'assets/payment/price_29.jpg';
+                else if (price == 29.9) wechatImg = 'assets/payment/price_29_9.jpg';
+                else if (price == 79) wechatImg = 'assets/payment/price_79.jpg';
+                else if (price == 199) wechatImg = 'assets/payment/price_199.jpg';
+                else if (price == 399) wechatImg = 'assets/payment/price_399.jpg';
+                
+                qrImg.src = wechatImg;
             }
             qrImg.onerror = function() { this.style.display = 'none'; };
         }

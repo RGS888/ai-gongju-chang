@@ -341,15 +341,32 @@
             }
             
             // 显示收款码
-            if (rechargeConfig) {
-                const qrData = selectedPayment === 'alipay' ? rechargeConfig.alipayQr : rechargeConfig.wechatQr;
-                if (qrData) {
-                    qrCode.innerHTML = `<img src="${qrData}" alt="收款码">`;
+            if (selectedPayment === 'alipay') {
+                // 支付宝
+                if (rechargeConfig && rechargeConfig.alipayQr) {
+                    qrCode.innerHTML = `<img src="${rechargeConfig.alipayQr}" alt="收款码">`;
                 } else {
-                    qrCode.innerHTML = `<span>管理员未设置${selectedPayment === 'alipay' ? '支付宝' : '微信'}收款码</span>`;
+                    qrCode.innerHTML = `<span>管理员未设置支付宝收款码</span>`;
                 }
             } else {
-                qrCode.innerHTML = `<span>请在后台配置收款二维码</span>`;
+                // 微信支付 - 根据金额选择对应的小程序收款码
+                let wechatImg = 'assets/wechat.jpg'; // 默认
+                
+                // 根据充值金额选择对应的收款码
+                if (selectedAmount == 6.6) wechatImg = 'assets/payment/price_6_6.jpg';
+                else if (selectedAmount == 9.9) wechatImg = 'assets/payment/price_9_9.jpg';
+                else if (selectedAmount == 19.9) wechatImg = 'assets/payment/price_19_9.jpg';
+                else if (selectedAmount == 29 || selectedAmount == 29.0) wechatImg = 'assets/payment/price_29.jpg';
+                else if (selectedAmount == 29.9) wechatImg = 'assets/payment/price_29_9.jpg';
+                else if (selectedAmount == 79) wechatImg = 'assets/payment/price_79.jpg';
+                else if (selectedAmount == 199) wechatImg = 'assets/payment/price_199.jpg';
+                else if (selectedAmount == 399) wechatImg = 'assets/payment/price_399.jpg';
+                else if (rechargeConfig && rechargeConfig.wechatQr) {
+                    // 如果金额不匹配，使用后台配置的收款码
+                    wechatImg = rechargeConfig.wechatQr;
+                }
+                
+                qrCode.innerHTML = `<img src="${wechatImg}" alt="微信收款码" onerror="this.onerror=null;this.src='assets/wechat.jpg';">`;
             }
             
             modal.classList.remove('hidden');

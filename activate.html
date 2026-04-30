@@ -931,7 +931,20 @@
                 alipayBtn.classList.add('active');
                 wechatBtn.classList.remove('active');
             } else {
-                qrImg.src = 'assets/wechat.jpg';
+                // 根据价格选择对应的微信收款码
+                let wechatImg = 'assets/wechat.jpg'; // 默认
+                if (selectedPlan) {
+                    const price = selectedPlan.price;
+                    if (price == 6.6) wechatImg = 'assets/payment/price_6_6.jpg';
+                    else if (price == 9.9) wechatImg = 'assets/payment/price_9_9.jpg';
+                    else if (price == 19.9) wechatImg = 'assets/payment/price_19_9.jpg';
+                    else if (price == 29 || price == 29.0) wechatImg = 'assets/payment/price_29.jpg';
+                    else if (price == 29.9) wechatImg = 'assets/payment/price_29_9.jpg';
+                    else if (price == 79) wechatImg = 'assets/payment/price_79.jpg';
+                    else if (price == 199) wechatImg = 'assets/payment/price_199.jpg';
+                    else if (price == 399) wechatImg = 'assets/payment/price_399.jpg';
+                }
+                qrImg.src = wechatImg;
                 methodText.textContent = '微信';
                 wechatBtn.classList.add('active');
                 alipayBtn.classList.remove('active');
