@@ -1235,9 +1235,28 @@
         
         // 初始化
         updateUI();
-        
-        // 定期检查会员状态
-        setInterval(updateUI, 2000);
+
+        // 联系我们弹窗
+        function showContact() {
+            document.getElementById('contactModal').classList.add('active');
+        }
+        function closeContact() {
+            document.getElementById('contactModal').classList.remove('active');
+        }
     </script>
+
+    <!-- 联系我们弹窗 -->
+    <div class="payment-modal" id="contactModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+        <div style="background:#fff;border-radius:16px;padding:24px;max-width:400px;width:90%;text-align:center;position:relative;">
+            <button onclick="closeContact()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
+            <h3 style="font-size:20px;margin-bottom:16px;">☎️ 联系我们</h3>
+            <img src="wechat-qrcode.jpg" alt="客服二维码" style="width:200px;border-radius:8px;margin-bottom:12px;">
+            <p style="color:#07c160;font-weight:bold;margin:8px 0;">微信号：LZJD8768</p>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+                <img src="assets/alipay.jpg" alt="支付宝" style="width:100px;border-radius:6px;">
+                <img src="assets/wechat.jpg" alt="微信" style="width:100px;border-radius:6px;">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
