@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>教程管理后台 - AI工具场</title>
+    <meta name="description" content="AI工具场管理后台，支持课程管理、会员管理、激活码管理、分销管理、收款设置、提现审核、积分管理等运营功能。">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="教程管理后台 - AI工具场">
+    <meta property="og:type" content="website">
     <style>
         * {
             margin: 0;
@@ -448,9 +452,28 @@
             body{padding:12px}
             .section{margin-bottom:16px}
             .tabs{display:flex;flex-wrap:wrap;gap:8px}
-            .tab-btn{padding:10px 16px;font-size:13px}
-            table{font-size:12px}
-            .course-list td,.course-list th{padding:8px 6px}
+            .tab-btn{padding:10px 16px;font-size:13px;flex:1;min-width:120px}
+            table{font-size:11px;overflow-x:auto;display:block}
+            .course-list td,.course-list th{padding:8px 6px;white-space:nowrap}
+            .course-list{width:100%;min-width:600px}
+            .admin-header{flex-direction:column;gap:12px;padding:12px}
+            .admin-header h1{font-size:18px}
+            .user-info{flex-wrap:wrap}
+            .logout-btn{padding:8px 12px;font-size:12px}
+            .form-row{flex-direction:column}
+            .form-group input,.form-group textarea,.form-group select{font-size:16px}
+            .modal-content{width:95%;padding:16px}
+            .stats-grid{grid-template-columns:repeat(2,1fr)!important}
+            .payment-methods{flex-direction:column}
+        }
+        @media (max-width: 480px) {
+            .tab-nav{overflow-x:auto;flex-wrap:nowrap;padding-bottom:8px}
+            .tab-btn{padding:8px 12px;font-size:12px;flex:0 0 auto}
+            .stats-card{ padding: 12px; }
+            .stats-card .value{font-size:20px}
+            .search-bar{flex-direction:column}
+            .search-bar input{width:100%}
+            .btn{padding:12px;font-size:14px}
         }
     </style>
 </head>
