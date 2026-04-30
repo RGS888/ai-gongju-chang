@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI工具场 - 自媒体创作者必备工具导航 | 701+AI工具大全</title>
-    <meta name="description" content="AI工具场汇集701+款自媒体创作者必备工具，包括AI聊天、AI图片、AI视频、AI音乐、AI编程、AI智能体、AI写作等，另有付费视频教程和趣味运势测试。">
+    <title>AI工具场 - 自媒体创作者必备工具导航 | 702+AI工具大全</title>
+    <meta name="description" content="AI工具场汇集702+款自媒体创作者必备工具，包括AI聊天、AI图片、AI视频、AI音乐、AI编程、AI智能体、AI写作等，另有付费视频教程和趣味运势测试。">
     <meta name="keywords" content="AI工具,AI聊天,AI图片,AI视频,AI音乐,AI编程,AI机器人,自媒体工具,AI导航,工具导航">
     <meta property="og:title" content="AI工具场 - 自媒体创作者必备工具导航">
     <meta property="og:type" content="website">
@@ -309,14 +309,16 @@
             .section-title .emoji{font-size:20px}
             .section-count{font-size:11px;padding:2px 8px}
             .tool-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-            .tool-card{padding:12px;border-radius:10px}
+            .tool-card{padding:12px;border-radius:10px;display:flex;flex-direction:column;min-height:160px}
             .tool-card:hover{transform:none}
-            .tool-icon,.tool-icon-fa{width:36px;height:36px;font-size:18px;border-radius:8px}
-            .tool-name{font-size:13px;font-weight:600}
-            .tool-desc{font-size:11px;-webkit-line-clamp:2;margin-bottom:8px}
-            .tool-tags{gap:4px;margin-bottom:8px}
+            .tool-card-header{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+            .tool-icon,.tool-icon-fa{width:36px;height:36px;font-size:18px;border-radius:8px;flex-shrink:0}
+            .tool-name{font-size:13px;font-weight:600;line-height:1.3}
+            .tool-desc{font-size:11px;-webkit-line-clamp:2;margin-bottom:8px;flex:1}
+            .tool-tags{gap:4px;margin-bottom:8px;flex-wrap:wrap}
             .tool-tag{font-size:10px;padding:2px 6px}
-            .tool-link{padding:6px 10px;font-size:11px;width:100%;justify-content:center;border-radius:6px}
+            .tool-detail-btn{width:100%;padding:8px 10px;font-size:11px;justify-content:center;margin-top:auto;box-sizing:border-box}
+            .tool-link{padding:8px 10px;font-size:11px;width:100%;justify-content:center;border-radius:6px;box-sizing:border-box}
             .tool-link.aliyun{font-size:10px;padding:6px 8px}
             .cat-tabs{padding:0 12px 8px;gap:6px}
             .cat-tab{padding:4px 10px;font-size:11px;border-radius:15px}
@@ -351,6 +353,9 @@
             .footer p{margin-top:8px}
             .footer a{margin:0 4px;font-size:11px}
             .sidebar-overlay{position:fixed;top:56px;left:0;right:0;bottom:70px;background:rgba(0,0,0,0.7);z-index:99;display:none}
+            /* 工具卡片底部对齐 */
+            .tool-card .tool-tags{order:1}
+            .tool-card .tool-detail-btn{order:2}
         }
         
         @media(max-width:480px){
@@ -360,11 +365,13 @@
             .banner p{font-size:12px}
             .section-title{font-size:15px}
             .tool-grid{grid-template-columns:1fr 1fr;gap:8px}
-            .tool-card{padding:10px}
+            .tool-card{padding:10px;min-height:150px}
+            .tool-card-header{gap:6px}
             .tool-icon,.tool-icon-fa{width:32px;height:32px;font-size:16px}
             .tool-name{font-size:12px}
             .tool-desc{font-size:10px}
-            .tool-link{font-size:10px;padding:5px 8px}
+            .tool-detail-btn{padding:6px 8px;font-size:10px}
+            .tool-link{font-size:10px;padding:6px 8px}
             .payment-modal-content{padding:16px 12px}
             .payment-amount{font-size:22px}
             .payment-qrcode img{width:120px;height:120px}
@@ -504,7 +511,7 @@
 
         <!-- BANNER -->
         <div class="banner">
-            <h1>🚀 AI工具场 - 700+ 自媒体创作者必备工具导航</h1>
+            <h1>🚀 AI工具场 - 702+ 自媒体创作者必备工具导航</h1>
             <p>涵盖AI聊天、AI绘画、AI视频、AI音乐、AI编程、AI智能体等全品类工具</p>
             <a href="https://www.aliyun.com/minisite/goods?userCode=8ont37k6" target="_blank" class="banner-aliyun">
                 ☁️ <strong>阿里云限时优惠</strong> — 新用户首单返25%-45%，点击领取专属优惠 →
@@ -741,7 +748,7 @@
         <!-- 直播工具 -->
         <section class="section hot-section" id="section-live">
             <div class="section-header">
-                <div class="section-title"><span class="emoji">📺</span>直播工具<span class="section-count">NEW</span></div>
+                <div class="section-title"><span class="emoji">📺</span>直播工具<span class="section-count">5个</span></div>
                 <div class="section-filters">
                     <button class="filter-btn active" onclick="filterSub(this,'live','all')">全部</button>
                     <button class="filter-btn" onclick="filterSub(this,'live','hot')">热门</button>
@@ -1403,32 +1410,9 @@ const tools = [
      detail:'微拓客是AI驱动的智能营销拓客工具，帮助实体商家、企业快速获取精准潜在客户，提升销售业绩。\n\n【核心功能】\n• AI客户画像：智能分析目标客户特征\n• 多渠道获客：抖音、微信、百度全渠道引流\n• 客户管理：完善的客户跟进管理系统\n• 数据追踪：营销效果实时监测\n• 裂变工具：老客带新客，快速裂变\n\n【适用场景】\n• 实体店引流获客\n• 企业销售团队\n• 培训机构招生\n• 美容健身会所\n• 餐饮商家推广\n\n【核心优势】\n• AI技术精准定位客户\n• 降低获客成本50%以上\n• 操作简单易上手\n• 专业团队全程指导\n\n【推广奖励】\n• 注册即享新人礼\n• 邀请码：yFZZ2bF_i9\n• 推广可获得高额佣金'},
 
    {id:'lv4',name:'有戏',emoji:'🎮',cat:'live',tags:['hot','new'],popular:true,desc:'游戏推广赚钱平台，海量热门游戏、丰厚佣金奖励，轻松变现你的游戏热情',url:'https://youxi.fullpeace.net/login?code=6gY8u',urlText:'立即加入',agentId:'6gY8u',
-    detail:'有戏是一个专业的游戏推广赚钱平台，汇聚海量热门游戏，为游戏爱好者提供边玩边赚的机会。
-
-【核心功能】
-• 海量游戏库：涵盖手游、页游、端游等多种类型
-• 专属邀请码：绑定你的推广身份，轻松追踪收益
-• 丰厚佣金：推广游戏获得高额分成
-• 实时结算：佣金收入透明，准时到账
-• 活动福利：新人礼包、节日活动奖励不停
-
-【适用人群】
-• 游戏爱好者
-• 直播/短视频创作者
-• 社交媒体达人
-• 想做游戏副业赚钱的人群
-
-【变现方式】
-• 邀请好友注册获得邀请奖励
-• 推广指定游戏获得下载/注册佣金
-• 参与游戏冲榜活动获得奖金
-• 发展下级代理获得团队奖励
-
-【推广奖励】
-• 邀请码：6gY8u
-• 新用户专属福利
-• 邀请好友额外奖励
-• 团队业绩分红'}
+    detail:'有戏是一个专业的游戏推广赚钱平台，汇聚海量热门游戏，为游戏爱好者提供边玩边赚的机会。\n\n【核心功能】\n• 海量游戏库：涵盖手游、页游、端游等多种类型\n• 专属邀请码：绑定你的推广身份，轻松追踪收益\n• 丰厚佣金：推广游戏获得高额分成\n• 实时结算：佣金收入透明，准时到账\n• 活动福利：新人礼包、节日活动奖励不停\n\n【适用人群】\n• 游戏爱好者\n• 直播/短视频创作者\n• 社交媒体达人\n• 想做游戏副业赚钱的人群\n\n【变现方式】\n• 邀请好友注册获得邀请奖励\n• 推广指定游戏获得下载/注册佣金\n• 参与游戏冲榜活动获得奖金\n• 发展下级代理获得团队奖励\n\n【推广奖励】\n• 邀请码：6gY8u\n• 新用户专属福利\n• 邀请好友额外奖励\n• 团队业绩分红'},
+    {id:'lv5',name:'二维码彩虹',emoji:'🌈',cat:'live',tags:['hot','new'],popular:true,desc:'专业二维码生成工具，支持美化定制、批量生成、数据统计',url:'https://www.erweicaihong.cn/share-code/VMG4-D5E6',urlText:'立即使用',
+    detail:'二维码彩虹是专业的二维码生成和美化平台，为商家和个人提供一站式二维码解决方案。\n\n【核心功能】\n• 二维码生成：支持文本、网址、微信、名片等多种类型\n• 美化定制：丰富的颜色、图标、样式模板\n• 批量生成：一次生成多个二维码，提高效率\n• 数据统计：追踪二维码扫描数据，了解传播效果\n• logo嵌入：支持在二维码中心添加logo\n\n【适用场景】\n• 商家推广引流\n• 微信公众号推广\n• 物料印刷制作\n• 活动宣传推广\n• 产品溯源追踪\n\n【核心优势】\n• 操作简单，无需设计基础\n• 多种美化模板，一键套用\n• 生成的二维码识别率高\n• 支持高清下载和打印\n\n【推广奖励】\n• 分享码：VMG4-D5E6\n• 新用户专属福利\n• 推广可获得佣金奖励'}
 
     // ===== RENDER FUNCTIONS =====
 function renderToolCard(tool) {

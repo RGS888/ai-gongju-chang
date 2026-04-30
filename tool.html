@@ -91,9 +91,23 @@
         /* Responsive */
         @media(max-width:768px){
             .tool-header-inner{flex-direction:column;align-items:center;text-align:center}
-            .tool-actions{position:static;margin-top:20px}
-            .go-btn{width:100%;justify-content:center}
-            .tool-name{font-size:24px}
+            .tool-actions{position:static;margin-top:20px;width:100%}
+            .go-btn{width:100%;justify-content:center;padding:12px 20px}
+            .tool-name{font-size:22px;text-align:center}
+            .tool-icon{width:64px;height:64px;font-size:28px}
+            .tool-tags{justify-content:center}
+            .tool-category-badge{justify-content:center}
+            .main{padding:70px 12px 40px}
+            .section{padding:20px 16px}
+            .features-grid{grid-template-columns:1fr}
+            .tool-header{padding:24px 16px}
+        }
+        @media(max-width:480px){
+            .tool-name{font-size:18px}
+            .tool-icon{width:56px;height:56px;font-size:24px}
+            .section-title{font-size:16px}
+            .section{padding:16px 12px;border-radius:14px}
+            .go-btn{font-size:14px;padding:10px 16px}
         }
     </style>
 </head>
@@ -196,7 +210,14 @@
             {id:'i7',name:'DALL-E',emoji:'🖼️',cat:'image',tags:['hot'],desc:'OpenAI出品，AI图像生成，质量顶级',url:'https://openai.com/dall-e-3',detail:'OpenAI DALL-E 3图像生成。\n\n【核心特点】\n• OpenAI技术\n• 图文匹配精准\n• 细节丰富\n• 安全过滤\n• 商用授权\n\n【适用场景】\n• 高质量素材\n• 商业设计\n• 创意概念\n• 产品展示\n• 内容配图\n\n【使用建议】\n通过ChatGPT Plus订阅使用，图文匹配能力是业界最佳。',features:['OpenAI技术','精准匹配','细节丰富','商用授权'],pricing:'paid',usage:['订阅ChatGPT Plus','在ChatGPT中使用','输入详细描述','生成高质量图片']},
             {id:'i8',name:'奇域AI',emoji:'🧭',cat:'image',tags:['hot','free','new'],desc:'国产AI绘画，支持国风、插画等多种风格',url:'https://www.qiyuai.net',detail:'国产AI绘画平台。\n\n【核心特点】\n• 国风风格突出\n• 插画效果出色\n• 中文提示词友好\n• 每日免费额度\n• 社区氛围好\n\n【适用场景】\n• 国风创作\n• 中式插画\n• 水墨风格\n• 传统美学\n• 新中式设计\n\n【使用建议】\n国风创作首选平台，水墨、敦煌等风格效果惊艳。',features:['国风突出','插画出色','中文友好','每日免费'],pricing:'free',usage:['访问奇域AI','输入中文提示词','选择国风等风格','生成并分享']},
             {id:'i9',name:'通义万相',emoji:'🌀',cat:'image',tags:['free'],desc:'阿里云AI绘画，支持文生图、风格迁移',url:'https://wanx.aliyun.com',detail:'阿里云通义万相。\n\n【核心特点】\n• 阿里云技术\n• 文生图能力\n• 风格迁移\n• API服务\n• 阿里生态\n\n【适用场景】\n• 创意图片\n• 风格迁移\n• 电商素材\n• 内容配图\n• 企业应用\n\n【使用建议】\n可调用API，适合企业级批量应用。与阿里云其他服务集成方便。',features:['阿里云技术','文生图','风格迁移','API服务'],pricing:'free',usage:['访问通义万相','网页体验或API调用','生成创意图片','企业用户集成']},
-            {id:'i10',name:'秒画',emoji:'⚡',cat:'image',tags:['free'],desc:'商汤科技出品，AI图像生成，支持自定义模型',url:'https://miaohua.sensetime.com',detail:'商汤科技秒画。\n\n【核心特点】\n• 商汤技术背景\n• 自定义模型\n• 效果出色\n• 多种风格\n• 免费使用\n\n【适用场景】\n• 创意绘画\n• 概念设计\n• 产品渲染\n• 艺术创作\n• 定制化需求\n\n【使用建议】\n支持自定义模型训练，适合有特定风格需求的用户。',features:['商汤技术','自定义模型','效果出色','多种风格'],pricing:'free',usage:['访问秒画官网','选择基础模型','或训练自定义模型','生成图片']}
+            {id:'i10',name:'秒画',emoji:'⚡',cat:'image',tags:['free'],desc:'商汤科技出品，AI图像生成，支持自定义模型',url:'https://miaohua.sensetime.com',detail:'商汤科技秒画。\n\n【核心特点】\n• 商汤技术背景\n• 自定义模型\n• 效果出色\n• 多种风格\n• 免费使用\n\n【适用场景】\n• 创意绘画\n• 概念设计\n• 产品渲染\n• 艺术创作\n• 定制化需求\n\n【使用建议】\n支持自定义模型训练，适合有特定风格需求的用户。',features:['商汤技术','自定义模型','效果出色','多种风格'],pricing:'free',usage:['访问秒画官网','选择基础模型','或训练自定义模型','生成图片']},
+
+            // ===== 直播工具 =====
+            {id:'lv1',name:'绿幕助手',emoji:'🎬',cat:'live',tags:['hot','new'],popular:true,desc:'专业虚拟直播特效工具，轻松玩转绿幕抠图和直播特效，支持多平台直播',url:'https://dwz.cn/QUovH5gQ',detail:'绿幕助手是一款专业级虚拟直播工具，支持绿幕抠像、虚拟背景、特效叠加等功能。\n\n【核心功能】\n• 智能绿幕抠像：AI精准识别，一键去除背景\n• 虚拟场景库：海量精美直播间场景可选\n• 特效叠加：弹幕、特效、转场动画等\n• 多平台推流：支持抖音、快手、淘宝等多平台\n• 虚拟形象：AI虚拟主播，24小时自动直播\n\n【适用场景】\n• 电商直播带货\n• 游戏直播\n• 在线教育直播\n• 企业宣讲直播\n\n【特色优势】\n• 电脑配置要求低，老电脑也能流畅运行\n• 操作简单，零基础也能快速上手',features:['绿幕抠像','虚拟场景','多平台推流','AI虚拟主播'],pricing:'free',usage:['下载安装绿幕助手','配置绿幕背景','选择虚拟场景','开始直播']},
+            {id:'lv2',name:'抖推猫',emoji:'🐱',cat:'live',tags:['hot','new'],popular:true,desc:'短视频/直播推广神器，海量素材和变现技巧，一键分享赚佣金',url:'http://dtmapp-253.doutuiweb.net/?jjpath=https%3A%2F%2Fdtmshareh51.doutuimao.cn%2F%23%2Fpages%2Ffriend%2Findex%3Fucode%3DBGKN86%26node%3D11%26haibao_id%3D38',detail:'抖推猫是专业的短视频/直播推广和变现工具平台。\n\n【核心功能】\n• 海量素材库：热门视频、音乐、特效模板\n• 一键分发：一次上传多平台同步发布\n• 变现任务：对接品牌广告，轻松接单\n• 数据分析：作品数据全监测\n\n【适用人群】\n• 短视频创作者\n• 直播带货主播\n• 自媒体运营者',features:['海量素材','一键分发','变现任务','数据分析'],pricing:'free',usage:['下载抖推猫APP','注册并登录','获取推广任务','分享赚佣金']},
+            {id:'lv3',name:'微拓客',emoji:'💰',cat:'live',tags:['hot','new'],popular:true,desc:'AI智能营销拓客工具，帮助商家快速获取精准客户，提升业绩',url:'https://h5.weituokeapp.com/reg/yFZZ2bF_i9.html',detail:'微拓客是AI驱动的智能营销拓客工具。\n\n【核心功能】\n• AI客户画像：智能分析目标客户特征\n• 多渠道获客：抖音、微信、百度全渠道引流\n• 客户管理：完善的客户跟进管理系统\n• 数据追踪：营销效果实时监测\n\n【适用场景】\n• 实体店引流获客\n• 企业销售团队\n• 培训机构招生',features:['AI客户画像','多渠道获客','客户管理','数据追踪'],pricing:'free',usage:['注册微拓客账号','配置拓客任务','推广获取客户','管理跟进转化']},
+            {id:'lv4',name:'有戏',emoji:'🎮',cat:'live',tags:['hot','new'],popular:true,desc:'游戏推广赚钱平台，海量热门游戏、丰厚佣金奖励，轻松变现你的游戏热情',url:'https://youxi.fullpeace.net/login?code=6gY8u',detail:'有戏是一个专业的游戏推广赚钱平台。\n\n【核心功能】\n• 海量游戏库：涵盖手游、页游、端游等多种类型\n• 专属邀请码：绑定你的推广身份\n• 丰厚佣金：推广游戏获得高额分成\n• 实时结算：佣金收入透明\n\n【适用人群】\n• 游戏爱好者\n• 直播/短视频创作者\n• 想做游戏副业赚钱的人群',features:['海量游戏','专属邀请码','丰厚佣金','实时结算'],pricing:'free',usage:['访问有戏官网','注册并绑定邀请码','选择推广游戏','分享赚取佣金']},
+            {id:'lv5',name:'二维码彩虹',emoji:'🌈',cat:'live',tags:['hot','new'],popular:true,desc:'专业二维码生成工具，支持美化定制、批量生成、数据统计',url:'https://www.erweicaihong.cn/share-code/VMG4-D5E6',detail:'二维码彩虹是专业的二维码生成和美化平台。\n\n【核心功能】\n• 二维码生成：支持文本、网址、微信、名片等多种类型\n• 美化定制：丰富的颜色、图标、样式模板\n• 批量生成：一次生成多个二维码，提高效率\n• 数据统计：追踪二维码扫描数据\n\n【适用场景】\n• 商家推广引流\n• 微信公众号推广\n• 物料印刷制作\n• 活动宣传推广\n\n【核心优势】\n• 操作简单，无需设计基础\n• 生成的二维码识别率高\n• 支持高清下载和打印',features:['二维码生成','美化定制','批量生成','数据统计'],pricing:'free',usage:['访问二维码彩虹','选择二维码类型','美化定制样式','下载使用']}
         ];
         
         // 根据ID查找工具
