@@ -705,14 +705,15 @@
         }
 
         function updateQRCode() {
-            // 模拟二维码生成
-            const tool = fortuneTools[currentTool];
-            const amount = tool.price;
+            // 使用实际收款码图片
             const method = currentPayment;
-
-            // 使用模拟二维码API
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=AI工具场-${tool.name}-${amount}元-${method === 'alipay' ? '支付宝' : '微信'}支付`;
-            document.getElementById('qrImage').src = qrUrl;
+            const qrImg = document.getElementById('qrImage');
+            if (method === 'alipay') {
+                qrImg.src = 'assets/alipay.jpg';
+            } else {
+                qrImg.src = 'assets/wechat.jpg';
+            }
+            qrImg.onerror = function() { this.style.display = 'none'; };
         }
 
         function completePayment() {

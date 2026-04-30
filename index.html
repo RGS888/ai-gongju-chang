@@ -835,7 +835,7 @@
             <p>
                 <a href="https://www.aliyun.com/minisite/goods?userCode=8ont37k6" target="_blank">☁️ 阿里云优惠</a> ·
                 <a href="javascript:void(0)">关于我们</a> ·
-                <a href="javascript:void(0)">联系我们</a> ·
+                <a href="javascript:void(0)" onclick="showContact()">☎️ 联系我们</a> ·
                 <a href="javascript:void(0)">免责声明</a>
             </p>
         </footer>
@@ -848,6 +848,24 @@
 
 <!-- SCROLL TO TOP -->
 <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- CONTACT MODAL -->
+<div class="payment-modal" id="contactModal">
+    <div class="payment-modal-content" style="max-width:480px;">
+        <button class="payment-modal-close" onclick="closeContact()">&times;</button>
+        <h3 style="font-size:22px;font-weight:700;color:#374151;margin-bottom:16px;">☎️ 联系我们</h3>
+        <div style="text-align:center;">
+            <p style="font-size:14px;color:#666;margin-bottom:16px;">扫码添加客服微信，获取更多帮助</p>
+            <img src="wechat-qrcode.jpg" alt="客服二维码" style="width:220px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);">
+            <p style="font-size:14px;color:#07c160;margin:16px 0;font-weight:bold;">微信号：LZJD8768</p>
+            <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;">
+                <img src="assets/alipay.jpg" alt="支付宝" style="width:120px;border-radius:8px;">
+                <img src="assets/wechat.jpg" alt="微信" style="width:120px;border-radius:8px;">
+            </div>
+            <p style="font-size:12px;color:#999;margin-top:12px;">↑ 点击放大扫码打赏支持我们 ↑</p>
+        </div>
+    </div>
+</div>
 
 <script>
 // ===== TOOL DATA =====
@@ -1940,6 +1958,22 @@ function closeSidebar() {
     sidebar.classList.remove('open');
     overlay.classList.remove('open');
 }
+
+// 联系弹窗
+function showContact() {
+    document.getElementById('contactModal').classList.add('active');
+}
+
+function closeContact() {
+    document.getElementById('contactModal').classList.remove('active');
+}
+
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('contactModal');
+    if (modal && e.target === modal) {
+        closeContact();
+    }
+});
 </script>
 
 <!-- 移动端遮罩层 -->

@@ -1437,8 +1437,8 @@
         function getPaymentConfig() {
             const data = localStorage.getItem('admin_payment_config');
             return data ? JSON.parse(data) : {
-                wechatPay: { enabled: false, name: '', qrcode: '' },
-                alipay: { enabled: false, name: '', qrcode: '' },
+                wechatPay: { enabled: true, name: 'AI工具场', qrcode: 'assets/wechat.jpg' },
+                alipay: { enabled: true, name: 'AI工具场', qrcode: 'assets/alipay.jpg' },
                 bank: { enabled: false, name: '', bankName: '', cardNumber: '' }
             };
         }
