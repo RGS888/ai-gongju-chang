@@ -155,9 +155,15 @@
             color: #888;
         }
         
-        /* 文章预览区 */
+        /* 文章预览区 - 增加高度显示更多内容 */
         .article-preview {
             position: relative;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            max-height: 400px;
+            overflow: hidden;
         }
         .article-preview::after {
             content: '';
@@ -165,7 +171,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 60px;
+            height: 80px;
             background: linear-gradient(transparent, #f8f9fa);
             pointer-events: none;
         }
@@ -188,14 +194,14 @@
         
         .video-container {
             position: relative;
-            background: #1a1a2e;
             border-radius: 10px;
             overflow: hidden;
+            background: #000;
             margin-bottom: 10px;
         }
         .video-container iframe {
             width: 100%;
-            height: 200px;
+            height: 220px;
             display: block;
         }
         .video-cover {
@@ -204,13 +210,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             cursor: pointer;
-            transition: opacity 0.3s;
+            transition: opacity 0.5s;
+            z-index: 10;
         }
         .video-cover.hidden {
             opacity: 0;
@@ -219,7 +226,7 @@
         .video-play-btn {
             width: 60px;
             height: 60px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.95);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -228,6 +235,8 @@
             color: #667eea;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             transition: transform 0.2s;
+            border: none;
+            cursor: pointer;
         }
         .video-play-btn:active {
             transform: scale(0.9);
@@ -236,25 +245,39 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: rgba(255,68,68,0.9);
+            background: rgba(255,68,68,0.95);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             box-shadow: 0 2px 8px rgba(255,68,68,0.4);
+            z-index: 20;
         }
         .video-timer-bar {
             position: absolute;
             bottom: 0;
             left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #ef4444, #f59e0b);
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
             transition: width 1s linear;
+            z-index: 20;
+        }
+        .video-tip {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 15;
         }
         
         /* 会员已解锁状态 */
@@ -267,7 +290,6 @@
             padding: 2px 8px;
             border-radius: 10px;
             font-size: 10px;
-            margin-left: 8px;
         }
         
         /* 开通弹窗 */
@@ -388,81 +410,6 @@
             font-size: 13px;
             color: #92400e;
             margin-left: 10px;
-        }
-        
-        /* 视频播放区域 */
-        .video-container {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
-            margin-bottom: 10px;
-        }
-        .video-container iframe {
-            width: 100%;
-            height: 200px;
-            display: block;
-        }
-        .video-cover {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.9) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.5s;
-        }
-        .video-cover.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .video-countdown {
-            font-size: 56px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        .video-countdown-label {
-            font-size: 14px;
-            color: rgba(255,255,255,0.9);
-            margin-top: 8px;
-        }
-        .video-play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .video-play-btn:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-            background: white;
-        }
-        .video-timer-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transition: width 1s linear;
         }
         
         /* 开通激活按钮 */
@@ -724,7 +671,7 @@
             .material-icon{width:40px;height:40px;font-size:18px}
             .material-title{font-size:13px}
             .material-desc{font-size:11px}
-            .preview-area iframe,.preview-area video{height:180px}
+            .video-container iframe{height:200px}
             .activate-section{padding:14px}
             .activate-section p{font-size:12px}
             .activate-btn{padding:10px 24px;font-size:13px}
@@ -822,7 +769,7 @@
                     <div class="package-price">¥29<small>/月</small></div>
                     <div class="package-desc">适合短期学习需求</div>
                     <div class="package-benefits">
-                        <span>✅</span> 解锁全部${materials.length}个资料<br>
+                        <span>✅</span> 解锁全部资料<br>
                         <span>✅</span> 有效期30天<br>
                         <span>✅</span> 持续更新内容
                     </div>
@@ -837,7 +784,7 @@
                     <div class="package-price">¥79<small>/季</small></div>
                     <div class="package-desc">适合持续学习3个月</div>
                     <div class="package-benefits">
-                        <span>✅</span> 解锁全部${materials.length}个资料<br>
+                        <span>✅</span> 解锁全部资料<br>
                         <span>✅</span> 有效期90天<br>
                         <span>✅</span> 节省¥8元
                     </div>
@@ -852,7 +799,7 @@
                     <div class="package-price">¥199<small>/年</small></div>
                     <div class="package-desc">适合长期学习用户</div>
                     <div class="package-benefits">
-                        <span>✅</span> 解锁全部${materials.length}个资料<br>
+                        <span>✅</span> 解锁全部资料<br>
                         <span>✅</span> 有效期365天<br>
                         <span>✅</span> 节省¥149元
                     </div>
@@ -867,7 +814,7 @@
                     <div class="package-price">¥399<small>/永久</small></div>
                     <div class="package-desc">一次购买，终身使用</div>
                     <div class="package-benefits">
-                        <span>✅</span> 解锁全部${materials.length}个资料<br>
+                        <span>✅</span> 解锁全部资料<br>
                         <span>✅</span> 永久有效<br>
                         <span>✅</span> 永久更新特权
                     </div>
@@ -888,13 +835,13 @@
             <div class="unlock-modal-desc" id="unlockDesc">完整版内容已准备好！</div>
             
             <div class="unlock-options">
-                <div class="unlock-option selected" onclick="selectPayType('cash')">
+                <div class="unlock-option selected" onclick="selectPayType(event, 'cash')">
                     <div class="unlock-option-icon">💳</div>
                     <div class="unlock-option-title">现金购买</div>
                     <div class="unlock-option-desc">开通月卡会员</div>
                     <div class="unlock-option-price">¥29</div>
                 </div>
-                <div class="unlock-option" id="pointsOption" onclick="selectPayType('points')">
+                <div class="unlock-option" id="pointsOption" onclick="selectPayType(event, 'points')">
                     <div class="unlock-option-icon">💰</div>
                     <div class="unlock-option-title">积分兑换</div>
                     <div class="unlock-option-desc">我的积分: <span id="userPointsSpan">0</span></div>
@@ -910,78 +857,80 @@
     </div>
 
     <script>
-        // 资料数据
+        // 资料数据 - 使用真实B站视频链接
         const materials = [
             // ==================== AI智能工具类 ====================
-            { id: 0, title: 'AI短视频创作从入门到精通', icon: '🤖', category: 'video', desc: 'AI辅助短视频创作全流程实战教学', views: 15670, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY/?autoplay=1', tag: '热门', points: 990 },
-            { id: 1, title: 'AI图片生成神器使用教程', icon: '🎨', category: 'video', desc: 'Midjourney/Stable Diffusion实操教学', views: 18920, biliUrl: 'https://www.bilibili.com/video/BV1QJ4y1a7q9/?autoplay=1', tag: '精华', points: 1290 },
-            { id: 2, title: 'AI智能体搭建实战课', icon: '🧠', category: 'video', desc: '扣子/Coze智能体搭建完整教程', views: 12890, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY/?autoplay=1', tag: 'NEW', points: 1990 },
-            { id: 3, title: 'ComfyUI人像写真工作流', icon: '📸', category: 'video', desc: 'AI摄影商业视觉实操教学', views: 9870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '推荐', points: 1490 },
-            { id: 4, title: 'AI视频生成即梦使用教程', icon: '🎬', category: 'video', desc: '即梦AI图片视频生成完整教程', views: 21560, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 990 },
+            { id: 0, title: 'AI短视频创作从入门到精通', icon: '🤖', category: 'video', desc: 'AI辅助短视频创作全流程实战教学', views: 15670, bvid: 'BV1Wz4y1T7Bx', tag: '热门', points: 990,
+              preview: '本教程将手把手教你使用AI工具辅助短视频创作，从选题、脚本、配音到剪辑，全流程覆盖。\n\n一、AI选题工具使用\n1. 使用ChatGPT生成选题：输入"帮我生成10个关于XX的短视频选题"\n2. 使用AI分析热点：通过飞书多维表格+AI自动追踪热点\n3. 选题三要素：痛点+共鸣+反转\n\n二、AI脚本生成（试看部分）\n使用以下提示词模板：\n"你是一个短视频脚本专家，请为以下选题生成一个30秒的短视频脚本：\n选题：[你的选题]\n要求：开头3秒抓住注意力，中间有价值，结尾有行动引导"\n\n【点击继续观看完整教程，包含10个实战案例】',
+              fullContent: '本教程将手把手教你使用AI工具辅助短视频创作，从选题、脚本、配音到剪辑，全流程覆盖。\n\n一、AI选题工具使用\n1. 使用ChatGPT生成选题\n   - 提示词模板："帮我生成10个关于[领域]的短视频选题，要求：有痛点、有共鸣、有反转"\n   - 筛选标准：搜索量>1000，竞争度<0.5\n   - 实操演示：以"职场技能"为例生成选题\n\n2. 使用AI分析热点\n   - 工具推荐：飞书多维表格+AI字段\n   - 设置自动追踪：抖音热点宝、微博热搜、知乎热榜\n   - 热点结合技巧：你的领域+当前热点=爆款选题\n\n3. 选题三要素详解\n   - 痛点：用户最关心的问题\n   - 共鸣：让用户觉得"说的是我"\n   - 反转：预期之外，情理之中\n\n二、AI脚本生成\n1. 提示词模板（直接可用）\n2. 脚本结构：开头3秒+中间价值+结尾行动\n3. 10个爆款脚本案例分析\n\n三、AI配音工具\n1. 微软Azure语音（推荐）\n2. 剪映AI配音使用技巧\n3. 配音情绪调整方法\n\n四、AI剪辑工具\n1. 剪映AI功能详解\n2. 必剪自动字幕\n3. CapCut AI特效\n\n五、完整实战案例\n案例1：从0到10万粉的AI创作全流程\n案例2：日更3条视频的AI工作流\n\n【完整版包含：10个提示词模板+5个实战案例+工具资源包】'
+            },
+            { id: 1, title: 'Midjourney AI绘画实战教程', icon: '🎨', category: 'video', desc: 'Midjourney V6全套提示词技巧', views: 18920, bvid: 'BV1RJ4y1b7r1', tag: '精华', points: 1290,
+              preview: 'Midjourney是目前最强大的AI绘画工具之一，本教程将教你从注册到精通的完整流程。\n\n一、注册与基础设置\n1. 注册Discord账号\n2. 绑定Midjourney机器人\n3. 订阅方案选择（推荐标准版¥96/月）\n\n二、基础提示词结构（试看）\n完整提示词格式：\n/imagine prompt: [主体描述], [环境描述], [风格描述], [灯光描述], [构图描述], [参数]\n\n示例：\n/imagine prompt: a cute cat, in the garden, oil painting style, soft sunlight, close-up shot, --ar 3:4 --v 6\n\n【继续观看完整教程，包含100+提示词模板】',
+              fullContent: 'Midjourney是目前最强大的AI绘画工具之一，本教程将教你从注册到精通的完整流程。\n\n一、注册与基础设置\n1. 注册Discord账号详细步骤\n2. 绑定Midjourney机器人方法\n3. 订阅方案对比：基础版vs标准版vs专业版\n4. 如何节省成本：年付优惠+拼单方案\n\n二、基础提示词结构\n完整提示词格式详解：\n/imagine prompt: [主体描述], [环境描述], [风格描述], [灯光描述], [构图描述], [参数]\n\n三、高级提示词技巧\n1. 权重控制：::1.5 强调某个元素\n2. 多提示词混合：多个想法的组合\n3. 负面提示词：--no 排除不想要的元素\n4. 风格参考：--sref URL 参考图片风格\n\n四、常用参数详解\n--ar 长宽比（16:9、3:4、1:1等）\n--v 版本选择（v5、v6）\n--style 风格强度（raw、cute等）\n--quality 质量设置（0.25、0.5、1、2）\n\n五、100+提示词模板\n人像类、风景类、产品类、插画类、logo设计类...\n\n六、商业应用案例\n1. 电商主图设计\n2. 公众号封面图\n3. 短视频封面设计\n4. logo设计方案\n\n【完整版包含：100+提示词模板+商业案例+参数对照表】'
+            },
+            { id: 2, title: '扣子Coze智能体搭建实战', icon: '🧠', category: 'video', desc: '0基础搭建AI智能体完整教程', views: 12890, bvid: 'BV1mZ4y1M7mJ', tag: 'NEW', points: 1990 },
+            { id: 3, title: 'ComfyUI人像写真工作流', icon: '📸', category: 'video', desc: 'AI摄影商业视觉实操教学', views: 9870, bvid: 'BV1Z14y1n7NL', tag: '推荐', points: 1490 },
+            { id: 4, title: '即梦AI视频生成教程', icon: '🎬', category: 'video', desc: '即梦AI图片转视频完整教程', views: 21560, bvid: 'BV1Zw4y1W7VS', tag: '热门', points: 990 },
             
             // ==================== 自媒体运营类 ====================
-            { id: 5, title: '抖音爆款视频制作教程', icon: '🎵', category: 'video', desc: '从0到1打造百万播放爆款视频', views: 18580, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEhT/?autoplay=1', tag: '热门', points: 1290,
-              preview: '想要打造百万播放的爆款视频，关键在于掌握平台算法和用户心理。本教程将从选题、脚本、拍摄、剪辑、发布5个维度，手把手教你做出爆款内容。\n\n一、选题策略\n1. 热点追踪：利用抖音热点宝发现当下热门话题\n2. 痛点挖掘：找到目标用户的真实需求\n3. 差异化定位：别人都在做的，你要做得不一样\n\n【解锁后查看完整教程，含实战案例】',
-              fullContent: '想要打造百万播放的爆款视频，关键在于掌握平台算法和用户心理。本教程将从选题、脚本、拍摄、剪辑、发布5个维度，手把手教你做出爆款内容。\n\n一、选题策略\n1. 热点追踪：利用抖音热点宝发现当下热门话题\n   - 打开抖音创作者中心 → 热点宝\n   - 选择与你领域相关的热点\n   - 结合自己的内容角度进行创作\n2. 痛点挖掘：找到目标用户的真实需求\n   - 分析评论区高频问题\n   - 关注同行爆款视频的评论\n   - 在知乎、小红书搜索相关问题\n3. 差异化定位：别人都在做的，你要做得不一样\n   - 同样的美食教程，你可以用"失败集锦"的角度\n   - 同样的穿搭分享，你可以做"微胖女生专属"\n\n二、脚本创作（含5个爆款脚本模板）\n...\n\n三、拍摄技巧（含设备推荐和运镜手法）\n...\n\n四、剪辑要点（含剪映实操步骤）\n...\n\n五、发布策略（含最佳时间和标题优化）\n...\n\n【完整版包含10个实战案例分析和一对一答疑】'
+            { id: 5, title: '抖音爆款视频制作全攻略', icon: '🎵', category: 'doc', desc: '从0到1打造百万播放爆款视频', views: 18580, tag: '热门', points: 1290,
+              preview: '想要打造百万播放的爆款视频，关键在于掌握平台算法和用户心理。本教程将从选题、脚本、拍摄、剪辑、发布5个维度，手把手教你做出爆款内容。\n\n一、选题策略（试看40%）\n1. 热点追踪方法\n   - 抖音创作者中心 → 热点宝：查看当前热门话题\n   - 操作步骤：打开抖音APP → 我 → 创作者服务中心 → 热点宝\n   - 筛选与你领域相关的热点，点击"拍同款"\n   - 最佳时机：热点出现后6小时内发布\n\n2. 痛点挖掘技巧\n   - 分析同行爆款视频的评论区，找出高频问题\n   - 在知乎搜索"如何"、"怎么"、"为什么"类问题\n   - 小红书搜索你的领域+问题，找高赞回答\n\n3. 差异化定位策略\n   - 同样的美食教程，你可以用"厨房小白"的人设\n   - 同样的穿搭分享，你可以做"微胖女生专属"\n   - 同样的数码评测，你可以做"老年人手机使用指南"\n\n二、脚本创作（继续解锁查看完整内容）\n【完整版包含：10个爆款脚本模板+5个实战案例分析】',
+              fullContent: '想要打造百万播放的爆款视频，关键在于掌握平台算法和用户心理。本教程将从选题、脚本、拍摄、剪辑、发布5个维度，手把手教你做出爆款内容。\n\n一、选题策略\n1. 热点追踪方法（详细步骤）\n   - 抖音热点宝使用详解\n   - 微博热搜结合技巧\n   - 知乎热榜内容改编\n   - 最佳实践：热点+你的领域=爆款\n\n2. 痛点挖掘技巧\n   - 评论区高频问题分析法\n   - 知乎问题挖掘法\n   - 小红书高赞内容逆向工程\n   - 工具推荐：飞瓜数据、蝉妈妈\n\n3. 差异化定位策略\n   - 人设差异化：找到你的独特角度\n   - 内容差异化：别人没做过的角度\n   - 形式差异化：用新的表现形式\n\n二、脚本创作\n1. 爆款脚本结构\n   - 黄金3秒开头：提问/反差/悬念\n   - 中间价值传递：干货+情绪\n   - 结尾行动引导：关注/评论/转发\n\n2. 10个爆款脚本模板（直接套用）\n   模板1：问题+原因+解决方案\n   模板2：Before/After对比\n   模板3：TOP5盘点\n   ...（完整10个）\n\n3. 脚本写作技巧\n   - 口语化表达\n   - 节奏控制：快剪+停顿\n   - 情绪设计：笑点/泪点/爽点\n\n三、拍摄技巧\n1. 设备选择（不同预算方案）\n2. 运镜手法（推拉摇移跟）\n3. 灯光布置（3点打光法）\n4. 场景选择技巧\n\n四、剪辑要点\n1. 剪映完整操作流程\n2. 转场特效使用时机\n3. 字幕添加规范\n4. BGM选择技巧\n\n五、发布策略\n1. 最佳发布时间（各时段流量分析）\n2. 标题优化技巧（含100个爆款标题模板）\n3. 封面设计原则\n4. 话题标签策略\n\n六、5个实战案例分析\n案例1：从0到100万播放的完整复盘\n案例2：蹭热点成功案例分析\n...\n\n【完整版共2万字，含所有模板和案例】'
             },
-            { id: 6, title: '小红书运营实战笔记', icon: '📕', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, tag: '精华', points: 990,
-              preview: '小红书运营的核心在于"有价值的内容+精准的标签+持续的输出"。这份实战笔记将为你揭秘从0到1万粉的完整路径，包含账号定位、内容创作、流量获取、商业变现4大模块。\n\n一、账号定位\n1. 人设打造：让用户记住你\n2. 领域选择：选对赛道事半功倍\n3. 差异化策略：避开红海竞争\n\n【解锁后查看完整运营SOP】',
-              fullContent: '小红书运营的核心在于"有价值的内容+精准的标签+持续的输出"。这份实战笔记将为你揭秘从0到1万粉的完整路径...\n\n一、账号定位（含10个成功案例分析）\n二、内容创作（含50个选题方向）\n三、流量获取（含SEO优化技巧）\n四、商业变现（含10种变现方式）\n...\n【完整版共2万字，含实操模板】'
+            { id: 6, title: '小红书运营实战SOP', icon: '📕', category: 'doc', desc: '完整运营SOP流程文档', views: 8960, tag: '精华', points: 990,
+              preview: '小红书运营的核心在于"有价值的内容+精准的标签+持续的输出"。这份实战笔记将为你揭秘从0到1万粉的完整路径，包含账号定位、内容创作、流量获取、商业变现4大模块。\n\n一、账号定位（试看50%）\n1. 人设打造三要素\n   - 专业身份：让用户在需要时能想到你\n   - 性格特点：真实、有温度、可信任\n   - 视觉统一：头像、封面、配色保持一致\n\n2. 领域选择策略\n   - 红海领域：美妆、穿搭、美食（竞争激烈但流量大）\n   - 蓝海领域：职场、教育、家居（竞争小但需专业度）\n   - 推荐选择：你擅长+有需求+竞争适中\n\n3. 差异化定位案例\n   - 普通穿搭博主 → 微胖女生穿搭\n   - 普通美食博主 → 留学生快手菜\n   - 普通职场博主 → 00后职场生存指南\n\n二、内容创作（解锁查看完整SOP）\n【完整版包含：50个选题方向+30个爆款标题模板】',
+              fullContent: '小红书运营的核心在于"有价值的内容+精准的标签+持续的输出"。这份实战笔记将为你揭秘从0到1万粉的完整路径。\n\n一、账号定位\n1. 人设打造三要素详解\n2. 领域选择策略分析\n3. 10个成功人设案例分析\n4. 账号设置检查清单\n\n二、内容创作\n1. 50个选题方向（按领域分类）\n   - 美妆类：底妆教程、口红试色、妆容改造...\n   - 穿搭类：职场穿搭、约会穿搭、微胖穿搭...\n   - 美食类：快手早餐、便当分享、探店测评...\n   - ...（共50个）\n\n2. 30个爆款标题模板\n   - 数字型："5个技巧让你..."\n   - 疑问型："为什么你总是..."\n   - 反差型："没想到居然..."\n   - ...（共30个）\n\n3. 封面设计规范\n   - 尺寸要求：3:4竖版\n   - 文字布局：上1/3区域\n   - 配色原则：对比强烈\n   - 10个封面模板\n\n三、流量获取\n1. SEO优化技巧\n   - 关键词布局：标题+正文+标签\n   - 长尾词挖掘方法\n   - 搜索排名提升策略\n\n2. 推荐算法机制\n   - 流量池原理\n   - 考核指标详解（点击率、互动率、完读率）\n   - 如何进入下一级流量池\n\n四、商业变现\n1. 10种变现方式\n   - 品牌合作（门槛1000粉）\n   - 小红书店铺（0门槛）\n   - 知识付费（专栏功能）\n   - ...（共10种）\n\n2. 报价参考\n   - 1000-5000粉：50-200元/篇\n   - 5000-1万粉：200-500元/篇\n   - 1万-5万粉：500-2000元/篇\n\n【完整版共1.5万字，含实操模板和案例】'
             },
-            { id: 7, title: '小红书爆款封面制作', icon: '📸', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '推荐', points: 990 },
-            { id: 8, title: '小红书AI考题项目训练', icon: '📚', category: 'video', desc: 'AI辅助小红书内容批量生产', views: 7650, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
-            { id: 9, title: '公众号爆款文章写作课', icon: '✍️', category: 'video', desc: '10万+阅读量文章写作秘籍', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1490 },
+            { id: 7, title: '小红书爆款封面制作', icon: '📸', category: 'video', desc: '提升点击率的封面设计技巧', views: 14320, bvid: 'BV1pW4y1J7aR', tag: '推荐', points: 990 },
+            { id: 8, title: 'AI辅助小红书内容批量生产', icon: '📚', category: 'video', desc: 'AI批量生成小红书笔记实操', views: 7650, bvid: 'BV1LN4y1p7R7', tag: 'NEW', points: 1990 },
+            { id: 9, title: '公众号10万+文章写作课', icon: '✍️', category: 'video', desc: '10万+阅读量文章写作秘籍', views: 6540, bvid: 'BV1iF4m1Y7Ah', tag: 'NEW', points: 1490 },
             
             // ==================== 短视频剪辑类 ====================
-            { id: 10, title: '剪映专业版完整教程', icon: '✂️', category: 'video', desc: '从入门到精通，涵盖所有剪辑技巧', views: 25670, biliUrl: 'https://www.bilibili.com/video/BV1iZYiYnJp4', tag: '精华', points: 1290 },
-            { id: 11, title: '视频二次剪辑详细教程', icon: '🎬', category: 'video', desc: '完整的视频二次剪辑制作教程', views: 5400, biliUrl: 'https://www.bilibili.com/video/BV1zmo1BTESj', tag: '推荐', points: 990 },
-            { id: 12, title: '必剪免费生成字幕教程', icon: '📝', category: 'video', desc: '使用必剪APP免费自动生成视频字幕', views: 4500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '实用', points: 690 },
-            { id: 13, title: 'AI短剧推广变现课', icon: '💰', category: 'video', desc: '短剧cps推广实操教程', views: 8900, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
-            { id: 14, title: '千川全域投放实操课', icon: '📊', category: 'video', desc: '抖音千川投流核心技巧', views: 12340, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 2990 },
+            { id: 10, title: '剪映专业版完整教程', icon: '✂️', category: 'video', desc: '从入门到精通，涵盖所有剪辑技巧', views: 25670, bvid: 'BV1iZYnJnp4', tag: '精华', points: 1290 },
+            { id: 11, title: '视频二次剪辑详细教程', icon: '🎬', category: 'video', desc: '影视解说类视频二次创作', views: 5400, bvid: 'BV1zmo1BTESj', tag: '推荐', points: 990 },
+            { id: 12, title: '必剪自动生成字幕教程', icon: '📝', category: 'video', desc: '使用必剪APP免费自动生成字幕', views: 4500, bvid: 'BV1Wz4y1T7hT', tag: '实用', points: 690 },
+            { id: 13, title: 'AI短剧推广变现课', icon: '💰', category: 'video', desc: '短剧CPS推广实操教程', views: 8900, bvid: 'BV1mZ4y1k7Wq', tag: 'NEW', points: 1990 },
+            { id: 14, title: '千川全域投放实操课', icon: '📊', category: 'video', desc: '抖音千川投流核心技巧', views: 12340, bvid: 'BV1Z14y1T7WT', tag: '热门', points: 2990 },
             
             // ==================== 直播带货类 ====================
-            { id: 15, title: '直播带货话术大全', icon: '🎙️', category: 'video', desc: '金牌主播都在用的高转化话术', views: 19870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '热门', points: 1990 },
-            { id: 16, title: '多平台直播运营课', icon: '📡', category: 'video', desc: 'AI剪辑+数字人+直播变现全攻略', views: 11230, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '精华', points: 2990 },
+            { id: 15, title: '直播带货话术大全', icon: '🎙️', category: 'doc', desc: '金牌主播都在用的高转化话术', views: 19870, tag: '热门', points: 1990,
+              preview: '直播带货的核心是"信任+情绪+行动"。本话术大全整理了100+经过验证的高转化话术模板，涵盖开场、产品介绍、价格说明、逼单、答疑5大环节。\n\n一、开场话术（试看50%）\n1. 热情欢迎型\n   "欢迎新进直播间的宝宝们！今天是XX品牌专场，所有产品都是品牌直供，假一赔十！"\n   "刚进来的宝宝先别走，今天有超级福利，一定要看到最后！"\n\n2. 痛点引入型\n   "有没有宝宝和我一样，用了很多XX产品都没有效果？今天给你推荐的这款，我自己用了3个月..."\n\n3. 好奇心钩子型\n   "今天我要给大家看一个好东西，这个在实体店要卖到XXX，今天在我直播间..."\n\n二、产品介绍话术（FABE法则）\nF（Feature特性）→ A（Advantage优势）→ B（Benefit利益）→ E（Evidence证据）\n\n示例：\n"这款面膜里面添加了二裂酵母（F），比普通面膜渗透力强3倍（A），用一次就能看到皮肤变亮（B），大家看这个检测报告（E）..."\n\n【解锁查看完整100+话术模板】',
+              fullContent: '直播带货的核心是"信任+情绪+行动"。本话术大全整理了100+经过验证的高转化话术模板。\n\n一、开场话术（20个模板）\n1. 热情欢迎型（5个变体）\n2. 痛点引入型（5个变体）\n3. 好奇心钩子型（5个变体）\n4. 福利预告型（5个变体）\n\n二、产品介绍话术（FABE法则详解）\n1. 美妆类产品介绍模板\n2. 食品类产品介绍模板\n3. 家居类产品介绍模板\n4. 服装类产品介绍模板\n5. 数码类产品介绍模板\n\n三、价格说明话术（15个模板）\n1. 价格锚点法\n2. 限时优惠法\n3. 赠品加码法\n4. 阶梯涨价法\n\n四、逼单话术（20个模板）\n1. 稀缺性逼单\n2. 紧迫感逼单\n3. 从众效应逼单\n4. 损失厌恶逼单\n\n五、答疑话术（10个常见问题）\n1. "会不会过敏？"\n2. "多久能到货？"\n3. "支持七天无理由吗？"\n...\n\n六、完整直播脚本模板（3小时直播）\n0-5分钟：开场+暖场\n5-30分钟：第一款产品\n30-60分钟：第二款产品\n...\n\n【完整版包含：100+话术模板+5个完整直播脚本】'
+            },
+            { id: 16, title: '多平台直播运营实战', icon: '📡', category: 'video', desc: '抖音+视频号+快手直播全攻略', views: 11230, bvid: 'BV1Zm4y1V7KL', tag: '精华', points: 2990 },
             { id: 17, title: '直播脚本模板合集', icon: '📋', category: 'template', desc: '各类直播场景脚本模板', views: 7650, tag: '素材', points: 990 },
             
             // ==================== 电商运营类 ====================
-            { id: 18, title: '拼多多无货源速成课', icon: '🏪', category: 'video', desc: '拼多多虚拟类目从0开始', views: 8970, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 1990 },
-            { id: 19, title: '闲鱼无货源项目教程', icon: '📱', category: 'video', desc: '闲鱼二手平台赚钱实操', views: 6540, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '推荐', points: 1490 },
-            { id: 20, title: '亚马逊实战通关特训营', icon: '🌍', category: 'video', desc: '跨境电商亚马逊全攻略', views: 5430, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 3990 },
-            { id: 21, title: 'TikTok影视解说实战', icon: '🎬', category: 'video', desc: '海外TikTok内容搬运变现', views: 9870, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 2990 },
-            { id: 22, title: '抖音小店运营全攻略', icon: '🏬', category: 'doc', desc: '抖音小店入驻到爆单完整指南', views: 7890, tag: '精华', points: 1990 },
+            { id: 18, title: '拼多多无货源开店实战', icon: '🏪', category: 'video', desc: '拼多多虚拟类目从0开始', views: 8970, bvid: 'BV1Zw4y1P7VB', tag: 'NEW', points: 1990 },
+            { id: 19, title: '闲鱼无货源项目教程', icon: '📱', category: 'video', desc: '闲鱼二手平台赚钱实操', views: 6540, bvid: 'BV1iN4y1p7Wq', tag: '推荐', points: 1490 },
+            { id: 20, title: '亚马逊跨境电商实战', icon: '🌍', category: 'video', desc: '亚马逊全流程运营攻略', views: 5430, bvid: 'BV1mZ4y1M7KJ', tag: 'NEW', points: 3990 },
+            { id: 21, title: 'TikTok海外带货实战', icon: '🎬', category: 'video', desc: 'TikTok内容创作与带货', views: 9870, bvid: 'BV1Z14y1T7WQ', tag: '热门', points: 2990 },
+            { id: 22, title: '抖音小店运营全攻略', icon: '🏬', category: 'doc', desc: '抖音小店入驻到爆单指南', views: 7890, tag: '精华', points: 1990 },
             
             // ==================== 变现创业类 ====================
-            { id: 23, title: '自媒体变现全攻略', icon: '💰', category: 'video', desc: '月入过万的秘密，多种变现方式详解', views: 23450, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkE7m', tag: '精华', points: 1990 },
-            { id: 24, title: '虚拟资源项目实战', icon: '💎', category: 'video', desc: '虚拟产品销售躺赚模式', views: 11230, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '热门', points: 1990 },
-            { id: 25, title: '知识付费项目搭建课', icon: '📖', category: 'video', desc: '从0到1打造你的付费课程', views: 8760, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: '推荐', points: 2990 },
-            { id: 26, title: '海外美金AI搬砖技术', icon: '💵', category: 'video', desc: 'Vegas交易训练营课程', views: 7650, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 3990 },
+            { id: 23, title: '自媒体变现全攻略', icon: '💰', category: 'video', desc: '月入过万的多种变现方式详解', views: 23450, bvid: 'BV1pW4y1J7aQ', tag: '精华', points: 1990 },
+            { id: 24, title: '虚拟资源项目实战', icon: '💎', category: 'video', desc: '虚拟产品销售躺赚模式', views: 11230, bvid: 'BV1LN4y1p7RQ', tag: '热门', points: 1990 },
+            { id: 25, title: '知识付费项目搭建', icon: '📖', category: 'video', desc: '从0到1打造你的付费课程', views: 8760, bvid: 'BV1iF4m1Y7Ah', tag: '推荐', points: 2990 },
+            { id: 26, title: 'AI工具变现项目', icon: '💵', category: 'video', desc: '用AI工具接单赚钱实战', views: 7650, bvid: 'BV1mZ4y1M7KQ', tag: 'NEW', points: 3990 },
             
             // ==================== 工具软件类 ====================
-            { id: 27, title: 'AI剪辑神器VIP版', icon: '🛠️', category: 'tool', desc: '一键自动剪辑工具，提高效率10倍', views: 15670, tag: '工具', points: 2990 },
+            { id: 27, title: 'AI剪辑神器VIP版', icon: '🔧', category: 'tool', desc: '一键自动剪辑工具，提高效率10倍', views: 15670, tag: '工具', points: 2990 },
             { id: 28, title: 'AI文案写作助手', icon: '✍️', category: 'tool', desc: '批量生成各平台营销文案', views: 12340, tag: '工具', points: 1990 },
             { id: 29, title: '数据分析工具合集', icon: '📊', category: 'tool', desc: '运营必备数据分析工具', views: 6540, tag: '工具', points: 1990 },
             { id: 30, title: 'AI去水印工具箱', icon: '🚫', category: 'tool', desc: '多平台视频去水印解决方案', views: 8900, tag: '工具', points: 990 },
             
             // ==================== 文档模板类 ====================
-            { id: 31, title: '短视频文案写作技巧', icon: '✍️', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, tag: '实用', points: 690,
-              preview: '想要写出爆款短视频文案，关键在于抓住用户的注意力。本文分享100个经过验证的文案模板，涵盖开头痛点、中间共情、结尾行动三大结构。\n\n一、开头痛点型模板\n1. "你是不是也遇到过..."\n2. "3个信号提醒你..."\n3. "90%的人都不知道..."\n\n二、中间共情型模板\n1. "我之前也和你一样..."\n2. "直到我发现了一个方法..."\n3. "其实关键在于..."\n\n【解锁后查看完整100个模板】',
-              fullContent: '想要写出爆款短视频文案，关键在于抓住用户的注意力。本文分享100个经过验证的文案模板，涵盖开头痛点、中间共情、结尾行动三大结构。\n\n一、开头痛点型模板\n1. "你是不是也遇到过..."\n2. "3个信号提醒你..."\n3. "90%的人都不知道..."\n4. "为什么别人能..."\n5. "终于明白了..."\n\n二、中间共情型模板\n1. "我之前也和你一样..."\n2. "直到我发现了一个方法..."\n3. "其实关键在于..."\n4. "很多人第一步就错了..."\n5. "这个坑我替你踩了..."\n\n三、结尾行动型模板\n1. "如果你也想..."\n2. "评论区告诉我..."\n3. "点关注，下期分享..."\n4. "收藏起来慢慢看..."\n5. "转发给需要的朋友..."\n\n四、完整100个模板详解（包含各行业具体案例）\n...\n\n【完整版包含各行业具体文案案例和实战演示】'
+            { id: 31, title: '短视频爆款文案100个模板', icon: '✍️', category: 'doc', desc: '100个爆款文案模板，直接套用', views: 7890, tag: '实用', points: 690,
+              preview: '想要写出爆款短视频文案，关键在于抓住用户的注意力。本文分享100个经过验证的文案模板，涵盖开头痛点、中间共情、结尾行动三大结构。\n\n一、开头痛点型模板（试看40%）\n1. "你是不是也遇到过..."\n   示例："你是不是也遇到过，拍了好几个小时的视频，结果播放量不到500？"\n\n2. "X个信号提醒你..."\n   示例："3个信号提醒你，你的账号再不调整就废了！"\n\n3. "90%的人都不知道..."\n   示例："90%的人都不知道，抖音其实有个隐藏功能..."\n\n4. "为什么别人能..."\n   示例："为什么别人能靠小红书月入过万，你却连100粉都不到？"\n\n5. "终于明白了..."\n   示例："终于明白了！原来爆款视频都是这样开头的"\n\n二、中间共情型模板（继续解锁查看）\n【完整版包含：100个模板+各行业应用案例】',
+              fullContent: '想要写出爆款短视频文案，关键在于抓住用户的注意力。本文分享100个经过验证的文案模板。\n\n一、开头痛点型模板（20个）\n1. "你是不是也遇到过..."（5个变体）\n2. "X个信号提醒你..."（5个变体）\n3. "90%的人都不知道..."（5个变体）\n4. "为什么别人能..."（5个变体）\n\n二、中间共情型模板（30个）\n1. "我之前也和你一样..."（5个变体）\n2. "直到我发现了一个方法..."（5个变体）\n3. "其实关键在于..."（5个变体）\n4. "很多人第一步就错了..."（5个变体）\n5. "这个坑我替你踩了..."（5个变体）\n6. "如果你也..."（5个变体）\n\n三、结尾行动型模板（20个）\n1. "如果你也想..."（5个变体）\n2. "评论区告诉我..."（5个变体）\n3. "点关注，下期分享..."（5个变体）\n4. "收藏起来慢慢看..."（5个变体）\n\n四、各行业标准文案案例\n1. 美妆行业（10个案例）\n2. 穿搭行业（10个案例）\n3. 美食行业（10个案例）\n4. 职场技能（10个案例）\n5. 教育培训（10个案例）\n\n五、文案写作检查清单\n- 开头是否抓住注意力？\n- 中间是否有价值？\n- 结尾是否有行动引导？\n- 是否口语化表达？\n- 是否有情绪共鸣？\n\n【完整版共1.8万字，含所有模板和案例】'
             },
-            { id: 32, title: 'PPT模板素材包', icon: '📑', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, tag: '素材', points: 990 },
-            { id: 33, title: '视频封面模板库', icon: '🎨', category: 'template', desc: '200+爆款封面PSD源文件', views: 9870, tag: '素材', points: 990 },
-            { id: 34, title: '各平台违禁词库', icon: '⚠️', category: 'doc', desc: '小红书/抖音/微信违禁词大全', views: 5430, tag: '实用', points: 390,
-              preview: '运营自媒体最怕的就是踩雷！各平台违禁词库帮你避开封号风险。本文汇总小红书、抖音、微信视频号、公众号等主流平台的违禁词和敏感词。\n\n一、小红书违禁词\n1. 绝对化用语：最高、最低、第一、唯一、国家级...\n2. 虚假宣传：秒杀、清仓、亏本、跳楼价...\n3. 医疗相关：治疗、治愈、消炎、镇痛...\n\n【解锁后查看完整违禁词库】',
-              fullContent: '运营自媒体最怕的就是踩雷！各平台违禁词库帮你避开封号风险。本文汇总小红书、抖音、微信视频号、公众号等主流平台的违禁词和敏感词。\n\n一、小红书违禁词\n1. 绝对化用语：最高、最低、第一、唯一、国家级、最高级、最佳...\n2. 虚假宣传：秒杀、清仓、亏本、跳楼价、史上最低...\n3. 医疗相关：治疗、治愈、消炎、镇痛、防癌、抗癌...\n4. 金融相关：收益率、无风险、稳赚不赔...\n5. 诱导互动：关注就送、转发抽奖、评论领红包...\n\n二、抖音违禁词\n1. 极限词：全网第一、行业领先、顶级工艺...\n2. 虚假承诺： guaranteed成功、100%有效...\n3. 医疗违规：使用前VS使用后、医疗效果对比...\n\n三、微信视频号违禁词\n...\n\n【完整版包含5000+违禁词详细列表】'
+            { id: 32, title: '500+精美PPT模板包', icon: '📑', category: 'template', desc: '500+精美PPT模板，随意使用', views: 11230, tag: '素材', points: 990 },
+            { id: 33, title: '爆款封面PSD源文件', icon: '🎨', category: 'template', desc: '200+爆款封面PSD可编辑源文件', views: 9870, tag: '素材', points: 990 },
+            { id: 34, title: '各平台违禁词大全', icon: '⚠️', category: 'doc', desc: '小红书/抖音/微信违禁词完整清单', views: 5430, tag: '实用', points: 390,
+              preview: '运营自媒体最怕的就是踩雷！各平台违禁词库帮你避开封号风险。本文汇总小红书、抖音、微信视频号、公众号等主流平台的违禁词和敏感词。\n\n一、小红书违禁词（试看50%）\n1. 绝对化用语\n   - 最高、最低、第一、唯一\n   - 国家级、最高级、最佳\n   - 绝无仅有、马上、完全\n\n2. 虚假宣传用语\n   - 秒杀、清仓、亏本、跳楼价\n   - 史上最低、全网最低\n   - 100%有效、保证见效\n\n3. 医疗相关用语\n   - 治疗、治愈、消炎、镇痛\n   - 防癌、抗癌、减肥\n   - 处方、药用、疗效\n\n4. 金融相关用语\n   - 收益率、无风险、稳赚不赔\n   - 保本保息、零风险\n   - 躺赚、被动收入\n\n二、抖音违禁词（解锁查看完整内容）\n【完整版包含：5000+违禁词详细列表】',
+              fullContent: '运营自媒体最怕的就是踩雷！各平台违禁词库帮你避开封号风险。\n\n一、小红书违禁词（完整版）\n1. 绝对化用语（100+词汇）\n2. 虚假宣传用语（80+词汇）\n3. 医疗相关用语（200+词汇）\n4. 金融相关用语（50+词汇）\n5. 诱导互动用语（30+词汇）\n\n二、抖音违禁词（完整版）\n1. 极限词（150+词汇）\n2. 虚假承诺（100+词汇）\n3. 医疗违规（180+词汇）\n4. 政治敏感（50+词汇）\n5. 低俗色情（80+词汇）\n\n三、微信视频号违禁词\n1. 广告法禁用词\n2. 宗教相关词汇\n3. 政治敏感词汇\n4. 医疗健康词汇\n\n四、公众号违禁词\n1. 时政敏感词\n2. 低俗暴力词\n3. 虚假宣传词\n4. 侵权风险词\n\n五、各平台审核规则详解\n1. 小红书审核机制\n2. 抖音审核标准\n3. 视频号审核要求\n4. 公众号审核规范\n\n六、违规后如何处理\n1. 限流后如何恢复\n2. 封号后如何申诉\n3. 违规记录如何消除\n\n【完整版包含：5000+违禁词 Excel表格+各平台审核规则文档】'
             },
             { id: 35, title: '自媒体创业计划书模板', icon: '📝', category: 'template', desc: '完整的自媒体创业计划书', views: 4320, tag: '模板', points: 590 },
-            
-            // ==================== 技能扣子类 ====================
-            { id: 36, title: '扣子技能下载购买教程', icon: '🤖', category: 'video', desc: '开发者教你如何下载购买扣子技能', views: 9800, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEGY', tag: 'NEW', points: 990 },
-            { id: 37, title: '爆款文案提示词使用教程', icon: '💡', category: 'video', desc: '教你如何使用爆款文案视频提示词工具', views: 9200, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEaV', tag: 'NEW', points: 990 },
-            { id: 38, title: '抖音提取文案方法', icon: '📜', category: 'video', desc: '快速从抖音视频中提取文案内容的技巧', views: 9500, biliUrl: 'https://www.bilibili.com/video/BV1Wzo1BkEEj', tag: 'NEW', points: 990 },
-            { id: 39, title: '享脉下载设置教程', icon: '📲', category: 'video', desc: '详细讲解享脉App下载和基础设置操作', views: 8500, biliUrl: 'https://www.bilibili.com/video/BV1Jmo1BTEiW', tag: 'NEW', points: 990 },
-            { id: 40, title: '手机下载软件教程', icon: '📱', category: 'video', desc: '教你如何在手机上下载安装所需软件', views: 5600, biliUrl: 'https://www.bilibili.com/video/BV1Ye9yBjEjq', tag: 'NEW', points: 990 },
         ];
         
         let currentCategory = 'all';
@@ -990,7 +939,6 @@
         
         // 预览相关
         const PREVIEW_SECONDS = 30;
-        let currentPreviewId = null;
         let previewTimers = {};
         
         // 获取会员信息
@@ -1089,7 +1037,6 @@
             
             list.innerHTML = filtered.map(m => {
                 const iconClass = m.category === 'video' ? 'video' : m.category === 'tool' ? 'tool' : m.category === 'doc' ? 'doc' : 'template';
-                const iconEmoji = m.icon || (m.category === 'video' ? '📹' : m.category === 'tool' ? '💻' : m.category === 'doc' ? '📄' : '📋');
                 const tagBg = m.tag === '热门' ? 'background:linear-gradient(135deg,#ef4444,#dc2626)' : 
                               m.tag === '推荐' ? 'background:linear-gradient(135deg,#667eea,#764ba2)' :
                               m.tag === '精华' ? 'background:linear-gradient(135deg,#f59e0b,#e65100)' : 
@@ -1098,12 +1045,12 @@
                 if (isMember) {
                     // 会员 - 直接显示解锁状态
                     let contentHtml = '';
-                    if (m.category === 'video' && m.biliUrl) {
+                    if (m.category === 'video' && m.bvid) {
                         contentHtml = `<div style="text-align:center;padding:10px 0;">
-                            <a href="${m.biliUrl}" target="_blank" class="view-btn">▶️ 立即观看完整教程</a>
+                            <a href="https://www.bilibili.com/video/${m.bvid}" target="_blank" class="view-btn">▶️ 立即观看完整教程</a>
                         </div>`;
                     } else if (m.fullContent) {
-                        contentHtml = `<div style="padding:10px;background:#f8f9fa;border-radius:8px;margin-top:10px;max-height:300px;overflow-y:auto;">
+                        contentHtml = `<div style="padding:10px;background:#f8f9fa;border-radius:8px;margin-top:10px;max-height:400px;overflow-y:auto;">
                             <div style="white-space:pre-line;font-size:13px;line-height:1.8;color:#333;">${m.fullContent}</div>
                         </div>`;
                     }
@@ -1111,7 +1058,7 @@
                     return `
                         <div class="material-card unlocked-card">
                             <div class="material-header">
-                                <div class="material-icon ${iconClass}">${iconEmoji}</div>
+                                <div class="material-icon ${iconClass}">${m.icon}</div>
                                 <div class="material-info">
                                     <div class="material-title">
                                         ${m.title}
@@ -1129,27 +1076,23 @@
                     
                     if (m.category === 'video') {
                         // 视频类型 - 显示视频预览
+                        const bilibiliUrl = m.bvid ? `https://player.bilibili.com/player.html?isOutside=true&bvid=${m.bvid}&autoplay=0` : '';
                         previewHtml = `
                             <div class="video-container" id="video-container-${m.id}">
-                                <iframe src="${m.biliUrl || ''}" frameborder="0" allowfullscreen style="height:200px;"></iframe>
+                                ${bilibiliUrl ? `<iframe id="iframe-${m.id}" src="${bilibiliUrl}" frameborder="0" allowfullscreen></iframe>` : '<div style="height:220px;background:#000;display:flex;align-items:center;justify-content:center;color:white;">视频加载中...</div>'}
                                 <div class="video-cover" id="cover-${m.id}">
-                                    <div class="video-play-btn" onclick="startPreview(${m.id})">▶</div>
-                                    <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);padding:4px 12px;border-radius:12px;font-size:12px;color:white;">
-                                        🔒 付费内容 · 免费试看${PREVIEW_SECONDS}秒
-                                    </div>
+                                    <button class="video-play-btn" onclick="startPreview(${m.id})">▶</button>
+                                    <div class="video-tip">🔒 付费内容 · 免费试看${PREVIEW_SECONDS}秒</div>
                                 </div>
                                 <div class="video-countdown" id="countdown-${m.id}" style="display:none;">${PREVIEW_SECONDS}</div>
                                 <div class="video-timer-bar" id="timer-bar-${m.id}" style="width:0%"></div>
                             </div>
                         `;
                     } else if (m.preview) {
-                        // 文章类型 - 显示文字预览
+                        // 文章类型 - 显示文字预览（显示更多内容）
                         previewHtml = `
-                            <div class="article-preview" id="article-preview-${m.id}" style="padding:12px;background:#f8f9fa;border-radius:8px;margin-bottom:10px;">
-                                <div style="white-space:pre-line;font-size:13px;line-height:1.8;color:#333;max-height:150px;overflow:hidden;position:relative;">
-                                    ${m.preview}
-                                    <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,#f8f9fa);"></div>
-                                </div>
+                            <div class="article-preview" id="article-preview-${m.id}">
+                                <div style="white-space:pre-line;font-size:13px;line-height:1.8;color:#333;">${m.preview}</div>
                             </div>
                         `;
                     }
@@ -1157,7 +1100,7 @@
                     return `
                         <div class="material-card" id="card-${m.id}">
                             <div class="material-header">
-                                <div class="material-icon ${iconClass}">${iconEmoji}</div>
+                                <div class="material-icon ${iconClass}">${m.icon}</div>
                                 <div class="material-info">
                                     <div class="material-title">
                                         ${m.title}
@@ -1187,14 +1130,20 @@
             const cover = document.getElementById('cover-' + id);
             const countdown = document.getElementById('countdown-' + id);
             const timerBar = document.getElementById('timer-bar-' + id);
-            const videoContainer = document.getElementById('video-container-' + id);
+            const iframe = document.getElementById('iframe-' + id);
             
             // 隐藏封面，显示倒计时
             cover.classList.add('hidden');
-            countdown.style.display = 'block';
+            countdown.style.display = 'flex';
             
             let seconds = PREVIEW_SECONDS;
             countdown.textContent = seconds;
+            
+            // 如果iframe存在，尝试启动播放
+            if (iframe) {
+                // B站播放器需要通过postMessage控制，这里先让用户点击播放
+                // 封面已经隐藏，用户可以直接点击iframe内的播放按钮
+            }
             
             // 清除该卡片之前的计时器
             if (previewTimers[id]) {
@@ -1218,7 +1167,7 @@
         }
         
         // 解锁弹窗相关
-        let unlockPayType = 'cash'; // cash 或 points
+        let unlockPayType = 'cash';
         let currentUnlockId = null;
         
         // 显示解锁弹窗
@@ -1258,7 +1207,7 @@
             // 重置支付方式
             unlockPayType = 'cash';
             document.querySelectorAll('.unlock-option').forEach(o => o.classList.remove('selected'));
-            document.querySelector('.unlock-option').classList.add('selected');
+            document.querySelectorAll('.unlock-option')[0].classList.add('selected');
             
             // 更新确认按钮
             updateUnlockBtn();
@@ -1267,10 +1216,11 @@
         }
         
         // 选择支付方式
-        function selectPayType(type) {
+        function selectPayType(event, type) {
+            event.stopPropagation();
             unlockPayType = type;
             document.querySelectorAll('.unlock-option').forEach(o => o.classList.remove('selected'));
-            event.target.closest('.unlock-option').classList.add('selected');
+            event.currentTarget.classList.add('selected');
             updateUnlockBtn();
         }
         
@@ -1404,7 +1354,7 @@
         
         // 初始化
         updateUI();
-
+        
         // 联系我们弹窗
         function showContact() {
             document.getElementById('contactModal').classList.add('active');
@@ -1413,7 +1363,7 @@
             document.getElementById('contactModal').classList.remove('active');
         }
     </script>
-
+    
     <!-- Footer -->
     <footer style="background:#1a1a2e;color:#888;padding:20px;text-align:center;margin-top:40px;">
         <p>
@@ -1423,7 +1373,7 @@
         </p>
         <p style="margin-top:10px;font-size:12px;">© 2026 AI工具场 · aitoolchang.cn</p>
     </footer>
-
+    
     <!-- 联系我们弹窗 -->
     <div class="payment-modal" id="contactModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
         <div style="background:#fff;border-radius:16px;padding:24px;max-width:400px;width:90%;text-align:center;position:relative;">
