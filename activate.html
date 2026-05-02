@@ -570,19 +570,6 @@
         </div>
         
         <div class="section">
-            <div class="section-title">📥 激活码兑换</div>
-            <div class="activate-box">
-                <h3>输入激活码立即开通</h3>
-                <div class="alert" id="activateAlert"></div>
-                <div class="activate-input">
-                    <input type="text" id="activateCode" placeholder="请输入激活码" maxlength="20">
-                </div>
-                <button class="activate-btn" onclick="activateCode()">立即激活</button>
-                <div class="activate-hint">激活码格式示例：ABC123XYZ456</div>
-            </div>
-        </div>
-        
-        <div class="section">
             <div class="section-title">💳 开通会员</div>
             
             <!-- 会员套餐 -->
@@ -663,6 +650,7 @@
             <div class="success-icon">🎉</div>
             <div class="success-title">开通成功！</div>
             <div class="success-desc" id="successDesc">您的会员已开通</div>
+            <div id="orderDetails" style="background:#f8f9fa;border-radius:12px;padding:16px;margin:12px 0;font-size:12px;color:#333;text-align:left;"></div>
             <button class="success-btn" onclick="goToVip()">进入会员区</button>
         </div>
     </div>
@@ -1334,13 +1322,48 @@
             
             closePayModal();
             
-            // 显示成功弹窗
+            // 显示成功弹窗，包含订单详情
             let expireText = plan.id === 'forever' ? '永久有效' : new Date(expireTime).toLocaleDateString();
-            let descText = `${plan.name}开通成功！\n\n激活码：${code}\n有效期至：${expireText}`;
-            if (currentInviteCode) {
-                descText += '\n\n🎉 感谢好友推荐！';
-            }
+            let levelName = getLevelName(plan.id);
+            
+            // 主成功信息
+            let descText = `${levelName}开通成功！`;
             document.getElementById('successDesc').textContent = descText;
+            
+            // 订单详情
+            let orderHtml = `
+                <div style="margin-bottom:10px;"><strong>📋 订单详情</strong></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="color:#666;">会员级别</span>
+                    <span style="font-weight:bold;color:#667eea;">${levelName}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="color:#666;">订单金额</span>
+                    <span style="font-weight:bold;color:#f59e0b;">¥${plan.price}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="color:#666;">激活码</span>
+                    <span style="font-weight:bold;font-size:11px;">${code}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="color:#666;">开通时间</span>
+                    <span>${new Date(now).toLocaleString()}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="color:#666;">有效期至</span>
+                    <span style="color:#10b981;font-weight:bold;">${expireText}</span>
+                </div>
+            `;
+            
+            if (currentInviteCode) {
+                orderHtml += `
+                    <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;">
+                        <span style="color:#667eea;">🎉 感谢好友推荐！</span>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('orderDetails').innerHTML = orderHtml;
             document.getElementById('successModal').classList.add('show');
         }
         
@@ -1356,62 +1379,6 @@
                 user: '在线购买'
             });
             localStorage.setItem('codeRecords', JSON.stringify(records));
-        }
-        
-        // 激活码兑换
-        function activateCode() {
-            const code = document.getElementById('activateCode').value.trim().toUpperCase();
-            const alert = document.getElementById('activateAlert');
-            
-            if (!code) {
-                alert.textContent = '请输入激活码';
-                alert.className = 'alert error';
-                alert.style.display = 'block';
-                return;
-            }
-            
-            // 查找激活码记录
-            const records = JSON.parse(localStorage.getItem('codeRecords') || '[]');
-            const record = records.find(r => r.code === code);
-            
-            if (record && record.used) {
-                const plan = plans.find(p => p.name === record.plan);
-                if (plan) {
-                    alert.textContent = '激活码有效，正在开通会员...';
-                    alert.className = 'alert success';
-                    alert.style.display = 'block';
-                    setTimeout(() => {
-                        activateMember(plan, code);
-                    }, 500);
-                    return;
-                }
-            }
-            
-            // 检查未使用的激活码
-            const unusedCodes = JSON.parse(localStorage.getItem('unusedCodes') || '[]');
-            const unusedRecord = unusedCodes.find(r => r.code === code);
-            
-            if (unusedRecord) {
-                unusedCodes.forEach(r => {
-                    if (r.code === code) r.used = true;
-                });
-                localStorage.setItem('unusedCodes', JSON.stringify(unusedCodes));
-                
-                const plan = plans.find(p => p.id === unusedRecord.planId);
-                if (plan) {
-                    alert.textContent = '激活码有效，正在开通会员...';
-                    alert.className = 'alert success';
-                    alert.style.display = 'block';
-                    setTimeout(() => {
-                        activateMember(plan, code);
-                    }, 500);
-                    return;
-                }
-            }
-            
-            alert.textContent = '激活码无效或已过期';
-            alert.className = 'alert error';
-            alert.style.display = 'block';
         }
         
         // 生成激活码
