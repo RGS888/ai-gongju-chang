@@ -395,6 +395,18 @@
     
     <!-- 知识库已移至末尾 -->
     <script>
+        // ========== URL锚点处理 ==========
+        // 页面加载时读取URL中的hash，自动打开对应的测试
+        window.addEventListener('DOMContentLoaded', function() {
+            const hash = window.location.hash.substring(1); // 去掉#号
+            if (hash && typeof showTest === 'function') {
+                // 延迟一下确保页面完全加载
+                setTimeout(() => {
+                    showTest(hash);
+                }, 100);
+            }
+        });
+        
         // ========== 支付配置 ==========
         let currentPayment = 'alipay'; // 当前支付方式
         let currentOrderId = null; // 当前订单号（静态模式）
