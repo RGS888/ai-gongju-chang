@@ -446,7 +446,6 @@
                 <a href="vip.html" class="header-link">📚 视频教程</a>
                 <a href="skills.html" class="header-link" style="color:#ffd700;font-weight:600">🧩 扣子技能</a>
                 <a href="business.html" class="header-link">💼 创业商机</a>
-                <span class="header-link" onclick="scrollToSection('fortune')">🔮 运势测试</span>
                 <span class="header-link" onclick="scrollToSection('payment')">💰 支持我们</span>
             </div>
             <a href="https://www.aliyun.com/minisite/goods?userCode=8ont37k6" target="_blank" class="tool-link aliyun" style="padding:6px 14px;font-size:13px">
@@ -478,9 +477,6 @@
             <a href="business.html" class="sidebar-item" style="background:linear-gradient(135deg,#D4A843,#A07820);color:#fff;border-left-color:#D4A843;font-weight:600">
                 <span class="emoji">💼</span><span>创业商机</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">NEW</span>
             </a>
-            <div class="sidebar-item" onclick="scrollToSection('fortune')" style="background:rgba(99,102,241,0.08);color:var(--primary);border-left-color:var(--primary);font-weight:600">
-                <span class="emoji">🔮</span><span>运势解析</span><span class="count" style="background:var(--danger);color:#fff">NEW</span>
-            </div>
             <div class="sidebar-item" onclick="location.href='vip.html'" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-left-color:#667eea;">
                 <span class="emoji">👑</span><span>会员专区</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">NEW</span>
             </div>
@@ -580,11 +576,6 @@
         <section class="section" id="section-chat">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">💬</span>AI智能对话<span class="section-count">25+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'chat','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'chat','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'chat','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="chat-grid"></div>
         </section>
@@ -593,11 +584,6 @@
         <section class="section" id="section-image">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">🎨</span>AI图像生成<span class="section-count">35+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'image','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'image','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'image','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="image-grid"></div>
         </section>
@@ -606,11 +592,6 @@
         <section class="section" id="section-video">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">🎬</span>AI视频创作<span class="section-count">30+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'video','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'video','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'video','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="video-grid"></div>
         </section>
@@ -619,11 +600,6 @@
         <section class="section" id="section-music">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">🎵</span>AI音乐语音<span class="section-count">20+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'music','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'music','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'music','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="music-grid"></div>
         </section>
@@ -632,11 +608,6 @@
         <section class="section" id="section-office">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">💼</span>AI智慧办公<span class="section-count">30+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'office','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'office','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'office','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="office-grid"></div>
         </section>
@@ -645,11 +616,6 @@
         <section class="section" id="section-coding">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">💻</span>AI编程开发<span class="section-count">20+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'coding','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'coding','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'coding','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="coding-grid"></div>
         </section>
@@ -658,11 +624,6 @@
         <section class="section" id="section-agent">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">🤖</span>AI智能体平台<span class="section-count">20+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'agent','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'agent','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'agent','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="agent-grid"></div>
         </section>
@@ -671,11 +632,6 @@
         <section class="section" id="section-writing">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">📝</span>AI写作工具<span class="section-count">25+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'writing','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'writing','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'writing','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="writing-grid"></div>
         </section>
@@ -684,11 +640,6 @@
         <section class="section" id="section-design">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">🖼️</span>AI商业设计<span class="section-count">20+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'design','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'design','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'design','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="design-grid"></div>
         </section>
@@ -697,11 +648,6 @@
         <section class="section" id="section-enterprise">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">🏢</span>AI企业服务<span class="section-count">20+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'enterprise','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'enterprise','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'enterprise','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="enterprise-grid"></div>
         </section>
@@ -710,11 +656,6 @@
         <section class="section" id="section-ecommerce">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">🛒</span>AI电商工具<span class="section-count">15+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'ecommerce','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'ecommerce','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'ecommerce','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="ecommerce-grid"></div>
         </section>
@@ -723,11 +664,6 @@
         <section class="section" id="section-learning">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">📖</span>AI学习教育<span class="section-count">15+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'learning','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'learning','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'learning','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="learning-grid"></div>
         </section>
@@ -736,11 +672,6 @@
         <section class="section" id="section-life">
             <div class="section-header">
                 <div class="section-title"><span class="emoji">🌟</span>AI趣味工具<span class="section-count">15+</span></div>
-                <div class="cat-tabs">
-                    <span class="cat-tab active" onclick="filterSub(this,'life','all')">全部</span>
-                    <span class="cat-tab" onclick="filterSub(this,'life','free')">免费</span>
-                    <span class="cat-tab" onclick="filterSub(this,'life','new')">新上线</span>
-                </div>
             </div>
             <div class="tool-grid" id="life-grid"></div>
         </section>
