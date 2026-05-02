@@ -446,7 +446,7 @@
                 <a href="vip.html" class="header-link">📚 视频教程</a>
                 <a href="skills.html" class="header-link" style="color:#ffd700;font-weight:600">🧩 扣子技能</a>
                 <a href="business.html" class="header-link">💼 创业商机</a>
-                <span class="header-link" onclick="scrollToSection('payment')">💰 支持我们</span>
+                <span class="header-link" onclick="showContact()">📞 联系我们</span>
             </div>
             <a href="https://www.aliyun.com/minisite/goods?userCode=8ont37k6" target="_blank" class="tool-link aliyun" style="padding:6px 14px;font-size:13px">
                 ☁️ 阿里云优惠
@@ -495,8 +495,8 @@
             <a href="shop.html" class="sidebar-item" style="background:linear-gradient(135deg,#FF6B6B,#EE5A5A);color:#fff;border-left-color:#FF6B6B;font-weight:600">
                 <span class="emoji">🛍️</span><span>一站式购物</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">NEW</span>
             </a>
-            <div class="sidebar-item" onclick="scrollToSection('payment')">
-                <span class="emoji">💰</span><span>支持我们</span>
+            <div class="sidebar-item" onclick="showContact()">
+                <span class="emoji">📞</span><span>联系我们</span>
             </div>
             <div class="sidebar-divider"></div>
         </div>
@@ -668,18 +668,20 @@
 
 <!-- CONTACT MODAL -->
 <div class="payment-modal" id="contactModal">
-    <div class="payment-modal-content" style="max-width:480px;">
+    <div class="payment-modal-content" style="max-width:520px;">
         <button class="payment-modal-close" onclick="closeContact()">&times;</button>
-        <h3 style="font-size:22px;font-weight:700;color:#374151;margin-bottom:16px;">☎️ 联系我们</h3>
-        <div style="text-align:center;">
-            <p style="font-size:14px;color:#666;margin-bottom:16px;">扫码添加客服微信，获取更多帮助</p>
-            <img src="wechat-qrcode.jpg" alt="客服二维码" style="width:220px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);">
-            <p style="font-size:14px;color:#07c160;margin:16px 0;font-weight:bold;">微信号：LZJD8768</p>
-            <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;">
-                <img src="assets/alipay.jpg" alt="支付宝" style="width:120px;border-radius:8px;">
-                <img src="assets/wechat.jpg" alt="微信" style="width:120px;border-radius:8px;">
+        <h3 style="font-size:22px;font-weight:700;color:#374151;margin-bottom:20px;">📞 联系我们</h3>
+        <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+            <div style="text-align:center;">
+                <p style="font-size:14px;color:#666;margin-bottom:12px;font-weight:600;">客服微信二维码</p>
+                <img src="wechat-qrcode.jpg" alt="客服二维码" style="width:180px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);">
+                <p style="font-size:13px;color:#07c160;margin-top:10px;font-weight:bold;">微信号：LZJD8768</p>
             </div>
-            <p style="font-size:12px;color:#999;margin-top:12px;">↑ 点击放大扫码打赏支持我们 ↑</p>
+            <div style="text-align:center;">
+                <p style="font-size:14px;color:#666;margin-bottom:12px;font-weight:600;">微信公众号</p>
+                <img src="qrcode_for_gh_1bcb556da071_258.jpg" alt="微信公众号" style="width:180px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);">
+                <p style="font-size:13px;color:#666;margin-top:10px;">扫码关注「AI工具场」</p>
+            </div>
         </div>
     </div>
 </div>
