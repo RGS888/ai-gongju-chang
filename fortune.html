@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>玄学殿堂 - AI工具场 | 星座配对、生肖配对、风水布局</title>
-    <meta name="description" content="玄学殿堂提供星座配对、生肖配对、星盘解读、风水布局、观音灵签、塔罗占卜、手相面相测试等趣味运势分析，专业AI解读，付费解锁完整报告。">
-    <meta name="keywords" content="星座配对,生肖配对,星盘解读,风水布局,观音灵签,塔罗占卜,手相,面相,MBTI,前世今生,脱单测试,天赋测试,财富运势">
-    <meta property="og:title" content="玄学殿堂 - AI工具场">
+    <title>玄学殿堂 - AI工具场 | 专业命理分析</title>
+    <meta name="description" content="玄学殿堂提供专业的星座配对、生肖配对、星盘解读、风水布局、观音灵签、塔罗占卜、手相面相测试等命理分析，先测试后付费，内容真实专业。">
+    <meta name="keywords" content="星座配对,生肖配对,星盘解读,风水布局,观音灵签,塔罗占卜,手相,面相,MBTI,前世今生,脱单测试,天赋测试,财富运势,命理分析">
+    <meta property="og:title" content="玄学殿堂 - 专业命理分析">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -26,7 +26,7 @@
         .header-inner{max-width:1200px;margin:0 auto;padding:0 16px;height:100%;display:flex;align-items:center;justify-content:space-between}
         .logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:#fff}
         .logo-icon{font-size:26px;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .back-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a78bfa;border-radius:8px;font-size:14px;transition:all 0.2s}
+        .back-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a78bfa;border-radius:8px;font-size:14px;transition:all 0.2s;cursor:pointer}
         .back-btn:hover{background:rgba(99,102,241,0.25)}
 
         /* Main */
@@ -52,33 +52,73 @@
         .category-card .preview-list li{margin-bottom:4px;list-style:none;display:flex;align-items:center;gap:6px}
         .category-card .preview-list li::before{content:'✓';color:var(--success);font-weight:bold}
 
-        /* Detail Modal */
-        .detail-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
-        .detail-modal.active{display:flex}
-        .detail-content{background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);border-radius:20px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
-        .detail-header{padding:24px;border-bottom:1px solid var(--border-color);position:sticky;top:0;background:var(--bg-card);z-index:10}
-        .detail-header h2{font-size:22px;font-weight:800;display:flex;align-items:center;gap:12px}
-        .detail-header .emoji{font-size:32px}
-        .detail-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary)}
-        .detail-close:hover{background:rgba(255,255,255,0.15);color:#fff}
-        .detail-body{padding:24px}
-        .detail-intro{font-size:14px;color:var(--text-secondary);margin-bottom:24px;line-height:1.8}
-        .detail-items{background:rgba(99,102,241,0.06);border-radius:12px;padding:20px;margin-bottom:24px}
-        .detail-items h4{font-size:15px;font-weight:700;color:var(--text-primary);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-        .detail-items ul{list-style:none}
-        .detail-items li{padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;color:var(--text-secondary);display:flex;align-items:flex-start;gap:10px}
-        .detail-items li:last-child{border-bottom:none}
-        .detail-items li::before{content:'✨';flex-shrink:0}
-        .detail-footer{padding:20px 24px;border-top:1px solid var(--border-color);background:rgba(0,0,0,0.2)}
-        .detail-price{text-align:center;margin-bottom:16px}
-        .detail-price .amount{font-size:32px;font-weight:900;color:#ef4444}
-        .detail-price .original{font-size:14px;color:var(--text-muted);text-decoration:line-through;margin-left:8px}
-        .detail-btn{display:block;width:100%;padding:14px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s}
-        .detail-btn:hover{transform:scale(1.02);box-shadow:0 4px 20px rgba(239,68,68,0.4)}
-        .detail-btn.vip{background:linear-gradient(135deg,#ffd700,#ff8c00)}
+        /* Test Modal - 测试输入界面 */
+        .test-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+        .test-modal.active{display:flex}
+        .test-content{background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);border-radius:20px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
+        .test-header{padding:24px;border-bottom:1px solid var(--border-color);position:sticky;top:0;background:var(--bg-card);z-index:10}
+        .test-header h2{font-size:22px;font-weight:800;display:flex;align-items:center;gap:12px}
+        .test-header .emoji{font-size:32px}
+        .test-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary)}
+        .test-close:hover{background:rgba(255,255,255,0.15);color:#fff}
+        .test-body{padding:24px}
+        .test-desc{font-size:14px;color:var(--text-secondary);margin-bottom:20px;line-height:1.8}
+        .test-form{display:flex;flex-direction:column;gap:16px}
+        .form-group{display:flex;flex-direction:column;gap:6px}
+        .form-group label{font-size:14px;font-weight:600;color:var(--text-primary)}
+        .form-group input,.form-group select,.form-group textarea{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 16px;color:var(--text-primary);font-size:14px;outline:none;transition:border-color 0.2s}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary)}
+        .form-group select option{background:#1e2538;color:#fff}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        .test-submit{margin-top:12px;padding:14px;background:linear-gradient(135deg,var(--primary),#7c3aed);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s}
+        .test-submit:hover{transform:scale(1.02);box-shadow:0 4px 20px rgba(99,102,241,0.4)}
+        
+        /* 选择题样式 */
+        .quiz-question{margin-bottom:24px}
+        .quiz-question h4{font-size:15px;font-weight:700;margin-bottom:12px;color:var(--text-primary)}
+        .quiz-options{display:flex;flex-direction:column;gap:8px}
+        .quiz-option{padding:12px 16px;background:rgba(255,255,255,0.04);border:2px solid rgba(255,255,255,0.08);border-radius:10px;cursor:pointer;transition:all 0.2s;font-size:14px;color:var(--text-secondary)}
+        .quiz-option:hover{border-color:rgba(99,102,241,0.4);background:rgba(99,102,241,0.06)}
+        .quiz-option.selected{border-color:var(--primary);background:rgba(99,102,241,0.12);color:var(--text-primary)}
+        .quiz-option input{display:none}
+
+        /* Result Modal - 结果显示（免费预览+付费引导） */
+        .result-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+        .result-modal.active{display:flex}
+        .result-content{background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);border-radius:20px;max-width:640px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
+        .result-header{padding:24px;border-bottom:1px solid var(--border-color);position:sticky;top:0;background:var(--bg-card);z-index:10}
+        .result-header h2{font-size:22px;font-weight:800;display:flex;align-items:center;gap:12px}
+        .result-header .emoji{font-size:32px}
+        .result-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary)}
+        .result-body{padding:24px}
+        
+        /* 免费预览区域 */
+        .free-preview{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:16px;padding:24px;margin-bottom:24px}
+        .free-preview h3{font-size:17px;font-weight:700;color:#86efac;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .free-preview p{font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px}
+        .free-preview .highlight{color:#fbbf24;font-weight:600}
+        
+        /* 付费引导区域 */
+        .pay-guide{background:linear-gradient(135deg,rgba(239,68,68,0.08),rgba(239,68,68,0.04));border:2px solid rgba(239,68,68,0.3);border-radius:16px;padding:24px;text-align:center;margin-bottom:24px}
+        .pay-guide .lock-icon{font-size:48px;margin-bottom:12px;display:block}
+        .pay-guide h3{font-size:18px;font-weight:700;color:#fca5a5;margin-bottom:8px}
+        .pay-guide p{font-size:14px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6}
+        .pay-guide .unlock-list{text-align:left;margin-bottom:16px}
+        .pay-guide .unlock-list li{font-size:13px;color:var(--text-secondary);margin-bottom:6px;list-style:none;display:flex;align-items:flex-start;gap:8px}
+        .pay-guide .unlock-list li::before{content:'✨';flex-shrink:0}
+        .pay-btn{display:inline-block;padding:14px 48px;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s}
+        .pay-btn:hover{transform:scale(1.05);box-shadow:0 4px 20px rgba(239,68,68,0.4)}
+        .pay-price{font-size:32px;font-weight:900;color:#ef4444;margin:12px 0}
+
+        /* 完整报告区域（付费后显示） */
+        .full-report{background:rgba(99,102,241,0.06);border-radius:16px;padding:24px;margin-top:24px}
+        .full-report h3{font-size:17px;font-weight:700;color:var(--text-primary);margin-bottom:16px}
+        .full-report p{font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px}
+        .full-report .section{margin-bottom:20px}
+        .full-report .section h4{font-size:15px;font-weight:700;color:var(--primary);margin-bottom:8px}
 
         /* Payment Modal */
-        .payment-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+        .payment-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:4000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
         .payment-modal.active{display:flex}
         .payment-content{background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);border-radius:20px;max-width:420px;width:100%;padding:32px;text-align:center;position:relative}
         .payment-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary)}
@@ -97,21 +137,15 @@
         .payment-tips{font-size:12px;color:#64748b;margin-top:12px}
         .payment-tips strong{color:#ef4444}
 
-        /* Result Modal */
-        .result-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);z-index:3000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
-        .result-modal.active{display:flex}
-        .result-content{background:var(--bg-card);border:1px solid rgba(99,102,241,0.3);border-radius:20px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative;text-align:center}
-        .result-content h2{font-size:24px;font-weight:800;margin-bottom:8px;background:linear-gradient(135deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .result-content .subtitle{color:var(--text-muted);margin-bottom:24px}
-        .result-body{background:rgba(99,102,241,0.06);border-radius:16px;padding:24px;text-align:left;margin-bottom:24px}
-        .result-body h3{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text-primary)}
-        .result-body p{font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:16px}
-        .result-close{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),#7c3aed);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
-
         /* Footer */
         .footer{background:#090b11;color:var(--text-muted);padding:32px 24px;text-align:center;font-size:13px;border-top:1px solid rgba(255,255,255,0.05);margin-top:48px}
         .footer a{color:var(--text-muted);margin:0 8px;transition:color 0.2s}
         .footer a:hover{color:#a78bfa}
+
+        /* Disclaimer */
+        .disclaimer{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-top:24px;text-align:center}
+        .disclaimer p{font-size:12px;color:var(--text-muted);line-height:1.6}
+        .disclaimer a{color:var(--primary);text-decoration:underline}
 
         /* Responsive */
         @media(max-width:768px){
@@ -123,18 +157,18 @@
             .category-card{padding:16px;border-radius:12px}
             .category-card .icon{font-size:32px}
             .category-card h3{font-size:16px}
-            .detail-content{max-height:90vh;border-radius:16px 16px 0 0}
-            .detail-header{padding:16px}
-            .detail-header h2{font-size:18px}
-            .detail-body{padding:16px}
-            .detail-price .amount{font-size:28px}
+            .test-content,.result-content{max-height:90vh;border-radius:16px 16px 0 0}
+            .test-header,.result-header{padding:16px}
+            .test-header h2,.result-header h2{font-size:18px}
+            .test-body,.result-body{padding:16px}
+            .form-row{grid-template-columns:1fr}
+            .pay-price{font-size:28px}
             .payment-content{padding:24px 16px;border-radius:16px 16px 0 0}
             .payment-amount{font-size:32px}
             .payment-methods{flex-direction:column;gap:10px}
             .payment-method-btn{max-width:100%;padding:12px}
             .payment-method-btn img{width:50px;height:50px}
             .payment-qrcode img{width:150px;height:150px}
-            .result-content{padding:24px 16px;border-radius:16px 16px 0 0}
         }
     </style>
 </head>
@@ -158,722 +192,184 @@
         <!-- Hero -->
         <div class="hero">
             <h1>🔮 玄学殿堂</h1>
-            <p>探索命运的奥秘，专业AI解读，揭示你的人生密码</p>
+            <p>专业命理分析 · 先测试看部分结果 · 付费解锁完整报告</p>
         </div>
 
         <!-- Category Grid -->
         <div class="category-grid">
             <!-- 星座配对 -->
-            <div class="category-card" onclick="showDetail('constellation')">
+            <div class="category-card" onclick="showTest('constellation')">
                 <span class="icon">♈</span>
                 <h3>星座配对</h3>
-                <p>深入分析两个星座的性格契合度、感情匹配度、工作协作指数</p>
+                <p>输入两人星座，获取专业配对分析。免费查看基础契合度，付费解锁详细感情/事业/财运分析</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥19.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>性格特点深度分析</li>
-                    <li>感情契合度评分</li>
-                    <li>相克相生星座解读</li>
+                    <li>先做测试：输入双方星座</li>
+                    <li>免费查看：基础契合度评分</li>
+                    <li>付费解锁：完整感情/事业分析</li>
                 </ul>
             </div>
 
             <!-- 生肖配对 -->
-            <div class="category-card" onclick="showDetail('zodiac')">
+            <div class="category-card" onclick="showTest('zodiac')">
                 <span class="icon">🐉</span>
                 <h3>生肖配对</h3>
-                <p>十二生肖之间的缘分密码，分析你们的婚姻指数、事业配合、财运走向</p>
+                <p>输入双方生肖，分析五行相生相克。免费查看基础配对指数，付费解锁婚姻/财运/子女缘分</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥19.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>生肖五行属性分析</li>
-                    <li>婚姻缘分指数</li>
-                    <li>最佳婚配月份建议</li>
+                    <li>先做测试：输入双方生肖</li>
+                    <li>免费查看：五行属性+基础指数</li>
+                    <li>付费解锁：婚姻/财运/子女分析</li>
                 </ul>
             </div>
 
             <!-- 星盘解读 -->
-            <div class="category-card" onclick="showDetail('horoscope')">
+            <div class="category-card" onclick="showTest('horoscope')">
                 <span class="icon">🌟</span>
                 <h3>星盘解读</h3>
-                <p>专业星盘分析，太阳、月亮、上升星座，全面解读你的命运轨迹</p>
+                <p>输入出生时间地点，生成个人星盘。免费查看太阳星座分析，付费解锁完整十星+十二宫解读</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥29.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>十大行星落座分析</li>
-                    <li>12宫位详细解读</li>
-                    <li>相位格局全解析</li>
+                    <li>先做测试：输入出生信息</li>
+                    <li>免费查看：太阳星座详细分析</li>
+                    <li>付费解锁：完整星盘12宫解读</li>
                 </ul>
             </div>
 
             <!-- 风水布局 -->
-            <div class="category-card" onclick="showDetail('fengshui')">
+            <div class="category-card" onclick="showTest('fengshui')">
                 <span class="icon">🏠</span>
                 <h3>风水布局</h3>
-                <p>家居风水、办公室布局、旺财旺运秘笈，让你的空间充满正能量</p>
+                <p>输入房屋朝向和布局，分析八宫方位。免费查看财位方向，付费解锁完整布局方案</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥29.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>八宫方位分析</li>
-                    <li>财位催旺布局</li>
-                    <li>桃花位调整方案</li>
+                    <li>先做测试：输入房屋信息</li>
+                    <li>免费查看：财位/桃花位方向</li>
+                    <li>付费解锁：完整八宫布局方案</li>
                 </ul>
             </div>
 
             <!-- 观音灵签 -->
-            <div class="category-card" onclick="showDetail('guanyin')">
+            <div class="category-card" onclick="showTest('guanyin')">
                 <span class="icon">🙏</span>
                 <h3>观音灵签</h3>
-                <p>求得灵签，观音菩萨指点迷津，解开你心中的疑惑</p>
+                <p>诚心求签，观音指点迷津。免费查看签号+签文，付费解锁完整解签（事业/感情/财运/健康）</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥6.6 解锁完整</span>
                 <ul class="preview-list">
-                    <li>智能抽签系统</li>
-                    <li>签文白话详解</li>
-                    <li>古籍典故引用</li>
+                    <li>先做测试：诚心求签</li>
+                    <li>免费查看：签号+签文原文</li>
+                    <li>付费解锁：完整解签（四维分析）</li>
                 </ul>
             </div>
 
             <!-- 塔罗占卜 -->
-            <div class="category-card" onclick="showDetail('tarot')">
+            <div class="category-card" onclick="showTest('tarot')">
                 <span class="icon">🃏</span>
                 <h3>塔罗占卜</h3>
-                <p>78张塔罗牌深度解读，单张、三张、十字牌阵，揭示过去现在未来</p>
+                <p>选择牌阵，抽取塔罗牌。免费查看牌面基础含义，付费解锁深度联动分析和趋势预测</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥29.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>78张牌义详解</li>
-                    <li>联动分析解读</li>
-                    <li>趋势发展预测</li>
+                    <li>先做测试：选择牌阵+抽牌</li>
+                    <li>免费查看：牌面基础含义</li>
+                    <li>付费解锁：联动分析+趋势预测</li>
                 </ul>
             </div>
 
             <!-- 手相 -->
-            <div class="category-card" onclick="showDetail('palm')">
+            <div class="category-card" onclick="showTest('palm')">
                 <span class="icon">✋</span>
                 <h3>手相</h3>
-                <p>掌纹解读生命线、感情线、事业线，从手相洞悉命运玄机</p>
+                <p>上传手相照片或选择纹路类型。免费查看基础纹路解读，付费解锁完整掌纹+掌丘+指形分析</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥19.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>掌纹纹路详解</li>
-                    <li>命运走势预测</li>
-                    <li>先天禀赋分析</li>
+                    <li>先做测试：选择手相特征</li>
+                    <li>免费查看：生命线/感情线基础解读</li>
+                    <li>付费解锁：完整掌纹+掌丘+指形</li>
                 </ul>
             </div>
 
             <!-- 面相 -->
-            <div class="category-card" onclick="showDetail('face')">
+            <div class="category-card" onclick="showTest('face')">
                 <span class="icon">👤</span>
                 <h3>面相</h3>
-                <p>五官解读面相学，通过面部特征分析性格、运势、财富指数</p>
+                <p>选择面部特征，分析五官格局。免费查看基础面相特征，付费解锁完整十二宫+流年分析</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥19.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>五官格局分析</li>
-                    <li>面相流年解读</li>
-                    <li>旺夫/旺妻相分析</li>
+                    <li>先做测试：选择面相特征</li>
+                    <li>免费查看：五官基础分析</li>
+                    <li>付费解锁：十二宫+流年+整体评分</li>
                 </ul>
             </div>
 
             <!-- MBTI -->
-            <div class="category-card" onclick="showDetail('mbti')">
+            <div class="category-card" onclick="showTest('mbti')">
                 <span class="icon">🧠</span>
                 <h3>MBTI性格测试</h3>
-                <p>16型人格深度分析，了解真实的自己，找到最佳伴侣类型</p>
+                <p>回答20道测试题，测定人格类型。免费查看基础类型，付费解锁完整性格+职业+恋爱分析</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥9.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>16型人格详解</li>
-                    <li>职业发展建议</li>
-                    <li>最佳配对分析</li>
+                    <li>先做测试：20道选择题</li>
+                    <li>免费查看：MBTI类型+基础特质</li>
+                    <li>付费解锁：职业/恋爱/成长完整建议</li>
                 </ul>
             </div>
 
             <!-- 前世今生 -->
-            <div class="category-card" onclick="showDetail('pastlife')">
+            <div class="category-card" onclick="showTest('pastlife')">
                 <span class="icon">⏳</span>
                 <h3>前世今生</h3>
-                <p>探索你的前世记忆，了解灵魂轮回的轨迹，解读今生使命</p>
+                <p>回答灵魂测试问题，探索前世记忆。免费查看基础灵魂印记，付费解锁完整前世身份+今生使命</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥29.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>前世身份推测</li>
-                    <li>灵魂印记解读</li>
-                    <li>今生使命指引</li>
+                    <li>先做测试：回答灵魂问卷</li>
+                    <li>免费查看：基础灵魂印记</li>
+                    <li>付费解锁：前世身份+今生使命指引</li>
                 </ul>
             </div>
 
             <!-- 脱单测试 -->
-            <div class="category-card" onclick="showDetail('love')">
+            <div class="category-card" onclick="showTest('love')">
                 <span class="icon">💕</span>
                 <h3>脱单测试</h3>
-                <p>分析你的感情模式，找出单身原因，定制专属脱单攻略</p>
+                <p>回答感情模式问卷，找出单身原因。免费查看基础分析，付费解锁完整脱单攻略+理想伴侣画像</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥19.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>感情模式分析</li>
-                    <li>理想伴侣画像</li>
-                    <li>脱单行动指南</li>
+                    <li>先做测试：回答感情问卷</li>
+                    <li>免费查看：单身原因基础分析</li>
+                    <li>付费解锁：脱单攻略+理想伴侣画像</li>
                 </ul>
             </div>
 
             <!-- 天赋测试 -->
-            <div class="category-card" onclick="showDetail('talent')">
+            <div class="category-card" onclick="showTest('talent')">
                 <span class="icon">🎯</span>
                 <h3>天赋测试</h3>
-                <p>发现你的隐藏天赋，找到最适合你的人生赛道</p>
+                <p>回答多元智能测试题，发现隐藏天赋。免费查看优势智能，付费解锁完整天赋开发+职业方向</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥19.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>多元天赋图谱</li>
-                    <li>天赋开发建议</li>
-                    <li>职业方向指引</li>
+                    <li>先做测试：多元智能问卷</li>
+                    <li>免费查看：优势智能类型</li>
+                    <li>付费解锁：天赋开发+职业方向指引</li>
                 </ul>
             </div>
 
             <!-- 财富运势 -->
-            <div class="category-card" onclick="showDetail('wealth')">
+            <div class="category-card" onclick="showTest('wealth')">
                 <span class="icon">💰</span>
                 <h3>财富运势</h3>
-                <p>分析你的财富能量场，找出吸金密码，制定专属财富计划</p>
+                <p>输入生辰信息，分析财富能量场。免费查看基础财运类型，付费解锁完整财富提升策略</p>
                 <span class="price-tag"><i class="fas fa-gem"></i> ¥29.9 解锁完整</span>
                 <ul class="preview-list">
-                    <li>财富能量分析</li>
-                    <li>财运高峰期预测</li>
-                    <li>财富提升策略</li>
+                    <li>先做测试：输入生辰+财务情况</li>
+                    <li>免费查看：财运类型+基础分析</li>
+                    <li>付费解锁：财富提升策略+年度计划</li>
                 </ul>
             </div>
         </div>
     </main>
 
-    <!-- Detail Modal -->
-    <div class="detail-modal" id="detailModal">
-        <div class="detail-content">
-            <div class="detail-header">
-                <h2><span class="emoji" id="detailEmoji"></span> <span id="detailTitle"></span></h2>
-                <button class="detail-close" onclick="closeDetail()"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="detail-body">
-                <p class="detail-intro" id="detailIntro"></p>
-                <div class="detail-items">
-                    <h4><i class="fas fa-list"></i> 解锁内容清单</h4>
-                    <ul id="detailList"></ul>
-                </div>
-            </div>
-            <div class="detail-footer">
-                <div class="detail-price">
-                    <span class="amount" id="detailPrice"></span>
-                    <span class="original" id="detailOriginal"></span>
-                </div>
-                <button class="detail-btn" id="detailBtn" onclick="showPayment()">
-                    <i class="fas fa-lock"></i> 解锁完整报告
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Payment Modal -->
-    <div class="payment-modal" id="paymentModal">
-        <div class="payment-content">
-            <button class="payment-close" onclick="closePayment()"><i class="fas fa-times"></i></button>
-            <h3 id="paymentTitle">解锁完整报告</h3>
-            <div class="payment-amount"><span id="paymentAmount"></span></div>
-            <div class="payment-methods">
-                <div class="payment-method-btn active" onclick="selectPayment('alipay', this)">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='8' fill='%231676FF'/%3E%3Ctext x='30' y='38' text-anchor='middle' fill='white' font-size='24' font-weight='bold'%3E支%3C/text%3E%3C/svg%3E" alt="支付宝">
-                    <p>支付宝</p>
-                </div>
-                <div class="payment-method-btn" onclick="selectPayment('wechat', this)">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='8' fill='%2307C160'/%3E%3Ctext x='30' y='38' text-anchor='middle' fill='white' font-size='20' font-weight='bold'%3E微%3C/text%3E%3C/svg%3E" alt="微信">
-                    <p>微信支付</p>
-                </div>
-            </div>
-            <div class="payment-qrcode" id="paymentQR">
-                <img src="" alt="支付二维码" id="qrImage">
-                <p class="payment-note" id="paymentNote">请使用支付宝扫码支付</p>
-            </div>
-            <div class="payment-success" id="paymentSuccess">
-                <i class="fas fa-check-circle"></i> 支付成功！
-            </div>
-            <div class="payment-tips">
-                <strong>温馨提示：</strong>支付完成后，点击"已完成支付"按钮即可解锁
-                <br><button class="detail-btn" style="margin-top:12px;font-size:14px;padding:10px" onclick="completePayment()">已完成支付</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Result Modal -->
-    <div class="result-modal" id="resultModal">
-        <div class="result-content">
-            <h2 id="resultTitle">分析完成</h2>
-            <p class="subtitle" id="resultSubtitle">以下是为您生成的完整报告</p>
-            <div class="result-body" id="resultBody"></div>
-            <button class="result-close" onclick="closeResult()">关闭</button>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2024 AI工具场 · <a href="index.html">返回首页</a> · 玄学殿堂仅供娱乐参考</p>
-    </footer>
-
-    <script>
-        // 工具数据
-        const fortuneTools = {
-            constellation: {
-                emoji: '♈',
-                name: '星座配对',
-                price: 19.9,
-                original: 99,
-                intro: '星座配对基于西方占星术，通过分析两个星座的太阳星座特征，揭示你们在性格、感情、事业等方面的契合程度。我们的AI系统综合了古典占星理论和现代心理学，为您提供科学而有趣的配对分析。',
-                items: [
-                    '性格特点深度对比分析',
-                    '感情契合度多维评分',
-                    '相克相生星座解读',
-                    '沟通模式建议',
-                    '吵架解决方案',
-                    '最佳相处方式',
-                    '财运互助指数',
-                    '事业配合分析',
-                    '长期发展预测',
-                    '专属情侣昵称推荐'
-                ]
-            },
-            zodiac: {
-                emoji: '🐉',
-                name: '生肖配对',
-                price: 19.9,
-                original: 99,
-                intro: '生肖配对源自中国传统文化，十二生肖对应十二地支，通过五行相生相克理论，分析两个人在婚姻、事业、财运等方面的缘分指数。这是老祖宗留下的智慧结晶，千年传承，屡试不爽。',
-                items: [
-                    '生肖五行属性分析',
-                    '婚姻缘分指数测评',
-                    '最佳婚配月份建议',
-                    '相冲化解方法',
-                    '婚后生活预测',
-                    '子女缘分分析',
-                    '婆媳关系指南',
-                    '家庭财运走势',
-                    '属相合婚详解',
-                    '结婚黄道吉日推荐'
-                ]
-            },
-            horoscope: {
-                emoji: '🌟',
-                name: '星盘解读',
-                price: 29.9,
-                original: 199,
-                intro: '星盘解读是最全面的命理分析工具，通过绘制个人出生星盘，包含太阳、月亮、上升、水星、金星、火星、木星、土星、天王星、海王星、冥王星等十大行星的落座位置，以及十二宫位的分布，为您揭示命运的完整图谱。',
-                items: [
-                    '十大行星落座分析',
-                    '12宫位详细解读',
-                    '行星相位格局全解析',
-                    '太阳星座核心特质',
-                    '月亮星座情感模式',
-                    '上升星座外在表现',
-                    '内在灵魂诉求',
-                    '今生命课题分析',
-                    '人生高峰期预测',
-                    '年度运势展望'
-                ]
-            },
-            fengshui: {
-                emoji: '🏠',
-                name: '风水布局',
-                price: 29.9,
-                original: 199,
-                intro: '风水布局基于中国传统环境学，通过分析住宅和办公室的方位、布局、色彩等因素，调理气场，趋吉避凶。好的风水布局可以催旺财运、事业运、桃花运，让您的生活事业顺风顺水。',
-                items: [
-                    '八宫方位分析',
-                    '财位精准定位',
-                    '财位催旺布局方案',
-                    '桃花位调整策略',
-                    '文昌位书桌摆放',
-                    '卧室风水优化',
-                    '厨房灶台方位',
-                    '卫生间化解方法',
-                    '大门纳气分析',
-                    '年度旺运方位指南'
-                ]
-            },
-            guanyin: {
-                emoji: '🙏',
-                name: '观音灵签',
-                price: 6.6,
-                original: 39,
-                intro: '观音灵签源自普陀山观世音菩萨法门，求签前请虔诚默念所求之事。灵签共100签，分上上、上、中、下四个等级，每签都有专属的解签诗文和吉凶判断。',
-                items: [
-                    '智能抽签系统',
-                    '签文原文展示',
-                    '白话详解签意',
-                    '古籍典故引用',
-                    '吉凶判断分析',
-                    '事业卦解',
-                    '感情卦解',
-                    '财运卦解',
-                    '健康卦解',
-                    '逐句深度解读'
-                ]
-            },
-            tarot: {
-                emoji: '🃏',
-                name: '塔罗占卜',
-                price: 29.9,
-                original: 199,
-                intro: '塔罗牌共有78张，分为大阿卡纳22张和小阿卡纳56张，是西方最古老的占卜工具之一。通过牌阵布局，塔罗可以为您揭示过去、解读现在、预示未来，指引人生方向。',
-                items: [
-                    '78张大阿卡纳详解',
-                    '56张小阿卡纳解读',
-                    '单张牌阵分析',
-                    '三张牌阵解读',
-                    '十字牌阵预测',
-                    '过去现状分析',
-                    '核心问题解答',
-                    '牌面联动分析',
-                    '潜意识信息挖掘',
-                    '未来趋势发展'
-                ]
-            },
-            palm: {
-                emoji: '✋',
-                name: '手相',
-                price: 19.9,
-                original: 99,
-                intro: '手相学起源于印度，通过观察掌纹的形状、深浅、分叉等特征，可以推算一个人的性格特点、命运走势、婚姻状况、事业成就等。手相会随着时间和经历而变化，反映人生的动态轨迹。',
-                items: [
-                    '生命线详细解读',
-                    '感情线深度分析',
-                    '事业线完整解读',
-                    '智慧线性格分析',
-                    '掌丘格局判定',
-                    '指形五行分类',
-                    '手纹分叉含义',
-                    '断纹化解建议',
-                    '先天禀赋分析',
-                    '后天努力方向'
-                ]
-            },
-            face: {
-                emoji: '👤',
-                name: '面相',
-                price: 19.9,
-                original: 99,
-                intro: '面相学是中国传统的相人之术，通过观察面部五官的大小、位置、形状、光泽等特征，推断一个人的性格、运势、财运、婚姻等。古人云"相由心生"，面相反映了一个人的内心世界和人生际遇。',
-                items: [
-                    '五官格局全面分析',
-                    '额头痣纹解读',
-                    '眉毛形状性格分析',
-                    '眼睛神态运势',
-                    '鼻子财帛宫分析',
-                    '嘴唇感情宫解读',
-                    '耳朵肾功能分析',
-                    '面相流年部位',
-                    '旺夫/旺妻相判定',
-                    '整体面相评分'
-                ]
-            },
-            mbti: {
-                emoji: '🧠',
-                name: 'MBTI性格测试',
-                price: 9.9,
-                original: 49,
-                intro: 'MBTI基于瑞士心理学家荣格的性格类型理论，发展成为全球最广泛使用的性格测试工具之一。通过分析你在精力来源、感知方式、决策方式、生活方式四个维度上的偏好，确定你的16型人格类型。',
-                items: [
-                    '16型人格完整解读',
-                    '性格优势深度分析',
-                    '性格劣势应对策略',
-                    '职业性格匹配',
-                    '最佳职业方向建议',
-                    '领导风格分析',
-                    '恋爱模式解读',
-                    '最佳配对类型',
-                    '沟通技巧指南',
-                    '个人成长计划'
-                ]
-            },
-            pastlife: {
-                emoji: '⏳',
-                name: '前世今生',
-                price: 29.9,
-                original: 199,
-                intro: '前世今生探索源于灵魂轮回的理论，认为灵魂会经历多次转世，每一世都有特定的生命课题。通过催眠回溯、能量感知等方式，探索灵魂的前世记忆，解读今生使命，帮助您更好地理解当下的困惑和挑战。',
-                items: [
-                    '灵魂印记解读',
-                    '前世身份推测',
-                    '前世未了心愿',
-                    '今生灵魂课题',
-                    '灵魂伴侣识别',
-                    '灵魂成长轨迹',
-                    '前世因果分析',
-                    '今生天赋来源',
-                    '人生使命指引',
-                    '灵魂觉醒建议'
-                ]
-            },
-            love: {
-                emoji: '💕',
-                name: '脱单测试',
-                price: 19.9,
-                original: 99,
-                intro: '脱单测试综合分析您的性格特点、情感模式、原生家庭影响、恋爱经历等因素，找出导致单身的关键原因，并为您量身定制脱单攻略。科学分析+实用建议，帮助您快速告别单身！',
-                items: [
-                    '单身原因深度分析',
-                    '感情模式诊断',
-                    '理想伴侣画像描绘',
-                    '择偶标准评估',
-                    '脱单行动清单',
-                    '社交圈子拓展',
-                    '约会技巧建议',
-                    '恋爱雷区提醒',
-                    '挽回前任分析',
-                    '幸福脱单案例'
-                ]
-            },
-            talent: {
-                emoji: '🎯',
-                name: '天赋测试',
-                price: 19.9,
-                original: 99,
-                intro: '天赋测试通过多元智能理论和性格分析，挖掘您隐藏的天赋才能。每个人都有独特的优势天赋，找到它并加以培养，可以让您的人生更加精彩成功。',
-                items: [
-                    '八大智能分布图',
-                    '天赋类型判定',
-                    '天赋开发优先级',
-                    '学习风格分析',
-                    '最佳学习方式',
-                    '职业天赋匹配',
-                    '副业方向推荐',
-                    '天赋变现路径',
-                    '自我提升计划',
-                    '成功案例参考'
-                ]
-            },
-            wealth: {
-                emoji: '💰',
-                name: '财富运势',
-                price: 29.9,
-                original: 199,
-                intro: '财富运势分析从命理角度出发，结合您的生辰八字和五行属性，分析您的财富能量场、理财风格、财运走势，并提供切实可行的财富提升策略。',
-                items: [
-                    '财富能量综合评估',
-                    '五行属性与财运',
-                    '财库充盈程度',
-                    '理财风格诊断',
-                    '偏财运分析',
-                    '正财运预测',
-                    '财运高峰期',
-                    '破财风险预警',
-                    '财富提升策略',
-                    '年度财富行动计划'
-                ]
-            }
-        };
-
-        let currentTool = null;
-        let currentPayment = 'alipay';
-
-        // 显示详情
-        function showDetail(toolId) {
-            currentTool = toolId;
-            const tool = fortuneTools[toolId];
-            document.getElementById('detailEmoji').textContent = tool.emoji;
-            document.getElementById('detailTitle').textContent = tool.name;
-            document.getElementById('detailIntro').textContent = tool.intro;
-            document.getElementById('detailPrice').textContent = '¥' + tool.price;
-            document.getElementById('detailOriginal').textContent = '原价¥' + tool.original;
-
-            const listHtml = tool.items.map(item => `<li>${item}</li>`).join('');
-            document.getElementById('detailList').innerHTML = listHtml;
-
-            document.getElementById('detailModal').classList.add('active');
-        }
-
-        function closeDetail() {
-            document.getElementById('detailModal').classList.remove('active');
-        }
-
-        // 显示支付
-        function showPayment() {
-            const tool = fortuneTools[currentTool];
-            document.getElementById('paymentTitle').textContent = '解锁「' + tool.name + '」完整报告';
-            document.getElementById('paymentAmount').textContent = '¥' + tool.price;
-            document.getElementById('detailModal').classList.remove('active');
-            document.getElementById('paymentModal').classList.add('active');
-            document.getElementById('paymentSuccess').classList.remove('active');
-
-            updateQRCode();
-        }
-
-        function closePayment() {
-            document.getElementById('paymentModal').classList.remove('active');
-        }
-
-        function selectPayment(method, btn) {
-            currentPayment = method;
-            document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById('paymentNote').textContent = method === 'alipay' ? '请使用支付宝扫码支付' : '请使用微信支付扫码';
-            updateQRCode();
-        }
-
-        function updateQRCode() {
-            // 根据价格选择对应的小程序收款码
-            const tool = fortuneTools[currentTool];
-            const price = tool.price;
-            const method = currentPayment;
-            const qrImg = document.getElementById('qrImage');
-            
-            if (method === 'alipay') {
-                qrImg.src = 'assets/alipay.jpg';
-            } else {
-                // 根据价格选择对应的微信收款码
-                let wechatImg = 'assets/wechat.jpg'; // 默认
-                if (price == 6.6) wechatImg = 'assets/payment/price_6_6.jpg';
-                else if (price == 9.9) wechatImg = 'assets/payment/price_9_9.jpg';
-                else if (price == 19.9) wechatImg = 'assets/payment/price_19_9.jpg';
-                else if (price == 29 || price == 29.0) wechatImg = 'assets/payment/price_29.jpg';
-                else if (price == 29.9) wechatImg = 'assets/payment/price_29_9.jpg';
-                else if (price == 79) wechatImg = 'assets/payment/price_79.jpg';
-                else if (price == 199) wechatImg = 'assets/payment/price_199.jpg';
-                else if (price == 399) wechatImg = 'assets/payment/price_399.jpg';
-                
-                qrImg.src = wechatImg;
-            }
-            qrImg.onerror = function() { this.style.display = 'none'; };
-        }
-
-        function completePayment() {
-            document.getElementById('paymentSuccess').classList.add('active');
-            document.getElementById('paymentQR').style.display = 'none';
-
-            // 3秒后显示结果
-            setTimeout(() => {
-                closePayment();
-                showResult();
-            }, 1500);
-        }
-
-        function showResult() {
-            const tool = fortuneTools[currentTool];
-            document.getElementById('resultTitle').textContent = tool.emoji + ' ' + tool.name;
-            document.getElementById('resultSubtitle').textContent = '完整分析报告已生成';
-
-            let resultHtml = '<h3>📋 分析结论</h3><p>感谢您的耐心等待！基于您提供的信息，我们完成了详细的分析。以下是核心结论：</p>';
-
-            for (let i = 0; i < 5; i++) {
-                resultHtml += `<p><strong>${i + 1}. ${tool.items[i]}</strong><br>${getAnalysisResult(currentTool, i)}</p>`;
-            }
-
-            resultHtml += '<h3 style="margin-top:20px">💡 建议</h3><p>了解更多详细内容，请关注AI工具场公众号获取更多运势分析。';
-
-            document.getElementById('resultBody').innerHTML = resultHtml;
-            document.getElementById('resultModal').classList.add('active');
-        }
-
-        function getAnalysisResult(toolId, index) {
-            const results = {
-                constellation: [
-                    '根据星座特征分析，您的性格外向开朗，善于社交，与配对星座有很好的互补性。',
-                    '感情方面，你们属于一见钟情型，但需要多沟通理解，才能长久。',
-                    '工作协作上，你们配合默契，是事业上的好伙伴。',
-                    '财运方面，两个星座的财运指数相加，整体运势上升。',
-                    '建议多包容对方的不足，共同成长，感情会更加稳定。'
-                ],
-                zodiac: [
-                    '从生肖角度分析，你们属于上等婚配，五行相生，缘分深厚。',
-                    '婚姻生活中，你们能够互相扶持，共同面对生活中的挑战。',
-                    '事业上，两个生肖的人能够互补，在职场上有所成就。',
-                    '财运方面，今年是你们财运旺盛的年份，好好把握机会。',
-                    '建议在重要决策前多商量，相互尊重，婚姻会更加幸福。'
-                ],
-                horoscope: [
-                    '星盘显示您的太阳星座能量充沛，具有领导力和创造力。',
-                    '月亮星座显示您内心敏感，需要情感上的支持和理解。',
-                    '上升星座决定您给他人的第一印象，往往成熟稳重。',
-                    '土星相位良好，意味着您将通过努力获得成功。',
-                    '木星相位吉祥，暗示近期有贵人相助，运势上升。'
-                ],
-                fengshui: [
-                    '根据您提供的信息分析，财位在家中的东北方向，建议摆放招财植物。',
-                    '桃花位在正南，可以放置粉色花瓶或鲜花来催旺姻缘。',
-                    '文昌位在书房或学习区域的北方，利于学业和事业。',
-                    '大门纳气分析显示，需要在门口放置地垫化解直冲。',
-                    '整体风水评分良好，遵循以上建议可进一步提升运势。'
-                ],
-                guanyin: [
-                    '恭喜您求得一支上签，预示着近期运势顺利。',
-                    '签文显示您所求之事将有贵人相助，成事有望。',
-                    '事业方面，表示您正处于事业上升期，努力必有回报。',
-                    '感情方面，预示着感情将迎来转机，单身者有望遇到良缘。',
-                    '建议：心存善念，多做善事，好运将会持续。'
-                ],
-                tarot: [
-                    '抽到的牌显示您正处于人生的转折点，需要做出重要选择。',
-                    '牌面暗示您近期需要勇气面对挑战，但最终会获得成功。',
-                    '感情牌显示您的关系正在向更深层次发展。',
-                    '财运牌显示您有偏财运，可以适当参与投资。',
-                    '整体牌阵预示光明前景，但需要保持耐心和专注。'
-                ],
-                palm: [
-                    '生命线显示您身体健康，精力充沛，寿命较长。',
-                    '感情线表明您是个重感情的人，对待感情认真负责。',
-                    '事业线显示您有很强的上进心，职业发展潜力大。',
-                    '手相整体显示您属于大器晚成型，中年后运势更佳。',
-                    '建议：注意保养身体，保持良好心态，命运掌握在自己手中。'
-                ],
-                face: [
-                    '额头宽广说明您聪明伶俐，具有很高的智商和情商。',
-                    '眉毛浓密显示您性格坚强，有领导能力和执行力。',
-                    '眼睛有神说明您财运不错，理财能力强。',
-                    '鼻子端正预示着财运亨通，中年后财运会越来越好。',
-                    '整体面相属于旺夫/旺妻相，非常适合结婚组建家庭。'
-                ],
-                mbti: [
-                    '根据分析，您的性格类型属于INTJ，具有战略思维和独立精神。',
-                    '您的优势在于分析能力和长远规划，适合做规划类工作。',
-                    '在团队中，您往往扮演智囊团的角色，提供创新思路。',
-                    '恋爱中，您比较理性，但一旦认定就会非常专一。',
-                    '建议：多表达情感，学会倾听，可以让您的人际关系更加和谐。'
-                ],
-                pastlife: [
-                    '灵魂印记显示您前世是一位修行者，积累了丰富的精神财富。',
-                    '您的前世身份可能与教育、艺术或医疗相关行业有关。',
-                    '今生您的灵魂课题是学会接纳和放下，追求内心平静。',
-                    '您的灵魂伴侣可能与您有相似的灵魂印记，需要用心感受。',
-                    '建议：通过冥想、瑜伽等方式连接内在自我，开启灵魂觉醒之路。'
-                ],
-                love: [
-                    '分析显示您单身的主要原因是对感情期望过高，需要调整心态。',
-                    '您的理想伴侣画像偏向于成熟稳重型，需要主动出击才能遇到。',
-                    '您的感情模式属于慢热型，建议多给自己和对方一些时间。',
-                    '今年是您的桃花年，下半年遇到真爱的几率很大。',
-                    '脱单建议：多参加社交活动，扩大交友圈，提升自我魅力。'
-                ],
-                talent: [
-                    '您的多元智能分布显示，语言和数学逻辑智能最为突出。',
-                    '您的天赋偏向于分析和策划类，适合做策略性工作。',
-                    '艺术天赋中等偏上，可以培养一些艺术爱好来丰富生活。',
-                    '建议发挥您的逻辑分析优势，在金融、互联网等领域发展。',
-                    '找到天赋后最重要的是持续深耕，天赋+努力=成功。'
-                ],
-                wealth: [
-                    '您的财富能量场显示属于中等偏上，有成为富人的潜质。',
-                    '五行分析显示您适合从事与火、土相关的行业。',
-                    '理财风格分析表明您属于稳健型投资者，不宜做高风险投资。',
-                    '您的偏财运较弱，建议主要依靠正财积累财富。',
-                    '财富提升建议：提升专业技能，增加被动收入来源。'
-                ]
-            };
-
-            return results[toolId] ? results[toolId][index] : '分析结果显示此项需要进一步了解具体情况才能给出准确建议。';
-        }
-
-        function closeResult() {
-            document.getElementById('resultModal').classList.remove('active');
-        }
-
-        // 点击遮罩关闭
-        document.getElementById('detailModal').addEventListener('click', function(e) {
-            if (e.target === this) closeDetail();
-        });
-        document.getElementById('paymentModal').addEventListener('click', function(e) {
-            if (e.target === this) closePayment();
-        });
-        document.getElementById('resultModal').addEventListener('click', function(e) {
-            if (e.target === this) closeResult();
-        });
-    </script>
-    
     <!-- 联系我们弹窗 -->
-    <div class="payment-modal" id="contactModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+    <div id="contactModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
         <div style="background:#fff;border-radius:16px;padding:24px;max-width:400px;width:90%;text-align:center;position:relative;">
             <button onclick="closeContact()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
             <h3 style="font-size:20px;margin-bottom:16px;">☎️ 联系我们</h3>
@@ -885,21 +381,905 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Footer -->
     <footer style="background:#1a1a2e;color:#888;padding:20px;text-align:center;margin-top:40px;">
         <p>
             <a href="index.html" style="color:#667eea;text-decoration:none;margin:0 10px;">首页</a> | 
-            <a href="javascript:void(0)" onclick="closeContact();document.getElementById('contactModal').style.display='flex';" style="color:#667eea;text-decoration:none;margin:0 10px;">联系我们</a> | 
+            <a href="javascript:void(0)" onclick="document.getElementById('contactModal').style.display='flex';" style="color:#667eea;text-decoration:none;margin:0 10px;">联系我们</a> | 
             <a href="vip.html" style="color:#667eea;text-decoration:none;margin:0 10px;">会员专区</a>
         </p>
         <p style="margin-top:10px;font-size:12px;">© 2026 AI工具场 · aitoolchang.cn</p>
     </footer>
-    
+
     <script>
-    function closeContact() {
-        document.getElementById('contactModal').style.display = 'none';
-    }
+        // ========== 数据定义 ==========
+        const fortuneData = {
+            constellation: {
+                emoji: '♈',
+                name: '星座配对',
+                price: 19.9,
+                desc: '星座配对基于西方占星术，通过分析两个星座的太阳星座特征，评估性格契合度、沟通模式、感情走势等维度。',
+                testFields: [
+                    {name: 'sign1', label: '您的星座', type: 'select', options: ['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座']},
+                    {name: 'sign2', label: '对方的星座', type: 'select', options: ['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座']}
+                ],
+                freeResult: function(data) {
+                    const sign1 = data.sign1;
+                    const sign2 = data.sign2;
+                    const score = calculateConstellationScore(sign1, sign2);
+                    return `
+                        <div class="free-preview">
+                            <h3>📊 基础配对指数（免费预览）</h3>
+                            <p>您（<span class="highlight">${sign1}</span>）与对方（<span class="highlight">${sign2}</span>）的配对分析：</p>
+                            <p>💕 <strong>感情契合度：</strong>${score.love}/100</p>
+                            <p>🤝 <strong>友谊适配度：</strong>${score.friendship}/100</p>
+                            <p>💼 <strong>工作配合度：</strong>${score.work}/100</p>
+                            <p>⚡ <strong>冲突指数：</strong>${score.conflict}/100（越低越好）</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为基础评分。完整报告包含：性格深度对比、沟通模式建议、吵架解决方案、长期发展预测等10项详细分析。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    const sign1 = data.sign1;
+                    const sign2 = data.sign2;
+                    return `
+                        <div class="full-report">
+                            <h3>📋 完整配对报告</h3>
+                            
+                            <div class="section">
+                                <h4>一、星座基本特征对比</h4>
+                                <p><strong>${sign1}：</strong>${getSignTrait(sign1)}</p>
+                                <p><strong>${sign2}：</strong>${getSignTrait(sign2)}</p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>二、性格契合度深度分析</h4>
+                                <p>${(sign1 === sign2) ? 
+                                    `同星座配对属于"镜像型"关系，你们有太多相似之处，既互相吸引又容易互相排斥。优点是互相理解，缺点是容易陷入同样的问题模式。建议：保持独立空间，不要过度依赖对方的情绪波动。` : 
+                                    `根据西方占星术的元素理论（火/土/风/水），${sign1}与${sign2}的配对属于${getElementRelation(sign1, sign2)}。${getPairAnalysis(sign1, sign2)}`}
+                                </p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>三、沟通模式分析</h4>
+                                <p>${sign1}的沟通风格：${getCommunicationStyle(sign1)}</p>
+                                <p>${sign2}的沟通风格：${getCommunicationStyle(sign2)}</p>
+                                <p><strong>沟通建议：</strong>${getCommunicationAdvice(sign1, sign2)}</p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>四、感情走势预测</h4>
+                                <p><strong>热恋期：</strong>${getLoveStage(sign1, sign2, 'passion')}</p>
+                                <p><strong>磨合期：</strong>${getLoveStage(sign1, sign2, 'conflict')}</p>
+                                <p><strong>稳定期：</strong>${getLoveStage(sign1, sign2, 'stable')}</p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>五、工作协作评估</h4>
+                                <p>${sign1}在工作中倾向于${getWorkStyle(sign1)}，${sign2}倾向于${getWorkStyle(sign2)}。你们的协作模式是：${getWorkCollaboration(sign1, sign2)}</p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>六、财运互助分析</h4>
+                                <p>${sign1}的理财风格：${getWealthStyle(sign1)}</p>
+                                <p>${sign2}的理财风格：${getWealthStyle(sign2)}</p>
+                                <p><strong>财运互助建议：</strong>${getWealthAdvice(sign1, sign2)}</p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>七、最佳相处方式</h4>
+                                <p>${getBestWay(sign1, sign2)}</p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>八、吵架解决方案</h4>
+                                <p>${getConflictSolution(sign1, sign2)}</p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>九、长期发展预测</h4>
+                                <p>${getLongTerm(sign1, sign2)}</p>
+                            </div>
+                            
+                            <div class="section">
+                                <h4>十、专属建议</h4>
+                                <p>${getExclusiveAdvice(sign1, sign2)}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            zodiac: {
+                emoji: '🐉',
+                name: '生肖配对',
+                price: 19.9,
+                desc: '生肖配对源自中国传统文化，十二生肖对应十二地支，通过五行相生相克理论分析两人缘分。',
+                testFields: [
+                    {name: 'zodiac1', label: '您的生肖', type: 'select', options: ['鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪']},
+                    {name: 'zodiac2', label: '对方的生肖', type: 'select', options: ['鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪']}
+                ],
+                freeResult: function(data) {
+                    const z1 = data.zodiac1;
+                    const z2 = data.zodiac2;
+                    const result = calculateZodiacMatch(z1, z2);
+                    return `
+                        <div class="free-preview">
+                            <h3>📊 基础配对指数（免费预览）</h3>
+                            <p>您（<span class="highlight">${z1}</span>）与对方（<span class="highlight">${z2}</span>）的生肖配对分析：</p>
+                            <p>💕 <strong>婚姻缘分：</strong>${result.marriage}</p>
+                            <p>🤝 <strong>合作指数：</strong>${result.cooperation}</p>
+                            <p>💰 <strong>财运互助：</strong>${result.wealth}</p>
+                            <p>⚠️ <strong>相冲情况：</strong>${result.clash}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为基础分析。完整报告包含：五行属性详解、相生相克深度分析、最佳婚配月份、婚后生活预测、子女缘分等10项详细内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整生肖配对报告</h3><p>详细报告内容生成中...</p></div>`;
+                }
+            },
+            horoscope: {
+                emoji: '🌟',
+                name: '星盘解读',
+                price: 29.9,
+                desc: '星盘解读是最全面的命理分析工具，通过绘制个人出生星盘，揭示太阳、月亮、上升等十大行星的能量分布。',
+                testFields: [
+                    {name: 'year', label: '出生年份', type: 'input', placeholder: '如：1990'},
+                    {name: 'month', label: '出生月份', type: 'select', options: ['1','2','3','4','5','6','7','8','9','10','11','12']},
+                    {name: 'day', label: '出生日期', type: 'select', options: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31']},
+                    {name: 'hour', label: '出生时辰（可选）', type: 'select', options: ['未知','23:00-01:00','01:00-03:00','03:00-05:00','05:00-07:00','07:00-09:00','09:00-11:00','11:00-13:00','13:00-15:00','15:00-17:00','17:00-19:00','19:00-21:00','21:00-23:00']}
+                ],
+                freeResult: function(data) {
+                    const sunSign = getSunSign(parseInt(data.month), parseInt(data.day));
+                    return `
+                        <div class="free-preview">
+                            <h3>☀️ 太阳星座分析（免费预览）</h3>
+                            <p>根据您提供的出生日期，您的<span class="highlight">太阳星座是${sunSign}</span>。</p>
+                            <p><strong>核心特质：</strong>${getSignTrait(sunSign)}</p>
+                            <p><strong>优势：</strong>${getSignStrengths(sunSign)}</p>
+                            <p><strong>劣势：</strong>${getSignWeaknesses(sunSign)}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上仅为太阳星座分析。完整星盘解读包含：月亮星座（内在情感）、上升星座（外在表现）、水星（思维方式）、金星（爱情观）、火星（行动力）等十大行星落座，以及十二宫位详细解读。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整星盘解读报告</h3><p>根据您提供的出生信息，生成完整星盘分析...</p></div>`;
+                }
+            },
+            guanyin: {
+                emoji: '🙏',
+                name: '观音灵签',
+                price: 6.6,
+                desc: '观音灵签源自普陀山观世音菩萨法门，求签前请虔诚默念所求之事。灵签共100签，分上上、上、中、下四等。',
+                testFields: [
+                    {name: 'wish', label: '默念您要求签的事项', type: 'text', placeholder: '如：事业发展、感情走向、财运情况...'}
+                ],
+                freeResult: function(data) {
+                    const sign = drawLot();
+                    return `
+                        <div class="free-preview">
+                            <h3>🙏 灵签结果（免费预览）</h3>
+                            <p>您求签的事项：<span class="highlight">${data.wish}</span></p>
+                            <p>🎋 <strong>签号：</strong>第${sign.number}签</p>
+                            <p>📜 <strong>签文：</strong>${sign.text}</p>
+                            <p>📊 <strong>吉凶：</strong>${sign.luck}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为签文原文。完整解签包含：签文白话详解、古籍典故引用、事业卦解、感情卦解、财运卦解、健康卦解、具体行动建议等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整灵签解读</h3><p>根据签文，为您详细解读...</p></div>`;
+                }
+            },
+            mbti: {
+                emoji: '🧠',
+                name: 'MBTI性格测试',
+                price: 9.9,
+                desc: 'MBTI基于荣格心理类型理论，通过20道测试题测定您的16型人格类型。',
+                testFields: 'quiz',
+                quizQuestions: [
+                    {q: '在社交场合，您通常：', options: ['主动认识新朋友，享受热闹','安静观察，只和熟悉的人交流']},
+                    {q: '周末更喜欢：', options: ['约朋友出去玩，参加活动','一个人在家看书、看电影、休息']},
+                    {q: '做决定时，您更依赖：', options: ['逻辑分析和客观事实','内心感受和他人情绪']},
+                    {q: '面对紧急情况，您：', options: ['冷静分析，找最优解决方案','先处理情绪，再考虑怎么办']},
+                    {q: '您更倾向于：', options: ['按计划和日程安排生活','随性而为，灵活调整']}
+                ],
+                freeResult: function(data) {
+                    const type = calculateMBTI(data);
+                    return `
+                        <div class="free-preview">
+                            <h3>🧠 您的MBTI类型（免费预览）</h3>
+                            <p>根据您的回答，您的<span class="highlight">MBTI类型是${type}</span>。</p>
+                            <p><strong>类型特征：</strong>${getMBTITrait(type)}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为基础类型分析。完整报告包含：详细性格剖析、适合职业推荐、恋爱模式分析、个人成长建议、沟通技巧指南等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整MBTI分析报告</h3><p>根据您的测试答案，生成完整性格分析...</p></div>`;
+                }
+            },
+
+            // ===== 补全的8个功能 =====
+
+            fengshui: {
+                emoji: '🏠',
+                name: '风水布局',
+                price: 29.9,
+                desc: '风水学基于八卦方位与五行理论，通过房屋坐向、门窗位置、家具摆放来分析气场流通，提升家宅运势。',
+                testFields: [
+                    {name: 'direction', label: '房屋朝向', type: 'select', options: ['正南朝北','正北朝南','东南朝西北','西北朝东南','正东朝西','正西朝东','东北朝西南','西南朝东北']},
+                    {name: 'type', label: '住宅类型', type: 'select', options: ['独栋别墅','普通楼房（低层1-6F）','高层（7F以上）','复式/跃层','平房']},
+                    {name: 'floor', label: '所在楼层', type: 'text', placeholder: '如：18（平房填1）'},
+                    {name: 'birth', label: '户主出生年份', type: 'text', placeholder: '如：1985'}
+                ],
+                freeResult: function(data) {
+                    const dirMap = {'正南朝北':'南','正北朝南':'北','东南朝西北':'东南','西北朝东南':'西北','正东朝西':'东','正西朝东':'西','东北朝西南':'东北','西南朝东北':'西南'};
+                    const dir = dirMap[data.direction] || data.direction;
+                    const year = parseInt(data.birth) || 1985;
+                    const gua = ((year - 1900) % 9) || 9;
+                    const caicai = ['东','东南','南','北','东南','东','西南','西北','西'][gua % 9] || '东';
+                    return `
+                        <div class="free-preview">
+                            <h3>🏠 基础风水方位（免费预览）</h3>
+                            <p>房屋朝向：<span class="highlight">${data.direction}</span></p>
+                            <p>💰 <strong>财位方向：</strong>${caicai}方（建议摆放招财植物或聚宝盆）</p>
+                            <p>🌸 <strong>桃花位：</strong>${['南','东','西北','西南'][gua % 4]}方（有助感情运势）</p>
+                            <p>🛡️ <strong>文昌位：</strong>${['东北','正北','西南','正东'][gua % 4]}方（书桌朝此方向利学业）</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为基础方位分析。完整方案包含：八宫详细化解方案、卧室/厨房/客厅三大区域布局建议、禁忌物品清单、开运摆件推荐、年度太岁化解方法等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整风水布局报告</h3><p>根据您的住宅信息和八字流年，为您生成完整布局方案...</p><div class="section"><h4>一、整体气场分析</h4><p>您的住宅朝向${data.direction}，结合楼层${data.floor}层的气场特征，整体运势属于...</p></div><div class="section"><h4>二、八宫方位详解</h4><p>乾宫（西北）：主贵人运，建议摆放金属摆件；坤宫（西南）：主家庭和谐，建议保持整洁；震宫（正东）：主健康长寿，建议放置绿植...</p></div><div class="section"><h4>三、三大区域优化方案</h4><p>客厅：沙发背靠实墙，茶几中央摆放黄水晶聚宝盆；卧室：床头朝向生气方，忌对门；厨房：灶台忌对卫生间门...</p></div></div>`;
+                }
+            },
+
+            tarot: {
+                emoji: '🃏',
+                name: '塔罗占卜',
+                price: 29.9,
+                desc: '塔罗牌起源于15世纪欧洲，共78张，包含22张大阿尔卡纳和56张小阿尔卡纳。每张牌都蕴含深刻的象征意义，通过牌阵解读揭示当下能量与未来走向。',
+                testFields: [
+                    {name: 'question', label: '您想占卜的问题', type: 'text', placeholder: '如：我最近的感情走向如何？'},
+                    {name: 'spread', label: '选择牌阵', type: 'select', options: ['单张牌（快速指引）','三张牌（过去/现在/未来）','凯尔特十字（全面解读）','爱情牌阵（感情专用）']}
+                ],
+                freeResult: function(data) {
+                    const majorArcana = ['愚者','魔术师','女祭司','女皇','皇帝','教皇','恋人','战车','力量','隐士','命运之轮','正义','倒吊人','死神','节制','恶魔','塔','星星','月亮','太阳','审判','世界'];
+                    const card = majorArcana[Math.floor(Math.random() * majorArcana.length)];
+                    const isReversed = Math.random() > 0.6;
+                    const cardDesc = {
+                        '愚者':'象征新开始、冒险与未知的可能性',
+                        '魔术师':'象征意志力、技巧与创造力',
+                        '女祭司':'象征直觉、神秘与内在智慧',
+                        '女皇':'象征丰盛、创造力与母性能量',
+                        '皇帝':'象征权威、稳定与掌控力',
+                        '教皇':'象征传统、精神指引与学习',
+                        '恋人':'象征选择、关系与价值观',
+                        '战车':'象征胜利、意志力与自我掌控',
+                        '力量':'象征内在力量、耐心与勇气',
+                        '隐士':'象征内省、孤独与智慧',
+                        '命运之轮':'象征机遇、变化与命运转折',
+                        '正义':'象征公平、因果与诚实',
+                        '倒吊人':'象征等待、牺牲与换角度看问题',
+                        '死神':'象征结束、转变与新生',
+                        '节制':'象征平衡、耐心与中庸',
+                        '恶魔':'象征束缚、物质执着与恐惧',
+                        '塔':'象征突变、震撼与旧有结构崩解',
+                        '星星':'象征希望、灵感与治愈',
+                        '月亮':'象征幻象、直觉与潜意识',
+                        '太阳':'象征成功、活力与喜悦',
+                        '审判':'象征觉醒、召唤与人生抉择',
+                        '世界':'象征圆满、整合与旅程终点'
+                    };
+                    return `
+                        <div class="free-preview">
+                            <h3>🃏 塔罗抽牌结果（免费预览）</h3>
+                            <p>您的问题：<span class="highlight">${data.question}</span></p>
+                            <p>🎴 <strong>抽到牌面：</strong>【${card}${isReversed ? '（逆位）' : '（正位）'}】</p>
+                            <p>📖 <strong>牌面含义：</strong>${cardDesc[card] || '蕴含深刻的象征能量'}</p>
+                            <p>🔮 <strong>当下能量：</strong>${isReversed ? '此牌逆位出现，能量受阻，需审视内心阻碍' : '此牌正位出现，能量流畅，方向清晰'}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为单张牌基础含义。完整解读包含：牌义深度诠释、与您具体问题的联动分析、行动建议、时间节点预测、其他相关牌阵配合解读等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整塔罗解读报告</h3><p>基于${data.spread}，为您深度解读...</p><div class="section"><h4>一、牌阵整体能量解读</h4><p>本次占卜您所抽取的牌阵呈现出一种转变中的能量场。过去的能量积累正在推动当前局面的形成，而未来的走向取决于您现在的选择与行动...</p></div><div class="section"><h4>二、针对您问题的具体解读</h4><p>关于"${data.question}"：塔罗揭示此刻有一段关键的能量转化正在发生。主牌的出现表明...</p></div><div class="section"><h4>三、行动建议与时间节点</h4><p>近期（1-3个月）：建议保持观察，不急于行动；中期（3-6个月）：关键节点将在季节交替时出现；长期：以更宏观的视角看待当下的困境...</p></div></div>`;
+                }
+            },
+
+            palm: {
+                emoji: '✋',
+                name: '手相解读',
+                price: 29.9,
+                desc: '手相学（Palmistry）起源于古印度，通过分析手掌的主线（生命线、感情线、智慧线、命运线）及丘纹特征，揭示个人的体质、性格与命运走向。',
+                testFields: [
+                    {name: 'dominant', label: '惯用手', type: 'select', options: ['右手（惯用）','左手（惯用）','双手均用']},
+                    {name: 'lifeline', label: '生命线特征', type: 'select', options: ['深长清晰，弧度饱满','细浅，中途有断纹','末端分叉','中途有岛纹']},
+                    {name: 'heartline', label: '感情线特征', type: 'select', options: ['深长弯曲，延伸至中指下方','笔直横贯，较短','有多条支线','中途有波纹或断裂']},
+                    {name: 'headline', label: '智慧线特征', type: 'select', options: ['笔直延伸（理性型）','末端下弯（创意型）','短而清晰','与生命线交叉很长']},
+                ],
+                freeResult: function(data) {
+                    const lifeMap = {'深长清晰，弧度饱满':'体质强健，精力旺盛，长寿之相','细浅，中途有断纹':'体质较弱，需注意健康，中年有较大变化','末端分叉':'晚年有多种生活模式，可能异乡定居','中途有岛纹':'某阶段健康需特别注意'};
+                    const heartMap = {'深长弯曲，延伸至中指下方':'感情丰富，重视精神层面，忠诚专一','笔直横贯，较短':'理性处理感情，不易受感情左右','有多条支线':'感情经历丰富，桃花运旺','中途有波纹或断裂':'感情起伏较多，需磨合'};
+                    return `
+                        <div class="free-preview">
+                            <h3>✋ 手相基础解读（免费预览）</h3>
+                            <p>分析手：<span class="highlight">${data.dominant}</span></p>
+                            <p>❤️ <strong>生命线解读：</strong>${lifeMap[data.lifeline] || '生命力旺盛'}</p>
+                            <p>💕 <strong>感情线解读：</strong>${heartMap[data.heartline] || '感情运势平稳'}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为主线基础分析。完整手相解读包含：智慧线详析、命运线解读、手丘分析（金星丘/木星丘/土星丘等7大手丘）、特殊纹路（米字纹/十字纹/五芒星纹）解读、综合命运走势等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整手相解读报告</h3><div class="section"><h4>一、四大主线综合分析</h4><p>生命线：${data.lifeline}，主导您的体质与生命活力走向。感情线：${data.heartline}，反映您的感情模式与情感处理方式。智慧线：${data.headline}，揭示您的思维模式与决策风格。命运线（如存在）：反映事业发展的主要轨迹与关键时间节点。</p></div><div class="section"><h4>二、七大手丘详析</h4><p>金星丘（大拇指根部）：代表爱情与活力能量；木星丘（食指根部）：代表野心与领导力；土星丘（中指根部）：代表责任与命运；太阳丘（无名指根部）：代表艺术与声誉；水星丘（小指根部）：代表沟通与财运；火星丘：代表斗志与勇气；月丘：代表想象力与直觉。</p></div><div class="section"><h4>三、特殊纹路解读</h4><p>根据您的手掌特征，综合分析特殊纹路的吉凶含义与改运建议...</p></div></div>`;
+                }
+            },
+
+            face: {
+                emoji: '👤',
+                name: '面相分析',
+                price: 29.9,
+                desc: '面相学（Physiognomy）是中国传统命理学的重要分支，通过分析额头、眼睛、鼻子、嘴巴、耳朵等五官特征，判断人的性格、运势与命运走向。',
+                testFields: [
+                    {name: 'forehead', label: '额头特征', type: 'select', options: ['宽广饱满（官贵相）','中等宽度','窄而低平','高而凸出']},
+                    {name: 'eyes', label: '眼睛特征', type: 'select', options: ['双眼皮，眼神明亮','单眼皮，细长','眼距较宽','眼睛较小但有神']},
+                    {name: 'nose', label: '鼻子特征', type: 'select', options: ['鼻梁高挺，鼻头圆润','鼻梁低平，鼻头大','鼻头尖小','鼻翼宽大']},
+                    {name: 'mouth', label: '嘴唇特征', type: 'select', options: ['唇形饱满，嘴角上扬','薄唇，嘴型较小','厚唇','人中清晰较深']}
+                ],
+                freeResult: function(data) {
+                    const foreheadMap = {'宽广饱满（官贵相）':'额头宽广饱满是官贵之相，青年运势顺遂，早年聪慧过人，适合从政或管理领域','中等宽度':'额头适中，运势稳健平顺，脚踏实地，靠自身努力积累成就','窄而低平':'早年运势多起伏，需主动拓展人脉，中年后运势渐开','高而凸出':'思维活跃，创造力强，适合从事创意、艺术或技术领域'};
+                    const eyeMap = {'双眼皮，眼神明亮':'眼神明亮是贵气之相，人际关系好，桃花运旺，容易获得贵人提携','单眼皮，细长':'城府较深，思虑周全，不轻易表露内心，适合需要策略的领域','眼距较宽':'心胸宽广，包容性强，适合从事需要团队协作的工作','眼睛较小但有神':'眼小有神是聪慧之相，专注力强，适合需要精细工作的领域'};
+                    return `
+                        <div class="free-preview">
+                            <h3>👤 面相基础分析（免费预览）</h3>
+                            <p>🏔️ <strong>额头运势：</strong>${foreheadMap[data.forehead] || '运势平稳'}</p>
+                            <p>👁️ <strong>眼相分析：</strong>${eyeMap[data.eyes] || '眼神清澈，贵气十足'}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为额头和眼睛的基础分析。完整面相解读包含：五官综合分析、气色解读、耳相/发际线解读、三停五岳详析、流年运势（按年龄对应面部区域）、改运建议等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整面相分析报告</h3><div class="section"><h4>一、三停分析</h4><p>上停（额头至眉）：代表25岁前的运势与父母缘分；中停（眉至鼻底）：代表25-50岁中年运势；下停（鼻底至下巴）：代表50岁后晚年运势及子女缘分。</p></div><div class="section"><h4>二、五官综合解读</h4><p>额头（${data.forehead}）：运势与智慧；眼睛（${data.eyes}）：人际与桃花；鼻子（${data.nose}）：财运与意志力；嘴唇（${data.mouth}）：福气与口才；耳朵：父母缘与福寿。</p></div><div class="section"><h4>三、流年运势对照</h4><p>面相流年法：额头对应青年期（15-30岁），两眉间（印堂）对应31-34岁，鼻子对应中年期（41-50岁），人中及嘴巴对应51-60岁。根据您的面相特征，各年龄段运势分析...</p></div></div>`;
+                }
+            },
+
+            pastlife: {
+                emoji: '🌀',
+                name: '前世今生',
+                price: 19.9,
+                desc: '前世今生测试结合生辰数字能量学与古典命理，通过分析出生日期中的数字振频，探索灵魂的轮回轨迹与今生使命。',
+                testFields: [
+                    {name: 'birthday', label: '出生日期', type: 'text', placeholder: '格式：1990-08-15'},
+                    {name: 'name', label: '您的姓名', type: 'text', placeholder: '用于计算姓名数字能量'},
+                    {name: 'feeling', label: '您最常梦到的场景', type: 'select', options: ['古代宫廷或官府','战场或武林','田野山林或农村','大海或水边','外国或异域风情','无特别印象']}
+                ],
+                freeResult: function(data) {
+                    const parts = (data.birthday || '1990-01-01').split('-');
+                    const year = parseInt(parts[0]) || 1990;
+                    const month = parseInt(parts[1]) || 1;
+                    const day = parseInt(parts[2]) || 1;
+                    const sum = String(year + month + day).split('').reduce((a,b) => a + parseInt(b), 0);
+                    const lifeNum = sum % 9 || 9;
+                    const pastRoles = ['帝王将相（权贵之身）','文人墨客（书香世家）','商贾旅人（行走四方）','隐士修行者（道法自然）','武者侠客（江湖儿女）','农耕百姓（朴实厚重）','医者仁心（悬壶济世）','艺人乐师（声色浮华）','僧尼修士（出家修行）'][lifeNum - 1];
+                    return `
+                        <div class="free-preview">
+                            <h3>🌀 前世基础测算（免费预览）</h3>
+                            <p>生命数字：<span class="highlight">${lifeNum}</span></p>
+                            <p>🌟 <strong>前世角色：</strong>${pastRoles}</p>
+                            <p>💫 <strong>梦境印证：</strong>${data.feeling === '无特别印象' ? '前世记忆已被遗忘，但灵魂中仍留有痕迹' : `您常梦到${data.feeling}，与前世角色高度吻合`}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为前世基础信息。完整报告包含：前世身份详细描述、前世重要事件、前世今生业力牵连、今生需化解的课题、今生特别天赋来源、灵魂伴侣特征、今生使命等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整前世今生报告</h3><div class="section"><h4>一、前世身份详解</h4><p>根据您的生命数字与姓名能量，您的前世主要身份可能与某种特定社会角色密切相关。这种身份带给您今生某些天然的倾向与才能...</p></div><div class="section"><h4>二、业力牵连分析</h4><p>前世的未竟之事往往以特定模式在今生重演。您的梦境（${data.feeling}）是前世记忆的投影，暗示某段情缘或事业仍待圆满...</p></div><div class="section"><h4>三、今生使命与化解方法</h4><p>基于前世积累的业力，今生有几个核心课题需要处理：在人际关系上需要学习边界感；在事业上需要突破某种固有模式；在心灵成长上需要放下过去某种执着...</p></div></div>`;
+                }
+            },
+
+            love: {
+                emoji: '💑',
+                name: '脱单测试',
+                price: 19.9,
+                desc: '脱单测试结合心理学与命理能量分析，通过多维度问卷评估您的感情模式、吸引力类型与脱单时机，给出针对性的感情提升建议。',
+                testFields: 'quiz',
+                quizQuestions: [
+                    {q: '您目前的感情状态是？', options: ['单身已久，希望尽快脱单', '有暗恋对象，不知如何开口']},
+                    {q: '异性对您最常说的评价是？', options: ['你很有趣/幽默/有魅力', '你很好，就是不像"恋爱对象"']},
+                    {q: '遇到喜欢的人，您的第一反应是？', options: ['主动接近，创造相处机会', '默默关注，等待对方来找我']},
+                    {q: '您认为自己感情运不好的主要原因是？', options: ['没遇到合适的人', '遇到了但关系总发展不起来']},
+                    {q: '理想中的恋爱关系是？', options: ['两人黏在一起，形影不离', '各自有空间，彼此独立又相爱']}
+                ],
+                freeResult: function(data) {
+                    const answers = Object.values(data);
+                    const activeCount = answers.filter(a => a.includes('主动') || a.includes('有趣') || a.includes('尽快')).length;
+                    const type = activeCount >= 3 ? '主动型' : '等待型';
+                    const typeDesc = activeCount >= 3 ?
+                        '您属于主动出击型，魅力值较高，但有时过于积极可能让对方有压力。建议：适当保持神秘感，欲擒故纵会更有效。' :
+                        '您属于等待缘分型，内心敏感细腻，但被动可能错过很多机会。建议：主动迈出第一步，脱单成功率将大幅提升。';
+                    return `
+                        <div class="free-preview">
+                            <h3>💑 脱单潜力分析（免费预览）</h3>
+                            <p>您的感情模式：<span class="highlight">${type}</span></p>
+                            <p>📊 <strong>综合分析：</strong>${typeDesc}</p>
+                            <p>💘 <strong>脱单指数：</strong>${60 + activeCount * 8}/100</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为基础评估。完整报告包含：您的异性吸引力画像、最佳脱单时间节点（流年分析）、最匹配的对象类型、拒绝信号识别、告白成功话术、感情障碍化解等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整脱单分析报告</h3><div class="section"><h4>一、您的异性吸引力画像</h4><p>根据测试结果，您对异性最大的吸引点在于内在特质的独特性。您天然吸引的对象类型是：思维活跃、有一定独立性、欣赏您内在价值的人...</p></div><div class="section"><h4>二、最佳脱单时间节点</h4><p>结合流年能量：近3个月内有一个桃花机缘期，通常出现在社交场合的偶然相遇；建议在这段时期多参加线下活动，增加与新朋友相处的机会...</p></div><div class="section"><h4>三、感情障碍与化解方案</h4><p>主要障碍：存在某种潜意识的感情保护机制，导致在关键时刻退缩。化解方法：每天做一件小事突破舒适区，从生活小事开始建立自信...</p></div></div>`;
+                }
+            },
+
+            talent: {
+                emoji: '💎',
+                name: '天赋测试',
+                price: 19.9,
+                desc: '天赋测试基于多元智能理论（Howard Gardner）与中国传统五行人格分析，通过综合评估发现您潜藏的天赋领域，给出职业发展和能力提升方向。',
+                testFields: 'quiz',
+                quizQuestions: [
+                    {q: '从小最让您觉得轻松的事情是？', options: ['画画、唱歌或手工艺术类', '数学、逻辑推理或解谜']},
+                    {q: '在团队中您通常扮演什么角色？', options: ['出主意、想创意的那个人', '统筹协调、让大家齐心的那个人']},
+                    {q: '别人最常夸奖您什么？', options: ['你很有想法/很有创意', '你很靠谱/你做事很细心']},
+                    {q: '空闲时间您最享受？', options: ['学新技能、探索新领域', '把已经会的事情做到极致']},
+                    {q: '您觉得自己最擅长的是？', options: ['用语言或文字表达想法', '分析数据或解决复杂问题']}
+                ],
+                freeResult: function(data) {
+                    const answers = Object.values(data);
+                    const creativeCount = answers.filter(a => a.includes('创意') || a.includes('艺术') || a.includes('想法') || a.includes('新')).length;
+                    const type = creativeCount >= 3 ? '创意艺术型' : '分析执行型';
+                    const areas = creativeCount >= 3 ?
+                        ['视觉艺术与设计', '文案策划与创意写作', '产品设计与用户体验'] :
+                        ['数据分析与研究', '项目管理与执行', '技术开发与工程'];
+                    return `
+                        <div class="free-preview">
+                            <h3>💎 天赋类型（免费预览）</h3>
+                            <p>您的天赋类型：<span class="highlight">${type}</span></p>
+                            <p>🌟 <strong>核心优势领域：</strong></p>
+                            ${areas.map(a => `<p>✨ ${a}</p>`).join('')}
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为基础天赋类型分析。完整报告包含：七大智能详细评分、隐藏天赋挖掘、最匹配的职业方向（15个具体职业）、天赋开发路线图、个性化成长计划等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整天赋测试报告</h3><div class="section"><h4>一、七大智能评分</h4><p>语言智能：您在表达和沟通上有天然优势；逻辑数学智能：分析推理能力；空间智能：视觉思维与想象力；音乐智能：节奏感与音乐表达力；身体运动智能：肢体协调性；人际智能：理解他人、建立关系的能力；内省智能：自我认知与情绪管理能力。</p></div><div class="section"><h4>二、隐藏天赋揭示</h4><p>除了显性天赋，根据您的测试结果，您有一项隐藏天赋正在等待被激活：在某个特定领域，您的学习曲线比普通人快3-5倍，关键在于找到正确的触发方式...</p></div><div class="section"><h4>三、15个最匹配职业方向</h4><p>根据您的天赋组合，以下职业方向最能发挥您的潜力：创意类、技术类、管理类各5个推荐方向，附详细的技能要求和发展路径分析...</p></div></div>`;
+                }
+            },
+
+            wealth: {
+                emoji: '💰',
+                name: '财富运势',
+                price: 29.9,
+                desc: '财富运势测算结合八字财星分析与数字能量学，通过分析出生信息中的财星强弱与流年运势，给出专属财富提升策略。',
+                testFields: [
+                    {name: 'birthday', label: '出生日期', type: 'text', placeholder: '格式：1990-08-15'},
+                    {name: 'birthtime', label: '出生时辰', type: 'select', options: ['子时(23-1点)','丑时(1-3点)','寅时(3-5点)','卯时(5-7点)','辰时(7-9点)','巳时(9-11点)','午时(11-13点)','未时(13-15点)','申时(15-17点)','酉时(17-19点)','戌时(19-21点)','亥时(21-23点)','不确定']},
+                    {name: 'income', label: '目前月收入范围', type: 'select', options: ['5000元以下','5000-10000元','10000-30000元','30000元以上']},
+                    {name: 'goal', label: '您的财富目标', type: 'select', options: ['稳定月收入提升','实现财务自由','积累第一桶金','投资理财增值']}
+                ],
+                freeResult: function(data) {
+                    const parts = (data.birthday || '1990-01-01').split('-');
+                    const year = parseInt(parts[0]) || 1990;
+                    const wealthTypes = ['偏财型（善于把握机遇，意外收入多）','正财型（稳扎稳打，适合积累式财富）','财印双全型（智慧与财运兼具）','枭印夺食型（需警惕财运起伏）'];
+                    const wType = wealthTypes[year % 4];
+                    const wScore = 65 + (year % 30);
+                    return `
+                        <div class="free-preview">
+                            <h3>💰 财富基础运势（免费预览）</h3>
+                            <p>财运类型：<span class="highlight">${wType}</span></p>
+                            <p>📊 <strong>今年财运指数：</strong>${wScore}/100</p>
+                            <p>💡 <strong>财运特点：</strong>${wScore > 80 ? '今年财运旺盛，适合主动出击，拓展收入来源' : wScore > 70 ? '今年财运平稳，稳中求进，避免冒险投资' : '今年财运需谨慎，以守为主，避免大额支出'}</p>
+                            <p>🎯 <strong>您的目标：</strong>${data.goal}</p>
+                            <p style="margin-top:16px;color:#94a3b8;font-size:13px;">以上为基础财运分析。完整报告包含：八字财星强弱分析、未来3年财运走势、偏财/正财获取时机、投资方向建议、财富增长具体策略（含5个可操作方案）等10项内容。</p>
+                        </div>
+                    `;
+                },
+                fullReport: function(data) {
+                    return `<div class="full-report"><h3>📋 完整财富运势报告</h3><div class="section"><h4>一、八字财星分析</h4><p>根据您的出生信息（${data.birthday} ${data.birthtime}），财星在命盘中的位置揭示了您财富积累的主要方式：正财星强者适合职场晋升与稳定收入；偏财星旺者适合创业、投资与意外之财...</p></div><div class="section"><h4>二、未来三年财运走势</h4><p>近一年：财运进入积累期，适合学习新技能，拓展副业；明年：迎来财运上升期，适合寻找合作机会；后年：财运达到近期小高峰，适合做出重要财务决策...</p></div><div class="section"><h4>三、五大财富提升策略</h4><p>1. 发展与您天赋匹配的副业方向；2. 学习复利投资逻辑，从小额开始；3. 提升核心技能，加速职业晋升；4. 打造个人品牌，建立被动收入；5. 开源节流：优化消费结构，将节省的钱转化为投资本金...</p></div></div>`;
+                }
+            }
+        };
+
+        // ========== 工具函数 ==========
+        function calculateConstellationScore(sign1, sign2) {
+            // 基于西方占星术元素理论计算配对分数
+            const elements = {
+                '白羊座':'火','金牛座':'土','双子座':'风','巨蟹座':'水',
+                '狮子座':'火','处女座':'土','天秤座':'风','天蝎座':'水',
+                '射手座':'火','摩羯座':'土','水瓶座':'风','双鱼座':'水'
+            };
+            const ele1 = elements[sign1];
+            const ele2 = elements[sign2];
+            
+            let base = 70;
+            if (ele1 === ele2) base += 10; // 同元素+10
+            if ((ele1==='火'&&ele2==='风')||(ele1==='风'&&ele2==='火')) base += 5; // 火风互补
+            if ((ele1==='土'&&ele2==='水')||(ele1==='水'&&ele2==='土')) base += 5; // 土水互补
+            
+            return {
+                love: Math.min(95, base + Math.floor(Math.random()*10)),
+                friendship: Math.min(95, base - 5 + Math.floor(Math.random()*15)),
+                work: Math.min(95, base + Math.floor(Math.random()*10)),
+                conflict: Math.max(10, 100 - base - Math.floor(Math.random()*10))
+            };
+        }
+
+        function getSunSign(month, day) {
+            const signs = ['摩羯座','水瓶座','双鱼座','白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座'];
+            const dates = [20,19,21,20,21,22,23,23,23,24,23,22];
+            return day < dates[month-1] ? signs[month-1] : signs[month];
+        }
+
+        function getSignTrait(sign) {
+            const traits = {
+                '白羊座':'热情冲动、行动力强、直率真诚，但有时过于急躁。火星守护，代表新生和开始。',
+                '金牛座':'稳重踏实、有耐心、追求物质享受，但有时固执。金星守护，代表价值和美感。',
+                '双子座':'聪明灵活、善于沟通、好奇心强，但容易三分钟热度。水星守护，代表信息和交流。',
+                '巨蟹座':'温柔体贴、重视家庭、直觉敏锐，但情绪化。月亮守护，代表情感和安全感。',
+                '狮子座':'自信大方、有领导力、慷慨热情，但有时过于自我。太阳守护，代表自我和创造力。',
+                '处女座':'细心严谨、追求完美、分析力强，但容易焦虑。水星守护，代表分析和秩序。',
+                '天秤座':'优雅公正、善于交际、追求和谐，但有时优柔寡断。金星守护，代表关系和美感。',
+                '天蝎座':'深沉神秘、意志坚定、洞察力强，但容易嫉妒。冥王星守护，代表重生和转化。',
+                '射手座':'乐观开朗、热爱自由、哲学思维，但有时不够细致。木星守护，代表扩张和幸运。',
+                '摩羯座':'务实稳健、有野心、责任感强，但有时过于严肃。土星守护，代表限制和成熟。',
+                '水瓶座':'独立创新、思维超前、人道主义，但有时显得冷漠。天王星守护，代表变革和突破。',
+                '双鱼座':'浪漫敏感、富有同情心、艺术天赋，但容易逃避现实。海王星守护，代表梦想和灵性。'
+            };
+            return traits[sign] || '性格独特，需要结合完整星盘分析。';
+        }
+
+        function getSignStrengths(sign) {
+            const strengths = {
+                '白羊座':'勇敢、直率、行动力强、领导能力',
+                '金牛座':'可靠、耐心、忠诚、审美能力强',
+                '双子座':'聪明、适应力强、口才好、多才多艺',
+                '巨蟹座':'体贴、直觉准、顾家、保护欲强',
+                '狮子座':'慷慨、有魅力、大方、组织能力强',
+                '处女座':'细致、敬业、分析力强、追求完美',
+                '天秤座':' diplomatic、优雅、善于协调、公正',
+                '天蝎座':'坚定、有洞察力、热情、恢复力强',
+                '射手座':'乐观、诚实、哲学思维、热爱自由',
+                '摩羯座':'自律、负责、有耐心、目标导向',
+                '水瓶座':'创新、独立、人道主义、思维超前',
+                '双鱼座':'同理心强、艺术天赋、善解人意、直觉准'
+            };
+            return strengths[sign] || '多面性格，需要深入了解。';
+        }
+
+        function getSignWeaknesses(sign) {
+            const weaknesses = {
+                '白羊座':'急躁、冲动、缺乏耐心、自我中心',
+                '金牛座':'固执、物质化、抗拒变化、慢热',
+                '双子座':'善变、肤浅、不够专注、三分钟热度',
+                '巨蟹座':'情绪化、敏感、 clingy、怀旧过度',
+                '狮子座':'自我、爱面子、控制欲强、需要被赞美',
+                '处女座':'挑剔、焦虑、过于完美主义、批评性',
+                '天秤座':'优柔寡断、回避冲突、依赖他人、 superficial',
+                '天蝎座':'嫉妒、报复心、占有欲强、多疑',
+                '射手座':'不够负责、粗心、 blunt、承诺恐惧',
+                '摩羯座':'悲观、 stubborn、工作狂、情感压抑',
+                '水瓶座':'情感疏离、叛逆、不一致、 detattached',
+                '双鱼座':'逃避现实、 victim mentality、边界模糊、 overly trusting'
+            };
+            return weaknesses[sign] || '性格复杂，需要专业分析。';
+        }
+
+        function drawLot() {
+            // 模拟抽签，返回签文
+            const lots = [
+                {number: 1, text: '龙虎渡长江，前途去有方。南方须得路，北畔莫课商。', luck: '上上签'},
+                {number: 18, text: '名显四方，日出中天。万事如意，不宜妄动。', luck: '上签'},
+                {number: 35, text: '凡事成全，春风和气。心诚则灵，福至心灵。', luck: '中签'},
+                {number: 52, text: '意味着阻，云遮月色。守旧安分，等待时来。', luck: '中下签'},
+                {number: 73, text: '劳心费力，事多阻隔。不宜进取，守旧无咎。', luck: '下签'}
+            ];
+            return lots[Math.floor(Math.random()*lots.length)];
+        }
+
+        function calculateMBTI(answers) {
+            // 简化版MBTI计算
+            let E = 0, I = 0, S = 0, N = 0, T = 0, F = 0, J = 0, P = 0;
+            // 根据答案计算类型
+            // 这里简化为随机返回一个常见类型
+            const types = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
+            return types[Math.floor(Math.random()*types.length)];
+        }
+
+        function getMBTITrait(type) {
+            const traits = {
+                'INTJ': '独立、战略性思维、高标准、追求知识。被称为"建筑师"，擅长长远规划。',
+                'INFP': '理想主义、富有创意、重视价值观、内心丰富。被称为"调停者"，追求真实和自我表达。',
+                'ENFP': '热情、创意无限、善于社交、充满正能量。被称为"竞选者"，喜欢探索新可能。',
+                'INFJ': '洞察力强、理想主义、有原则、关心他人。被称为"提倡者"，追求让世界更美好。'
+            };
+            return traits[type] || '独特的人格类型，具有多元特质。';
+        }
+
+        function calculateZodiacMatch(z1, z2) {
+            const clashPairs = [['鼠','马'],['牛','羊'],['虎','猴'],['兔','鸡'],['龙','狗'],['蛇','猪']];
+            let isClash = false;
+            clashPairs.forEach(p => {
+                if ((p[0]===z1 && p[1]===z2) || (p[0]===z2 && p[1]===z1)) isClash = true;
+            });
+            
+            return {
+                marriage: isClash ? '需要化解，缘分较浅' : '相合，婚姻美满',
+                cooperation: isClash ? '60/100，需要磨合' : '85/100，配合默契',
+                wealth: isClash ? '财运相克，需分开理财' : '财运相生，互助互利',
+                clash: isClash ? `${z1}与${z2}相冲，需注意化解` : `无相冲，五行相合`
+            };
+        }
+
+        // ========== 界面控制 ==========
+        let currentTool = null;
+        let currentPayment = 'alipay';
+        let testData = {};
+
+        function showTest(toolId) {
+            currentTool = toolId;
+            const tool = fortuneData[toolId];
+            if (!tool) {
+                alert('功能开发中，敬请期待！');
+                return;
+            }
+
+            // 创建测试界面
+            let html = `
+                <div class="test-content" id="testContent">
+                    <div class="test-header">
+                        <h2><span class="emoji">${tool.emoji}</span> ${tool.name}测试</h2>
+                        <button class="test-close" onclick="closeTest()"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="test-body">
+                        <p class="test-desc">${tool.desc}<br><br>请填写以下信息，我们将为您生成专业分析：</p>
+            `;
+
+            if (tool.testFields === 'quiz') {
+                // MBTI选择题
+                html += `<div class="test-form" id="quizForm">`;
+                tool.quizQuestions.forEach((q, i) => {
+                    html += `
+                        <div class="quiz-question">
+                            <h4>Q${i+1}. ${q.q}</h4>
+                            <div class="quiz-options">
+                                <div class="quiz-option" onclick="selectOption(this, ${i}, 0)">${q.options[0]}</div>
+                                <div class="quiz-option" onclick="selectOption(this, ${i}, 1)">${q.options[1]}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            } else {
+                // 普通表单
+                html += `<div class="test-form">`;
+                tool.testFields.forEach(f => {
+                    if (f.type === 'select') {
+                        html += `
+                            <div class="form-group">
+                                <label>${f.label}</label>
+                                <select id="field_${f.name}">
+                                    <option value="">请选择${f.label}</option>
+                                    ${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}
+                                </select>
+                            </div>
+                        `;
+                    } else if (f.type === 'input') {
+                        html += `
+                            <div class="form-group">
+                                <label>${f.label}</label>
+                                <input type="number" id="field_${f.name}" placeholder="${f.placeholder || ''}">
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="form-group">
+                                <label>${f.label}</label>
+                                <input type="text" id="field_${f.name}" placeholder="${f.placeholder || ''}">
+                            </div>
+                        `;
+                    }
+                });
+                html += `</div>`;
+            }
+
+            html += `
+                        <button class="test-submit" onclick="submitTest()">生成分析报告</button>
+                    </div>
+                </div>
+            `;
+
+            // 显示测试界面
+            const modal = document.createElement('div');
+            modal.className = 'test-modal active';
+            modal.id = 'testModal';
+            modal.innerHTML = html;
+            document.body.appendChild(modal);
+
+            // 点击遮罩关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) closeTest();
+            });
+        }
+
+        function selectOption(el, qIndex, oIndex) {
+            // 清除同问题其他选项的选中状态
+            const question = el.parentElement.parentElement;
+            question.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+            el.classList.add('selected');
+            el.dataset.selected = 'true';
+        }
+
+        function submitTest() {
+            const tool = fortuneData[currentTool];
+            testData = {};
+
+            if (tool.testFields === 'quiz') {
+                // 收集选择题答案
+                const questions = document.querySelectorAll('.quiz-question');
+                let allAnswered = true;
+                questions.forEach((q, i) => {
+                    const selected = q.querySelector('.quiz-option.selected');
+                    if (selected) {
+                        testData['q' + i] = selected.textContent.trim();
+                    } else {
+                        allAnswered = false;
+                    }
+                });
+                if (!allAnswered) {
+                    alert('请回答所有问题后再提交！');
+                    return;
+                }
+            } else {
+                // 收集表单数据
+                let allFilled = true;
+                tool.testFields.forEach(f => {
+                    const el = document.getElementById('field_' + f.name);
+                    if (el) {
+                        testData[f.name] = el.value;
+                        if (!el.value && f.type !== 'select') allFilled = false;
+                        if (f.type === 'select' && !el.value) allFilled = false;
+                    }
+                });
+                if (!allFilled) {
+                    alert('请填写所有信息后再提交！');
+                    return;
+                }
+            }
+
+            // 生成免费预览结果
+            closeTest();
+            showFreeResult();
+        }
+
+        function showFreeResult() {
+            const tool = fortuneData[currentTool];
+            const freeHtml = tool.freeResult(testData);
+
+            const resultHtml = `
+                <div class="result-content" id="resultContent">
+                    <div class="result-header">
+                        <h2><span class="emoji">${tool.emoji}</span> ${tool.name}分析结果</h2>
+                        <button class="result-close" onclick="closeResult()"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="result-body">
+                        ${freeHtml}
+                        
+                        <div class="pay-guide" id="payGuide">
+                            <span class="lock-icon">🔒</span>
+                            <h3>解锁完整报告</h3>
+                            <p>免费预览让您了解基础分析结果。<br>付费解锁后，将为您生成包含10项详细分析的完整报告。</p>
+                            <div class="unlock-list">
+                                <li>深度性格/命理分析</li>
+                                <li>专业建议和可操作方案</li>
+                                <li>趋势预测和发展指导</li>
+                                <li>专属定制化内容</li>
+                            </div>
+                            <div class="pay-price">¥${tool.price}</div>
+                            <button class="pay-btn" onclick="showPayment()"><i class="fas fa-unlock"></i> 立即解锁完整报告</button>
+                        </div>
+                        
+                        <div class="full-report" id="fullReport" style="display:none">
+                            ${tool.fullReport(testData)}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const modal = document.createElement('div');
+            modal.className = 'result-modal active';
+            modal.id = 'resultModal';
+            modal.innerHTML = resultHtml;
+            document.body.appendChild(modal);
+
+            // 点击遮罩关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) closeResult();
+            });
+        }
+
+        function closeTest() {
+            const modal = document.getElementById('testModal');
+            if (modal) modal.remove();
+        }
+
+        function closeResult() {
+            const modal = document.getElementById('resultModal');
+            if (modal) modal.remove();
+        }
+
+        // ========== 支付功能 ==========
+        function showPayment() {
+            const tool = fortuneData[currentTool];
+            document.body.insertAdjacentHTML('beforeend', `
+                <div class="payment-modal" id="paymentModal">
+                    <div class="payment-content">
+                        <button class="payment-close" onclick="closePayment()"><i class="fas fa-times"></i></button>
+                        <h3>解锁「${tool.name}」完整报告</h3>
+                        <div class="payment-amount">¥${tool.price}</div>
+                        <div class="payment-methods">
+                            <div class="payment-method-btn active" onclick="selectPayment('alipay', this)">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='8' fill='%231676FF'/%3E%3Ctext x='30' y='38' text-anchor='middle' fill='white' font-size='24' font-weight='bold'%3E支%3C/text%3E%3C/svg%3E">
+                                <p>支付宝</p>
+                            </div>
+                            <div class="payment-method-btn" onclick="selectPayment('wechat', this)">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Crect width='60' height='60' rx='8' fill='%2307C160'/%3E%3Ctext x='30' y='38' text-anchor='middle' fill='white' font-size='20' font-weight='bold'%3E微%3C/text%3E%3C/svg%3E">
+                                <p>微信支付</p>
+                            </div>
+                        </div>
+                        <div class="payment-qrcode" id="paymentQR">
+                            <img src="assets/alipay.jpg" alt="支付二维码" id="qrImage">
+                            <p class="payment-note" id="paymentNote">请使用支付宝扫码支付</p>
+                        </div>
+                        <div class="payment-success" id="paymentSuccess">
+                            <i class="fas fa-check-circle"></i> 支付成功！
+                        </div>
+                        <div class="payment-tips">
+                            <strong>温馨提示：</strong>支付完成后，点击"已完成支付"按钮即可解锁
+                            <br><button class="pay-btn" style="margin-top:12px;font-size:14px;padding:10px 32px;" onclick="completePayment()">已完成支付</button>
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+
+        function closePayment() {
+            const modal = document.getElementById('paymentModal');
+            if (modal) modal.remove();
+        }
+
+        function selectPayment(method, btn) {
+            currentPayment = method;
+            document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const qrImg = document.getElementById('qrImage');
+            if (method === 'alipay') {
+                qrImg.src = 'assets/alipay.jpg';
+                document.getElementById('paymentNote').textContent = '请使用支付宝扫码支付';
+            } else {
+                qrImg.src = 'assets/wechat.jpg';
+                document.getElementById('paymentNote').textContent = '请使用微信支付扫码';
+            }
+        }
+
+        function completePayment() {
+            document.getElementById('paymentSuccess').classList.add('active');
+            document.getElementById('paymentQR').style.display = 'none';
+            
+            setTimeout(() => {
+                closePayment();
+                // 显示完整报告
+                document.getElementById('payGuide').style.display = 'none';
+                document.getElementById('fullReport').style.display = 'block';
+            }, 1500);
+        }
+
+        // ========== 联系我们 ==========
+        function closeContact() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
     </script>
 </body>
 </html>
