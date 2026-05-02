@@ -397,13 +397,23 @@
     <script>
         // ========== URL锚点处理 ==========
         // 页面加载时读取URL中的hash，自动打开对应的测试
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('load', function() {
             const hash = window.location.hash.substring(1); // 去掉#号
+            if (hash) {
+                if (typeof showTest === 'function') {
+                    showTest(hash); // load事件触发时，脚本已全部加载完毕，无需延迟
+                } else {
+                    // 函数仍未定义，说明脚本加载异常，给出友好提示
+                    console.warn('[玄学殿堂] 工具加载失败，hash:', hash);
+                }
+            }
+        });
+        
+        // 额外建议：监听hashchange事件（用户手动修改URL或页面内锚点跳转）
+        window.addEventListener('hashchange', function() {
+            const hash = window.location.hash.substring(1);
             if (hash && typeof showTest === 'function') {
-                // 延迟一下确保页面完全加载
-                setTimeout(() => {
-                    showTest(hash);
-                }, 100);
+                showTest(hash);
             }
         });
         
@@ -1246,7 +1256,7 @@
             currentTool = toolId;
             const tool = fortuneData[toolId];
             if (!tool) {
-                alert('功能开发中，敬请期待！');
+                alert('未找到功能模块：' + toolId + '\n请从首页菜单选择功能。');
                 return;
             }
 
