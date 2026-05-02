@@ -366,7 +366,6 @@
                 </ul>
             </div>
         </div>
-    </main>
 
     <!-- 联系我们弹窗 -->
     <div id="contactModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
@@ -392,7 +391,13 @@
         <p style="margin-top:10px;font-size:12px;">© 2026 AI工具场 · aitoolchang.cn</p>
     </footer>
 
+    </main>
+    
     <script>
+        // ========== 支付配置 ==========
+        let currentPayment = 'alipay'; // 当前支付方式
+        let currentOrderId = null; // 当前订单号（静态模式）
+        
         // ========== 数据定义 ==========
         const fortuneData = {
             constellation: {
@@ -1211,8 +1216,13 @@
         }
 
         // ========== 支付功能 ==========
+        let currentPayment = 'alipay'; // 当前支付方式
+        let currentOrderId = null; // 当前订单号
+        let pollInterval = null; // 轮询定时器
+        
         function showPayment() {
             const tool = fortuneData[currentTool];
+            currentPayment = 'alipay';
             document.body.insertAdjacentHTML('beforeend', `
                 <div class="payment-modal" id="paymentModal">
                     <div class="payment-content">
@@ -1231,7 +1241,9 @@
                         </div>
                         <div class="payment-qrcode" id="paymentQR">
                             <img src="assets/alipay.jpg" alt="支付二维码" id="qrImage">
+                            <canvas id="qrCanvas" style="display:none;max-width:200px;margin:0 auto;"></canvas>
                             <p class="payment-note" id="paymentNote">请使用支付宝扫码支付</p>
+                            <p class="payment-loading" id="paymentLoading" style="display:none;color:#6366f1;"><i class="fas fa-spinner fa-spin"></i> 正在生成支付二维码...</p>
                         </div>
                         <div class="payment-success" id="paymentSuccess">
                             <i class="fas fa-check-circle"></i> 支付成功！
@@ -1250,23 +1262,43 @@
             if (modal) modal.remove();
         }
 
-        function selectPayment(method, btn) {
+        async function selectPayment(method, btn) {
             currentPayment = method;
             document.querySelectorAll('.payment-method-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const qrImg = document.getElementById('qrImage');
+            const qrCanvas = document.getElementById('qrCanvas');
+            const paymentLoading = document.getElementById('paymentLoading');
+            const paymentNote = document.getElementById('paymentNote');
+            
             if (method === 'alipay') {
+                qrImg.style.display = 'block';
+                qrCanvas.style.display = 'none';
                 qrImg.src = 'assets/alipay.jpg';
-                document.getElementById('paymentNote').textContent = '请使用支付宝扫码支付';
+                paymentNote.textContent = '请使用支付宝扫码支付';
+                paymentLoading.style.display = 'none';
             } else {
+                // 微信支付：使用静态收款码
+                paymentLoading.style.display = 'none';
+                qrCanvas.style.display = 'none';
                 qrImg.src = 'assets/wechat.jpg';
-                document.getElementById('paymentNote').textContent = '请使用微信支付扫码';
+                qrImg.style.display = 'block';
+                paymentNote.textContent = '请使用微信扫描上方二维码支付，支付后点击"已完成支付"';
+                currentOrderId = 'static_wechat_' + Date.now();
             }
         }
 
-        function completePayment() {
-            document.getElementById('paymentSuccess').classList.add('active');
-            document.getElementById('paymentQR').style.display = 'none';
+        async function completePayment() {
+            // 支付宝和微信支付都使用静态收款码，直接显示完整报告
+            handlePaymentSuccess();
+        }
+
+        // 处理支付成功
+        function handlePaymentSuccess() {
+            const paymentSuccess = document.getElementById('paymentSuccess');
+            const paymentQR = document.getElementById('paymentQR');
+            if (paymentSuccess) paymentSuccess.classList.add('active');
+            if (paymentQR) paymentQR.style.display = 'none';
             
             setTimeout(() => {
                 closePayment();
