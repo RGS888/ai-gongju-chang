@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工具场 - 自媒体创作者必备工具导航 | 702+AI工具大全</title>
+    <meta name="description" content="AI工具场汇集702+款自媒体创作者必备工具，包括AI聊天、AI图片、AI视频、AI音乐、AI编程、AI智能体、AI写作等，另有付费视频教程和趣味运势测试。">
+    <meta name="keywords" content="AI工具,AI聊天,AI图片,AI视频,AI音乐,AI编程,AI机器人,自媒体工具,AI导航,工具导航">
+    <meta property="og:title" content="AI工具场 - 自媒体创作者必备工具导航">
+    <meta property="og:type" content="website">
+    <!-- FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwOg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --primary:#6366f1;--primary-dark:#4f46e5;
+            --success:#22c55e;--warning:#f59e0b;--danger:#ef4444;
+            --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+            --gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;
+            --gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;
+            --sidebar-w:260px;--header-h:60px;
+
+            /* ===== 分类主题色 ===== */
+            /* 对话 - 靛蓝系 */
+            --cat-chat-from:#4f46e5;--cat-chat-to:#818cf8;--cat-chat-bg:#eef2ff;--cat-chat-text:#3730a3;
+            /* 图像/创意 - 紫色系 */
+            --cat-image-from:#7c3aed;--cat-image-to:#c084fc;--cat-image-bg:#f5f3ff;--cat-image-text:#6d28d9;
+            /* 视频 - 玫红系 */
+            --cat-video-from:#db2777;--cat-video-to:#f472b6;--cat-video-bg:#fdf2f8;--cat-video-text:#be185d;
+            /* 音乐 - 青色系 */
+            --cat-music-from:#0891b2;--cat-music-to:#22d3ee;--cat-music-bg:#ecfeff;--cat-music-text:#0e7490;
+            /* 办公 - 蓝色系（效率） */
+            --cat-office-from:#1d4ed8;--cat-office-to:#60a5fa;--cat-office-bg:#eff6ff;--cat-office-text:#1e40af;
+            /* 编程 - 绿色系 */
+            --cat-coding-from:#065f46;--cat-coding-to:#34d399;--cat-coding-bg:#ecfdf5;--cat-coding-text:#064e3b;
+            /* 智能体 - 橙色系 */
+            --cat-agent-from:#c2410c;--cat-agent-to:#fb923c;--cat-agent-bg:#fff7ed;--cat-agent-text:#9a3412;
+            /* 写作 - 黄绿系 */
+            --cat-writing-from:#4d7c0f;--cat-writing-to:#a3e635;--cat-writing-bg:#f7fee7;--cat-writing-text:#3f6212;
+            /* 设计 - 粉红系 */
+            --cat-design-from:#9f1239;--cat-design-to:#fb7185;--cat-design-bg:#fff1f2;--cat-design-text:#881337;
+            /* 企业 - 深蓝系 */
+            --cat-enterprise-from:#1e3a5f;--cat-enterprise-to:#3b82f6;--cat-enterprise-bg:#eff6ff;--cat-enterprise-text:#1e3a5f;
+            /* 电商 - 橙红系 */
+            --cat-ecommerce-from:#b45309;--cat-ecommerce-to:#fbbf24;--cat-ecommerce-bg:#fffbeb;--cat-ecommerce-text:#92400e;
+            /* 学习 - 天蓝系 */
+            --cat-learning-from:#0369a1;--cat-learning-to:#38bdf8;--cat-learning-bg:#f0f9ff;--cat-learning-text:#075985;
+            /* 趣味 - 彩色系 */
+            --cat-life-from:#d97706;--cat-life-to:#fcd34d;--cat-life-bg:#fefce8;--cat-life-text:#b45309;
+            /* 直播 - 红色系 */
+            --cat-live-from:#991b1b;--cat-live-to:#f87171;--cat-live-bg:#fff5f5;--cat-live-text:#7f1d1d;
+        }
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#0f1117;color:var(--gray-800);line-height:1.6}
+        a{color:inherit;text-decoration:none}
+        img{max-width:100%;display:block}
+
+        /* ===== HEADER ===== */
+        .header{background:rgba(15,17,23,0.95);border-bottom:1px solid rgba(99,102,241,0.2);position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:1000;backdrop-filter:blur(20px)}
+        .header-inner{max-width:1400px;margin:0 auto;padding:0 16px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;padding-left:56px}
+        .logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:#fff;white-space:nowrap}
+        .logo-icon{font-size:26px;background:linear-gradient(135deg,#6366f1,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .header-center{flex:1;max-width:500px}
+        .header-search{display:flex;gap:8px}
+        .header-search input{flex:1;padding:8px 16px;border:1px solid rgba(99,102,241,0.4);border-radius:20px;font-size:14px;outline:none;transition:border 0.2s;background:rgba(255,255,255,0.08);color:#fff}
+        .header-search input::placeholder{color:rgba(255,255,255,0.4)}
+        .header-search input:focus{border-color:#6366f1;background:rgba(99,102,241,0.12)}
+        .header-search button{padding:8px 18px;background:linear-gradient(135deg,var(--primary),#a855f7);color:#fff;border:none;border-radius:20px;font-size:14px;cursor:pointer;transition:all 0.2s}
+        .header-search button:hover{opacity:0.9;transform:scale(1.03)}
+        .header-right{display:flex;align-items:center;gap:16px;white-space:nowrap}
+        .header-links{display:flex;gap:20px}
+        .header-link{font-size:14px;color:rgba(255,255,255,0.65);cursor:pointer;transition:color 0.2s}
+        .header-link:hover{color:#a78bfa}
+        .header-badge{background:var(--danger);color:#fff;font-size:11px;padding:2px 6px;border-radius:10px;position:absolute;top:-4px;right:-8px}
+
+        /* ===== LAYOUT ===== */
+        .layout{display:flex;padding-top:var(--header-h);min-height:100vh}
+
+        /* ===== SIDEBAR ===== */
+        .sidebar{width:var(--sidebar-w);background:#161b27;border-right:1px solid rgba(99,102,241,0.15);position:fixed;top:var(--header-h);bottom:0;left:0;overflow-y:auto;z-index:100;transition:transform 0.3s}
+        .sidebar::-webkit-scrollbar{width:4px}
+        .sidebar::-webkit-scrollbar-thumb{background:rgba(99,102,241,0.3);border-radius:2px}
+        .sidebar-section{padding:16px 0}
+        .sidebar-title{font-size:11px;font-weight:600;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;padding:0 20px;margin-bottom:8px}
+        .sidebar-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer;transition:all 0.15s;border-left:3px solid transparent}
+        .sidebar-item:hover{background:rgba(99,102,241,0.12);color:#a78bfa}
+        .sidebar-item.active{background:rgba(99,102,241,0.18);color:#818cf8;border-left-color:#6366f1;font-weight:600}
+        .sidebar-item .emoji{font-size:18px;width:24px;text-align:center}
+        .sidebar-item .count{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);font-size:11px;padding:1px 7px;border-radius:10px;margin-left:auto}
+        .sidebar-divider{height:1px;background:rgba(255,255,255,0.08);margin:8px 20px}
+
+        /* ===== MAIN ===== */
+        .main{margin-left:var(--sidebar-w);flex:1;min-width:0;background:#0f1117}
+
+        /* ===== BANNER ===== */
+        .banner{background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);padding:56px 24px;text-align:center;color:#fff;position:relative;overflow:hidden}
+        .banner::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;pointer-events:none}
+        .banner h1{font-size:38px;font-weight:900;margin-bottom:12px;background:linear-gradient(135deg,#fff 0%,#a78bfa 60%,#818cf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;position:relative}
+        .banner p{font-size:16px;opacity:0.75;margin-bottom:28px;position:relative}
+        .banner-aliyun{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);padding:12px 24px;border-radius:12px;font-size:14px;transition:all 0.2s;backdrop-filter:blur(10px);margin:4px}
+        .banner-aliyun:hover{background:rgba(255,255,255,0.16);border-color:rgba(167,139,250,0.5);transform:translateY(-1px)}
+        .banner-aliyun strong{color:#fbbf24}
+        .banner-stats{display:flex;justify-content:center;gap:48px;margin-top:28px;position:relative}
+        .banner-stat{text-align:center}
+        .banner-stat-value{font-size:28px;font-weight:900;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .banner-stat-label{font-size:12px;opacity:0.6;margin-top:2px}
+
+        /* ===== SECTION 科技感背景 ===== */
+        .section{padding:32px 24px;max-width:1200px;margin:0 auto}
+        .section-wrapper{background:#161b27;border-top:1px solid rgba(255,255,255,0.04)}
+        /* 分类区域主题色边框 */
+        .section-wrapper.theme-chat{border-top-color:var(--cat-chat-from)}
+        .section-wrapper.theme-image{border-top-color:var(--cat-image-from)}
+        .section-wrapper.theme-video{border-top-color:var(--cat-video-from)}
+        .section-wrapper.theme-music{border-top-color:var(--cat-music-from)}
+        .section-wrapper.theme-office{border-top-color:var(--cat-office-from)}
+        .section-wrapper.theme-coding{border-top-color:var(--cat-coding-from)}
+        .section-wrapper.theme-agent{border-top-color:var(--cat-agent-from)}
+        .section-wrapper.theme-writing{border-top-color:var(--cat-writing-from)}
+        .section-wrapper.theme-design{border-top-color:var(--cat-design-from)}
+        .section-wrapper.theme-enterprise{border-top-color:var(--cat-enterprise-from)}
+        .section-wrapper.theme-ecommerce{border-top-color:var(--cat-ecommerce-from)}
+        .section-wrapper.theme-learning{border-top-color:var(--cat-learning-from)}
+        .section-wrapper.theme-life{border-top-color:var(--cat-life-from)}
+        .section-wrapper.theme-live{border-top-color:var(--cat-live-from)}
+
+        .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+        .section-title{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;color:#f1f5f9}
+        .section-title .emoji{font-size:24px}
+        /* 分类标题图标 - 用渐变色 */
+        .section-title .cat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+        .section-count{color:#fff;font-size:12px;padding:2px 10px;border-radius:10px;font-weight:600}
+
+        .section-filters{display:flex;gap:8px;flex-wrap:wrap}
+        .filter-btn{padding:5px 14px;border:1px solid rgba(255,255,255,0.15);border-radius:20px;font-size:12px;cursor:pointer;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);transition:all 0.15s}
+        .filter-btn:hover{border-color:rgba(99,102,241,0.6);color:#a78bfa;background:rgba(99,102,241,0.1)}
+        .filter-btn.active{background:linear-gradient(135deg,var(--primary),#a855f7);color:#fff;border-color:transparent}
+
+        /* ===== TOOL GRID ===== */
+        .tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+        .tool-card{background:#1e2538;border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:20px;transition:all 0.25s;cursor:pointer;position:relative;overflow:hidden}
+        .tool-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,102,241,0.05),transparent);opacity:0;transition:opacity 0.3s}
+        .tool-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.4),0 0 0 1px rgba(99,102,241,0.3);border-color:rgba(99,102,241,0.4)}
+        .tool-card:hover::before{opacity:1}
+        .tool-card.popular::after{content:'🔥';position:absolute;top:12px;right:12px;font-size:16px}
+        .tool-card.new::after{content:'🆕';position:absolute;top:12px;right:12px;font-size:16px}
+
+        .tool-card-header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+        .tool-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+        /* FontAwesome图标容器 */
+        .tool-icon-fa{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:20px}
+        .tool-icon img{width:100%;height:100%;object-fit:cover;border-radius:12px}
+        .tool-name{font-size:15px;font-weight:700;color:#f1f5f9;flex:1;line-height:1.3}
+        .tool-category{display:inline-block;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.45);font-size:10px;padding:2px 8px;border-radius:6px;margin-top:2px}
+        .tool-desc{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:12px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .tool-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+        .tool-tag{font-size:11px;padding:3px 10px;border-radius:6px;font-weight:500}
+        .tool-tag.hot{background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.2)}
+        .tool-tag.free{background:rgba(34,197,94,0.12);color:#86efac;border:1px solid rgba(34,197,94,0.2)}
+        .tool-tag.new{background:rgba(59,130,246,0.12);color:#93c5fd;border:1px solid rgba(59,130,246,0.2)}
+        .tool-tag.fee{background:rgba(251,191,36,0.12);color:#fde68a;border:1px solid rgba(251,191,36,0.2)}
+        .tool-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,var(--primary),#7c3aed);color:#fff;border-radius:8px;font-size:13px;font-weight:500;transition:all 0.2s;border:none}
+        .tool-link:hover{opacity:0.9;transform:scale(1.03)}
+        .tool-link.aliyun{background:linear-gradient(135deg,#ff6a00,#ff2200)}
+        .tool-detail-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:#a78bfa;border-radius:8px;font-size:13px;font-weight:500;transition:all 0.2s;cursor:pointer}
+        .tool-detail-btn:hover{background:rgba(99,102,241,0.25);border-color:rgba(99,102,241,0.5)}
+
+        /* ===== HOT TOOLS BADGE ===== */
+        .hot-section{border-top:3px solid #f59e0b}
+        .hot-section .section-title{color:#fbbf24}
+        .section-wrapper.theme-hot{background:linear-gradient(to bottom,rgba(245,158,11,0.05),transparent)}
+
+        /* ===== CATEGORY TABS ===== */
+        .cat-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px;scrollbar-width:none}
+        .cat-tabs::-webkit-scrollbar{display:none}
+        .cat-tab{padding:6px 16px;border:1px solid rgba(255,255,255,0.1);border-radius:20px;font-size:13px;cursor:pointer;background:rgba(255,255,255,0.04);white-space:nowrap;transition:all 0.15s;color:rgba(255,255,255,0.55)}
+        .cat-tab:hover,.cat-tab.active{border-color:rgba(99,102,241,0.5);color:#a78bfa;background:rgba(99,102,241,0.12)}
+        .cat-tab.active{background:linear-gradient(135deg,rgba(99,102,241,0.25),rgba(168,85,247,0.2));color:#c4b5fd;border-color:rgba(99,102,241,0.4)}
+
+        /* ===== TUTORIAL SECTION ===== */
+        .tutorial-section{background:linear-gradient(135deg,#0d0d1a 0%,#13111c 100%);padding:48px 24px;color:#fff;border-top:1px solid rgba(99,102,241,0.15)}
+        .tutorial-inner{max-width:1200px;margin:0 auto}
+        .tutorial-header{text-align:center;margin-bottom:32px}
+        .tutorial-header h2{font-size:28px;font-weight:800;margin-bottom:8px;background:linear-gradient(135deg,#fff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .tutorial-header p{font-size:15px;opacity:0.6}
+        .tutorial-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+        .tutorial-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;transition:all 0.2s;cursor:pointer}
+        .tutorial-card:hover{background:rgba(99,102,241,0.1);transform:translateY(-2px);border-color:rgba(99,102,241,0.3)}
+        .tutorial-thumb{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#4f46e5,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+        .tutorial-thumb .play-btn{position:absolute;width:48px;height:48px;background:rgba(255,255,255,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+        .tutorial-body{padding:16px}
+        .tutorial-title{font-size:14px;font-weight:600;margin-bottom:6px;line-height:1.4;color:#f1f5f9}
+        .tutorial-meta{font-size:12px;opacity:0.5;color:#94a3b8}
+        .tutorial-placeholder{background:rgba(255,255,255,0.03);border:2px dashed rgba(255,255,255,0.12);border-radius:14px;padding:32px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:200px}
+        .tutorial-placeholder-icon{font-size:40px;opacity:0.4}
+        .tutorial-placeholder p{font-size:14px;opacity:0.4;color:#94a3b8}
+        .tutorial-placeholder small{font-size:12px;opacity:0.3;color:#94a3b8}
+
+        /* ===== PAY VIDEO PLAYER ===== */
+        .pay-video-container{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.5)}
+        .pay-video-container iframe{width:100%;height:100%;border:none}
+        .pay-video-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(0deg,rgba(0,0,0,0.85) 0%,transparent 50%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10}
+        .pay-video-overlay.vip-unlocked{display:none}
+        .pay-countdown{font-size:48px;font-weight:900;color:#fff;margin-bottom:8px;text-shadow:0 2px 10px rgba(0,0,0,0.5)}
+        .pay-countdown span{color:#ffd700}
+        .pay-tip{font-size:16px;color:rgba(255,255,255,0.8);margin-bottom:16px}
+        .pay-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:linear-gradient(135deg,#6366f1,#7c3aed);color:#fff;border:none;border-radius:30px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 20px rgba(99,102,241,0.5)}
+        .pay-btn:hover{transform:scale(1.05);box-shadow:0 6px 30px rgba(99,102,241,0.7)}
+        .vip-badge{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:20px;z-index:20;box-shadow:0 2px 10px rgba(255,215,0,0.4)}
+        .unlocked-badge{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:20px;z-index:20;box-shadow:0 2px 10px rgba(34,197,94,0.4)}
+
+        /* ===== PAYMENT MODAL ===== */
+        .payment-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+        .payment-modal.active{display:flex}
+        .payment-modal-content{background:#1e2538;border:1px solid rgba(99,102,241,0.3);border-radius:20px;max-width:480px;width:100%;padding:32px;text-align:center;position:relative;animation:modalIn 0.3s ease;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+        @keyframes modalIn{from{transform:scale(0.9);opacity:0}to{transform:scale(1);opacity:1}}
+        .payment-modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;background:rgba(255,255,255,0.1);border:none;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#94a3b8}
+        .payment-modal-close:hover{background:rgba(255,255,255,0.15);color:#fff}
+        .payment-modal-content h3{color:#f1f5f9;font-size:20px}
+        .payment-amount{font-size:36px;font-weight:900;color:#ef4444;margin:16px 0}
+        .payment-amount small{font-size:16px;color:#64748b;font-weight:400}
+        .payment-methods{display:flex;gap:16px;justify-content:center;margin:24px 0}
+        .payment-method-btn{flex:1;max-width:180px;padding:20px 16px;border:2px solid rgba(255,255,255,0.1);border-radius:12px;cursor:pointer;transition:all 0.2s;background:rgba(255,255,255,0.04)}
+        .payment-method-btn:hover,.payment-method-btn.active{border-color:#6366f1;background:rgba(99,102,241,0.1)}
+        .payment-method-btn img{width:80px;height:80px;border-radius:8px;margin-bottom:8px}
+        .payment-method-btn p{font-size:14px;font-weight:600;color:#cbd5e1;margin:0}
+        .payment-qrcode{background:rgba(255,255,255,0.04);border-radius:12px;padding:24px;margin:20px 0;border:1px solid rgba(255,255,255,0.08)}
+        .payment-qrcode img{width:200px;height:200px;border-radius:8px}
+        .payment-qrcode p{font-size:14px;color:#64748b;margin-top:12px}
+        .payment-tips{font-size:13px;color:#475569;margin-top:16px}
+        .payment-tips strong{color:#ef4444}
+        .payment-success{color:#22c55e;font-size:18px;font-weight:700;margin:20px 0;display:none}
+        .payment-success.active{display:block}
+        .vip-unlock-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:linear-gradient(135deg,#ffd700,#ff8c00);color:#fff;border:none;border-radius:25px;font-size:14px;font-weight:700;cursor:pointer;margin-top:16px}
+        .vip-unlock-btn:hover{transform:scale(1.05)}
+
+        /* ===== FORTUNE TEST ===== */
+        .fortune-section{background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);padding:48px 24px;color:#fff;text-align:center}
+        .fortune-inner{max-width:800px;margin:0 auto}
+        .fortune-section h2{font-size:28px;font-weight:800;margin-bottom:8px;background:linear-gradient(135deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .fortune-section p{font-size:15px;opacity:0.65;margin-bottom:32px}
+        .fortune-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:32px}
+        .fortune-item{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:20px 12px;cursor:pointer;transition:all 0.2s;font-size:14px;color:rgba(255,255,255,0.8)}
+        .fortune-item:hover{background:rgba(99,102,241,0.2);transform:translateY(-2px);border-color:rgba(99,102,241,0.4)}
+        .fortune-item .emoji{font-size:32px;display:block;margin-bottom:8px}
+        .fortune-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:linear-gradient(135deg,#6366f1,#7c3aed);color:#fff;border-radius:30px;font-size:16px;font-weight:700;cursor:pointer;transition:transform 0.2s;border:none;box-shadow:0 4px 20px rgba(99,102,241,0.4)}
+        .fortune-cta:hover{transform:scale(1.05)}
+
+        /* ===== PAYMENT ===== */
+        .payment-section{background:#0f1117;border-top:1px solid rgba(255,255,255,0.06);padding:48px 24px;text-align:center}
+        .payment-inner{max-width:600px;margin:0 auto}
+        .payment-section h3{font-size:20px;font-weight:700;margin-bottom:8px;color:#f1f5f9}
+        .payment-section p{font-size:14px;color:#64748b;margin-bottom:24px}
+        .payment-item{text-align:center}
+        .payment-item img{width:160px;height:160px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);margin-bottom:8px}
+        .payment-item p{font-size:13px;color:#64748b;margin:0}
+
+        /* ===== FOOTER ===== */
+        .footer{background:#090b11;color:#475569;padding:32px 24px;text-align:center;font-size:13px;border-top:1px solid rgba(255,255,255,0.05)}
+        .footer a{color:#475569;margin:0 8px;transition:color 0.2s}
+        .footer a:hover{color:#a78bfa}
+        .footer p{margin-top:8px}
+
+        /* ===== MOBILE TOGGLE ===== */
+        .mobile-toggle{display:none;position:absolute;left:12px;top:50%;transform:translateY(-50%);width:40px;height:40px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.12);border-radius:8px;font-size:20px;cursor:pointer;z-index:1001;align-items:center;justify-content:center}
+        .mobile-toggle:hover{background:rgba(99,102,241,0.2)}
+        .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:99;backdrop-filter:blur(2px)}
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top{position:fixed;bottom:20px;right:80px;width:44px;height:44px;background:linear-gradient(135deg,var(--primary),#7c3aed);color:#fff;border:none;border-radius:50%;font-size:20px;cursor:pointer;z-index:1000;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(99,102,241,0.5)}
+        .scroll-top.visible{display:flex}
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:1024px){
+            .tool-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+            .banner h1{font-size:30px}
+            .banner-stats{gap:32px}
+        }
+        
+        @media(max-width:768px){
+            :root{--sidebar-w:0px;--header-h:56px}
+            .sidebar{transform:translateX(-100%);width:280px;background:#161b27}
+            .sidebar.open{transform:translateX(0)}
+            .sidebar-overlay.open{display:block}
+            .mobile-toggle{display:flex}
+            .header-inner{padding-left:52px}
+            .sidebar-header{display:flex!important}
+            .header-inner{padding:0 12px 0 52px;gap:8px}
+            .logo{font-size:16px}
+            .logo-icon{font-size:20px}
+            .header-center{flex:1;min-width:0}
+            .header-search input{padding:6px 12px;font-size:13px}
+            .header-search button{padding:6px 12px;font-size:12px}
+            .header-ads,.header-links{display:none}
+            .mobile-nav{display:flex!important;position:fixed;bottom:0;left:0;right:0;background:#161b27;border-top:1px solid rgba(255,255,255,0.08);z-index:999;padding:8px 0;justify-content:space-around;box-shadow:0 -4px 20px rgba(0,0,0,0.4)}
+            .mobile-nav a{flex:1;text-align:center;font-size:11px;color:rgba(255,255,255,0.45);text-decoration:none;padding:4px 0}
+            .mobile-nav a span{display:block;font-size:20px;margin-bottom:2px}
+            .mobile-nav a.active{color:#a78bfa}
+            .main{margin-left:0;padding-bottom:70px}
+            .banner{padding:24px 16px}
+            .banner h1{font-size:22px;line-height:1.3}
+            .banner p{font-size:13px;margin-bottom:16px}
+            .banner-stats{gap:16px;flex-wrap:wrap;justify-content:center}
+            .banner-stat-value{font-size:18px}
+            .banner-stat-label{font-size:11px}
+            .banner-aliyun{padding:8px 12px;font-size:11px;flex-wrap:wrap}
+            .section{padding:16px 12px}
+            .section-header{flex-direction:column;align-items:flex-start;gap:8px}
+            .section-title{font-size:16px}
+            .section-title .emoji{font-size:20px}
+            .section-count{font-size:11px;padding:2px 8px}
+            .tool-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+            .tool-card{padding:12px;border-radius:10px;display:flex;flex-direction:column;min-height:160px}
+            .tool-card:hover{transform:none}
+            .tool-card-header{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px}
+            .tool-icon,.tool-icon-fa{width:36px;height:36px;font-size:18px;border-radius:8px;flex-shrink:0}
+            .tool-name{font-size:13px;font-weight:600;line-height:1.3}
+            .tool-desc{font-size:11px;-webkit-line-clamp:2;margin-bottom:8px;flex:1}
+            .tool-tags{gap:4px;margin-bottom:8px;flex-wrap:wrap}
+            .tool-tag{font-size:10px;padding:2px 6px}
+            .tool-detail-btn{width:100%;padding:8px 10px;font-size:11px;justify-content:center;margin-top:auto;box-sizing:border-box}
+            .tool-link{padding:8px 10px;font-size:11px;width:100%;justify-content:center;border-radius:6px;box-sizing:border-box}
+            .tool-link.aliyun{font-size:10px;padding:6px 8px}
+            .cat-tabs{padding:0 12px 8px;gap:6px}
+            .cat-tab{padding:4px 10px;font-size:11px;border-radius:15px}
+            .fortune-section{padding:24px 12px}
+            .fortune-section h2{font-size:18px}
+            .fortune-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+            .fortune-item{padding:12px 6px;font-size:10px;border-radius:10px}
+            .fortune-item .emoji{font-size:22px;margin-bottom:4px}
+            .fortune-cta{padding:10px 20px;font-size:13px;border-radius:20px}
+            .tutorial-section{padding:24px 12px}
+            .tutorial-header h2{font-size:18px;margin-bottom:6px}
+            .tutorial-header p{font-size:13px}
+            .tutorial-grid{grid-template-columns:1fr;gap:12px}
+            .tutorial-card{border-radius:10px}
+            .tutorial-thumb{aspect-ratio:16/10}
+            .tutorial-thumb .play-btn{width:36px;height:36px;font-size:16px}
+            .tutorial-body{padding:12px}
+            .tutorial-title{font-size:13px}
+            .tutorial-meta{font-size:11px}
+            .payment-modal{padding:12px;align-items:flex-end}
+            .payment-modal-content{padding:20px 16px;border-radius:16px 16px 0 0;max-width:100%}
+            .payment-amount{font-size:24px}
+            .payment-methods{flex-direction:column;gap:10px}
+            .payment-method-btn{max-width:100%;padding:12px}
+            .payment-method-btn img{width:60px;height:60px}
+            .payment-qrcode img{width:140px;height:140px}
+            .pay-video-container{border-radius:8px;aspect-ratio:16/10}
+            .pay-countdown{font-size:32px}
+            .pay-tip{font-size:13px}
+            .pay-btn{padding:10px 20px;font-size:13px;border-radius:20px}
+            .footer{padding:20px 12px;font-size:11px}
+            .footer p{margin-top:8px}
+            .footer a{margin:0 4px;font-size:11px}
+            .sidebar-overlay{position:fixed;top:56px;left:0;right:0;bottom:70px;background:rgba(0,0,0,0.7);z-index:99;display:none}
+            /* 工具卡片底部对齐 */
+            .tool-card .tool-tags{order:1}
+            .tool-card .tool-detail-btn{order:2}
+        }
+        
+        @media(max-width:480px){
+            :root{--header-h:52px}
+            .logo span:last-child{display:none}
+            .banner h1{font-size:20px}
+            .banner p{font-size:12px}
+            .section-title{font-size:15px}
+            .tool-grid{grid-template-columns:1fr 1fr;gap:8px}
+            .tool-card{padding:10px;min-height:150px}
+            .tool-card-header{gap:6px}
+            .tool-icon,.tool-icon-fa{width:32px;height:32px;font-size:16px}
+            .tool-name{font-size:12px}
+            .tool-desc{font-size:10px}
+            .tool-detail-btn{padding:6px 8px;font-size:10px}
+            .tool-link{font-size:10px;padding:6px 8px}
+            .payment-modal-content{padding:16px 12px}
+            .payment-amount{font-size:22px}
+            .payment-qrcode img{width:120px;height:120px}
+            .payment-qrcode{padding:12px}
+            .fortune-grid{grid-template-columns:repeat(2,1fr)}
+            .fortune-item{font-size:10px}
+            .mobile-nav a{font-size:10px}
+            .mobile-nav a span{font-size:18px}
+        }
+        
+        @media(hover:none) and (pointer:coarse){
+            .tool-card:hover{transform:none}
+            .filter-btn,.cat-tab,.sidebar-item{min-height:44px}
+        }
+
+        /* ===== NOTIFICATION BAR ===== */
+        .notice-bar{background:linear-gradient(135deg,rgba(99,102,241,0.15),rgba(168,85,247,0.15));border-bottom:1px solid rgba(99,102,241,0.25);padding:10px 24px;text-align:center;font-size:13px;color:#a78bfa;overflow:hidden}
+        .notice-bar span{display:inline-block;animation:marquee 22s linear infinite}
+        @keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+        /* ===== 分类区分标题样式 ===== */
+        .section-title-chat .section-count{background:linear-gradient(135deg,var(--cat-chat-from),var(--cat-chat-to))}
+        .section-title-image .section-count{background:linear-gradient(135deg,var(--cat-image-from),var(--cat-image-to))}
+        .section-title-video .section-count{background:linear-gradient(135deg,var(--cat-video-from),var(--cat-video-to))}
+        .section-title-music .section-count{background:linear-gradient(135deg,var(--cat-music-from),var(--cat-music-to))}
+        .section-title-office .section-count{background:linear-gradient(135deg,var(--cat-office-from),var(--cat-office-to))}
+        .section-title-coding .section-count{background:linear-gradient(135deg,var(--cat-coding-from),var(--cat-coding-to))}
+        .section-title-agent .section-count{background:linear-gradient(135deg,var(--cat-agent-from),var(--cat-agent-to))}
+        .section-title-writing .section-count{background:linear-gradient(135deg,var(--cat-writing-from),var(--cat-writing-to))}
+        .section-title-design .section-count{background:linear-gradient(135deg,var(--cat-design-from),var(--cat-design-to))}
+        .section-title-enterprise .section-count{background:linear-gradient(135deg,var(--cat-enterprise-from),var(--cat-enterprise-to))}
+        .section-title-ecommerce .section-count{background:linear-gradient(135deg,var(--cat-ecommerce-from),var(--cat-ecommerce-to))}
+        .section-title-learning .section-count{background:linear-gradient(135deg,var(--cat-learning-from),var(--cat-learning-to))}
+        .section-title-life .section-count{background:linear-gradient(135deg,var(--cat-life-from),var(--cat-life-to))}
+        .section-title-live .section-count{background:linear-gradient(135deg,var(--cat-live-from),var(--cat-live-to))}
+
+        /* ===== 工具卡片图标主题色 (根据分类) ===== */
+        [data-cat="chat"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-chat-from),var(--cat-chat-to))}
+        [data-cat="image"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-image-from),var(--cat-image-to))}
+        [data-cat="video"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-video-from),var(--cat-video-to))}
+        [data-cat="music"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-music-from),var(--cat-music-to))}
+        [data-cat="office"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-office-from),var(--cat-office-to))}
+        [data-cat="coding"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-coding-from),var(--cat-coding-to))}
+        [data-cat="agent"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-agent-from),var(--cat-agent-to))}
+        [data-cat="writing"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-writing-from),var(--cat-writing-to))}
+        [data-cat="design"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-design-from),var(--cat-design-to))}
+        [data-cat="enterprise"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-enterprise-from),var(--cat-enterprise-to))}
+        [data-cat="ecommerce"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-ecommerce-from),var(--cat-ecommerce-to))}
+        [data-cat="learning"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-learning-from),var(--cat-learning-to))}
+        [data-cat="life"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-life-from),var(--cat-life-to))}
+        [data-cat="live"] .tool-icon-fa{background:linear-gradient(135deg,var(--cat-live-from),var(--cat-live-to))}
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-inner">
+        <button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()" style="display:none">☰</button>
+        <div class="logo">
+            <span class="logo-icon">🚀</span>
+            <span>AI工具场</span>
+        </div>
+        <div class="header-center">
+            <div class="header-search">
+                <input type="text" id="headerSearch" placeholder="搜索AI工具..." onkeyup="handleHeaderSearch(event)">
+                <button onclick="headerSearch()">搜索</button>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="header-links">
+                <a href="vip.html" class="header-link">📚 视频教程</a>
+                <a href="skills.html" class="header-link" style="color:#ffd700;font-weight:600">🧩 扣子技能</a>
+                <a href="business.html" class="header-link">💼 创业商机</a>
+                <span class="header-link" onclick="scrollToSection('fortune')">🔮 运势测试</span>
+                <span class="header-link" onclick="scrollToSection('payment')">💰 支持我们</span>
+            </div>
+            <a href="https://www.aliyun.com/minisite/goods?userCode=8ont37k6" target="_blank" class="tool-link aliyun" style="padding:6px 14px;font-size:13px">
+                ☁️ 阿里云优惠
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- NOTICE BAR -->
+<div class="notice-bar" style="background:linear-gradient(135deg,#4263EB15,#7C3AED15);border-bottom:1px solid #4263EB30;color:#4263EB;">
+    <span>🧩 NEW | 扣子技能专区上线！22+精品AI技能免费体验，点击查看 →</span>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+        <!-- 移动端关闭按钮 -->
+        <div class="sidebar-header" style="display:none;justify-content:flex-end;padding:12px 16px;border-bottom:1px solid var(--gray-200)">
+            <button onclick="toggleSidebar()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--gray-500);padding:4px 8px;line-height:1">&times;</button>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">🎯 快捷入口</div>
+            <a href="vip.html" class="sidebar-item" style="background:rgba(99,102,241,0.08);color:var(--primary);border-left-color:var(--primary);font-weight:600">
+                <span class="emoji">📚</span><span>视频教程</span><span class="count" style="background:var(--primary);color:#fff">HOT</span>
+            </a>
+            <a href="business.html" class="sidebar-item" style="background:linear-gradient(135deg,#D4A843,#A07820);color:#fff;border-left-color:#D4A843;font-weight:600">
+                <span class="emoji">💼</span><span>创业商机</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">NEW</span>
+            </a>
+            <div class="sidebar-item" onclick="scrollToSection('fortune')" style="background:rgba(99,102,241,0.08);color:var(--primary);border-left-color:var(--primary);font-weight:600">
+                <span class="emoji">🔮</span><span>运势解析</span><span class="count" style="background:var(--danger);color:#fff">NEW</span>
+            </div>
+            <div class="sidebar-item" onclick="location.href='vip.html'" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border-left-color:#667eea;">
+                <span class="emoji">👑</span><span>会员专区</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">NEW</span>
+            </div>
+            <a href="skills.html" class="sidebar-item" style="background:linear-gradient(135deg,#4263EB,#7C3AED);color:#fff;border-left-color:#4263EB;font-weight:600;">
+                <span class="emoji">🧩</span><span>扣子技能</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">HOT</span>
+            </a>
+            <div class="sidebar-item" onclick="location.href='vip-ai-tools.html'">
+                <span class="emoji">🚀</span><span>AI工具库</span><span class="count" style="background:var(--success);color:#fff;">HOT</span>
+            </div>
+            <div class="sidebar-item" onclick="location.href='activate.html'">
+                <span class="emoji">🔑</span><span>激活码中心</span>
+            </div>
+            <a href="shop.html" class="sidebar-item" style="background:linear-gradient(135deg,#FF6B6B,#EE5A5A);color:#fff;border-left-color:#FF6B6B;font-weight:600">
+                <span class="emoji">🛍️</span><span>一站式购物</span><span class="count" style="background:rgba(255,255,255,0.3);color:#fff;">NEW</span>
+            </a>
+            <div class="sidebar-item" onclick="scrollToSection('payment')">
+                <span class="emoji">💰</span><span>支持我们</span>
+            </div>
+            <div class="sidebar-divider"></div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main" id="mainContent">
+
+        <!-- BANNER -->
+        <div class="banner">
+            <h1>🚀 AI工具场 - 702+ 自媒体创作者必备工具导航</h1>
+            <p>涵盖AI聊天、AI绘画、AI视频、AI音乐、AI编程、AI智能体等全品类工具</p>
+            <a href="https://www.aliyun.com/minisite/goods?userCode=8ont37k6" target="_blank" class="banner-aliyun">
+                ☁️ <strong>阿里云限时优惠</strong> — 新用户首单返25%-45%，点击领取专属优惠 →
+            </a>
+            <a href="skills.html" class="banner-aliyun" style="background:linear-gradient(135deg,#4263EB50,#7C3AED50);">
+                🧩 <strong>扣子技能专区</strong> — 22+精品AI技能免费体验 →
+            </a>
+            <div class="banner-stats">
+                <div class="banner-stat"><div class="banner-stat-value">701+</div><div class="banner-stat-label">精选工具</div></div>
+                <div class="banner-stat"><div class="banner-stat-value">22+</div><div class="banner-stat-label">扣子技能</div></div>
+                <div class="banner-stat"><div class="banner-stat-value">30+</div><div class="banner-stat-label">视频教程</div></div>
+                <div class="banner-stat"><div class="banner-stat-value">24h</div><div class="banner-stat-label">持续更新</div></div>
+            </div>
+        </div>
+
+        <!-- HOT TOOLS SECTION -->
+        <section class="section hot-section" id="section-hot">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🔥</span>热门推荐<span class="section-count">HOT</span></div>
+                <div class="section-filters">
+                    <button class="filter-btn active" onclick="filterTag(this,'all')">全部</button>
+                    <button class="filter-btn" onclick="filterTag(this,'free')">免费</button>
+                    <button class="filter-btn" onclick="filterTag(this,'hot')">热门</button>
+                    <button class="filter-btn" onclick="filterTag(this,'new')">新上线</button>
+                </div>
+            </div>
+            <div class="tool-grid" id="hot-grid"></div>
+        </section>
+
+        <!-- 扣子技能专区入口 -->
+        <section class="section" style="background:linear-gradient(135deg,#4263EB10,#7C3AED10);border-radius:20px;margin:0 24px;padding:32px;">
+            <div class="section-header" style="margin-bottom:16px;">
+                <div class="section-title"><span class="emoji">🧩</span>扣子技能专区<span class="section-count" style="background:linear-gradient(135deg,#4263EB,#7C3AED);">NEW</span></div>
+                <a href="skills.html" class="filter-btn active" style="background:var(--coze-primary);color:#fff;border-color:var(--coze-primary);">查看全部 →</a>
+            </div>
+            <p style="color:var(--gray-500);margin-bottom:20px;font-size:14px;">精选22+款精品AI技能，涵盖内容创作、生活百科、运势玄学、创业商业、创意娱乐，无需编程即开即用！</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;">
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">📰</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">公众号爆款分析</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">✍️</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">小说生成器</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">🔮</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">星座命运分析</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">🚀</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">自媒体创业</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">😄</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">表情包生成</div>
+                </div>
+                <div onclick="location.href='skills.html'" style="background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;" onmouseover="this.style.borderColor='#4263EB';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.transform='none'">
+                    <div style="font-size:28px;margin-bottom:8px;">🎨</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--gray-800);">更多技能 →</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI智能对话 -->
+        <section class="section" id="section-chat">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">💬</span>AI智能对话<span class="section-count">25+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'chat','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'chat','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'chat','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="chat-grid"></div>
+        </section>
+
+        <!-- AI图像生成 -->
+        <section class="section" id="section-image">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🎨</span>AI图像生成<span class="section-count">35+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'image','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'image','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'image','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="image-grid"></div>
+        </section>
+
+        <!-- AI视频创作 -->
+        <section class="section" id="section-video">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🎬</span>AI视频创作<span class="section-count">30+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'video','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'video','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'video','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="video-grid"></div>
+        </section>
+
+        <!-- AI音乐语音 -->
+        <section class="section" id="section-music">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🎵</span>AI音乐语音<span class="section-count">20+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'music','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'music','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'music','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="music-grid"></div>
+        </section>
+
+        <!-- AI智慧办公 -->
+        <section class="section" id="section-office">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">💼</span>AI智慧办公<span class="section-count">30+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'office','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'office','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'office','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="office-grid"></div>
+        </section>
+
+        <!-- AI编程开发 -->
+        <section class="section" id="section-coding">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">💻</span>AI编程开发<span class="section-count">20+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'coding','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'coding','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'coding','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="coding-grid"></div>
+        </section>
+
+        <!-- AI智能体平台 -->
+        <section class="section" id="section-agent">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🤖</span>AI智能体平台<span class="section-count">20+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'agent','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'agent','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'agent','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="agent-grid"></div>
+        </section>
+
+        <!-- AI写作工具 -->
+        <section class="section" id="section-writing">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">📝</span>AI写作工具<span class="section-count">25+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'writing','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'writing','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'writing','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="writing-grid"></div>
+        </section>
+
+        <!-- AI商业设计 -->
+        <section class="section" id="section-design">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🖼️</span>AI商业设计<span class="section-count">20+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'design','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'design','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'design','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="design-grid"></div>
+        </section>
+
+        <!-- AI企业服务 -->
+        <section class="section" id="section-enterprise">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🏢</span>AI企业服务<span class="section-count">20+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'enterprise','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'enterprise','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'enterprise','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="enterprise-grid"></div>
+        </section>
+
+        <!-- AI电商工具 -->
+        <section class="section" id="section-ecommerce">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🛒</span>AI电商工具<span class="section-count">15+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'ecommerce','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'ecommerce','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'ecommerce','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="ecommerce-grid"></div>
+        </section>
+
+        <!-- AI学习教育 -->
+        <section class="section" id="section-learning">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">📖</span>AI学习教育<span class="section-count">15+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'learning','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'learning','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'learning','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="learning-grid"></div>
+        </section>
+
+        <!-- AI趣味工具 -->
+        <section class="section" id="section-life">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">🌟</span>AI趣味工具<span class="section-count">15+</span></div>
+                <div class="cat-tabs">
+                    <span class="cat-tab active" onclick="filterSub(this,'life','all')">全部</span>
+                    <span class="cat-tab" onclick="filterSub(this,'life','free')">免费</span>
+                    <span class="cat-tab" onclick="filterSub(this,'life','new')">新上线</span>
+                </div>
+            </div>
+            <div class="tool-grid" id="life-grid"></div>
+        </section>
+
+        <!-- 直播工具 -->
+        <section class="section hot-section" id="section-live">
+            <div class="section-header">
+                <div class="section-title"><span class="emoji">📺</span>直播工具<span class="section-count">5个</span></div>
+                <div class="section-filters">
+                    <button class="filter-btn active" onclick="filterSub(this,'live','all')">全部</button>
+                    <button class="filter-btn" onclick="filterSub(this,'live','hot')">热门</button>
+                </div>
+            </div>
+            <div class="tool-grid" id="live-grid"></div>
+        </section>
+
+        <!-- TUTORIAL SECTION -->
+        <!-- 视频教程已移至会员专区 vip.html -->
+
+        <!-- PAYMENT MODAL -->
+        <div class="payment-modal" id="paymentModal">
+            <div class="payment-modal-content">
+                <button class="payment-modal-close" onclick="closePaymentModal()">&times;</button>
+                <h3 style="font-size:20px;font-weight:700;color:#374151;">💳 解锁完整视频</h3>
+                <div class="payment-amount"><span id="modalAmount">9.9</span><small> 元</small></div>
+                <div class="payment-methods">
+                    <div class="payment-method-btn active" id="alipayBtn" onclick="selectPaymentMethod('alipay')">
+                        <img src="assets/alipay.jpg" alt="支付宝" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22><rect fill=%22%231671e8%22 width=%2280%22 height=%2280%22 rx=%228%22/><text x=%2250%%22 y=%2255%%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>支付宝</text></svg>'">
+                        <p>支付宝</p>
+                    </div>
+                    <div class="payment-method-btn" id="wechatBtn" onclick="selectPaymentMethod('wechat')">
+                        <img src="assets/wechat.jpg" alt="微信" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 80%22><rect fill=%22%2307c160%22 width=%2280%22 height=%2280%22 rx=%228%22/><text x=%2250%%22 y=%2255%%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2212%22>微信</text></svg>'">
+                        <p>微信支付</p>
+                    </div>
+                </div>
+                <div class="payment-qrcode" id="qrcodeArea">
+                    <img id="qrcodeImg" src="assets/alipay.jpg" alt="付款码" onerror="this.style.display='none'">
+                    <p>📱 请使用<span id="qrcodeMethod">支付宝</span>扫码支付</p>
+                </div>
+                <div class="payment-success" id="paymentSuccess">
+                    ✅ 支付成功！视频已解锁
+                </div>
+                <p class="payment-tips">
+                    <strong>💡 提示：</strong>支付完成后点击"确认已支付"按钮<br>
+                    开通会员可免费观看所有视频，首月仅需<strong>29元</strong>
+                </p>
+                <button class="pay-btn" id="confirmPayBtn" onclick="confirmPayment()" style="margin-top:16px;background:#22c55e;">
+                    ✅ 确认已支付
+                </button>
+                <button class="vip-unlock-btn" onclick="goToVip()" style="margin-top:12px;">
+                    👑 开通会员 免费看所有视频 →
+                </button>
+            </div>
+        </div>
+
+        <!-- FORTUNE TEST SECTION -->
+        <section class="fortune-section" id="section-fortune">
+            <div class="fortune-inner">
+                <h2>🔮 趣味运势 &玄学工具</h2>
+                <p>星座、生肖、塔罗、起名...好玩还能赚点小费</p>
+                <div class="fortune-grid">
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">💑</span>星座配对</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">✨</span>星座运势</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">🌌</span>星盘解读</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">🐉</span>生肖运势</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">👶</span>宝宝起名</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">🏢</span>公司起名</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">🔍</span>AI面相</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">🃏</span>塔罗占卜</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">🎋</span>观音灵签</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">🏠</span>风水布局</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">✏️</span>改名服务</div>
+                    <div class="fortune-item" onclick="window.open('fortune.html','_blank')"><span class="emoji">📚</span>玄学文章</div>
+                </div>
+                <button class="fortune-cta" onclick="window.open('fortune.html','_blank')">🔮 进入运势测试工具箱 →</button>
+                <div class="payment-methods" style="margin-top:20px;background:linear-gradient(135deg,rgba(0,150,199,.1),rgba(0,180,136,.1));border:1px solid rgba(0,180,136,.3);border-radius:12px;padding:16px;">
+                    <p style="color:#a0c090;font-size:13px;margin-bottom:12px;">💚 使用支付宝扫码打赏，支持我们继续运营</p>
+                    <img src="assets/alipay.jpg" alt="支付宝收款码" style="width:180px;border-radius:8px;" onerror="this.style.display='none'">
+                </div>
+                <!-- 微信公众号二维码 -->
+                <div style="margin-top:24px;padding:20px;background:#fff;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08);text-align:center">
+                    <p style="font-size:14px;color:#666;margin-bottom:12px;">📢 关注微信公众号，获取更多工具和教程</p>
+                    <img src="wechat-qrcode.jpg" alt="微信公众号" style="width:160px;border-radius:8px;border:2px solid #07c160;">
+                    <p style="font-size:12px;color:#999;margin-top:8px;">扫码关注「AI工具场」</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>© 2026 AI工具场 aitoolchang.com · 工具导航 · 教程分享 · 运势测试</p>
+            <p>
+                <a href="https://www.aliyun.com/minisite/goods?userCode=8ont37k6" target="_blank">☁️ 阿里云优惠</a> ·
+                <a href="javascript:void(0)">关于我们</a> ·
+                <a href="javascript:void(0)" onclick="showContact()">☎️ 联系我们</a> ·
+                <a href="javascript:void(0)">免责声明</a>
+            </p>
+        </footer>
+
+    </main>
+</div>
+
+<!-- MOBILE TOGGLE -->
+<button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- CONTACT MODAL -->
+<div class="payment-modal" id="contactModal">
+    <div class="payment-modal-content" style="max-width:480px;">
+        <button class="payment-modal-close" onclick="closeContact()">&times;</button>
+        <h3 style="font-size:22px;font-weight:700;color:#374151;margin-bottom:16px;">☎️ 联系我们</h3>
+        <div style="text-align:center;">
+            <p style="font-size:14px;color:#666;margin-bottom:16px;">扫码添加客服微信，获取更多帮助</p>
+            <img src="wechat-qrcode.jpg" alt="客服二维码" style="width:220px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.1);">
+            <p style="font-size:14px;color:#07c160;margin:16px 0;font-weight:bold;">微信号：LZJD8768</p>
+            <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;">
+                <img src="assets/alipay.jpg" alt="支付宝" style="width:120px;border-radius:8px;">
+                <img src="assets/wechat.jpg" alt="微信" style="width:120px;border-radius:8px;">
+            </div>
+            <p style="font-size:12px;color:#999;margin-top:12px;">↑ 点击放大扫码打赏支持我们 ↑</p>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== TOOL DATA =====
+const tools = [
+    // ===== 热门推荐 =====
+    {id:'h0',name:'WorkBuddy',emoji:'🦐',cat:'chat',tags:['hot','free','new'],popular:true,desc:'你一虾我一虾，Credits赚回家！AI智能助手平台，邀请好友赚积分，积分可兑换各类AI服务',url:'https://www.codebuddy.cn/fission/?inviteCode=i1m55roilxyo9usx',urlText:'立即加入'},
+    {id:'h1',name:'Kimi',emoji:'🤖',cat:'chat',tags:['hot','free'],popular:true,desc:'月之暗面出品，支持20万字超长上下文，支持文件阅读和联网搜索',url:'https://kimi.moonshot.cn',urlText:'访问官网'},
+    {id:'h2',name:'豆包',emoji:'🫛',cat:'chat',tags:['hot','free'],popular:true,desc:'字节跳动出品，智能对话、写作助手、翻译等全能AI助手',url:'https://www.doubao.com',urlText:'访问官网'},
+    {id:'h3',name:'可灵AI',emoji:'⚡',cat:'video',tags:['hot'],popular:true,desc:'快手出品，国际爆火，画质优秀，支持图生视频和视频续写',url:'https://klingai.com',urlText:'访问官网'},
+    {id:'h4',name:'即梦AI',emoji:'🎨',cat:'image',tags:['hot','free'],popular:true,desc:'字节跳动出品，文生图、文生视频效果出色，中文界面友好',url:'https://jimeng.jianying.com',urlText:'访问官网'},
+    {id:'h5',name:'通义灵码',emoji:'💻',cat:'coding',tags:['hot','free','new'],popular:true,desc:'阿里云出品，AI编程助手，支持代码补全、解释、Debug',url:'https://tongyi.li',urlText:'访问官网'},
+    {id:'h6',name:'腾讯混元',emoji:'🌊',cat:'chat',tags:['hot','free'],popular:true,desc:'腾讯出品，国产顶级AI，支持文生视频和图生视频，完全免费',url:'https://hunyuan.tencent.com',urlText:'访问官网'},
+    {id:'h7',name:'Suno AI',emoji:'🎵',cat:'music',tags:['hot','new'],popular:true,desc:'全球最火AI音乐生成器，输入歌词即可生成原创歌曲',url:'https://suno.ai',urlText:'访问官网'},
+    {id:'h8',name:'DeepSeek',emoji:'🔮',cat:'chat',tags:['hot','free'],popular:true,desc:'国产最强开源大模型，性价比极高，API价格最低',url:'https://deepseek.com',urlText:'访问官网'},
+
+    // ===== AI智能对话 =====
+    {id:'c1',name:'文心一言',emoji:'📖',cat:'chat',tags:['hot','free'],desc:'百度出品，知识增强大语言模型，支持文生图等功能',url:'https://yiyan.baidu.com',urlText:'访问官网'},
+    {id:'c2',name:'腾讯元宝',emoji:'🐧',cat:'chat',tags:['hot','free'],desc:'腾讯混元大模型加持，支持AI搜索、总结、写作',url:'https://yuanbao.tencent.com',urlText:'访问官网'},
+    {id:'c3',name:'智谱清言',emoji:'⚡',cat:'chat',tags:['hot','free'],desc:'清华大学出品，GLM-4大模型，支持代码生成和多模态',url:'https://www.zhipuai.cn',urlText:'访问官网'},
+    {id:'c4',name:'讯飞星火',emoji:'🔥',cat:'chat',tags:['hot','free'],desc:'科大讯飞出品，语音交互强，支持多轮对话和内容创作',url:'https://xinghuo.xfyun.cn',urlText:'访问官网'},
+    {id:'c5',name:'天工AI',emoji:'⚔️',cat:'chat',tags:['free','new'],desc:'昆仑万维出品，支持AI搜索、对话、写作、文档处理',url:'https://www.tiangong.cn',urlText:'访问官网'},
+    {id:'c6',name:'百小应',emoji:'🎯',cat:'chat',tags:['hot','new'],desc:'百川智能出品，支持超长上下文，擅长专业领域问答',url:'https://www.baichuan-ai.com',urlText:'访问官网'},
+    {id:'c7',name:'知乎直答',emoji:'💡',cat:'chat',tags:['free'],desc:'知乎AI搜索，基于知乎优质内容提供专业回答',url:'https://zhida.zhihu.com',urlText:'访问官网'},
+    {id:'c8',name:'海螺AI',emoji:'🐚',cat:'chat',tags:['new'],desc:'稀宇科技出品，AI对话助手，支持长文本分析和创作',url:'https://hailuoai.video',urlText:'访问官网'},
+    {id:'c9',name:'跃问',emoji:'⬆️',cat:'chat',tags:['new'],desc:'识空科技出品，AI知识问答助手',url:'https://yuewen.cn',urlText:'访问官网'},
+    {id:'c10',name:'商量',emoji:'🤝',cat:'chat',tags:['hot'],desc:'商汤科技出品，多模态AI助手，支持对话和推理',url:'https://chat.sensetime.com',urlText:'访问官网'},
+    {id:'c11',name:'Moonshot',emoji:'🌙',cat:'chat',tags:['hot'],desc:'Kimi母公司，国际版AI助手，支持超长上下文',url:'https://moonshot.cn',urlText:'访问官网'},
+    {id:'c12',name:'紫东太初',emoji:'🌅',cat:'chat',tags:[],desc:'中科院自动化所出品，国产多模态大模型',url:'https://taichu.ai',urlText:'访问官网'},
+    {id:'c13',name:'万知',emoji:'📚',cat:'chat',tags:['free'],desc:'零一万物出品，AI知识助手，支持文档阅读和写作',url:'https://wanzhi01.com',urlText:'访问官网'},
+    {id:'c14',name:'扣子Coze',emoji:'🧩',cat:'chat',tags:['hot','free'],desc:'字节跳动AI应用平台，无需编程即可创建AI Bot',url:'https://www.coze.cn',urlText:'访问官网'},
+    {id:'c15',name:'通义千问',emoji:'🌐',cat:'chat',tags:['hot','free'],desc:'阿里云大模型，支持多轮对话、代码、翻译等',url:'https://tongyi.aliyun.com',urlText:'访问官网'},
+    {id:'c16',name:'质谱AI',emoji:'🔬',cat:'chat',tags:['new'],desc:'新型AI对话助手，支持创意写作和知识问答',url:'https://zmai.cn',urlText:'访问官网'},
+    {id:'c17',name:'秘塔AI搜索',emoji:'🔍',cat:'chat',tags:['free'],desc:'无广告AI搜索引擎，支持全网和学术搜索',url:'https://metaso.cn',urlText:'访问官网'},
+    {id:'c18',name:'夸克AI',emoji:'🦚',cat:'chat',tags:['hot'],desc:'阿里旗下夸克浏览器内置AI，支持搜索和写作',url:'https://www.quark.cn',urlText:'访问官网'},
+    {id:'c19',name:'问小白',emoji:'❓',cat:'chat',tags:['new'],desc:'快手可灵团队出品，AI搜索和问答助手',url:'https://wenxiaobai.com',urlText:'访问官网'},
+    {id:'c20',name:'海螺问问',emoji:'🐚',cat:'chat',tags:['new'],desc:'稀宇科技AI搜索产品，即时回答各类问题',url:'https://hailuoai.com',urlText:'访问官网'},
+    {id:'c21',name:'天工巧问',emoji:'🎨',cat:'chat',tags:['new'],desc:'天工AI旗下创意对话工具',url:'https://qiao.tiangong.cn',urlText:'访问官网'},
+    {id:'c22',name:'问问',emoji:'💬',cat:'chat',tags:[],desc:'MiniMax出品，AI对话助手',url:'https://minimax.chat',urlText:'访问官网'},
+    {id:'c23',name:'听听',emoji:'👂',cat:'chat',tags:['new'],desc:'AI语音对话助手，支持语音交互',url:'https://tingting.ai',urlText:'访问官网'},
+    {id:'c24',name:'小悟空',emoji:'🐒',cat:'chat',tags:['hot'],desc:'字节跳动出品，AI工具合集，对话+工具一条龙',url:'https://xiaowukong.cn',urlText:'访问官网'},
+    {id:'c25',name:'灵犀',emoji:'🦄',cat:'chat',tags:['new'],desc:'新型AI助手，支持创意和知识场景',url:'https://lingxi.ai',urlText:'访问官网'},
+
+    // ===== AI图像生成 =====
+    {id:'i1',name:'可图AI',emoji:'🖼️',cat:'image',tags:['hot','free'],desc:'快手可图，AI图像生成，支持文生图和图生图',url:'https://klingai.com/kolors',urlText:'访问官网'},
+    {id:'i2',name:'堆友AI',emoji:'👤',cat:'image',tags:['hot','free'],desc:'阿里旗下AI图像工具，支持人像生成和电商图',url:'https://d.design',urlText:'访问官网'},
+    {id:'i3',name:'稿定AI',emoji:'📐',cat:'image',tags:['free'],desc:'一站式AI设计工具，支持图片生成、海报设计',url:'https://www.gaoding.com',urlText:'访问官网'},
+    {id:'i4',name:'LiblibAI',emoji:'🖥️',cat:'image',tags:['hot','free'],desc:'国内最大SD生图社区，模型丰富，免费额度多',url:'https://www.liblibai.com',urlText:'访问官网'},
+    {id:'i5',name:'Midjourney',emoji:'🎨',cat:'image',tags:['hot'],desc:'全球最火AI绘画工具，效果惊艳',url:'https://www.midjourney.com',urlText:'访问官网'},
+    {id:'i6',name:'Stable Diffusion',emoji:'⚡',cat:'image',tags:['hot','free'],desc:'开源最强AI绘画模型，本地部署完全免费',url:'https://stability.ai',urlText:'访问官网'},
+    {id:'i7',name:'DALL-E',emoji:'🖼️',cat:'image',tags:['hot'],desc:'OpenAI出品，AI图像生成，质量顶级',url:'https://openai.com/dall-e-3',urlText:'访问官网'},
+    {id:'i8',name:'奇域AI',emoji:'🧭',cat:'image',tags:['hot','free','new'],desc:'国产AI绘画，支持国风、插画等多种风格',url:'https://www.qiyuai.net',urlText:'访问官网'},
+    {id:'i9',name:'通义万相',emoji:'🌀',cat:'image',tags:['free'],desc:'阿里云AI绘画，支持文生图、风格迁移',url:'https://wanx.aliyun.com',urlText:'访问官网'},
+    {id:'i10',name:'秒画',emoji:'⚡',cat:'image',tags:['free'],desc:'商汤科技出品，AI图像生成，支持自定义模型',url:'https://miaohua.sensetime.com',urlText:'访问官网'},
+    {id:'i11',name:'触手AI',emoji:'🦑',cat:'image',tags:['free'],desc:'国产AI绘画平台，支持文生图和模型训练',url:'https://dpzsj.com',urlText:'访问官网'},
+    {id:'i12',name:'标小智',emoji:'🏷️',cat:'image',tags:['free'],desc:'AILogo设计，输入名字自动生成logo',url:'https://www.biaotos.com',urlText:'访问官网'},
+    {id:'i13',name:'美图设计室',emoji:'💅',cat:'image',tags:['hot'],desc:'美图秀秀出品，AI商品图、PPT、海报设计',url:'https://www.designkit.com',urlText:'访问官网'},
+    {id:'i14',name:'创客贴AI',emoji:'✂️',cat:'image',tags:['free'],desc:'AI设计工具，支持海报、名片、PPT等',url:'https://www.chuangkit.com',urlText:'访问官网'},
+    {id:'i15',name:'图怪兽',emoji:'🦄',cat:'image',tags:['free'],desc:'在线AI图片编辑器，海量模板',url:'https://818ps.com',urlText:'访问官网'},
+    {id:'i16',name:'六图设计',emoji:'📊',cat:'image',tags:['new'],desc:'AI图片编辑工具，支持消除、放大、超清',url:'https://www.liutu.cn',urlText:'访问官网'},
+    {id:'i17',name:'佐糖',emoji:'🍬',cat:'image',tags:['free'],desc:'AI抠图、去水印、图片修复，完全免费',url:'https://picwish.cn',urlText:'访问官网'},
+    {id:'i18',name:'Bigjpg',emoji:'🔍',cat:'image',tags:['free'],desc:'AI图片放大，不失真，支持动漫和照片',url:'https://bigjpg.com',urlText:'访问官网'},
+    {id:'i19',name:'waifu2x',emoji:'👘',cat:'image',tags:['free'],desc:'动漫图片放大神器，开源免费',url:'https://waifu2x.udp.jp',urlText:'访问官网'},
+    {id:'i20',name:'Clipdrop',emoji:'📎',cat:'image',tags:['free'],desc:'Stability AI出品，AI抠图、消除、放大',url:'https://clipdrop.co',urlText:'访问官网'},
+    {id:'i21',name:'Upscayl',emoji:'⬆️',cat:'image',tags:['free','new'],desc:'开源免费AI图片放大工具，本地运行',url:'https://upscayl.org',urlText:'访问官网'},
+    {id:'i22',name:'美颜工坊',emoji:'💄',cat:'image',tags:['new'],desc:'AI美颜、人像处理、一键换装',url:'https://meiyan.com',urlText:'访问官网'},
+    {id:'i23',name:'灵动AI',emoji:'💫',cat:'image',tags:['new'],desc:'AI商品图生成，电商卖家必备',url:'https://www.lingdongai.com',urlText:'访问官网'},
+    {id:'i24',name:'画宇宙',emoji:'🌌',cat:'image',tags:['free','new'],desc:'AI绘画工具，支持多种模型和风格',url:'https://www.drawtv.com',urlText:'访问官网'},
+    {id:'i25',name:'言己AI',emoji:'✍️',cat:'image',tags:['new'],desc:'AI文案配图，一键生成配图素材',url:'https://yanji.ai',urlText:'访问官网'},
+    {id:'i26',name:'Vega AI',emoji:'🌟',cat:'image',tags:['free'],desc:'国产AI绘画平台，支持文生图、图生图',url:'https://www.vegaai.com',urlText:'访问官网'},
+    {id:'i27',name:'盗梦师',emoji:'💤',cat:'image',tags:['free'],desc:'TIAMAT出品，AI艺术创作工具',url:'https://www.daomengshi.com',urlText:'访问官网'},
+    {id:'i28',name:'画秒AI',emoji:'⏱️',cat:'image',tags:['new'],desc:'快速AI图像生成，适合创意灵感',url:'https://huamiaoai.com',urlText:'访问官网'},
+    {id:'i29',name:'顽兔',emoji:'🐰',cat:'image',tags:['free'],desc:'阿里巴巴AI抠图工具，电商图片处理',url:'https://alibaba.design',urlText:'访问官网'},
+    {id:'i30',name:'鹿班',emoji:'🦌',cat:'image',tags:['hot'],desc:'阿里鹿班，AI批量设计，一秒生成千张图',url:'https://lubanyun.com',urlText:'访问官网'},
+    {id:'i31',name:'秒创',emoji:'⚡',cat:'image',tags:['free'],desc:'秒创AI旗下，图文转视频+AI绘画',url:'https://miaobochuang.com',urlText:'访问官网'},
+    {id:'i32',name:'言之画',emoji:'🗣️',cat:'image',tags:['new'],desc:'出门问问出品，AI图像和视频生成',url:'https://www.chuhai.com',urlText:'访问官网'},
+    {id:'i33',name:'海艺AI',emoji:'🌊',cat:'image',tags:['free','new'],desc:'国产AI绘画社区，模型广场丰富',url:'https://haiyi.art',urlText:'访问官网'},
+    {id:'i34',name:'小白AI',emoji:'🌱',cat:'image',tags:['free'],desc:'零门槛AI绘画工具，新手友好',url:'https://xiaobai.art',urlText:'访问官网'},
+    {id:'i35',name:'云雀',emoji:'🐦',cat:'image',tags:['new'],desc:'字节AI图像生成工具，支持多种风格',url:'https://yunque.bytedance.com',urlText:'访问官网'},
+
+    // ===== AI视频创作 =====
+    {id:'v1',name:'即梦AI',emoji:'🎬',cat:'video',tags:['hot','free'],desc:'字节跳动出品，支持文生视频、图生视频，效果出色',url:'https://jimeng.jianying.com',urlText:'访问官网',
+     detail:'字节跳动出品的新一代AI视频生成工具。\n\n【核心特点】\n• 文生视频：输入文字描述，自动生成高质量视频\n• 图生视频：将静态图片转化为动态视频\n• 支持多种风格和场景\n• 生成的视频效果逼真流畅\n\n【适用场景】\n• 自媒体短视频创作\n• 产品展示视频\n• 创意内容生产\n• 教育培训视频\n\n【免费额度】\n每日赠送免费生成次数，新用户首月体验更优惠'},
+    {id:'v2',name:'可灵AI',emoji:'⚡',cat:'video',tags:['hot'],desc:'快手可灵，AI视频生成，支持5秒和10秒时长',url:'https://klingai.com',urlText:'访问官网',
+     detail:'快手可灵大模型出品的AI视频生成工具。\n\n【核心特点】\n• 支持3秒、5秒、10秒等多种时长选择\n• 图生视频和文生视频双模式\n• 视频续写功能，可延长已有视频\n• 国际爆火，画质优秀\n• 运镜效果自然，电影感强\n\n【适用场景】\n• 短视频平台内容创作\n• 电商产品展示\n• 品牌宣传片\n• MV和创意视频\n\n【使用技巧】\n• 描述词越具体，生成效果越好\n• 英文提示词效果更佳\n• 配合运镜提示词可控制镜头运动'},
+    {id:'v3',name:'腾讯混元',emoji:'🌊',cat:'video',tags:['hot','free'],desc:'腾讯出品，国产顶级AI视频工具，完全免费',url:'https://hunyuan.tencent.com',urlText:'访问官网',
+     detail:'腾讯混元大模型出品的AI视频生成工具。\n\n【核心特点】\n• 完全免费使用，无需付费\n• 文生视频和图生视频双模式\n• 支持多种视频风格\n• 生成速度快，效果专业\n• 腾讯生态整合，可直接发布到视频号\n\n【适用场景】\n• 视频号创作者\n• 企业宣传视频\n• 自媒体内容生产\n• 在线教育视频\n\n【注意事项】\n• 免费用户每日有生成额度限制\n• 生成内容需遵守平台规范'},
+    {id:'v4',name:'即创AI',emoji:'💡',cat:'video',tags:['hot'],desc:'抖音旗下AI创意工具，支持脚本、剪辑、配音',url:'https://aigc.bytedance.com',urlText:'访问官网',
+     detail:'抖音旗下的一站式AI创意工具平台。\n\n【核心特点】\n• AI脚本生成：输入主题自动生成视频脚本\n• 数字人制作：快速生成虚拟主播\n• 智能剪辑：自动识别精彩片段\n• AI配音：多种音色可选\n• 素材推荐：自动匹配相关素材\n\n【适用场景】\n• 抖音、快手短视频创作\n• 直播话术生成\n• 电商带货视频\n• 品牌营销内容\n\n【核心优势】\n• 专为抖音生态优化\n• 与抖音创作者工具深度整合'},
+    {id:'v6',name:'巨日禄AI',emoji:'📜',cat:'video',tags:['free'],desc:'AI故事视频生成，图文转视频，支持多角色',url:'https://jurilu.com',urlText:'访问官网',
+     detail:'国产AI故事视频生成工具。\n\n【核心特点】\n• 图文转视频：上传图文素材自动生成视频\n• 多角色支持：可设置多个角色对话\n• 多种配音选择：支持不同音色和语速\n• 模板丰富：提供多种视频模板\n• 完全免费使用\n\n【适用场景】\n• 自媒体故事讲述\n• 新闻资讯视频化\n• 产品故事包装\n• 教育内容制作\n\n【使用建议】\n• 准备好图文素材\n• 设置好角色和配音\n• 选择合适的模板风格'},
+    {id:'v7',name:'Vidu',emoji:'🎥',cat:'video',tags:['hot','new'],desc:'生数科技出品，国产AI视频生成，支持文生视频',url:'https://www.vidu.com',urlText:'访问官网',
+     detail:'生数科技出品的国产AI视频生成模型。\n\n【核心特点】\n• 高质量文生视频生成\n• 支持图生视频功能\n• 动作流畅，画面精美\n• 支持长镜头生成\n• 国产模型，中文友好\n\n【适用场景】\n• 创意短视频\n• 品牌宣传\n• 艺术创作\n• 教育演示\n\n【核心优势】\n• 完全免费使用\n• 生成速度快\n• 画质优秀不输国际产品\n• 持续迭代更新中'},
+    {id:'v8',name:'Pika',emoji:'🎈',cat:'video',tags:['hot'],desc:'国际AI视频工具，支持图生视频和视频编辑',url:'https://pika.art',urlText:'访问官网',
+     detail:'国际知名AI视频生成平台。\n\n【核心特点】\n• 图生视频：将图片转化为动态视频\n• 视频编辑：支持视频局部修改\n• 多风格支持：写实、动画、3D等\n• 社区活跃：海量用户创作分享\n• 操作简单，入门快\n\n【适用场景】\n• 海外内容创作者\n• 短视频创作\n• 创意表达\n• 社交媒体内容\n\n【使用建议】\n• 需要英文提示词\n• 订阅付费版可获得更多额度\n• 加入社区学习优秀案例'},
+    {id:'v9',name:'Runway',emoji:'✈️',cat:'video',tags:['hot'],desc:'全球顶级AI视频平台，电影级效果',url:'https://runwayml.com',urlText:'访问官网',
+     detail:'全球领先的AI视频创作平台。\n\n【核心特点】\n• Gen-2/Gen-3尖端视频生成模型\n• 电影级画质输出\n• 运镜控制：可指定镜头运动\n• 风格迁移：多种视觉风格可选\n• 绿幕抠像等后期功能\n• 被好莱坞电影制作团队使用\n\n【适用场景】\n• 专业影视制作\n• 广告创意视频\n• 短视频创作\n• 实验艺术创作\n\n【版本说明】\n• 免费版：每月有限额度\n• Pro版：无限制使用\n• Studio版：团队协作功能'},
+    {id:'v10',name:'Sora',emoji:'🌍',cat:'video',tags:['hot'],desc:'OpenAI出品，全球最强AI视频生成（测试阶段）',url:'https://openai.com/sora',urlText:'访问官网',
+     detail:'OpenAI推出的革命性AI视频生成模型。\n\n【核心特点】\n• 60秒超长视频生成\n• 世界模拟器级别真实感\n• 支持复杂场景和运镜\n• 文生视频和图生视频双模式\n• 物理世界理解能力强\n• 目前处于测试阶段\n\n【适用场景】\n• 专业影视预览\n• 创意概念展示\n• 广告片制作\n• 游戏场景预览\n\n【注意事项】\n• 目前仅对部分红队测试人员和创意专业人士开放\n• 尚未全面公测\n• 预计将大幅改变视频创作行业'},
+    {id:'v11',name:'海螺AI',emoji:'🐚',cat:'video',tags:['new'],desc:'稀宇科技AI视频生成，效果出色',url:'https://hailuoai.video',urlText:'访问官网',
+     detail:'稀宇科技出品的AI视频生成工具。\n\n【核心特点】\n• 文字转视频：输入描述生成视频\n• 图片转视频：让静态图片动起来\n• 支持多种视频风格\n• 生成速度快\n• 免费额度充足\n\n【适用场景】\n• 短视频内容创作\n• 产品展示视频\n• 社交媒体内容\n• 创意视频制作\n\n【使用建议】\n• 中文描述效果最佳\n• 可配合参考图片使用\n• 多尝试不同提示词'},
+    {id:'v12',name:'万兴天幕',emoji:'🎞️',cat:'video',tags:['hot','new'],desc:'万兴科技出品，AI视频大模型，支持文生视频',url:'https://wanx.wondershare.cn',urlText:'访问官网',
+     detail:'万兴科技推出的AI视频大模型。\n\n【核心特点】\n• 文生视频、图生视频双模式\n• 支持多种视频风格\n• 与万兴旗下软件深度整合\n• 专业级画质输出\n• 支持长视频生成\n\n【适用场景】\n• 品牌宣传视频\n• 广告制作\n• 短视频创作\n• 教育培训内容\n\n【核心优势】\n• 万兴生态整合：可直接导入到万兴喵影等软件\n• 专业创作者首选\n• 持续更新迭代'},
+    {id:'v13',name:'秒哒',emoji:'⚡',cat:'video',tags:['new'],desc:'阿里旗下，AI无代码平台，支持应用和视频生成',url:'https://miaoda.aliyun.com',urlText:'访问官网',
+     detail:'阿里云推出的AI无代码应用开发平台。\n\n【核心特点】\n• 无需编程即可创建应用\n• AI辅助设计和开发\n• 支持快速原型制作\n• 可生成简单的视频内容\n• 与阿里云生态整合\n\n【适用场景】\n• 快速搭建小型应用\n• 原型演示视频\n• 内部工具开发\n• MVP快速验证\n\n【注意】\n• 视频生成是辅助功能\n• 核心能力是应用开发'},
+    {id:'v14',name:'清影AI',emoji:'✨',cat:'video',tags:['hot','free'],desc:'智谱清影，AI视频生成，支持图生视频',url:'https://chatglm.cn/video',urlText:'访问官网',
+     detail:'智谱AI推出的视频生成工具。\n\n【核心特点】\n• 完全免费使用\n• 文生视频和图生视频\n• 与智谱清言深度整合\n• 生成速度较快\n• 国产大模型支持\n\n【适用场景】\n• 短视频创作\n• 内容创作辅助\n• 产品展示\n• 教育培训\n\n【使用方法】\n• 登录智谱清言\n• 进入清影功能\n• 输入描述或上传图片\n• 等待生成完成'},
+    {id:'v15',name:'腾讯智影',emoji:'🎬',cat:'video',tags:['hot'],desc:'腾讯视频处理AI，支持数字人、配音、剪辑',url:'https://zenvideo.qq.com',urlText:'访问官网',
+     detail:'腾讯推出的多功能视频创作平台。\n\n【核心特点】\n• 数字人播报：AI虚拟主播\n• AI配音：多种音色可选\n• 智能剪辑：自动识别精彩片段\n• 字幕生成：自动识别语音\n• 视频上传和处理\n\n【适用场景】\n• 新闻播报\n• 企业宣传\n• 教育培训\n• 电商带货\n\n【核心优势】\n• 腾讯生态支持\n• 数字人效果逼真\n• 免费额度充足'},
+    {id:'v16',name:'剪映',emoji:'✂️',cat:'video',tags:['hot','free'],desc:'字节跳动出品，AI剪辑必备，支持自动字幕、配音',url:'https://www.capcut.cn',urlText:'访问官网',
+     detail:'字节跳动出品的专业视频剪辑工具。\n\n【核心特点】\n• AI自动字幕：识别语音自动添加字幕\n• AI配音：多种音色可选\n• 智能剪辑：自动识别精彩片段\n• 丰富的素材库和滤镜\n• 完全免费使用\n• 手机端和PC端同步\n\n【适用场景】\n• 短视频剪辑\n• Vlog制作\n• 电商视频\n• 直播回放处理\n\n【核心优势】\n• 零基础也能上手\n• 内置大量模板\n• 与抖音深度整合'},
+    {id:'v17',name:'必剪',emoji:'🎥',cat:'video',tags:['free'],desc:'B站官方剪辑工具，AI字幕、变声功能',url:'https://bcut.cn',urlText:'访问官网',
+     detail:'B站官方推出的视频剪辑工具。\n\n【核心特点】\n• AI自动字幕：B站up主专属优化\n• 变声功能：多种趣味声音\n• 素材丰富：海量B站风格素材\n• 模板众多：up主专属模板\n• 免费使用\n\n【适用场景】\n• B站内容创作\n• 游戏视频\n• 知识分享视频\n• Vlog剪辑\n\n【核心优势】\n• B站风格素材丰富\n• 与B站账号绑定\n• 支持一键投稿'},
+    {id:'v18',name:'快影',emoji:'📱',cat:'video',tags:['free'],desc:'快手官方剪辑，支持AI特效和自动字幕',url:'https://www.kuaishou.com',urlText:'访问官网',
+     detail:'快手官方视频剪辑工具。\n\n【核心特点】\n• AI自动字幕：准确识别语音\n• AI特效：多种视频特效\n• 素材库：快手风格素材\n• 模板丰富：热点模板及时更新\n• 免费使用\n\n【适用场景】\n• 快手内容创作\n• 短视频剪辑\n• 直播回放\n• 电商视频\n\n【核心优势】\n• 快手风格优化\n• 与快手账号同步\n• 热门话题模板'},
+    {id:'v19',name:'来画',emoji:'🎨',cat:'video',tags:['hot'],desc:'AI数字人视频生成，适合企业宣传和教育',url:'https://www.laihua.com',urlText:'访问官网',
+     detail:'专业的AI数字人视频创作平台。\n\n【核心特点】\n• 数字人主播：多种形象可选\n• 克隆声音：克隆真实音色\n• 模板丰富：适合不同场景\n• 多语言支持：中文、英文等\n• 企业级服务\n\n【适用场景】\n• 企业宣传视频\n• 教育培训课程\n• 新闻播报\n• 产品介绍\n\n【使用建议】\n• 选择合适的数字人形象\n• 输入脚本内容\n• 选择背景和配乐\n• 生成完整视频'},
+    {id:'v20',name:'HeyGen',emoji:'👤',cat:'video',tags:['hot'],desc:'国际AI数字人平台，支持多语言和换脸',url:'https://heygen.com',urlText:'访问官网',
+     detail:'国际领先的AI数字人视频平台。\n\n【核心特点】\n• 数字人制作：可选多种形象\n• 多语言支持：支持40+语言\n• 换脸功能：自定义数字人形象\n• 声音克隆：克隆真实声音\n• 模板丰富：适合各类场景\n\n【适用场景】\n• 国际化营销视频\n• 企业培训\n• 多语言产品介绍\n• 社交媒体内容\n\n【价格说明】\n• 免费版：有限额度\n• Pro版：更多额度\n• 企业版：无限制使用'},
+    {id:'v21',name:'D-ID',emoji:'🖼️',cat:'video',tags:['hot'],desc:'AI数字人，照片说话，支持多种语言',url:'https://www.d-id.com',urlText:'访问官网',
+     detail:'专业的AI数字人视频生成平台。\n\n【核心特点】\n• 照片转视频：上传照片让照片说话\n• 多语言支持：40+语言可选\n• 声音选择：多种音色可选\n• API支持：可集成到其他应用\n• 高清视频输出\n\n【适用场景】\n• 个人IP打造\n• 数字人主播\n• 企业介绍视频\n• 教育培训\n\n【使用建议】\n• 选择清晰的照片效果更好\n• 输入简洁的脚本\n• 选择合适的音色\n• 预览后再生成完整视频'},
+    {id:'v22',name:'Wink',emoji:'✨',cat:'video',tags:['free'],desc:'美图秀秀出品，AI视频修复和增强',url:'https://wink.meitu.com',urlText:'访问官网',
+     detail:'美图秀秀推出的AI视频修复工具。\n\n【核心特点】\n• AI视频修复：提升画质\n• 视频美容：美颜、磨皮等\n• 视频增强：色彩优化\n• 消除抖动：修复手抖视频\n• 完全免费使用\n\n【适用场景】\n• 老旧视频修复\n• 手机拍摄视频美化\n• 直播回放处理\n• 素材优化\n\n【核心优势】\n• 操作简单\n• 完全免费\n• 美图技术支持'},
+    {id:'v23',name:'一帧秒创',emoji:'⏱️',cat:'video',tags:['free'],desc:'图文转视频AI，自动配音配乐',url:'https://aigc.yizhentv.com',urlText:'访问官网',
+     detail:'智能图文转视频平台。\n\n【核心特点】\n• 图文转视频：自动匹配素材\n• AI配音：多种音色可选\n• 自动配乐：智能背景音乐\n• 多平台尺寸适配\n• 完全免费使用\n\n【适用场景】\n• 自媒体内容创作\n• 新闻资讯视频化\n• 产品介绍\n• 教育培训\n\n【使用方法】\n• 输入文字内容\n• 选择配音和配乐\n• 系统自动匹配素材\n• 生成并下载视频'},
+    {id:'v24',name:'腾讯智影',emoji:'📺',cat:'video',tags:['hot'],desc:'数字人播报，AI配音，支持定制形象',url:'https://zenvideo.qq.com',urlText:'访问官网',
+     detail:'腾讯智影数字人播报平台。\n\n【核心特点】\n• 数字人播报：AI虚拟主播\n• 多种形象可选\n• 支持定制数字人\n• AI配音：多种音色\n• 自动字幕生成\n\n【适用场景】\n• 新闻播报\n• 企业宣传\n• 在线教育\n• 产品介绍\n\n【核心优势】\n• 腾讯技术支持\n• 免费额度充足\n• 形象真实自然'},
+    {id:'v25',name:'万兴播爆',emoji:'🚀',cat:'video',tags:['new'],desc:'万兴科技AI数字人视频，支持多语言',url:'https://broadcast.wondershare.cn',urlText:'访问官网',
+     detail:'万兴科技推出的AI数字人视频工具。\n\n【核心特点】\n• 数字人主播：多种形象\n• 多语言支持：中文、英文等\n• 脚本驱动：输入文字自动播报\n• 模板丰富：适合不同场景\n• 专业级画质\n\n【适用场景】\n• 跨境营销\n• 企业培训\n• 产品介绍\n• 新闻播报\n\n【核心优势】\n• 万兴品牌保障\n• 多语言能力强\n• 适合国际化内容'},
+    {id:'v26',name:'奇妙元',emoji:'🦄',cat:'video',tags:['new'],desc:'AI数字人定制，虚拟主播和客服',url:'https://www.qimihuan.com',urlText:'访问官网',
+     detail:'出门问问旗下AI数字人平台。\n\n【核心特点】\n• 数字人定制：可定制专属形象\n• 声音克隆：克隆真实声音\n• 多种场景模板\n• 支持直播和录播\n• 实时互动功能\n\n【适用场景】\n• 虚拟主播\n• AI客服\n• 企业代言人\n• 教育培训\n\n【核心优势】\n• 出门问问技术支持\n• 声音克隆能力强\n• 支持实时互动'},
+    {id:'v27',name:'出门问问',emoji:'🗺️',cat:'video',tags:['hot'],desc:'AI数字人+视频生成，语音克隆',url:'https://www.chumenwenwen.com',urlText:'访问官网',
+     detail:'出门问问AI数字人综合平台。\n\n【核心特点】\n• 数字人制作\n• 语音克隆技术\n• 视频生成能力\n• 多场景应用\n• 企业级解决方案\n\n【适用场景】\n• 数字人主播\n• 企业AI客服\n• 品牌代言人\n• 教育培训\n\n【核心优势】\n• 自主语音技术\n• 一站式解决方案\n• 企业服务成熟'},
+    {id:'v28',name:'硅基智能',emoji:'💎',cat:'video',tags:['hot'],desc:'AI数字人平台，企业级数字员工',url:'https://www.guiji.ai',urlText:'访问官网',
+     detail:'专业AI数字人平台。\n\n【核心特点】\n• 企业级数字员工\n• 数字人克隆技术\n• 多场景应用\n• 智能对话能力\n• 7x24小时服务\n\n【适用场景】\n• 企业数字员工\n• 金融客服\n• 教育培训\n• 医疗导诊\n\n【核心优势】\n• 企业级稳定性\n• 支持私有化部署\n• 行业解决方案成熟'},
+    {id:'v30',name:'闪剪',emoji:'⚡',cat:'video',tags:['free'],desc:'AI视频剪辑，批量处理短视频',url:'https://shan-jian.com',urlText:'访问官网',
+     detail:'智能短视频剪辑工具。\n\n【核心特点】\n• AI智能剪辑：自动识别精彩片段\n• 批量处理：一次处理多个视频\n• 字幕自动生成\n• 多种剪辑风格\n• 完全免费使用\n\n【适用场景】\n• 批量视频剪辑\n• 直播回放处理\n• 素材快速处理\n• 短视频创作\n\n【使用建议】\n• 上传原始素材\n• 选择剪辑风格\n• 批量导出\n• 节省大量时间'},
+
+    // ===== AI音乐语音 =====
+    {id:'m1',name:'抖音音乐创作者实验室',emoji:'🎵',cat:'music',tags:['hot','new'],desc:'字节跳动官方音乐AI工具，音乐创作者必备',url:'https://music-laboratory.bytedance.com',urlText:'访问官网',
+     detail:'字节跳动官方音乐创作平台。\n\n【核心特点】\n• AI歌词创作：输入主题自动生成歌词\n• 旋律生成：根据歌词生成曲调\n• 多种音乐风格\n• 一键发布到抖音\n• 官方正版授权\n\n【适用场景】\n• 抖音音乐创作者\n• 自媒体背景音乐\n• 广告配乐\n• 短视频BGM\n\n【核心优势】\n• 字节跳动官方支持\n• 生成内容正版授权\n• 与抖音生态整合'},
+    {id:'m2',name:'Suno AI',emoji:'🎶',cat:'music',tags:['hot'],desc:'全球最火AI音乐生成，输入歌词生成原创歌曲',url:'https://suno.ai',urlText:'访问官网',
+     detail:'全球最火的AI音乐生成工具。\n\n【核心特点】\n• 输入歌词即可生成原创歌曲\n• 支持多种音乐风格：流行、摇滚、古典等\n• 支持纯音乐生成\n• 高质量音频输出\n• 完全免费使用\n\n【适用场景】\n• 自媒体背景音乐\n• 原创歌曲创作\n• 视频配乐\n• 音乐创作灵感\n\n【使用技巧】\n• 歌词越具体，生成效果越好\n• 可以选择音乐风格\n• 支持自定义时长\n• 生成后可二次编辑'},
+    {id:'m3',name:'Mureka AI',emoji:'🎸',cat:'music',tags:['hot','new'],desc:'国产AI音乐生成，支持中英文歌词创作',url:'https://mureka.ai',urlText:'访问官网',
+     detail:'国产AI音乐生成平台。\n\n【核心特点】\n• 中文歌词创作能力强\n• 中英文双语支持\n• 多种音乐风格\n• 歌曲结构完整\n• 高质量音频输出\n\n【适用场景】\n• 中文原创歌曲\n• 跨境内容配乐\n• 自媒体音乐\n• 品牌音乐定制\n\n【核心优势】\n• 国产优化，中文友好\n• 支持中英文混合\n• 生成速度快'},
+    {id:'m4',name:'网易天音',emoji:'🎧',cat:'music',tags:['free'],desc:'网易出品，AI音乐创作，一键生成歌曲',url:'https://tianyin.163.com',urlText:'访问官网',
+     detail:'网易云音乐官方AI音乐创作平台。\n\n【核心特点】\n• AI辅助作曲：输入旋律生成完整歌曲\n• 歌词创作：AI生成或手动输入\n• 一键编曲：多种音乐风格\n• 专属定制：可创作个人风格歌曲\n• 免费使用\n\n【适用场景】\n• 音乐爱好者创作\n• 自媒体原创音乐\n• 视频背景音乐\n• 个人礼物定制\n\n【使用建议】\n• 可选择不同音乐风格\n• 支持自定义歌词\n• 生成后可下载使用'},
+    {id:'m5',name:'天谟AI',emoji:'🎤',cat:'music',tags:['new'],desc:'国产AI音乐工具，支持歌词创作和编曲',url:'https://tianmoai.com',urlText:'访问官网',
+     detail:'国产AI音乐创作工具。\n\n【核心特点】\n• 歌词创作辅助\n• 智能编曲功能\n• 多种音乐风格\n• 歌曲结构设计\n• 生成速度快\n\n【适用场景】\n• 原创音乐创作\n• 短视频配乐\n• 广告音乐\n• 教育演示\n\n【核心优势】\n• 国产优化\n• 中文歌词创作强\n• 操作简单易上手'},
+    {id:'m6',name:'讯飞智作',emoji:'🗣️',cat:'music',tags:['hot'],desc:'科大讯飞AI配音，支持文字转语音和数字人',url:'https://peiyin.xfyun.cn',urlText:'访问官网',
+     detail:'科大讯飞AI配音平台。\n\n【核心特点】\n• 文字转语音：多种音色可选\n• 声音克隆：克隆真实声音\n• 数字人：AI虚拟主播\n• 多语言支持：中文、英文等\n• 专业级音质\n\n【适用场景】\n• 视频配音\n• 广告配音\n• 有声读物\n• 导航语音\n\n【核心优势】\n• 科大讯飞语音技术\n• 音色丰富自然\n• 稳定性强'},
+    {id:'m7',name:'剪映配音',emoji:'✂️',cat:'music',tags:['free'],desc:'剪映内置AI配音，多种音色可选',url:'https://www.capcut.cn',urlText:'访问官网',
+     detail:'剪映内置AI配音功能。\n\n【核心特点】\n• 多种音色可选\n• 支持语速调节\n• 直接在视频中使用\n• 完全免费\n• 与剪辑无缝结合\n\n【适用场景】\n• 短视频配音\n• Vlog旁白\n• 教程讲解\n• 纪录片配音\n\n【使用建议】\n• 在剪映中添加字幕后\n• 点击配音按钮\n• 选择合适的音色\n• 自动生成配音'},
+    {id:'m8',name:'必剪配音',emoji:'🎥',cat:'music',tags:['free'],desc:'B站必剪AI配音，B站up主专用',url:'https://bcut.cn',urlText:'访问官网',
+     detail:'B站必剪内置AI配音。\n\n【核心特点】\n• B站风格音色\n• 多种声音选择\n• 语速可调\n• 免费使用\n• 与B站生态整合\n\n【适用场景】\n• B站视频配音\n• 游戏解说\n• 知识分享\n• Vlog创作\n\n【使用建议】\n• 在必剪中添加字幕\n• 使用AI配音功能\n• 选择B站风格音色\n• 直接发布到B站'},
+    {id:'m9',name:'标贝科技',emoji:'🎙️',cat:'music',tags:['free'],desc:'AI语音合成，支持多种语言和音色',url:'https://www.data-baker.com',urlText:'访问官网',
+     detail:'专业AI语音合成平台。\n\n【核心特点】\n• 多语言支持：中文、英文等\n• 丰富音色库\n• 支持声音克隆\n• API接口开放\n• 免费试用额度\n\n【适用场景】\n• 应用语音集成\n• 视频配音\n• 语音导航\n• 教育内容\n\n【核心优势】\n• 技术成熟稳定\n• 音色自然\n• 支持定制开发'},
+    {id:'m10',name:'腾讯智影配音',emoji:'📺',cat:'music',tags:['free'],desc:'腾讯智影AI配音，数字人配套语音',url:'https://zenvideo.qq.com',urlText:'访问官网',
+     detail:'腾讯智影内置AI配音。\n\n【核心特点】\n• 多种音色可选\n• 数字人配套语音\n• 高质量输出\n• 免费使用\n• 与腾讯智影整合\n\n【适用场景】\n• 数字人播报\n• 视频配音\n• 新闻播报\n• 企业宣传\n\n【使用建议】\n• 在腾讯智影创建数字人\n• 选择配音音色\n• 输入脚本内容\n• 生成完整视频'},
+    {id:'m11',name:'魔音工坊',emoji:'🎵',cat:'music',tags:['hot'],desc:'出门问问出品，AI配音和声音克隆',url:'https://www.moyin.com',urlText:'访问官网',
+     detail:'出门问问AI配音平台。\n\n【核心特点】\n• 声音克隆技术\n• 多种音色选择\n• 语速音调调节\n• 多语言支持\n• 专业级音质\n\n【适用场景】\n• 视频配音\n• 有声内容创作\n• 品牌声音定制\n• 教育内容\n\n【核心优势】\n• 出门问问技术支持\n• 声音克隆效果逼真\n• 适合个人IP打造'},
+    {id:'m12',name:'米可AI',emoji:'🎤',cat:'music',tags:['new'],desc:'AI语音合成，支持定制音色',url:'https://www.mikeai.com',urlText:'访问官网',
+     detail:'AI语音合成平台。\n\n【核心特点】\n• 文字转语音\n• 多种音色可选\n• 支持定制音色\n• 多语言支持\n• API接口开放\n\n【适用场景】\n• 应用语音集成\n• 视频配音\n• 有声内容\n• 语音导航\n\n【使用建议】\n• 选择合适音色\n• 输入文本内容\n• 调整语速参数\n• 生成并下载'},
+    {id:'m13',name:'标贝悦读',emoji:'📖',cat:'music',tags:['free'],desc:'AI文字转语音，有声书制作',url:'https://www.reading-beta.com',urlText:'访问官网',
+     detail:'AI文字转语音平台。\n\n【核心特点】\n• 文字转语音\n• 有声书制作\n• 多种音色\n• 免费使用\n• 操作简单\n\n【适用场景】\n• 有声书制作\n• 文章朗读\n• 学习材料\n• 无障碍阅读\n\n【使用建议】\n• 粘贴文字内容\n• 选择朗读音色\n• 一键生成音频\n• 下载使用'},
+    {id:'m14',name:'讯飞听见',emoji:'👂',cat:'music',tags:['hot'],desc:'科大讯飞语音转文字，录音转写',url:'https://www.iflyrec.com',urlText:'访问官网',
+     detail:'科大讯飞语音识别平台。\n\n【核心特点】\n• 语音转文字\n• 录音转写\n• 多语言支持\n• 实时转写\n• 会议纪要生成\n\n【适用场景】\n• 会议记录\n• 采访整理\n• 课堂笔记\n• 字幕制作\n\n【核心优势】\n• 讯飞语音识别技术\n• 准确率高\n• 支持方言'},
+    {id:'m15',name:'飞书妙记',emoji:'📝',cat:'music',tags:['free'],desc:'飞书AI工具，音视频转文字摘要',url:'https://www.feishu.cn',urlText:'访问官网',
+     detail:'飞书AI会议记录工具。\n\n【核心特点】\n• 音视频转文字\n• 自动生成摘要\n• 会议纪要\n• 实时转写\n• 飞书生态整合\n\n【适用场景】\n• 会议记录\n• 培训整理\n• 访谈转写\n• 学习笔记\n\n【核心优势】\n• 飞书企业版内置\n• 团队协作便捷\n• 免费使用'},
+    {id:'m16',name:'通义听悟',emoji:'🎧',cat:'music',tags:['free'],desc:'阿里云AI，音视频转写和总结',url:'https://tingwu.aliyun.com',urlText:'访问官网',
+     detail:'阿里云AI会议记录工具。\n\n【核心特点】\n• 音视频转写\n• 智能总结\n• 关键词提取\n• 多语言支持\n• 阿里云生态整合\n\n【适用场景】\n• 会议记录\n• 培训转写\n• 访谈整理\n• 课程笔记\n\n【核心优势】\n• 阿里云技术支持\n• 准确率高\n• 免费额度充足'},
+    {id:'m17',name:'网易见外',emoji:'👁️',cat:'music',tags:['free'],desc:'网易AI，字幕识别和翻译',url:'https://jianwai.youdao.com',urlText:'访问官网',
+     detail:'网易有道AI字幕工具。\n\n【核心特点】\n• 视频字幕识别\n• 中英互译\n• 字幕导出\n• 免费使用\n• 操作简单\n\n【适用场景】\n• 视频字幕制作\n• 翻译校对\n• 内容本地化\n• 学习资料\n\n【使用建议】\n• 上传视频文件\n• 选择识别语言\n• 自动生成字幕\n• 导出使用'},
+    {id:'m18',name:'剪映音色克隆',emoji:'🗣️',cat:'music',tags:['new'],desc:'剪映最新功能，克隆自己的声音',url:'https://www.capcut.cn',urlText:'访问官网',
+     detail:'剪映声音克隆功能。\n\n【核心特点】\n• 克隆真实声音\n• 操作简单\n• 完全免费\n• 直接在剪映使用\n• 效果逼真\n\n【适用场景】\n• 个人IP打造\n• 视频配音\n• 内容创作\n• 个性化声音\n\n【使用建议】\n• 录制清晰音频样本\n• 在剪映中使用克隆功能\n• 生成配音\n• 效果真实自然'},
+    {id:'m19',name:'海螺问问（音频）',emoji:'🐚',cat:'music',tags:['new'],desc:'稀宇科技AI语音助手',url:'https://hailuoai.com',urlText:'访问官网',
+     detail:'稀宇科技AI语音助手。\n\n【核心特点】\n• AI语音对话\n• 语音识别\n• 多轮对话\n• 知识问答\n• 操作便捷\n\n【适用场景】\n• 语音交互\n• 知识查询\n• 日常助手\n• 内容创作\n\n【核心优势】\n• 海螺AI技术支持\n• 交互自然\n• 响应快速'},
+    {id:'m20',name:'Udio',emoji:'🎵',cat:'music',tags:['hot','new'],desc:'国际AI音乐生成器，与Suno竞争',url:'https://udio.com',urlText:'访问官网',
+     detail:'国际AI音乐生成平台。\n\n【核心特点】\n• 高质量音乐生成\n• 多种音乐风格\n• 支持纯音乐和歌曲\n• 可自定义时长\n• 社区分享功能\n\n【适用场景】\n• 原创音乐创作\n• 视频背景音乐\n• 游戏配乐\n• 广告音乐\n\n【核心优势】\n• 与Suno竞争产品\n• 音质优秀\n• 风格多样\n• 持续更新迭代'},
+
+    // ===== AI智慧办公 =====
+    {id:'o1',name:'iSlide AIPPT',emoji:'📊',cat:'office',tags:['hot'],desc:'PPT设计插件，AI一键生成PPT，支持多种模板',url:'https://www.islide.cc',urlText:'访问官网',
+     detail:'专业PPT设计辅助插件。\n\n【核心特点】\n• AI一键生成PPT：根据内容自动生成\n• 丰富模板库：10000+专业模板\n• 智能排版：自动对齐和配色\n• 素材库：图片、图标、图表素材\n• 兼容PowerPoint和WPS\n\n【适用场景】\n• 商务演示\n• 工作汇报\n• 教学课件\n• 培训演讲\n\n【使用建议】\n• 安装插件后启动PowerPoint\n• 选择模板或AI生成\n• 替换内容即可'},
+    {id:'o3',name:'ChatPPT',emoji:'💬',cat:'office',tags:['hot','free'],desc:'AI对话生成PPT，说句话就能做PPT',url:'https://chat-ppt.com',urlText:'访问官网',
+     detail:'对话式AI PPT生成工具。\n\n【核心特点】\n• 对话生成：像聊天一样生成PPT\n• 自然语言交互：说句话就能做PPT\n• 智能理解：自动提炼关键内容\n• 多种模板风格\n• 完全免费使用\n\n【适用场景】\n• 快速制作演示\n• 灵感快速呈现\n• 临时汇报\n• 创意展示\n\n【使用技巧】\n• 用自然语言描述需求\n• 可以多轮对话调整\n• 选择喜欢的风格\n• 下载或分享'},
+    {id:'o4',name:'讯飞智文',emoji:'📄',cat:'office',tags:['free'],desc:'科大讯飞AI文档处理，PPT和文章生成',url:'https://zhiwen.xfyun.cn',urlText:'访问官网',
+     detail:'科大讯飞AI文档处理平台。\n\n【核心特点】\n• AI生成PPT：输入主题自动生成\n• 文章写作：多场景文案生成\n• 文档润色：改写和优化\n• 多语言支持\n• 讯飞语音整合\n\n【适用场景】\n• 工作文档\n• 商业计划\n• 教学课件\n• 内容创作\n\n【核心优势】\n• 讯飞AI技术支持\n• 准确率高\n• 免费使用'},
+    {id:'o5',name:'百度文库AI',emoji:'📚',cat:'office',tags:['hot'],desc:'百度文库AI助手，文档生成和润色',url:'https://wenku.baidu.com',urlText:'访问官网',
+     detail:'百度文库AI助手。\n\n【核心特点】\n• AI文档生成\n• 内容润色优化\n• 模板丰富\n• 文档转换\n• 海量参考资料\n\n【适用场景】\n• 学术论文\n• 工作报告\n• 教学资料\n• 商业文档\n\n【核心优势】\n• 百度AI技术支持\n• 海量文档资源\n• 模板丰富'},
+    {id:'o6',name:'WPS AI',emoji:'📝',cat:'office',tags:['hot'],desc:'WPS办公AI助手，文档、表格、PPT全覆盖',url:'https://www.wps.cn',urlText:'访问官网',
+     detail:'WPS办公软件AI助手。\n\n【核心特点】\n• 文档AI：写作、润色、总结\n• 表格AI：数据分析和公式\n• PPT AI：一键生成演示文稿\n• PDF AI：阅读和提取\n• 集成在WPS中，无需切换\n\n【适用场景】\n• 日常办公\n• 文档处理\n• 数据分析\n• 演示制作\n\n【核心优势】\n• 与WPS深度整合\n• 无需额外软件\n• 免费使用'},
+    {id:'o7',name:'通义智文',emoji:'📖',cat:'office',tags:['free'],desc:'阿里云AI文档阅读和总结',url:'https://tongyi.aliyun.com',urlText:'访问官网',
+     detail:'阿里云AI文档处理工具。\n\n【核心特点】\n• 文档阅读理解\n• 内容总结提取\n• 多语言翻译\n• 问答对话\n• 论文润色\n\n【适用场景】\n• 文献阅读\n• 报告分析\n• 合同审核\n• 学习笔记\n\n【核心优势】\n• 阿里云技术支持\n• 处理速度快\n• 完全免费'},
+    {id:'o8',name:'腾讯文档AI',emoji:'📋',cat:'office',tags:['hot'],desc:'腾讯文档AI助手，智能写作和数据分析',url:'https://docs.qq.com',urlText:'访问官网',
+     detail:'腾讯文档AI助手。\n\n【核心特点】\n• 智能写作助手\n• 表格数据分析\n• 文档润色\n• 多人协作\n• 云端同步\n\n【适用场景】\n• 团队协作\n• 文档编辑\n• 数据整理\n• 在线协作\n\n【核心优势】\n• 腾讯生态整合\n• 多人实时协作\n• 免费使用'},
+    {id:'o9',name:'印象笔记AI',emoji:'🗒️',cat:'office',tags:['hot'],desc:'印象笔记AI助手，知识管理和笔记整理',url:'https://www.yinxiang.com',urlText:'访问官网',
+     detail:'印象笔记AI助手。\n\n【核心特点】\n• 智能笔记整理\n• 内容摘要生成\n• 知识图谱\n• 写作助手\n• 多端同步\n\n【适用场景】\n• 知识管理\n• 笔记整理\n• 素材收集\n• 创作辅助\n\n【核心优势】\n• 笔记领域深耕多年\n• 知识管理功能强大\n• 多平台支持'},
+    {id:'o10',name:'飞书AI',emoji:'✈️',cat:'office',tags:['hot'],desc:'飞书办公套件AI助手，文档、表格全覆盖',url:'https://www.feishu.cn',urlText:'访问官网',
+     detail:'飞书办公AI助手。\n\n【核心特点】\n• 多维表格AI\n• 文档写作助手\n• 会议纪要\n• 智能问答\n• 工作流自动化\n\n【适用场景】\n• 企业协作\n• 项目管理\n• 文档处理\n• 会议记录\n\n【核心优势】\n• 飞书生态深度整合\n• 企业级功能\n• 协作体验优秀'},
+    {id:'o11',name:'Notion AI',emoji:'📓',cat:'office',tags:['hot'],desc:'国际知名笔记工具AI助手',url:'https://www.notion.so',urlText:'访问官网',
+     detail:'Notion AI写作助手。\n\n【核心特点】\n• AI写作助手\n• 内容摘要\n• 翻译润色\n• 头脑风暴\n• 任务管理\n\n【适用场景】\n• 个人笔记\n• 项目管理\n• 团队文档\n• 知识库\n\n【核心优势】\n• 与Notion深度整合\n• 国际产品优化\n• 协作功能强大'},
+    {id:'o12',name:'OfficePLUS',emoji:'📈',cat:'office',tags:['free'],desc:'微软Office官方模板和AI工具',url:'https://www.officeplus.cn',urlText:'访问官网',
+     detail:'微软官方Office模板平台。\n\n【核心特点】\n• 官方模板库\n• PPT模板丰富\n• Word模板\n• Excel模板\n• 免费使用\n\n【适用场景】\n• 商务演示\n• 工作汇报\n• 个人简历\n• 数据报表\n\n【核心优势】\n• 微软官方出品\n• 模板质量高\n• 完全免费'},
+    {id:'o13',name:'Gamma AI',emoji:'🌟',cat:'office',tags:['hot'],desc:'国际AI生成PPT，支持多种主题风格',url:'https://gamma.app',urlText:'访问官网',
+     detail:'国际AI演示文稿生成平台。\n\n【核心特点】\n• AI一键生成PPT\n• 多种主题风格\n• 在线编辑\n• 嵌入多媒体\n• 协作分享\n\n【适用场景】\n• 商业演示\n• 创意展示\n• 教育教学\n• 个人展示\n\n【核心优势】\n• 设计美观\n• 操作简单\n• 视觉效果优秀'},
+    {id:'o14',name:'Beautiful.ai',emoji:'🎨',cat:'office',tags:['hot'],desc:'AI演示文稿工具，自动美化设计',url:'https://www.beautiful.ai',urlText:'访问官网',
+     detail:'AI智能演示文稿平台。\n\n【核心特点】\n• 自动设计美化\n• 智能排版\n• 模板丰富\n• 团队协作\n• 在线演示\n\n【适用场景】\n• 商务演示\n• 销售提案\n• 培训演讲\n• 会议展示\n\n【核心优势】\n• 自动设计省时\n• 专业美观\n• 协作方便'},
+    {id:'o15',name:'Slidesgo',emoji:'🧩',cat:'office',tags:['free'],desc:'Free PowerPoint模板+AI生成',url:'https://slidesgo.com',urlText:'访问官网',
+     detail:'FreePPT模板平台。\n\n【核心特点】\n• 免费模板库\n• Google Slides模板\n• PowerPoint模板\n• 多种风格\n• AI生成功能\n\n【适用场景】\n• 学生作业\n• 简单演示\n• 创业路演\n• 教学课件\n\n【核心优势】\n• 完全免费\n• 模板种类多\n• 质量不错'},
+    {id:'o16',name:'百度如流',emoji:'🌊',cat:'office',tags:[],desc:'百度智能办公平台，即时通讯和OA',url:'https://rflow.baidu.com',urlText:'访问官网',
+     detail:'百度智能办公平台。\n\n【核心特点】\n• 即时通讯\n• 视频会议\n• OA审批\n• 文档协作\n• AI助手\n\n【适用场景】\n• 企业内部沟通\n• 远程协作\n• 项目管理\n• 行政办公\n\n【核心优势】\n• 百度AI技术支持\n• 企业级功能\n• 安全可靠'},
+    {id:'o17',name:'钉钉AI',emoji:'📌',cat:'office',tags:['hot'],desc:'钉钉AI助手，智能客服和文档处理',url:'https://www.dingtalk.com',urlText:'访问官网',
+     detail:'钉钉AI助手。\n\n【核心特点】\n• 智能客服\n• 文档处理\n• 会议助手\n• 任务管理\n• 通讯录管理\n\n【适用场景】\n• 企业办公\n• 团队协作\n• 远程会议\n• 行政管理\n\n【核心优势】\n• 阿里生态整合\n• 企业用户多\n• 功能完善'},
+    {id:'o18',name:'腾讯会议AI',emoji:'🎥',cat:'office',tags:['hot','free'],desc:'腾讯会议AI助手，会后总结和要点提取',url:'https://meeting.tencent.com',urlText:'访问官网',
+     detail:'腾讯会议AI助手。\n\n【核心特点】\n• AI会议纪要\n• 自动总结要点\n• 实时字幕\n• 语音转文字\n• 会议录制\n\n【适用场景】\n• 在线会议\n• 远程沟通\n• 培训讲座\n• 商务洽谈\n\n【核心优势】\n• 腾讯技术支持\n• 稳定流畅\n• 免费额度充足'},
+    {id:'o19',name:'秘塔写作猫',emoji:'🐱',cat:'office',tags:['hot','free'],desc:'AI写作助手，纠错、改写、润色',url:'https://xiezuocat.com',urlText:'访问官网',
+     detail:'AI智能写作助手。\n\n【核心特点】\n• 错别字检查\n• 语法纠错\n• 内容改写\n• 润色优化\n• 原创性检测\n\n【适用场景】\n• 文章校对\n• 内容优化\n• 论文检查\n• 文案润色\n\n【核心优势】\n• 纠错准确\n• 改写自然\n• 免费使用'},
+    {id:'o20',name:'笔灵AI',emoji:'✍️',cat:'office',tags:['hot'],desc:'AI写作工具，支持多场景内容生成',url:'https://ibiling.cn',urlText:'访问官网',
+     detail:'多场景AI写作平台。\n\n【核心特点】\n• 多场景模板\n• 论文写作\n• 报告生成\n• 营销文案\n• 创意写作\n\n【适用场景】\n• 学术写作\n• 工作报告\n• 内容创作\n• 营销推广\n\n【核心优势】\n• 场景丰富\n• 生成速度快\n• 模板多样'},
+    {id:'o21',name:'讯飞听见会记',emoji:'🎙️',cat:'office',tags:['free'],desc:'会议录音转写，自动生成会议纪要',url:'https://www.iflyrec.com',urlText:'访问官网',
+     detail:'科大讯飞会议记录工具。\n\n【核心特点】\n• 录音实时转写\n• 自动生成纪要\n• 多语言支持\n• 关键词提取\n• 区分说话人\n\n【适用场景】\n• 会议记录\n• 访谈整理\n• 课堂笔记\n• 讲座记录\n\n【核心优势】\n• 讯飞语音识别\n• 准确率高\n• 完全免费'},
+    {id:'o22',name:'腾讯问卷',emoji:'📝',cat:'office',tags:['free'],desc:'腾讯问卷AI，分析和总结问卷数据',url:'https://wj.qq.com',urlText:'访问官网',
+     detail:'腾讯问卷AI分析工具。\n\n【核心特点】\n• AI问卷分析\n• 数据可视化\n• 自动生成报告\n• 多题型支持\n• 免费使用\n\n【适用场景】\n• 市场调研\n• 用户反馈\n• 员工调查\n• 学术研究\n\n【核心优势】\n• 腾讯技术支持\n• 问卷模板丰富\n• 数据安全'},
+    {id:'o23',name:'ProcessOn思维导图',emoji:'🧠',cat:'office',tags:['free'],desc:'在线思维导图工具，支持AI生成导图',url:'https://www.processon.com',urlText:'访问官网',
+     detail:'在线思维导图工具。\n\n【核心特点】\n• AI生成导图\n• 多种模板\n• 多人协作\n• 云端存储\n• 免费使用\n\n【适用场景】\n• 头脑风暴\n• 学习笔记\n• 项目规划\n• 知识整理\n\n【使用建议】\n• 输入主题关键词\n• AI自动生成导图\n• 手动调整优化\n• 导出分享'},
+    {id:'o24',name:'Xmind Copilot',emoji:'💡',cat:'office',tags:['new'],desc:'Xmind思维导图AI助手，一键生成思路',url:'https://xmind.com',urlText:'访问官网',
+     detail:'Xmind思维导图AI助手。\n\n【核心特点】\n• AI一键生成导图\n• 灵感快速扩展\n• 多种结构样式\n• 与Xmind同步\n• 智能建议\n\n【适用场景】\n• 创意发散\n• 学习整理\n• 会议规划\n• 项目分解\n\n【核心优势】\n• Xmind品牌保障\n• 操作流畅\n• 功能专业'},
+    {id:'o25',name:'boardmix',emoji:'🎨',cat:'office',tags:['free'],desc:'在线白板+AI，支持多人协作',url:'https://boardmix.cn',urlText:'访问官网',
+     detail:'在线协作白板工具。\n\n【核心特点】\n• AI生成内容\n• 多人实时协作\n• 多种绘图工具\n• 模板丰富\n• 云端存储\n\n【适用场景】\n• 团队头脑风暴\n• 项目规划\n• 远程会议\n• 教学演示\n\n【核心优势】\n• 协作体验好\n• 功能丰富\n• 免费使用'},
+
+    // ===== AI编程开发 =====
+    {id:'d1',name:'通义灵码',emoji:'💻',cat:'coding',tags:['hot','free'],desc:'阿里云AI编程助手，代码补全、解释、Debug',url:'https://tongyi.li',urlText:'访问官网',
+     detail:'阿里云AI编程助手。\n\n【核心特点】\n• 代码补全：智能补全代码片段\n• 代码解释：详细解释代码逻辑\n• Bug修复：自动定位并修复问题\n• 支持多语言：Java、Python、Go等\n• 兼容主流IDE：VSCode、JetBrains\n\n【适用场景】\n• 日常编码开发\n• 代码学习理解\n• Bug调试修复\n• 代码审查\n\n【使用方法】\n• 安装通义灵码插件\n• 登录阿里云账号\n• 开始编码，自动获得提示\n• 使用快捷键调用AI功能'},
+    {id:'d2',name:'GitHub Copilot',emoji:'⚡',cat:'coding',tags:['hot'],desc:'GitHub+OpenAI出品，程序员必备编码助手',url:'https://github.com/features/copilot',urlText:'访问官网',
+     detail:'GitHub官方AI编程助手。\n\n【核心特点】\n• 代码自动补全\n• 整行或整函数生成\n• 支持多语言和框架\n• 学习项目代码风格\n• 与GitHub深度整合\n\n【适用场景】\n• 日常编码\n• 快速原型开发\n• 学习新框架\n• 重复代码编写\n\n【价格说明】\n• 个人版：$10/月\n• 学生免费\n• 企业版：$19/月/用户'},
+    {id:'d3',name:'CodeWhisperer',emoji:'🔊',cat:'coding',tags:['free'],desc:'AWS出品，AI代码生成和补全',url:'https://aws.amazon.com/codewhisperer',urlText:'访问官网',
+     detail:'AWS免费AI编程助手。\n\n【核心特点】\n• 代码补全生成\n• 安全扫描\n• 免费使用\n• 支持多种语言\n• AWS服务集成\n\n【适用场景】\n• AWS开发\n• 日常编码\n• 云原生开发\n• 学习编程\n\n【核心优势】\n• 完全免费\n• AWS生态整合\n• 安全性检查'},
+    {id:'d4',name:'Cursor',emoji:'💡',cat:'coding',tags:['hot','new'],desc:'AI代码编辑器，VSCode最强AI插件替代品',url:'https://cursor.sh',urlText:'访问官网',
+     detail:'AI原生代码编辑器。\n\n【核心特点】\n• 内置AI助手\n• 代码自动补全\n• 多行编辑\n• 对话式编程\n• 支持GPT-4和Claude\n\n【适用场景】\n• 前端开发\n• 全栈开发\n• 快速原型\n• 代码重构\n\n【使用建议】\n• 下载安装Cursor\n• 选择AI模型\n• 开始编写代码\n• 使用Ctrl+K调用AI'},
+    {id:'d5',name:'Windsurf',emoji:'🌊',cat:'coding',tags:['hot','new'],desc:'Codeium出品，AI代码编辑器',url:'https://codeium.com/windsurf',urlText:'访问官网',
+     detail:'Codeium AI代码编辑器。\n\n【核心特点】\n• AI代码补全\n• 智能建议\n• 免费使用\n• 多语言支持\n• 轻量快速\n\n【适用场景】\n• 日常编码\n• 学习编程\n• 快速开发\n• 轻量级编辑\n\n【核心优势】\n• 完全免费\n• 轻量级运行\n• 响应速度快'},
+    {id:'d6',name:'PromptPilot',emoji:'🚀',cat:'coding',tags:['hot','new'],desc:'字节跳动火山引擎AI提示词优化工具',url:'https:// volcengine.com/product/prompt-pilot',urlText:'访问官网',
+     detail:'字节跳动AI提示词优化工具。\n\n【核心特点】\n• 提示词优化\n• 代码生成\n• 对话式交互\n• 多场景支持\n• 火山引擎支持\n\n【适用场景】\n• 提示词优化\n• AI应用开发\n• 学习AI使用\n• 内容创作\n\n【核心优势】\n• 字节技术支持\n• 持续更新\n• 社区支持'},
+    {id:'d7',name:'CodeBuddy',emoji:'🐯',cat:'coding',tags:['free','new'],desc:'腾讯云AI编程助手，代码补全和生成',url:'https://cloud.tencent.com/product/codebuddy',urlText:'访问官网',
+     detail:'腾讯云AI编程助手。\n\n【核心特点】\n• 代码补全生成\n• 代码解释\n• Bug修复建议\n• 多语言支持\n• 腾讯云集成\n\n【适用场景】\n• 日常开发\n• 学习编程\n• 腾讯云开发\n• 代码优化\n\n【核心优势】\n• 免费使用\n• 腾讯技术支持\n• 稳定可靠'},
+    {id:'d8',name:'InsCode',emoji:'⚡',cat:'coding',tags:['free'],desc:'CSDN出品，AI编程和代码运行平台',url:'https://inscode.com',urlText:'访问官网',
+     detail:'CSDN AI编程平台。\n\n【核心特点】\n• 在线代码运行\n• AI代码生成\n• 社区分享\n• 多语言支持\n• 完全免费\n\n【适用场景】\n• 学习编程\n• 在线实验\n• 代码分享\n• 快速验证\n\n【核心优势】\n• 无需配置环境\n• 在线运行代码\n• CSDN社区支持'},
+    {id:'d9',name:'Baidu Comate',emoji:'🔍',cat:'coding',tags:['hot'],desc:'百度AI编程助手，代码补全和解释',url:'https://comate.baidu.com',urlText:'访问官网',
+     detail:'百度AI编程助手。\n\n【核心特点】\n• 代码补全\n• 代码解释\n• 函数生成\n• 多语言支持\n• 文心一言集成\n\n【适用场景】\n• 日常开发\n• 学习编程\n• 代码理解\n• 快速开发\n\n【核心优势】\n• 百度技术支持\n• 文心一言能力\n• 免费使用'},
+    {id:'d10',name:'阿里云函数计算',emoji:'☁️',cat:'coding',tags:['free'],desc:'阿里云Serverless平台，AI辅助开发',url:'https://fc.aliyun.com',urlText:'访问官网',
+     detail:'阿里云Serverless计算平台。\n\n【核心特点】\n• 无服务器架构\n• 自动扩缩容\n• 按使用付费\n• 多种运行时\n• AI辅助部署\n\n【适用场景】\n• Web后端\n• 数据处理\n• API服务\n• 定时任务\n\n【核心优势】\n• 免服务器管理\n• 成本优化\n• 阿里云生态'},
+    {id:'d11',name:'腾讯云云开发',emoji:'🐧',cat:'coding',tags:['free'],desc:'腾讯云小程序和Web开发平台',url:'https://cloud.tencent.com/product/tcb',urlText:'访问官网',
+     detail:'腾讯云小程序开发平台。\n\n【核心特点】\n• 免服务器开发\n• 云数据库\n• 云存储\n• 身份认证\n• AI能力集成\n\n【适用场景】\n• 微信小程序\n• Web应用\n• 移动端开发\n• 快速上线\n\n【核心优势】\n• 腾讯生态整合\n• 免费额度充足\n• 开发便捷'},
+    {id:'d12',name:'火山引擎IDE',emoji:'🌋',cat:'coding',tags:['new'],desc:'字节跳动云端AI编程环境',url:'https://volcengine.com',urlText:'访问官网',
+     detail:'字节跳动云端开发平台。\n\n【核心特点】\n• 云端IDE\n• AI编程辅助\n• 团队协作\n• 多种模板\n• 快速部署\n\n【适用场景】\n• 远程开发\n• 团队协作\n• 快速原型\n• 学习编程\n\n【核心优势】\n• 字节技术支持\n• 云端运行\n• 无需配置'},
+    {id:'d13',name:'CodeGeeX',emoji:'🦄',cat:'coding',tags:['free'],desc:'智谱AI开源代码模型，本地IDE插件',url:'https://codegeex.cn',urlText:'访问官网',
+     detail:'智谱AI开源代码模型。\n\n【核心特点】\n• 开源免费\n• 本地IDE插件\n• 多语言支持\n• 代码翻译\n• 代码补全\n\n【适用场景】\n• 日常开发\n• 代码翻译\n• 学习编程\n• 跨语言开发\n\n【核心优势】\n• 完全免费开源\n• 本地运行保护隐私\n• 中文支持好'},
+    {id:'d14',name:'天工智码',emoji:'⚔️',cat:'coding',tags:['new'],desc:'天工AI编程助手，昆仑万维出品',url:'https://tiangong.cn',urlText:'访问官网',
+     detail:'昆仑万维AI编程助手。\n\n【核心特点】\n• 代码补全\n• 代码生成\n• 多语言支持\n• 天工大模型支持\n• 多种IDE集成\n\n【适用场景】\n• 日常开发\n• 快速编码\n• 学习辅助\n• 代码优化\n\n【核心优势】\n• 昆仑万维技术支持\n• 天工大模型能力\n• 持续更新'},
+    {id:'d15',name:'Fitten Code',emoji:'⚡',cat:'coding',tags:['free','new'],desc:'AI代码补全插件，支持多种语言',url:'https://fittencode.com',urlText:'访问官网',
+     detail:'免费AI代码补全插件。\n\n【核心特点】\n• AI代码补全\n• 多语言支持\n• 免费使用\n• VSCode插件\n• 轻量快速\n\n【适用场景】\n• 日常编码\n• 学习编程\n• 快速开发\n• 轻量级编辑\n\n【核心优势】\n• 完全免费\n• 安装简单\n• 响应快速'},
+    {id:'d16',name:'讯飞iFLYCODE',emoji:'🔥',cat:'coding',tags:['new'],desc:'科大讯飞AI编程助手',url:'https://iflycode.xfyun.cn',urlText:'访问官网',
+     detail:'科大讯飞AI编程助手。\n\n【核心特点】\n• 代码补全\n• 代码生成\n• 代码解释\n• Bug修复\n• 多语言支持\n\n【适用场景】\n• 日常开发\n• 代码学习\n• 问题诊断\n• 效率提升\n\n【核心优势】\n• 讯飞技术支持\n• 语音交互\n• 智能提示'},
+    {id:'d17',name:'AskCodi',emoji:'❓',cat:'coding',tags:['free'],desc:'AI代码助手，支持多语言',url:'https://askcodi.com',urlText:'访问官网',
+     detail:'AI代码编程助手。\n\n【核心特点】\n• 代码生成\n• 代码补全\n• 代码解释\n• 多语言支持\n• 免费使用\n\n【适用场景】\n• 日常开发\n• 学习编程\n• 快速原型\n• 代码参考\n\n【核心优势】\n• 免费使用\n• 操作简单\n• 多语言支持'},
+    {id:'d18',name:'Codeium',emoji:'⚡',cat:'coding',tags:['free'],desc:'免费AI代码补全，Copilot替代品',url:'https://codeium.com',urlText:'访问官网',
+     detail:'免费AI代码补全工具。\n\n【核心特点】\n• AI代码补全\n• 快速搜索\n• 多语言支持\n• 完全免费\n• 隐私保护\n\n【适用场景】\n• 日常编码\n• 学习编程\n• 快速开发\n• Copilot替代\n\n【核心优势】\n• 完全免费\n• Copilot最佳替代\n• 支持主流IDE'},
+    {id:'d19',name:'Tabnine',emoji:'⬇️',cat:'coding',tags:['free'],desc:'AI代码补全，本地运行保护隐私',url:'https://tabnine.com',urlText:'访问官网',
+     detail:'本地AI代码补全工具。\n\n【核心特点】\n• 本地运行\n• 隐私保护\n• 代码补全\n• 多语言支持\n• 团队学习\n\n【适用场景】\n• 企业开发\n• 敏感项目\n• 隐私保护\n• 快速编码\n\n【核心优势】\n• 本地运行更安全\n• 隐私无忧\n• 团队共享'},
+    {id:'d20',name:'Replit AI',emoji:'🤖',cat:'coding',tags:['hot'],desc:'AI编程平台，在线编写和运行代码',url:'https://replit.com',urlText:'访问官网',
+     detail:'AI在线编程平台。\n\n【核心特点】\n• 在线IDE\n• AI代码生成\n• 快速部署\n• 社区分享\n• Ghostwriter AI\n\n【适用场景】\n• 在线开发\n• 学习编程\n• 快速原型\n• 团队协作\n\n【核心优势】\n• 无需配置环境\n• 浏览器即可编程\n• 社区资源丰富'},
+
+    // ===== AI智能体平台 =====
+    {id:'a1',name:'扣子Coze',emoji:'🧩',cat:'agent',tags:['hot','free'],desc:'字节跳动AI应用平台，无需编程创建AI Bot',url:'https://www.coze.cn',urlText:'访问官网',
+     detail:'字节跳动AI应用开发平台。\n\n【核心特点】\n• 无需编程即可创建AI Bot\n• 丰富的插件市场\n• 工作流编排\n• 多渠道发布\n• API开放\n\n【适用场景】\n• 客服机器人\n• 内容创作助手\n• 数据分析助手\n• 企业知识库\n\n【核心优势】\n• 字节跳动技术支持\n• 简单易上手\n• 丰富的Bot模板'},
+    {id:'a2',name:'Dify',emoji:'📋',cat:'agent',tags:['hot','free'],desc:'开源LLM应用开发平台，支持工作流',url:'https://dify.ai',urlText:'访问官网',
+     detail:'开源LLM应用开发平台。\n\n【核心特点】\n• 开源免费\n• 工作流编排\n• RAG支持\n• API接口丰富\n• 私有化部署\n\n【适用场景】\n• 企业知识库\n• 智能客服\n• 内容生成\n• 数据分析\n\n【核心优势】\n• 完全开源免费\n• 支持私有部署\n• 社区活跃'},
+    {id:'a3',name:'FastGPT',emoji:'⚡',cat:'agent',tags:['free'],desc:'国产开源知识库问答平台',url:'https://fastgpt.cn',urlText:'访问官网',
+     detail:'国产开源知识库问答平台。\n\n【核心特点】\n• 知识库问答\n• 开源免费\n• 多模型支持\n• 工作流编排\n• 对话优化\n\n【适用场景】\n• 企业知识库\n• 智能客服\n• 在线问答\n• 文档助手\n\n【核心优势】\n• 中文优化\n• 部署简单\n• 功能丰富'},
+    {id:'a4',name:'Flowith',emoji:'🌊',cat:'agent',tags:['hot','new'],desc:'AI对话+工作流平台，支持多模型',url:'https://flowith.io',urlText:'访问官网',
+     detail:'AI对话与工作流平台。\n\n【核心特点】\n• 多模型支持\n• 工作流编排\n• 节点式设计\n• 对话式交互\n• 团队协作\n\n【适用场景】\n• AI应用开发\n• 自动化流程\n• 内容创作\n• 数据处理\n\n【核心优势】\n• 设计直观\n• 多模型切换\n• 协作友好'},
+    {id:'a5',name:'文心智能体',emoji:'📖',cat:'agent',tags:['hot'],desc:'百度文心大模型智能体平台',url:'https://agents.baidu.com',urlText:'访问官网',
+     detail:'百度文心智能体平台。\n\n【核心特点】\n• 文心一言加持\n• 低代码创建\n• 多场景模板\n• 百度生态整合\n• 分发渠道多\n\n【适用场景】\n• 智能客服\n• 内容助手\n• 教育培训\n• 企业服务\n\n【核心优势】\n• 百度流量支持\n• 文心能力\n• 简单易用'},
+    {id:'a6',name:'腾讯元器',emoji:'🐧',cat:'agent',tags:['hot','new'],desc:'腾讯混元智能体平台，创建AI应用',url:'https://yuanqi.tencent.com',urlText:'访问官网',
+     detail:'腾讯混元智能体平台。\n\n【核心特点】\n• 混元大模型支持\n• 智能体创建\n• 工作流编排\n• 腾讯生态整合\n• 多渠道分发\n\n【适用场景】\n• 智能客服\n• 内容创作\n• 数据分析\n• 企业应用\n\n【核心优势】\n• 腾讯生态支持\n• 混元模型\n• 微信分发'},
+    {id:'a7',name:'字节扣子空间',emoji:'🫛',cat:'agent',tags:['new'],desc:'字节跳动Coze国际版智能体平台',url:'https://www.coze.com',urlText:'访问官网',
+     detail:'Coze国际版智能体平台。\n\n【核心特点】\n• 国际版Coze\n• 多语言支持\n• 国际化插件\n• GPT-4等模型\n• Discord等渠道\n\n【适用场景】\n• 国际化应用\n• 海外客服\n• 多语言Bot\n• 全球用户\n\n【核心优势】\n• 国际渠道丰富\n• 多语言支持\n• OpenAI模型'},
+    {id:'a8',name:'钉钉AI助理',emoji:'📌',cat:'agent',tags:['hot'],desc:'钉钉智能AI助理，无需编程创建',url:'https://www.dingtalk.com',urlText:'访问官网',
+     detail:'钉钉AI智能助理平台。\n\n【核心特点】\n• 无需编程创建\n• 钉钉深度整合\n• 企业内部使用\n• 工作流自动化\n• 知识库管理\n\n【适用场景】\n• 企业内部助手\n• 行政自动化\n• 客服支持\n• 知识管理\n\n【核心优势】\n• 钉钉生态整合\n• 企业用户多\n• 部署简单'},
+    {id:'a9',name:'Coze Polish',emoji:'✨',cat:'agent',tags:['new'],desc:'扣子平台插件增强工具',url:'https://www.coze.cn/plugins',urlText:'访问官网',
+     detail:'扣子平台插件增强工具。\n\n【核心特点】\n• 插件扩展\n• 功能增强\n• 扣子平台集成\n• 社区分享\n\n【适用场景】\n• Bot功能扩展\n• 能力增强\n• 插件开发\n\n【核心优势】\n• 扩展扣子能力\n• 社区支持\n• 持续更新'},
+    {id:'a10',name:'Prompt Optimize',emoji:'🔧',cat:'agent',tags:['new'],desc:'AI提示词优化和测试平台',url:'https://promptai.com',urlText:'访问官网',
+     detail:'AI提示词优化平台。\n\n【核心特点】\n• 提示词优化\n• 对比测试\n• 版本管理\n• 模板库\n• 团队协作\n\n【适用场景】\n• 提示词调优\n• Bot开发\n• AI应用调试\n\n【核心优势】\n• 调试方便\n• 团队共享\n• 版本控制'},
+    {id:'a11',name:'LangChain',emoji:'⛓️',cat:'agent',tags:['hot'],desc:'AI应用开发框架，构建LLM应用',url:'https://www.langchain.com',urlText:'访问官网',
+     detail:'AI应用开发框架。\n\n【核心特点】\n• LLM调用封装\n• 工具调用支持\n• 记忆管理\n• RAG支持\n• 链式调用\n\n【适用场景】\n• LLM应用开发\n• 智能问答\n• 对话系统\n• 自动化流程\n\n【核心优势】\n• 生态完善\n• 文档丰富\n• 社区活跃'},
+    {id:'a12',name:'LlamaIndex',emoji:'🦙',cat:'agent',tags:['free'],desc:'LLM数据连接框架，构建知识库',url:'https://www.llamaindex.ai',urlText:'访问官网',
+     detail:'LLM数据连接框架。\n\n【核心特点】\n• 数据连接器\n• 知识库构建\n• RAG检索\n• 向量数据库支持\n• 数据索引优化\n\n【适用场景】\n• 知识库问答\n• 文档检索\n• 数据分析\n• RAG应用\n\n【核心优势】\n• 数据源丰富\n• 检索能力强\n• 易于集成'},
+    {id:'a13',name:'Coze DX',emoji:'📊',cat:'agent',tags:['new'],desc:'扣子数据分析智能体平台',url:'https://www.coze.cn',urlText:'访问官网',
+     detail:'扣子数据分析智能体平台。\n\n【核心特点】\n• 数据分析\n• 图表生成\n• 报表制作\n• 扣子平台集成\n\n【适用场景】\n• 数据分析助手\n• 报表生成\n• 业务分析\n\n【核心优势】\n• 扣子生态\n• 操作简单\n• 可视化强'},
+    {id:'a14',name:'阿里百炼',emoji:'🏗️',cat:'agent',tags:['hot'],desc:'阿里云大模型服务平台，构建AI应用',url:'https://bailian.console.aliyun.com',urlText:'访问官网',
+     detail:'阿里云大模型服务平台。\n\n【核心特点】\n• 通义千问API\n• 模型微调\n• 应用托管\n• 阿里云生态\n\n【适用场景】\n• 企业AI应用\n• API集成\n• 模型定制\n• 应用部署\n\n【核心优势】\n• 阿里云支持\n• 稳定可靠\n• 价格优惠'},
+    {id:'a15',name:'百度智能云千帆',emoji:'⛵',cat:'agent',tags:['hot'],desc:'百度大模型应用平台，API调用和应用构建',url:'https://qianfan.ai',urlText:'访问官网',
+     detail:'百度大模型应用平台。\n\n【核心特点】\n• 文心一言API\n• 模型训练\n• 应用托管\n• 百度云整合\n\n【适用场景】\n• 企业AI应用\n• 对话系统\n• 内容生成\n• 知识库\n\n【核心优势】\n• 文心一言\n• 百度云支持\n• 行业方案'},
+    {id:'a16',name:'火山引擎大模型',emoji:'🌋',cat:'agent',tags:['hot'],desc:'字节跳动火山引擎LLM服务平台',url:'https://volcengine.com/product/jike',urlText:'访问官网',
+     detail:'字节跳动LLM服务平台。\n\n【核心特点】\n• 云雀大模型\n• 豆包大模型\n• 视觉模型\n• 火山引擎整合\n\n【适用场景】\n• 视频理解\n• 内容生成\n• 对话交互\n• 企业应用\n\n【核心优势】\n• 字节技术支持\n• 多模态能力\n• 抖音生态'},
+    {id:'a17',name:'讯飞星火认知',emoji:'🔥',cat:'agent',tags:['hot'],desc:'科大讯飞大模型应用平台',url:'https://xinghuo.xfyun.cn',urlText:'访问官网',
+     detail:'科大讯飞大模型平台。\n\n【核心特点】\n• 星火大模型\n• 语音交互\n• 多语言支持\n• 行业解决方案\n\n【适用场景】\n• 智能客服\n• 语音助手\n• 教育应用\n• 企业服务\n\n【核心优势】\n• 讯飞语音技术\n• 语音交互强\n• 行业经验丰富'},
+    {id:'a18',name:'OpenAI Assistant',emoji:'🤖',cat:'agent',tags:['hot'],desc:'OpenAI官方助手API，构建AI应用',url:'https://platform.openai.com',urlText:'访问官网',
+     detail:'OpenAI助手API平台。\n\n【核心特点】\n• GPT-4模型\n• Assistant API\n• Function Calling\n• 多模态支持\n• Code Interpreter\n\n【适用场景】\n• AI应用开发\n• 对话系统\n• 内容生成\n• 数据分析\n\n【核心优势】\n• 最强模型\n• 功能完善\n• 生态丰富'},
+    {id:'a19',name:'Claude API',emoji:'🧠',cat:'agent',tags:['hot'],desc:'Anthropic Claude大模型API',url:'https://www.anthropic.com',urlText:'访问官网',
+     detail:'Anthropic Claude API平台。\n\n【核心特点】\n• Claude 3系列\n• 长上下文\n• 安全对齐\n• 多模态支持\n\n【适用场景】\n• 复杂推理\n• 长文分析\n• 内容创作\n• 代码生成\n\n【核心优势】\n• 长上下文强\n• 安全性高\n• 推理能力强'},
+    {id:'a20',name:'智谱AI开放平台',emoji:'⚡',cat:'agent',tags:['hot'],desc:'智谱清言API平台，构建AI应用',url:'https://open.bigmodel.cn',urlText:'访问官网',
+     detail:'智谱AI开放平台。\n\n【核心特点】\n• GLM-4模型\n• 多模态能力\n• API接口丰富\n• 知识图谱整合\n\n【适用场景】\n• 对话应用\n• 内容生成\n• 知识问答\n• 行业定制\n\n【核心优势】\n• 清华技术\n• 中文能力强\n• 价格实惠'},
+
+    // ===== AI写作工具 =====
+    {id:'w1',name:'豆包AI写作',emoji:'🫛',cat:'writing',tags:['hot','free'],desc:'字节跳动AI写作助手，多场景内容生成',url:'https://www.doubao.com',urlText:'访问官网',
+     detail:'字节跳动AI写作助手。\n\n【核心特点】\n• 多场景写作\n• 智能润色\n• 灵感激发\n• 内容改写\n• 完全免费\n\n【适用场景】\n• 日常写作\n• 内容创作\n• 文案撰写\n• 学习辅助\n\n【核心优势】\n• 字节技术支持\n• 完全免费\n• 响应快速'},
+    {id:'w3',name:'笔灵AI写作',emoji:'✍️',cat:'writing',tags:['hot'],desc:'多场景AI写作，支持论文、报告、文案',url:'https://ibiling.cn',urlText:'访问官网',
+     detail:'多场景AI写作平台。\n\n【核心特点】\n• 100+写作场景\n• 论文写作\n• 工作报告\n• 营销文案\n• 创意写作\n\n【适用场景】\n• 学术写作\n• 职场办公\n• 内容创作\n• 营销推广\n\n【核心优势】\n• 场景丰富\n• 生成速度快\n• 模板多样'},
+    {id:'w4',name:'讯飞文书',emoji:'📄',cat:'writing',tags:['free'],desc:'科大讯飞AI写作工具',url:'https://xinghuo.xfyun.cn',urlText:'访问官网',
+     detail:'讯飞AI写作工具。\n\n【核心特点】\n• 文档生成\n• 内容润色\n• 翻译改写\n• 摘要提取\n• 免费使用\n\n【适用场景】\n• 工作文档\n• 学习笔记\n• 内容创作\n• 翻译辅助\n\n【核心优势】\n• 讯飞技术支持\n• 语音交互\n• 完全免费'},
+    {id:'w5',name:'秘塔写作猫',emoji:'🐱',cat:'writing',tags:['hot','free'],desc:'AI纠错、改写、润色，写作必备',url:'https://xiezuocat.com',urlText:'访问官网',
+     detail:'AI智能写作助手。\n\n【核心特点】\n• 错别字检查\n• 语法纠错\n• 内容改写\n• 润色优化\n• 原创性检测\n\n【适用场景】\n• 文章校对\n• 内容优化\n• 论文检查\n• 文案润色\n\n【核心优势】\n• 纠错准确\n• 改写自然\n• 免费使用'},
+    {id:'w6',name:'Kimi写作',emoji:'🤖',cat:'writing',tags:['free'],desc:'Kimi长文本写作助手，适合长文章',url:'https://kimi.moonshot.cn',urlText:'访问官网',
+     detail:'Kimi长文本写作助手。\n\n【核心特点】\n• 20万字上下文\n• 长文写作\n• 文件阅读\n• 联网搜索\n• 多语言支持\n\n【适用场景】\n• 长篇文章\n• 论文写作\n• 报告撰写\n• 内容创作\n\n【核心优势】\n• 超长上下文\n• 国产模型\n• 免费使用'},
+    {id:'w7',name:'火山写作',emoji:'🌋',cat:'writing',tags:['free'],desc:'字节跳动AI英语写作润色工具',url:'https://huoshan.com',urlText:'访问官网',
+     detail:'AI英语写作润色工具。\n\n【核心特点】\n• 英语润色\n• 语法纠错\n• 表达优化\n• 中译英\n• 风格调整\n\n【适用场景】\n• 英语作文\n• 论文翻译\n• 商务邮件\n• 留学申请\n\n【核心优势】\n• 字节技术支持\n• 英语优化强\n• 完全免费'},
+    {id:'w8',name:'腾讯智批',emoji:'📝',cat:'writing',tags:['new'],desc:'腾讯AI写作助手，支持多场景',url:'https://yiqi.qq.com',urlText:'访问官网',
+     detail:'腾讯AI写作助手。\n\n【核心特点】\n• 多场景写作\n• 内容生成\n• 润色改写\n• 翻译辅助\n• 腾讯生态\n\n【适用场景】\n• 工作文档\n• 社交内容\n• 营销文案\n• 日常写作\n\n【核心优势】\n• 腾讯技术支持\n• 多场景支持\n• 持续更新'},
+    {id:'w9',name:'彩云小梦',emoji:'🌈',cat:'writing',tags:['hot'],desc:'AI故事续写和小说创作',url:'https://xiaocai.cn',urlText:'访问官网',
+     detail:'AI故事续写工具。\n\n【核心特点】\n• 故事续写\n• 多风格选择\n• 角色扮演\n• 剧情分支\n• 免费使用\n\n【适用场景】\n• 小说创作\n• 故事写作\n• 剧本构思\n• 游戏脚本\n\n【使用建议】\n• 输入开头或设定\n• 选择故事风格\n• AI续写内容\n• 探索分支剧情'},
+    {id:'w10',name:'.wantong',emoji:'✍️',cat:'writing',tags:['new'],desc:'AI文案写作助手，营销内容生成',url:'https://wantong.cn',urlText:'访问官网',
+     detail:'AI营销文案工具。\n\n【核心特点】\n• 营销文案\n• 推广内容\n• 社交媒体\n• 广告语生成\n• 品牌故事\n\n【适用场景】\n• 电商运营\n• 品牌营销\n• 社交媒体\n• 广告创意\n\n【核心优势】\n• 营销专业\n• 效果导向\n• 模板丰富'},
+    {id:'w11',name:'Giiso写作机器人',emoji:'🤖',cat:'writing',tags:['hot'],desc:'AI热点写作，资讯类内容生成',url:'https://www.giiso.com',urlText:'访问官网',
+     detail:'AI热点写作工具。\n\n【核心特点】\n• 热点追踪\n• 自动写作\n• 素材推荐\n• 多平台发布\n• 免费使用\n\n【适用场景】\n• 自媒体创作\n• 资讯平台\n• 新闻聚合\n• 内容批量生产\n\n【使用建议】\n• 设置关注领域\n• 获取热点话题\n• AI生成内容\n• 多平台分发'},
+    {id:'w12',name:'Friday AI',emoji:'🎉',cat:'writing',tags:['hot'],desc:'AI文案写作，支持多场景模板',url:'https://www.heyfriday.cn',urlText:'访问官网',
+     detail:'AI多场景写作平台。\n\n【核心特点】\n• 50+写作场景\n• 营销文案\n• 社交内容\n• 创意写作\n• SEO优化\n\n【适用场景】\n• 营销推广\n• 社交媒体\n• 内容创作\n• SEO文章\n\n【核心优势】\n• 场景丰富\n• 模板多样\n• 持续更新'}},
+    {id:'w13',name:'5118内容神器',emoji:'🔧',cat:'writing',tags:['free'],desc:'SEO内容优化，AI伪原创和查重',url:'https://www.5118.com',urlText:'访问官网',
+     detail:'SEO内容优化工具。\n\n【核心特点】\n• 伪原创改写\n• 原创度检测\n• 关键词分析\n• 内容采集\n• SEO优化\n\n【适用场景】\n• SEO优化\n• 内容采集\n• 伪原创处理\n• 批量内容生产\n\n【核心优势】\n• SEO专业\n• 批量处理\n• 查重准确'},
+    {id:'w14',name:'梅花写作',emoji:'🌸',cat:'writing',tags:['new'],desc:'AI创意写作和文章生成',url:'https://meihua.com',urlText:'访问官网',
+     detail:'AI创意写作平台。\n\n【核心特点】\n• 创意写作\n• 文章生成\n• 灵感激发\n• 多场景支持\n\n【适用场景】\n• 内容创作\n• 文案撰写\n• 创意启发\n• 学习写作\n\n【核心优势】\n• 创意能力强\n• 场景多样\n• 激发灵感'},
+    {id:'w15',name:'光点红',emoji:'🔴',cat:'writing',tags:['new'],desc:'AI小红书文案写作',url:'https://guangdianhong.com',urlText:'访问官网',
+     detail:'AI小红书文案工具。\n\n【核心特点】\n• 小红书风格\n• 爆款标题\n• 笔记生成\n• 话题推荐\n• 标签建议\n\n【适用场景】\n• 小红书运营\n• 种草文案\n• 博主创作\n• 品牌推广\n\n【核心优势】\n• 小红书深度优化\n• 爆款模板\n• 效率提升'},
+    {id:'w16',name:'红薯笔记',emoji:'🍠',cat:'writing',tags:['new'],desc:'AI小红书爆款文案生成',url:'https://hongsihu.com',urlText:'访问官网',
+     detail:'AI小红书爆款文案工具。\n\n【核心特点】\n• 爆款文案\n• 标题生成\n• 封面文案\n• 评论回复\n• 数据分析\n\n【适用场景】\n• 小红书运营\n• 博主创作\n• 种草推广\n• 品牌营销\n\n【核心优势】\n• 爆款逻辑\n• 数据驱动\n• 持续更新'},
+    {id:'w17',name:'易撰',emoji:'📊',cat:'writing',tags:['free'],desc:'自媒体内容创作工具，素材库丰富',url:'https://www.yichuan.com',urlText:'访问官网',
+     detail:'自媒体内容创作平台。\n\n【核心特点】\n• 素材库\n• 内容采集\n• 伪原创\n• 标题生成\n• 数据分析\n\n【适用场景】\n• 自媒体运营\n• 内容采集\n• 批量生产\n• 数据分析\n\n【核心优势】\n• 素材丰富\n• 批量处理\n• 多平台支持'},
+    {id:'w18',name:'GIISO热点写作',emoji:'🔥',cat:'writing',tags:['free'],desc:'AI热点追踪+写作，一键生成文章',url:'https://www.giiso.com',urlText:'访问官网',
+     detail:'AI热点写作工具。\n\n【核心特点】\n• 热点追踪\n• 自动生成\n• 素材推荐\n• 多平台发布\n• 免费使用\n\n【适用场景】\n• 自媒体创作\n• 热点追踪\n• 资讯生成\n• 内容批量生产\n\n【核心优势】\n• 热点+写作\n• 免费使用\n• 效率提升'},
+    {id:'w19',name:'悉语',emoji:'🗣️',cat:'writing',tags:['free'],desc:'阿里AI文案，一键生成营销文案',url:'https://www.aliyun.com',urlText:'访问官网',
+     detail:'阿里AI营销文案工具。\n\n【核心特点】\n• 营销文案\n• 商品描述\n• 广告语\n• 详情页\n• 多场景\n\n【适用场景】\n• 电商运营\n• 商品推广\n• 营销活动\n• 品牌宣传\n\n【核心优势】\n• 阿里技术支持\n• 电商优化\n• 批量生成'},
+    {id:'w20',name:'创意助手',emoji:'💡',cat:'writing',tags:['new'],desc:'AI创意文案和头脑风暴',url:'https://chuangyi.com',urlText:'访问官网',
+     detail:'AI创意头脑风暴工具。\n\n【核心特点】\n• 创意激发\n• 头脑风暴\n• 方案生成\n• 灵感扩展\n• 思维导图\n\n【适用场景】\n• 创意策划\n• 营销方案\n• 产品设计\n• 问题解决\n\n【核心优势】\n• 创意激发\n• 思维扩展\n• 方案丰富'},
+    {id:'w21',name:'晓语AI',emoji:'🌙',cat:'writing',tags:['free'],desc:'AI对话式写作助手',url:'https://xiaoyu.ai',urlText:'访问官网',
+     detail:'AI对话式写作助手。\n\n【核心特点】\n• 对话写作\n• 多轮交互\n• 风格调整\n• 内容优化\n• 完全免费\n\n【适用场景】\n• 日常写作\n• 内容创作\n• 学习辅助\n• 工作文档\n\n【核心优势】\n• 对话交互\n• 灵活调整\n• 免费使用'},
+    {id:'w22',name:'笔神AI',emoji:'🖋️',cat:'writing',tags:['hot'],desc:'AI写作助手，协作文档',url:'https://www.bishen.com',urlText:'访问官网',
+     detail:'AI写作与协作文档平台。\n\n【核心特点】\n• AI写作助手\n• 协作文档\n• 素材管理\n• 模板库\n• 多端同步\n\n【适用场景】\n• 内容创作\n• 团队协作\n• 知识管理\n• 个人笔记\n\n【核心优势】\n• 协作功能\n• 模板丰富\n• 同步便捷'},
+    {id:'w23',name:'写作机器人',emoji:'🤖',cat:'writing',tags:['free'],desc:'AI文章生成，支持多种模板',url:'https://xiezuo.com',urlText:'访问官网',
+     detail:'AI文章生成工具。\n\n【核心特点】\n• 文章生成\n• 多模板\n• 批量生产\n• 免费使用\n• 操作简单\n\n【适用场景】\n• 内容生产\n• SEO文章\n• 资讯生成\n• 模板写作\n\n【核心优势】\n• 免费使用\n• 模板丰富\n• 批量生成'},
+    {id:'w24',name:'小番茄AI',emoji:'🍅',cat:'writing',tags:['new'],desc:'AI文案助手，新媒体人专用',url:'https://xfanq.com',urlText:'访问官网',
+     detail:'新媒体AI文案工具。\n\n【核心特点】\n• 新媒体文案\n• 爆款标题\n• 选题推荐\n• 评论回复\n• 数据追踪\n\n【适用场景】\n• 新媒体运营\n• 内容创作\n• 社交媒体\n• 品牌营销\n\n【核心优势】\n• 新媒体优化\n• 爆款逻辑\n• 数据分析'},
+    {id:'w25',name:'句子控',emoji:'📝',cat:'writing',tags:['free'],desc:'AI文案的句子素材库',url:'https://www.juzikong.com',urlText:'访问官网',
+     detail:'文案素材库工具。\n\n【核心特点】\n• 句子素材\n• 文案模板\n• 分类齐全\n• 搜索便捷\n• 免费使用\n\n【适用场景】\n• 文案创作\n• 素材收集\n• 内容优化\n• 学习参考\n\n【核心优势】\n• 素材丰富\n• 分类清晰\n• 搜索方便'},
+    {id:'w26',name:'即时写作',emoji:'⚡',cat:'writing',tags:['hot','new'],popular:true,desc:'AI智能写作助手，支持爆款文案、短视频脚本、营销文案一键生成，高效好用',url:'https://www.jishixiezuo.com/invite?ref=0000T',urlText:'立即使用',
+     detail:'AI智能写作助手。\n\n【核心特点】\n• 爆款文案生成\n• 短视频脚本\n• 营销文案\n• 多场景支持\n• 操作简单\n\n【适用场景】\n• 自媒体创作\n• 短视频运营\n• 营销推广\n• 内容生产\n\n【核心优势】\n• 效率高\n• 模板丰富\n• 专业水准'},
+
+    // ===== AI商业设计 =====
+    {id:'ds1',name:'稿定设计',emoji:'📐',cat:'design',tags:['hot'],desc:'AI设计工具，海报、头像、电商图一键生成',url:'https://www.gaoding.com',urlText:'访问官网',
+     detail:'一站式AI设计平台。\n\n【核心特点】\n• AI生成设计：输入描述自动生成\n• 海报、名片、电商图等模板\n• 智能抠图\n• 批量生成\n• 免费使用\n\n【适用场景】\n• 电商运营\n• 社交媒体\n• 品牌设计\n• 自媒体配图\n\n【使用建议】\n• 选择设计类型\n• 输入设计需求\n• AI自动生成\n• 下载使用'},
+    {id:'ds2',name:'创客贴',emoji:'✂️',cat:'design',tags:['free'],desc:'在线AI设计工具，模板丰富',url:'https://www.chuangkit.com',urlText:'访问官网',
+     detail:'在线设计模板平台。\n\n【核心特点】\n• 丰富模板库\n• AI辅助设计\n• 拖拽式编辑\n• 多种尺寸适配\n• 完全免费使用\n\n【适用场景】\n• 海报设计\n• 社交媒体\n• 办公文档\n• 个人创作'},
+    {id:'ds3',name:'图怪兽',emoji:'🦄',cat:'design',tags:['free'],desc:'AI图片编辑器，海量素材模板',url:'https://818ps.com',urlText:'访问官网',
+     detail:'AI图片编辑平台。\n\n【核心特点】\n• 丰富素材库\n• AI图片编辑\n• 多种模板\n• 操作简单\n• 完全免费\n\n【适用场景】\n• 图片编辑\n• 素材创作\n• 社交媒体\n• 电商设计'},
+    {id:'ds4',name:'比格AI设计',emoji:'🎨',cat:'design',tags:['hot'],desc:'AI设计工具，海报、简历、名片',url:'https://www.bigeai.com',urlText:'访问官网',
+     detail:'AI设计工具。\n\n【核心特点】\n• 海报设计\n• 简历制作\n• 名片设计\n• AI智能生成\n• 模板丰富\n\n【适用场景】\n• 求职简历\n• 商务名片\n• 营销海报\n• 活动宣传'},
+    {id:'ds5',name:'Canva',emoji:'🖼️',cat:'design',tags:['hot'],desc:'全球最大在线设计平台，AI功能丰富',url:'https://www.canva.cn',urlText:'访问官网',
+     detail:'全球知名在线设计平台。\n\n【核心特点】\n• 丰富模板\n• AI设计助手\n• 品牌套件\n• 团队协作\n• 多平台发布\n\n【适用场景】\n• 品牌设计\n• 社交媒体\n• 演示文稿\n• 电商设计'},
+    {id:'ds6',name:'醒图',emoji:'✨',cat:'design',tags:['free'],desc:'字节跳动AI修图工具，效果专业',url:'https://www.xingtu.cn',urlText:'访问官网',
+     detail:'字节跳动AI修图工具。\n\n【核心特点】\n• AI修图\n• 滤镜效果\n• 人像美颜\n• 批量处理\n• 完全免费\n\n【适用场景】\n• 照片美化\n• 人像处理\n• 社交媒体\n• 内容创作'},
+    {id:'ds7',name:'轻图',emoji:'📸',cat:'design',tags:['free'],desc:'字节系AI修图，轻量级工具',url:'https://qingtu.cn',urlText:'访问官网',
+     detail:'轻量级AI修图工具。\n\n【核心特点】\n• 基础修图\n• 滤镜调整\n• 简单易用\n• 完全免费\n• 轻量运行\n\n【适用场景】\n• 日常修图\n• 社交分享\n• 简单处理'},
+    {id:'ds8',name:'妙鸭相机',emoji:'📷',cat:'design',tags:['hot'],desc:'AI写真生成，多种风格模板',url:'https://miaoya.camera',urlText:'访问官网',
+     detail:'AI数字写真生成工具。\n\n【核心特点】\n• AI写真生成\n• 多种风格模板\n• 数字分身\n• 高清输出\n• 操作简单\n\n【适用场景】\n• 职业照\n• 写真创作\n• 社交头像\n• 个人形象'},
+    {id:'ds9',name:'美图秀秀AI',emoji:'💅',cat:'design',tags:['hot'],desc:'美图秀秀AI修图，全套工具',url:'https://www.meitu.com',urlText:'访问官网',
+     detail:'美图秀秀AI修图工具。\n\n【核心特点】\n• AI修图\n• 人像美颜\n• 滤镜特效\n• 批量处理\n• 模板丰富\n\n【适用场景】\n• 人像美化\n• 照片修复\n• 社交分享\n• 内容创作'},
+    {id:'ds10',name:'图司机',emoji:'🚗',cat:'design',tags:['free'],desc:'AI在线设计，Logo、海报、名片',url:'https://www.tusiji.com',urlText:'访问官网',
+     detail:'AI在线设计平台。\n\n【核心特点】\n• Logo设计\n• 海报生成\n• 名片制作\n• AI智能生成\n• 完全免费\n\n【适用场景】\n• 品牌Logo\n• 营销海报\n• 商务名片\n• 活动物料'},
+    {id:'ds11',name:'爱设计',emoji:'💡',cat:'design',tags:['free'],desc:'AI设计工具，企业营销物料',url:'https://www.isheji.com',urlText:'访问官网',
+     detail:'企业AI设计工具。\n\n【核心特点】\n• 营销物料\n• 企业设计\n• 模板丰富\n• 批量生成\n• 团队协作\n\n【适用场景】\n• 企业宣传\n• 营销物料\n• 品牌设计\n• 活动物料'},
+    {id:'ds12',name:'图可丽',emoji:'🖌️',cat:'design',tags:['free'],desc:'AI抠图和图片处理工具',url:'https://www.tukeli.com',urlText:'访问官网',
+     detail:'AI抠图工具。\n\n【核心特点】\n• 智能抠图\n• 边缘优化\n• 批量处理\n• 完全免费\n• 操作简单\n\n【适用场景】\n• 电商主图\n• 产品展示\n• 素材处理\n• 图片编辑'},
+    {id:'ds13',name:'皮卡智能',emoji:'⚡',cat:'design',tags:['free'],desc:'AI抠图、视频动漫化，人像处理',url:'https://www.picup.ai',urlText:'访问官网',
+     detail:'多功能AI图像处理工具。\n\n【核心特点】\n• 抠图去背景\n• 动漫化处理\n• 人像美化\n• 风格迁移\n• 完全免费\n\n【适用场景】\n• 电商设计\n• 创意图片\n• 社交媒体\n• 内容创作'},
+    {id:'ds14',name:'remove.bg',emoji:'🖼️',cat:'design',tags:['free'],desc:'AI一键抠图，在线免费使用',url:'https://www.remove.bg',urlText:'访问官网',
+     detail:'AI抠图工具。\n\n【核心特点】\n• 一键抠图\n• 自动识别主体\n• 边缘精细\n• API接口\n• 免费使用\n\n【适用场景】\n• 电商主图\n• 证件照换背景\n• 海报设计\n• 素材处理'},
+    {id:'ds15',name:'Photoroom',emoji:'📱',cat:'design',tags:['hot'],desc:'AI修图和背景替换，电商必备',url:'https://www.photoroom.com',urlText:'访问官网',
+     detail:'电商AI修图工具。\n\n【核心特点】\n• 背景替换\n• 产品图优化\n• 批量处理\n• API支持\n• 高清输出\n\n【适用场景】\n• 电商主图\n• 产品展示\n• 营销素材\n• 品牌设计'},
+    {id:'ds16',name:'千图AI',emoji:'🖼️',cat:'design',tags:['free'],desc:'AI设计素材和工具合集',url:'https://www.58pic.com',urlText:'访问官网',
+     detail:'设计素材与AI工具平台。\n\n【核心特点】\n• 素材库丰富\n• AI设计工具\n• 模板下载\n• 版权素材\n\n【适用场景】\n• 设计素材\n• 海报设计\n• 电商素材\n• 办公文档'},
+    {id:'ds17',name:'搞定设计',emoji:'✅',cat:'design',tags:['free'],desc:'在线设计工具，AI辅助功能',url:'https://www.gaoding.com',urlText:'访问官网',
+     detail:'在线AI设计工具。\n\n【核心特点】\n• AI设计辅助\n• 模板丰富\n• 拖拽编辑\n• 团队协作\n\n【适用场景】\n• 海报设计\n• 社交媒体\n• 办公设计'},
+    {id:'ds18',name:'Figma AI',emoji:'🎨',cat:'design',tags:['hot'],desc:'全球设计师工具，AI插件丰富',url:'https://www.figma.com',urlText:'访问官网',
+     detail:'全球设计师协作平台。\n\n【核心特点】\n• UI设计\n• 原型制作\n• 团队协作\n• AI插件\n• 插件市场\n\n【适用场景】\n• UI设计\n• 产品原型\n• 设计协作\n• 设计系统'},
+    {id:'ds19',name:'Mastergo AI',emoji:'🛠️',cat:'design',tags:['free'],desc:'国产Figma替代，UI设计工具',url:'https://mastergo.com',urlText:'访问官网',
+     detail:'国产UI设计工具。\n\n【核心特点】\n• UI设计\n• 组件库\n• 团队协作\n• AI辅助\n• 国产优化\n\n【适用场景】\n• UI设计\n• 移动端设计\n• 团队协作\n• 设计交付'},
+    {id:'ds20',name:'即时设计',emoji:'⚡',cat:'design',tags:['free'],desc:'国产AI设计工具，UI和原型',url:'https://js.design',urlText:'访问官网',
+     detail:'国产AI设计平台。\n\n【核心特点】\n• UI设计\n• 原型制作\n• AI设计助手\n• 组件市场\n• 团队协作\n\n【适用场景】\n• UI设计\n• 产品原型\n• 设计协作\n• 素材市场'},
+
+    // ===== AI企业服务 =====
+    {id:'e1',name:'阿里云百炼',emoji:'☁️',cat:'enterprise',tags:['hot'],desc:'阿里云大模型平台，API调用和应用构建',url:'https://bailian.console.aliyun.com',urlText:'访问官网',aliyun:true,
+     detail:'阿里云大模型服务平台。\n\n【核心特点】\n• 通义千问API\n• 模型微调\n• 应用托管\n• 阿里云生态\n• 企业级服务\n\n【适用场景】\n• 企业AI应用\n• API集成\n• 模型定制\n• 应用部署\n\n【核心优势】\n• 阿里云支持\n• 稳定可靠\n• 价格优惠'},
+    {id:'e2',name:'火山引擎',emoji:'🌋',cat:'enterprise',tags:['hot'],desc:'字节跳动云服务，AI能力和算力',url:'https://www.volcengine.com',urlText:'访问官网',
+     detail:'字节跳动云服务平台。\n\n【核心特点】\n• 云雀大模型\n• 豆包大模型\n• 视觉模型\n• 火山引擎整合\n• 抖音生态\n\n【适用场景】\n• 视频理解\n• 内容生成\n• 对话交互\n• 企业应用'},
+    {id:'e3',name:'腾讯混元大模型',emoji:'🐧',cat:'enterprise',tags:['hot'],desc:'腾讯混元API，企业级AI服务',url:'https://hunyuan.tencent.com',urlText:'访问官网',
+     detail:'腾讯混元大模型API。\n\n【核心特点】\n• 混元大模型\n• 文生图\n• 文生视频\n• 腾讯生态\n• 企业级服务\n\n【适用场景】\n• 企业应用\n• 内容生成\n• 对话系统\n• 多模态应用'},
+    {id:'e4',name:'百度智能云',emoji:'🔍',cat:'enterprise',tags:['hot'],desc:'百度AI云服务，文心大模型API',url:'https://cloud.baidu.com',urlText:'访问官网',
+     detail:'百度AI云服务平台。\n\n【核心特点】\n• 文心一言\n• 文心一格\n• 语音技术\n• 图像识别\n• 百度云整合\n\n【适用场景】\n• 企业AI应用\n• 内容生成\n• 对话系统\n• 视觉应用'},
+    {id:'e5',name:'讯飞开放平台',emoji:'🔥',cat:'enterprise',tags:['hot'],desc:'科大讯飞语音和认知AI开放平台',url:'https://www.xfyun.cn',urlText:'访问官网',
+     detail:'讯飞AI开放平台。\n\n【核心特点】\n• 语音合成\n• 语音识别\n• 语音评测\n• 机器翻译\n• 星火大模型\n\n【适用场景】\n• 语音应用\n• 教育产品\n• 智能客服\n• 企业服务'},
+    {id:'e6',name:'华为云盘古',emoji:'🛡️',cat:'enterprise',tags:['hot'],desc:'华为云大模型，企业级AI',url:'https://www.huaweicloud.com',urlText:'访问官网',
+     detail:'华为云大模型平台。\n\n【核心特点】\n• 盘古大模型\n• 昇腾AI\n• 云服务\n• 企业级安全\n• 行业解决方案\n\n【适用场景】\n• 企业应用\n• 行业AI\n• 数据处理\n• 云原生开发'},
+    {id:'e7',name:'阿里云视觉AI',emoji:'👁️',cat:'enterprise',tags:['free'],desc:'阿里云图像识别、OCR等视觉AI服务',url:'https://vision.aliyun.com',urlText:'访问官网',
+     detail:'阿里云视觉AI服务。\n\n【核心特点】\n• 图像识别\n• OCR文字识别\n• 人脸识别\n• 视频分析\n• 免费额度\n\n【适用场景】\n• 图像处理\n• 文档识别\n• 人脸核身\n• 内容审核'},
+    {id:'e8',name:'腾讯云AI',emoji:'🐧',cat:'enterprise',tags:['free'],desc:'腾讯云人工智能服务合集',url:'https://cloud.tencent.com/product/ai',urlText:'访问官网',
+     detail:'腾讯云AI服务合集。\n\n【核心特点】\n• 图像识别\n• 语音技术\n• NLP服务\n• 人脸识别\n• 免费试用\n\n【适用场景】\n• 企业应用\n• 图像处理\n• 语音交互'},
+    {id:'e9',name:'火山引擎语音AI',emoji:'🎙️',cat:'enterprise',tags:['hot'],desc:'字节跳动语音合成和识别服务',url:'https://www.volcengine.com',urlText:'访问官网',
+     detail:'火山引擎语音AI服务。\n\n【核心特点】\n• 语音合成\n• 语音识别\n• 声音克隆\n• 音频处理\n• 豆包语音\n\n【适用场景】\n• 语音应用\n• 智能客服\n• 有声内容\n• 车载系统'},
+    {id:'e10',name:'商汤AI开放平台',emoji:'🧠',cat:'enterprise',tags:['hot'],desc:'商汤科技视觉AI和生成式AI服务',url:'https://www.sensetime.com',urlText:'访问官网',
+     detail:'商汤AI开放平台。\n\n【核心特点】\n• 计算机视觉\n• 人脸识别\n• 图像生成\n• 视频分析\n• 行业解决方案\n\n【适用场景】\n• 安防监控\n• 智慧城市\n• 金融核身\n• 内容创作'},
+    {id:'e11',name:'旷视AI平台',emoji:'👤',cat:'enterprise',tags:['hot'],desc:'旷视科技人脸识别和计算机视觉',url:'https://www.megvii.com',urlText:'访问官网',
+     detail:'旷视AI平台。\n\n【核心特点】\n• 人脸识别\n• 图像识别\n• 视频分析\n• Face++技术\n• 行业方案\n\n【适用场景】\n• 安防监控\n• 身份核验\n• 智慧城市'},
+    {id:'e12',name:'云从科技',emoji:'🦚',cat:'enterprise',tags:['hot'],desc:'云从科技AI感知和认知服务',url:'https://www.cloudwalk.com',urlText:'访问官网',
+     detail:'云从科技AI平台。\n\n【核心特点】\n• 人机协同\n• 行业AI\n• 认知智能\n• 感知服务\n• 行业解决方案\n\n【适用场景】\n• 智慧金融\n• 智慧治理\n• 智慧出行'},
+    {id:'e13',name:'海康威视AI',emoji:'📹',cat:'enterprise',tags:['hot'],desc:'海康威视视频AI和物联网服务',url:'https://www.hikvision.com',urlText:'访问官网',
+     detail:'海康威视AI服务。\n\n【核心特点】\n• 视频监控\n• 图像识别\n• 物联网AI\n• 行业视频方案\n\n【适用场景】\n• 安防监控\n• 智慧城市\n• 工业物联网'},
+    {id:'e14',name:'阿里云机器学习PAI',emoji:'🤖',cat:'enterprise',tags:['hot'],desc:'阿里云机器学习平台，模型训练和部署',url:'https://pai.data.aliyun.com',urlText:'访问官网',
+     detail:'阿里云机器学习平台。\n\n【核心特点】\n• 模型训练\n• 模型部署\n• AutoML\n• 算法市场\n• 云原生\n\n【适用场景】\n• 模型开发\n• 数据科学\n• AI应用'},
+    {id:'e15',name:'百度AI开放平台',emoji:'🔍',cat:'enterprise',tags:['hot'],desc:'百度文字识别、语音、图像全栈AI',url:'https://ai.baidu.com',urlText:'访问官网',
+     detail:'百度AI开放平台。\n\n【核心特点】\n• OCR识别\n• 语音技术\n• 图像识别\n• NLP服务\n• 全栈AI能力\n\n【适用场景】\n• 企业AI应用\n• 内容审核\n• 图像处理'},
+    {id:'e16',name:'网易云商',emoji:'💬',cat:'enterprise',tags:['hot'],desc:'网易AI客服和营销服务',url:'https://wuyoushang.com',urlText:'访问官网',
+     detail:'网易云商服务平台。\n\n【核心特点】\n• 智能客服\n• 营销云\n• 客服云\n• 数据分析\n• 行业方案\n\n【适用场景】\n• 电商客服\n• 企业营销\n• 客户管理'},
+    {id:'e17',name:'容联七陌',emoji:'📞',cat:'enterprise',tags:['hot'],desc:'AI客服和呼叫中心解决方案',url:'https://www.7moor.com',urlText:'访问官网',
+     detail:'智能客服与呼叫中心平台。\n\n【核心特点】\n• 智能客服\n• 呼叫中心\n• 语音机器人\n• 工单系统\n• 数据分析\n\n【适用场景】\n• 企业客服\n• 呼叫中心\n• 售后支持'},
+    {id:'e18',name:'竹间智能',emoji:'🎋',cat:'enterprise',tags:['hot'],desc:'AI情感对话和NLP服务',url:'https://www.emotibot.com',urlText:'访问官网',
+     detail:'情感AI与NLP平台。\n\n【核心特点】\n• 情感计算\n• NLP服务\n• 对话系统\n• 文字识别\n\n【适用场景】\n• 情感分析\n• 智能客服\n• 舆情监控'},
+    {id:'e19',name:'追一科技',emoji:'🔍',cat:'enterprise',tags:['hot'],desc:'AI智能客服和企业对话平台',url:'https://zhuiyi.ai',urlText:'访问官网',
+     detail:'AI对话平台。\n\n【核心特点】\n• 智能客服\n• 对话AI\n• 知识图谱\n• 行业方案\n\n【适用场景】\n• 企业客服\n• 智能对话\n• 知识问答'},
+    {id:'e20',name:'循环智能',emoji:'🔄',cat:'enterprise',tags:['hot'],desc:'销售AI和客服AI解决方案',url:'https://www.rcust.com',urlText:'访问官网',
+     detail:'销售与客服AI平台。\n\n【核心特点】\n• 销售AI\n• 客服AI\n• 会话分析\n• 产能提升\n\n【适用场景】\n• 销售赋能\n• 客服辅助\n• 业绩提升'},
+
+    // ===== AI电商工具 =====
+    {id:'ec1',name:'万兴播爆',emoji:'🎬',cat:'ecommerce',tags:['hot'],desc:'万兴科技AI数字人，电商直播必备',url:'https://broadcast.wondershare.cn',urlText:'访问官网',
+     detail:'万兴播爆是万兴科技推出的AI数字人视频创作平台，专为电商直播场景打造。\n\n【核心功能】\n• AI数字人形象：提供多个虚拟主播形象选择，支持定制\n• 文字转语音：输入文案自动生成数字人播报视频\n• 多语言支持：支持中文、英文等多语言配音\n• 丰富模板：提供多种直播场景模板快速套用\n\n【适用场景】\n• 电商直播预录视频\n• 商品介绍短视频\n• 品牌宣传片制作\n• 多语言跨境电商\n\n【特色优势】\n• 告别镜头恐惧，数字人主播24小时在线\n• 一键生成，大幅降低视频制作成本\n• 支持多平台分发（抖音、快手、淘宝等）'},
+    {id:'ec3',name:'秒创电商版',emoji:'⚡',cat:'ecommerce',tags:['free'],desc:'秒创AI视频，商品展示和直播',url:'https://miaobochuang.com',urlText:'访问官网',
+     detail:'秒创AI是全新一代的智能内容生成平台，电商版专为商品展示和直播场景优化。\n\n【核心功能】\n• AI数字人：多种风格数字人主播可选\n• 文字转视频：输入商品文案自动生成视频\n• 智能配音：多种音色可选，支持方言\n• 商品图转视频：静态图片秒变动态展示\n\n【适用场景】\n• 商品详情页视频\n• 淘宝/京东主图视频\n• 直播预热短视频\n• 私域运营素材\n\n【免费政策】\n• 每日赠送免费生成次数\n• 新用户首月体验更优惠\n• 基础功能永久免费使用'},
+    {id:'ec4',name:'鹿班AI',emoji:'🦌',cat:'ecommerce',tags:['hot'],desc:'阿里鹿班，批量商品图设计',url:'https://lubanyun.com',urlText:'访问官网',
+     detail:'阿里鹿班是阿里巴巴旗下AI设计平台，日均生成数百万张营销图片。\n\n【核心功能】\n• 批量抠图：AI智能识别主体，一键去除背景\n• 智能排版：自动生成多尺寸营销图\n• 风格迁移：支持多种设计风格一键切换\n• 海报生成：输入文案即可生成精美海报\n\n【适用场景】\n• 淘宝/天猫商品主图\n• 京东/拼多多店铺装修\n• 营销活动海报\n• 社交媒体配图\n\n【特色优势】\n• 源自阿里巴巴技术，日处理量级最大\n• 深度对接淘宝生态，一键同步发布\n• 多种尺寸模板，满足全平台需求'},
+    {id:'ec5',name:'顽兔AI',emoji:'🐰',cat:'ecommerce',tags:['free'],desc:'阿里巴巴AI抠图，电商图片处理',url:'https://alibaba.design',urlText:'访问官网',
+     detail:'顽兔AI是阿里巴巴设计团队推出的AI图像处理工具，专注于电商图片优化。\n\n【核心功能】\n• AI智能抠图：发丝级精度，一键去除背景\n• 图片修复：智能补全缺角、修复瑕疵\n• 色彩优化：自动调整图片色彩和光线\n• 批量处理：支持一次性处理多张图片\n\n【适用场景】\n• 商品白底图制作\n• 模特图背景替换\n• 场景图优化\n• 素材批量处理\n\n【免费政策】\n• 基础功能完全免费\n• 每日免费额度充足\n• 淘宝商家专享优惠'},
+    {id:'ec6',name:'妙聊AI',emoji:'💬',cat:'ecommerce',tags:['new'],desc:'AI客服和商品推荐',url:'https://miaoliao.com',urlText:'访问官网',
+     detail:'妙聊AI是新一代智能电商客服系统，融合大模型技术提升客户服务体验。\n\n【核心功能】\n• 智能客服：7×24小时自动回答买家问题\n• 商品推荐：根据用户需求AI推荐相关商品\n• 订单处理：自动处理常见订单问题\n• 数据分析：洞察客户需求，优化运营\n\n【适用场景】\n• 售前咨询接待\n• 售后服务处理\n• 会员运营维护\n• 私域流量转化\n\n【核心优势】\n• 多轮对话，理解复杂问题\n• 持续学习，越用越聪明\n• 无缝对接电商后台系统'},
+    {id:'ec7',name:'店小秘',emoji:'📋',cat:'ecommerce',tags:['free'],desc:'电商ERP，订单和商品管理',url:'https://www.dianxiaomi.com',urlText:'访问官网',
+     detail:'店小秘是深受欢迎的跨境电商ERP系统，帮助卖家高效管理多平台店铺。\n\n【核心功能】\n• 多平台对接：支持亚马逊、eBay、Wish等50+平台\n• 订单管理：批量处理订单，自动同步物流\n• 产品刊登：一键发布到多个店铺\n• 库存管理：多仓库实时库存同步\n\n【适用场景】\n• 跨境电商多店铺管理\n• 订单处理效率提升\n• 产品批量刊登\n• 库存智能管理\n\n【免费政策】\n• 基础版永久免费\n• 日订单200单内无限制\n• 支持中文界面'},
+    {id:'ec8',name:'千牛AI',emoji:'🐮',cat:'ecommerce',tags:['hot'],desc:'阿里巴巴电商AI客服和运营工具',url:'https://qianniu.taobao.com',urlText:'访问官网',
+     detail:'千牛是阿里巴巴官方卖家工作台，集成AI智能工具提升店铺运营效率。\n\n【核心功能】\n• 智能客服：AI自动回复，买家咨询无忧\n• 数据分析：店铺经营数据全掌握\n• 营销工具：优惠券、满减等活动一键创建\n• 商品管理：批量上下架，智能定价\n\n【适用场景】\n• 淘宝/天猫店铺日常运营\n• 客户咨询接待\n• 活动策划执行\n• 数据复盘分析\n\n【特色优势】\n• 阿里巴巴官方出品，稳定可靠\n• 深度集成淘宝生态\n• 海量卖家使用，口碑保障'},
+    {id:'ec9',name:'AI商品图',emoji:'🖼️',cat:'ecommerce',tags:['free'],desc:'AI一键生成商品展示图',url:'https://aitu.aliyun.com',urlText:'访问官网',
+     detail:'阿里云AI商品图是阿里云推出的智能图片生成工具，快速生成高质量商品展示图。\n\n【核心功能】\n• 场景合成：将商品融入精美场景\n• 风格迁移：一键切换不同视觉风格\n• 尺寸适配：自动生成多平台适用尺寸\n• HDR增强：提升图片质感和细节\n\n【适用场景】\n• 电商主图设计\n• 详情页配图\n• 社交媒体配图\n• 广告投放素材\n\n【免费政策】\n• 新用户赠送免费额度\n• 基础功能每日免费用\n• 充值更优惠'},
+    {id:'ec10',name:'画三百',emoji:'🎨',cat:'ecommerce',tags:['new'],desc:'AI电商设计，人台图和商品图',url:'https://www.huasnb.com',urlText:'访问官网',
+     detail:'画三百是专为服装电商设计的AI作图工具，解决人台图、模特图的拍摄成本问题。\n\n【核心功能】\n• 人台图转模特：AI生成真实感模特上身效果\n• 服装模特库：海量不同体型、肤色模特\n• 场景切换：室内室外多种背景可选\n• 换装搭配：支持多件服装搭配展示\n\n【适用场景】\n• 服装电商主图\n• 淘宝详情页模特图\n• 跨境电商服装展示\n• 快时尚新品上架\n\n【核心优势】\n• 告别高价模特拍摄\n• 批量生成，降本增效\n• 效果逼真，媲美真人拍摄'},
+    {id:'ec11',name:'美图设计室电商版',emoji:'💅',cat:'ecommerce',tags:['hot'],desc:'美图秀秀电商专用，商品图和主图',url:'https://www.designkit.com',urlText:'访问官网',
+     detail:'美图设计室是美图秀秀推出的电商设计工具，提供海量电商设计素材和模板。\n\n【核心功能】\n• 电商海报：各类目电商海报模板\n• 主图视频：快速制作商品展示视频\n• 智能抠图：发丝级精准度\n• 营销素材：节日活动一键生成\n\n【适用场景】\n• 淘宝/天猫店铺装修\n• 主图直通车图\n• 活动大促素材\n• 社交媒体配图\n\n【特色优势】\n• 美图出品，必属精品\n• 海量模板持续更新\n• 操作简单，拖拽即用'},
+    {id:'ec12',name:'图生生',emoji:'🔄',cat:'ecommerce',tags:['new'],desc:'AI电商图片处理，模特换装',url:'https://tushengsheng.com',urlText:'访问官网',
+     detail:'图生生是专业的AI模特换装平台，帮助服装电商解决模特图拍摄难题。\n\n【核心功能】\n• AI模特替换：支持国内外多种模特风格\n• 肤色适配：自动匹配服装与肤色\n• 场景定制：多种拍摄场景可选\n• 批量处理：一次处理多款服装\n\n【适用场景】\n• 服装电商模特图\n• 内衣/泳装展示\n• 跨境电商本地化\n• 新品快速上架\n\n【核心优势】\n• 效果逼真自然\n• 大幅降低拍摄成本\n• 支持定制化需求'},
+    {id:'ec13',name:'灵动AI',emoji:'💫',cat:'ecommerce',tags:['new'],desc:'AI商品场景图生成',url:'https://www.lingdongai.com',urlText:'访问官网',
+     detail:'灵动AI专注于为电商商品生成精美的场景展示图，让产品更具吸引力。\n\n【核心功能】\n• 场景生成：AI为商品自动匹配精美场景\n• 光影优化：智能调整光照效果\n• 风格多样：支持极简、北欧、中式等多种风格\n• 多角度展示：自动生成多视角展示图\n\n【适用场景】\n• 家具家电场景图\n• 家居用品展示\n• 数码产品渲染\n• 美妆护肤场景\n\n【特色优势】\n• 一键生成高质量场景图\n• 省去昂贵的场景搭建费用\n• 支持批量生成'},
+    {id:'ec14',name:'智匠AI',emoji:'🛠️',cat:'ecommerce',tags:['new'],desc:'AI电商文案和内容生成',url:'https://zhijiang.ai',urlText:'访问官网',
+     detail:'智匠AI是专业的电商文案生成工具，帮助卖家快速产出高质量商品文案。\n\n【核心功能】\n• 商品卖点：自动提炼产品核心卖点\n• 种草文案：小红书/抖音风格文案\n• 详情页文案：完整商品详情描述\n• 营销话术：活动促销文案模板\n\n【适用场景】\n• 商品标题优化\n• 详情页文案撰写\n• 种草笔记创作\n• 直播话术准备\n\n【核心优势】\n• 深度学习电商文案规律\n• 支持多平台风格适配\n• 批量生成效率高'},
+    {id:'ec15',name:'快麦CRM',emoji:'📊',cat:'ecommerce',tags:['hot'],desc:'电商客户管理和营销AI',url:'https://www.kuaimai.com',urlText:'访问官网',
+     detail:'快麦CRM是专业的电商客户关系管理系统，融合AI技术提升客户运营效率。\n\n【核心功能】\n• 客户画像：多维度分析客户特征\n• 智能营销：自动化触达提升转化\n• 会员管理：完善的会员等级体系\n• 数据分析：客户全生命周期追踪\n\n【适用场景】\n• 客户分层运营\n• 精准营销触达\n• 会员体系搭建\n• 复购率提升\n\n【特色优势】\n• AI驱动精准营销\n• 对接主流电商平台\n• 丰富的营销玩法'},
+
+    // ===== AI学习教育 =====
+    {id:'l1',name:'Kimi学习助手',emoji:'🤖',cat:'learning',tags:['free'],desc:'Kimi长文本阅读和学习资料分析',url:'https://kimi.moonshot.cn',urlText:'访问官网',
+     detail:'Kimi是月之暗面推出的AI学习助手，专注于长文本阅读和学术资料分析。\n\n【核心功能】\n• 超长上下文：支持20万字无损阅读\n• 多文档分析：一次性分析多份学习资料\n• 智能问答：深入理解并解答学术问题\n• 论文辅助：论文摘要、润色、格式调整\n\n【适用场景】\n• 学术论文阅读\n• 教材自学辅导\n• 考研/考公资料整理\n• 行业报告分析\n\n【免费政策】\n• 完全免费使用\n• 无需注册即可体验\n• 支持网页和小程序'},
+    {id:'l2',name:'讯飞学习机AI',emoji:'🔥',cat:'learning',tags:['hot'],desc:'科大讯飞AI学习机，个性化辅导',url:'https://www.iflytek.com',urlText:'访问官网',
+     detail:'讯飞学习机是科大讯飞推出的AI智能学习设备，搭载讯飞星火大模型。\n\n【核心功能】\n• AI个性化学习：根据薄弱点定制学习计划\n• AI作业批改：数学、英语等全科智能批改\n• AI口语评测：标准发音评测和纠正\n• 知识点图谱：可视化知识掌握情况\n\n【适用场景】\n• K12全科辅导\n• 中高考备考\n• 英语口语练习\n• 课后作业辅导\n\n【特色优势】\n• 讯飞多年教育数据积累\n• AI精准找到学习薄弱点\n• 因材施教，效率提升显著'},
+    {id:'l3',name:'百度文库AI教育',emoji:'📚',cat:'learning',tags:['free'],desc:'百度文库AI教育版，课件和习题',url:'https://wenku.baidu.com',urlText:'访问官网',
+     detail:'百度文库AI教育版是百度文库推出的智能教育工具，提供海量教学资源和AI辅助功能。\n\n【核心功能】\n• AI生成课件：一键生成精美教学PPT\n• 智能出题：根据知识点自动生成练习题\n• 文档总结：长文档一键提炼核心要点\n• 海量资源：2亿+文档资源库\n\n【适用场景】\n• 教师备课制作课件\n• 学生复习整理笔记\n• 家长辅导作业\n• 各类考试备考\n\n【免费政策】\n• 基础功能免费使用\n• 每日赠送AI额度\n• 学生会员更优惠'},
+    {id:'l4',name:'有道AI学习',emoji:'📖',cat:'learning',tags:['hot'],desc:'网易有道AI学习工具',url:'https://www.youdao.com',urlText:'访问官网',
+     detail:'有道AI学习是网易有道推出的智能学习平台，涵盖词典、翻译、学习等多个场景。\n\n【核心功能】\n• AI词典：拍照翻译，实时取词\n• 口语评测：英语发音智能打分\n• AI作文批改：英语作文智能纠错润色\n• 个性化推荐：根据水平推荐学习内容\n\n【适用场景】\n• 英语学习全程辅导\n• 考研英语备考\n• 留学考试准备（雅思、托福）\n• 职场英语提升\n\n【特色优势】\n• 有道词典9亿用户信赖\n• AI技术领先，发音评测精准\n• 丰富的学习内容生态'},
+    {id:'l5',name:'腾讯课堂AI',emoji:'🎓',cat:'learning',tags:['free'],desc:'腾讯课堂AI课程推荐',url:'https://ke.qq.com',urlText:'访问官网',
+     detail:'腾讯课堂是腾讯推出的在线教育平台，汇聚海量优质课程，AI技术提升学习体验。\n\n【核心功能】\n• 智能推荐：根据学习目标推荐课程\n• AI笔记：自动生成课程重点笔记\n• 学习计划：个性化学习路径规划\n• 学习数据：学习时长、进度可视化\n\n【适用场景】\n• IT编程学习\n• 职业技能考证\n• 兴趣爱好培养\n• 学历提升课程\n\n【免费资源】\n• 大量免费课程资源\n• 付费课程性价比高\n• 微信登录即可学习'},
+    {id:'l6',name:'学而思网校AI',emoji:'🏫',cat:'learning',tags:['hot'],desc:'学而思AI在线教育平台',url:'https://www.xueersi.com',urlText:'访问官网',
+     detail:'学而思网校是好未来旗下中小学在线教育品牌，AI技术让个性化学习更高效。\n\n【核心功能】\n• AI老师：学而思自研大模型辅助教学\n• 智能批改：数学等科目AI即时批改\n• 知识点追踪：精准定位薄弱环节\n• 互动课堂：趣味动画激发学习兴趣\n\n【适用场景】\n• 小升初衔接\n• 中考高考冲刺\n• 思维训练培养\n• 素质类课程学习\n\n【特色优势】\n• 学而思19年教育沉淀\n• AI+教育深度融合\n• 名师团队精心打磨'},
+    {id:'l7',name:'猿辅导AI',emoji:'🐒',cat:'learning',tags:['hot'],desc:'猿辅导AI个性化学习',url:'https://www.yuanfudao.com',urlText:'访问官网',
+     detail:'猿辅导是国内领先的智能教育公司，AI技术为每个学生定制专属学习方案。\n\n【核心功能】\n• AI薄弱点检测：快速定位知识漏洞\n• 智能练习：根据水平推送适配题目\n• AI讲解：不会的题AI详细讲解\n• 错题本：自动收集整理错题\n\n【适用场景】\n• 数学思维培养\n• 小学全科辅导\n• 初中同步学习\n• 高中专项突破\n\n【特色优势】\n• AI精准推送，避免题海战术\n• 学习数据全追踪\n• 趣味互动提高学习积极性'},
+    {id:'l8',name:'作业帮AI',emoji:'📝',cat:'learning',tags:['hot'],desc:'作业帮AI拍照解题',url:'https://www.zybang.com',urlText:'访问官网',
+     detail:'作业帮是国内用户量最大的智能学习平台，AI拍照解题功能深受学生喜爱。\n\n【核心功能】\n• 拍照搜题：秒出答案和解析\n• AI讲解：视频+文字详细解答\n• 作文批改：语文英语作文AI打分\n• 举一反三：类似题目智能推送\n\n【适用场景】\n• 课后作业辅导\n• 考前复习冲刺\n• 知识点查漏补缺\n• 寒暑假预习复习\n\n【特色优势】\n• 8亿+题库资源\n• 拍照识别准确率超99%\n• 视频讲解通俗易懂'},
+    {id:'l9',name:'拍照识题',emoji:'📷',cat:'learning',tags:['free'],desc:'AI拍照识别题目并解答',url:'https://www.zybang.com',urlText:'访问官网',
+     detail:'拍照识题是AI驱动的智能解题工具，拍照即可获得详细解题步骤和答案。\n\n【核心功能】\n• 精准识别：复杂公式、几何图形轻松识别\n• 多种解法：同一题提供多种解法思路\n• 知识点关联：关联相关知识点讲解\n• 收藏整理：题目一键收藏便于复习\n\n【适用场景】\n• 作业不会随手拍\n• 考前刷题答疑\n• 难题重点标注\n• 学习小组讨论\n\n【免费政策】\n• 基础功能免费使用\n• 无广告干扰学习\n• 支持多学科'},
+    {id:'l10',name:'讯飞口算',emoji:'🧮',cat:'learning',tags:['free'],desc:'科大讯飞AI口算批改',url:'https://kousuan.xfyun.cn',urlText:'访问官网',
+     detail:'讯飞口算是科大讯飞推出的AI口算批改工具，帮助孩子高效练习计算能力。\n\n【核心功能】\n• 拍照批改：口算作业拍照秒批\n• 错题归类：自动整理错题类型\n• 智能出题：根据薄弱点出题\n• 能力报告：计算能力可视化分析\n\n【适用场景】\n• 小学数学口算练习\n• 巩固基础计算能力\n• 考前专项训练\n• 计算速度提升\n\n【免费政策】\n• 完全免费使用\n• 无需注册登录\n• 讯飞AI技术保障准确率'},
+    {id:'l11',name:'百度智慧课堂',emoji:'🎓',cat:'learning',tags:['free'],desc:'百度AI教育解决方案',url:'https://zhihui.baidu.com',urlText:'访问官网',
+     detail:'百度智慧课堂是百度推出的AI教育解决方案，为学校和培训机构提供智能化教学工具。\n\n【核心功能】\n• AI备课：智能生成教学方案和课件\n• 智能批改：主观题客观题均可批改\n• 学情分析：班级学生整体学习情况\n• 资源推荐：根据教学进度推荐资源\n\n【适用场景】\n• 学校智慧教学\n• 培训机构课程管理\n• 教师备课增效\n• 家校互动\n\n【免费政策】\n• 学校/机构可申请免费试用\n• 基础功能免费开放\n• API接口支持对接'},
+    {id:'l12',name:'一起学',emoji:'📚',cat:'learning',tags:['free'],desc:'AI作业批改和学习分析',url:'https://www.17zy.com',urlText:'访问官网',
+     detail:'一起学是专业的K12教育平台，提供AI作业批改和学习数据分析服务。\n\n【核心功能】\n• AI作业批改：语数英等全科智能批改\n• 薄弱点分析：精准定位学生薄弱点\n• 个性化作业：根据水平推送专属练习\n• 学习报告：家长实时了解孩子学习情况\n\n【适用场景】\n• 课后作业辅导\n• 期中期末复习\n• 家长了解学情\n• 老师减负增效\n\n【免费政策】\n• 基础功能免费使用\n• 学校版免费申请\n• 家长版无收费项目'},
+    {id:'l13',name:'纳米盒AI',emoji:'📦',cat:'learning',tags:['free'],desc:'小学AI学习工具',url:'https://www.namihe.com',urlText:'访问官网',
+     detail:'纳米盒是专为小学生打造的学习工具，AI技术让小学学习更轻松有趣。\n\n【核心功能】\n• AI听写：语文英语智能听写\n• 口语评测：标准发音跟读练习\n• 绘本阅读：海量英文原版绘本\n• 思维训练：趣味数学思维培养\n\n【适用场景】\n• 小学语文学习\n• 英语启蒙教育\n• 数学思维培养\n• 课后复习巩固\n\n【免费资源】\n• 大量免费学习内容\n• 绘本免费阅读\n• 趣味学习游戏'},
+    {id:'l14',name:'松鼠AI',emoji:'🐿️',cat:'learning',tags:['hot'],desc:'AI自适应学习系统',url:'https://www.songshu21.com',urlText:'访问官网',
+     detail:'松鼠AI是知名的AI自适应学习平台，通过AI技术实现真正的因材施教。\n\n【核心功能】\n• AI精准测：快速定位知识薄弱点\n• 纳米级拆分：知识点拆分到最小颗粒度\n• 智能推送：根据掌握程度推送学习内容\n• 学习路径：动态调整最优学习路径\n\n【适用场景】\n• K12全科辅导\n• 中高考冲刺\n• 补弱培优\n• 考前专项突破\n\n【核心优势】\n• AI自适应技术全球领先\n• 学习效率提升3-5倍\n• 著名投资机构背书'},
+    {id:'l15',name:'好未来AI学',emoji:'📈',cat:'learning',tags:['hot'],desc:'好未来AI个性化学习',url:'https://www.tal.com',urlText:'访问官网',
+     detail:'好未来AI学是好未来集团推出的智能学习产品，依托集团教育资源打造AI学习新体验。\n\n【核心功能】\n• AI学情诊断：全面分析学习情况\n• 智能推荐：个性化学习内容推荐\n• 互动课堂：AI驱动的趣味课堂\n• 成长档案：记录学习点滴成长\n\n【适用场景】\n• 3-18岁全年龄段\n• 素质教育和学科辅导\n• 能力提升训练\n• 升学备考指导\n\n【特色优势】\n• 好未来教育集团出品\n• 优质教育资源整合\n• AI技术与教育深度结合'},
+
+    // ===== AI趣味工具 =====
+    {id:'f1',name:'玄学殿堂',emoji:'🔮',cat:'life',tags:['hot'],desc:'星座、生肖、塔罗、起名等趣味运势测试',url:'fortune.html',urlText:'立即体验',
+     detail:'玄学殿堂是集趣味性、娱乐性于一体的运势测试平台，融合AI技术提供精准有趣的命理分析。\n\n【核心功能】\n• 星座配对：12星座性格分析、恋爱配对指数\n• 生肖运势：12生肖每日/每周/每月运势\n• 塔罗占卜：多种牌阵，AI智能解读\n• 姓名测试：姓名吉凶、五行分析\n• 观音灵签：古典算法结合现代解读\n• 手相面相：AI识别手纹和面部特征\n\n【特色服务】\n• AI驱动，分析更精准\n• 界面精美，体验流畅\n• 完全免费，随时可测\n• 详细解读，物超所值\n\n【适用人群】\n• 对星座运势感兴趣\n• 想了解命理文化\n• 娱乐消遣打发时间\n• 社交破冰话题'},
+    {id:'f2',name:'通义面相',emoji:'👤',cat:'life',tags:['new'],desc:'阿里云AI人脸分析，五官解读',url:'https://faceanalysis.aliyun.com',urlText:'访问官网',
+     detail:'通义面相是阿里云推出的AI人脸分析工具，通过AI技术分析面部特征提供运势参考。\n\n【核心功能】\n• 五官分析：眉眼耳鼻口逐一解读\n• 面相评分：综合评估面相打分\n• 开运建议：根据面相结合五行给出建议\n• 历史记录：保存分析结果便于对比\n\n【适用场景】\n• 好奇自己的面相特点\n• 了解面相与运势关系\n• 娱乐测试打发时间\n• 社交分享互动\n\n【特色优势】\n• 阿里云AI技术保障\n• 分析速度快，准确率高\n• 完全免费使用\n• 持续更新算法提升准确度'},
+    {id:'f3',name:'AI变老',emoji:'👴',cat:'life',tags:['free'],desc:'上传照片看未来老去的模样',url:'https://www.faceapp.com',urlText:'访问官网',
+     detail:'AI变老是一款风靡全球的趣味拍照应用，通过AI技术预测你老年时的模样。\n\n【核心功能】\n• 年龄预测：看看自己老了什么样\n• 多种风格：不同年龄段效果可选\n• 男女切换：体验异性变老效果\n• 一键分享：生成精美图片分享朋友圈\n\n【适用场景】\n• 朋友圈趣味分享\n• 家庭聚会娱乐\n• 生日祝福创意\n• 社交媒体涨粉\n\n【免费政策】\n• 基础功能免费使用\n• 部分特效需付费\n• 无广告干扰'},
+    {id:'f4',name:'AI换脸',emoji:'🔄',cat:'life',tags:['hot'],desc:'AI换脸工具，趣味头像',url:'https://www.facefusion.com',urlText:'访问官网',
+     detail:'AI换脸是新一代智能换脸工具，可以将你的脸完美融合到任何图片或视频中。\n\n【核心功能】\n• 照片换脸：与明星/网红交换面孔\n• 视频换脸：制作趣味短视频\n• 性别转换：体验异性的自己\n• 童年变装：看看小时候的自己\n\n【适用场景】\n• 制作趣味头像\n• 朋友圈分享素材\n• 视频创作灵感\n• 家人朋友娱乐\n\n【注意事项】\n• 请勿用于侵犯隐私\n• 仅供娱乐使用\n• 生成效果逼真'},
+    {id:'f5',name:'AI捏脸',emoji:'😊',cat:'life',tags:['free'],desc:'AI生成个性化头像',url:'https://www.character.ai',urlText:'访问官网',
+     detail:'AI捏脸是智能头像生成工具，可以根据你的描述或照片生成独特的个性化头像。\n\n【核心功能】\n• 文字生图：描述你想要的头像\n• 照片生成：上传照片生成卡通版\n• 风格多样：日漫/韩漫/水墨/古风等\n• 批量生成：一次生成多种风格对比\n\n【适用场景】\n• 制作社交媒体头像\n• 游戏角色设定\n• 创作灵感收集\n• 个人IP形象设计\n\n【免费政策】\n• 每日赠送免费次数\n• 基础风格免费使用\n• 高级风格需付费'},
+    {id:'f6',name:'表情包生成',emoji:'😄',cat:'life',tags:['free'],desc:'AI生成搞笑表情包',url:'https://www.meme.ai',urlText:'访问官网',
+     detail:'表情包生成器是AI驱动的趣味图片生成工具，让你轻松制作各种搞笑表情包。\n\n【核心功能】\n• 文字配图：输入文字自动匹配模板\n• AI改图：把普通照片变成表情包\n• 批量生成：一次生成多个选择\n• 素材库：海量表情包模板\n\n【适用场景】\n• 微信聊天斗图\n• 朋友圈分享\n• 社交媒体运营\n• 好友聚会娱乐\n\n【免费政策】\n• 完全免费使用\n• 无水印下载\n• 支持一键保存'},
+    {id:'f7',name:'AI唱歌',emoji:'🎤',cat:'life',tags:['hot'],desc:'上传照片让AI唱首歌',url:'https://suno.ai',urlText:'访问官网',
+     detail:'AI唱歌是前沿的AI音乐生成工具，可以让你的照片开口唱歌或者创作原创音乐。\n\n【核心功能】\n• 照片唱歌：上传照片让TA唱指定歌曲\n• AI原创：根据描述创作歌曲\n• 风格切换：流行/古典/说唱等\n• 歌词编辑：自定义歌曲歌词\n\n【适用场景】\n• 给偶像/家人惊喜\n• 短视频创作素材\n• 音乐创作灵感\n• 趣味娱乐分享\n\n【特色优势】\n• 业界领先的AI音频技术\n• 生成效果逼真自然\n• 支持中英文歌曲'},
+    {id:'f8',name:'照片动起来',emoji:'🎬',cat:'life',tags:['free'],desc:'AI让老照片动起来',url:'https://www.myeffect.net',urlText:'访问官网',
+     detail:'照片动起来是一款可以将静态照片转化为动态视频的AI工具，让回忆更鲜活。\n\n【核心功能】\n• 表情迁移：让照片中的人物做出表情\n• 口型同步：照片对口型唱歌说话\n• 头部转动：静态照片摇头点头\n• 全身动画：让老照片完整动起来\n\n【适用场景】\n• 老照片修复活化\n• 家人团聚展示\n• 纪念日惊喜\n• 短视频创作素材\n\n【免费政策】\n• 每日免费额度\n• 高清下载需付费\n• 无广告体验'},
+    {id:'f9',name:'AI卡通化',emoji:'🎨',cat:'life',tags:['free'],desc:'照片秒变卡通风格',url:'https://toonme.com',urlText:'访问官网',
+     detail:'AI卡通化是将照片转换为精美卡通风格的AI工具，多种风格可选，效果惊艳。\n\n【核心功能】\n• 日漫风格：日系动漫人物效果\n• 迪士尼风格：童话公主王子效果\n• 皮克斯风格：3D动画电影效果\n• 手绘风格：素描水彩油画效果\n\n【适用场景】\n• 制作卡通头像\n• 社交媒体配图\n• 视频号内容素材\n• 孩子照片卡通化\n\n【免费政策】\n• 每日免费次数\n• 基础风格免费用\n• 高清原图需付费'},
+    {id:'f10',name:'AI证件照',emoji:'📇',cat:'life',tags:['free'],desc:'AI生成专业证件照',url:'https://www.zhengjianmian.com',urlText:'访问官网',
+     detail:'AI证件照是智能证件照制作工具，在家就能拍出专业级别的证件照片。\n\n【核心功能】\n• AI换底色：红白蓝多色背景\n• AI美颜：自然美颜不失真\n• AI正装：添加西装衬衫等服装\n• 多种尺寸：护照、签证、简历等\n\n【适用场景】\n• 各类考试报名照\n• 简历证件照\n• 护照签证照片\n• 驾照社保照片\n\n【特色优势】\n• 通过官方检测标准\n• AI技术保证清晰度\n• 省钱省时在家完成'},
+    {id:'f11',name:'AI漫剧生成',emoji:'📚',cat:'life',tags:['hot'],desc:'输入文字生成AI漫画/短剧',url:'https://miaobochuang.com',urlText:'访问官网',
+     detail:'AI漫剧生成器可以将你的故事文字自动转化为精美的漫画或短剧画面。\n\n【核心功能】\n• 文字转漫画：输入故事生成漫画分镜\n• 多种画风：日漫/国漫/美漫等风格\n• 角色一致：AI保持角色一致性\n• 场景生成：自动生成配套场景背景\n\n【适用场景】\n• 自媒体内容创作\n• 小说推文改编\n• 朋友圈故事分享\n• 短视频脚本创作\n\n【特色优势】\n• 无需绘画技能\n• 批量生成效率高\n• 支持多种画风选择'},
+    {id:'f12',name:'AI恶搞配音',emoji:'😂',cat:'life',tags:['free'],desc:'文字转特定人物声音',url:'https://www.voice.ai',urlText:'访问官网',
+     detail:'AI恶搞配音是将文字转换为明星、名人声音的趣味工具，制作搞笑配音视频。\n\n【核心功能】\n• 名人声线：多种明星/名人声音可选\n• 文字转语音：输入文字生成音频\n• 视频配音：为视频替换声音\n• 情感调节：支持多种情感表达\n\n【适用场景】\n• 朋友恶搞生日祝福\n• 短视频配音素材\n• 创意视频创作\n• 聚会娱乐互动\n\n【注意事项】\n• 请勿用于侵权用途\n• 仅供娱乐使用\n• 尊重他人肖像权'},
+    {id:'f13',name:'AI测脸龄',emoji:'👶',cat:'life',tags:['free'],desc:'AI测颜值和年龄',url:'https://www.howold.net',urlText:'访问官网',
+     detail:'AI测脸龄是通过人脸识别技术分析照片中人物的年龄和颜值的趣味工具。\n\n【核心功能】\n• 年龄预测：AI分析你的真实年龄\n• 颜值评分：多维度评估你的颜值\n• 颜值对比：与明星对比颜值\n• 变老预测：看看未来的样子\n\n【适用场景】\n• 朋友圈趣味分享\n• 朋友聚会娱乐\n• 社交媒体互动\n• 自我了解参考\n\n【免费政策】\n• 完全免费使用\n• 无需注册登录\n• 即扫即用'},
+    {id:'f14',name:'AI头像定制',emoji:'👤',cat:'life',tags:['hot'],desc:'AI定制专属头像，多种风格',url:'https://www.avatary.com',urlText:'访问官网',
+     detail:'AI头像定制是专业的个性化头像生成平台，多种风格可选，总有一款适合你。\n\n【核心功能】\n• 照片转头像：上传照片生成头像\n• 文字描述：描述你想要的风格\n• 风格丰富：动漫/水墨/古风/赛博朋克等\n• 批量生成：一次生成多个方案\n\n【适用场景】\n• 社交媒体头像\n• 游戏角色头像\n• 工作群/班级群头像\n• 粉丝群专属头像\n\n【特色优势】\n• 专业团队持续更新风格\n• 生成速度快质量高\n• 支持高清原图下载'},
+    {id:'f15',name:'AI艺术字',emoji:'✏️',cat:'life',tags:['free'],desc:'AI生成艺术字体图片',url:'https://wordart.com',urlText:'访问官网',
+     detail:'AI艺术字是将文字转化为精美艺术设计的在线工具，适合制作各类文字特效图片。\n\n【核心功能】\n• 词云生成：文字排列成图形\n• 艺术字体：多种书法/艺术字体效果\n• 背景素材：丰富背景模板选择\n• 颜色搭配：智能配色方案\n\n【适用场景】\n• 社交媒体配图文字\n• PPT/海报设计元素\n• 活动邀请函文字\n• 个人签名设计\n\n【免费政策】\n• 基础功能免费使用\n• 高清下载需付费\n• 无需注册即可使用'},
+
+    // ===== 直播工具 =====
+    {id:'lv1',name:'绿幕助手',emoji:'🎬',cat:'live',tags:['hot','new'],popular:true,desc:'专业虚拟直播特效工具，轻松玩转绿幕抠图和直播特效，支持多平台直播',url:'https://dwz.cn/QUovH5gQ',urlText:'立即下载',agentId:'A5668',
+     detail:'绿幕助手是一款专业级虚拟直播工具，支持绿幕抠像、虚拟背景、特效叠加等功能，让普通用户也能做出专业直播间效果。\n\n【核心功能】\n• 智能绿幕抠像：AI精准识别，一键去除背景\n• 虚拟场景库：海量精美直播间场景可选\n• 特效叠加：弹幕、特效、转场动画等\n• 多平台推流：支持抖音、快手、淘宝等多平台\n• 虚拟形象：AI虚拟主播，24小时自动直播\n\n【适用场景】\n• 电商直播带货\n• 游戏直播\n• 在线教育直播\n• 企业宣讲直播\n• 个人IP直播\n\n【特色优势】\n• 电脑配置要求低，老电脑也能流畅运行\n• 操作简单，零基础也能快速上手\n• 支持竖屏/横屏切换\n• 持续更新特效和场景\n\n【推广奖励】\n• 邀请码：A5668\n• 下载即可使用基础功能\n• 推广可获得佣金奖励'},
+    {id:'lv2',name:'抖推猫',emoji:'🐱',cat:'live',tags:['hot','new'],popular:true,desc:'短视频/直播推广神器，海量素材和变现技巧，一键分享赚佣金',url:'http://dtmapp-253.doutuiweb.net/?jjpath=https%3A%2F%2Fdtmshareh51.doutuimao.cn%2F%23%2Fpages%2Ffriend%2Findex%3Fucode%3DBGKN86%26node%3D11%26haibao_id%3D38',urlText:'立即加入',agentId:'BGKN86',
+     detail:'抖推猫是专业的短视频/直播推广和变现工具平台，为创作者提供海量素材、一键分发和佣金变现功能。\n\n【核心功能】\n• 海量素材库：热门视频、音乐、特效模板\n• 一键分发：一次上传多平台同步发布\n• 变现任务：对接品牌广告，轻松接单\n• 数据分析：作品数据全监测\n• 涨粉技巧：专业运营指导\n\n【适用人群】\n• 短视频创作者\n• 直播带货主播\n• 自媒体运营者\n• 想要副业变现的人群\n\n【变现方式】\n• 分享视频赚取流量奖励\n• 推广产品获得佣金\n• 接品牌广告任务\n• 成为推广员赚取提成\n\n【推广奖励】\n• 邀请码：BGKN86\n• 新人专享福利\n• 邀请好友额外奖励'},
+    {id:'lv3',name:'微拓客',emoji:'💰',cat:'live',tags:['hot','new'],popular:true,desc:'AI智能营销拓客工具，帮助商家快速获取精准客户，提升业绩',url:'https://h5.weituokeapp.com/reg/yFZZ2bF_i9.html',urlText:'立即注册',agentId:'yFZZ2bF_i9',
+     detail:'微拓客是AI驱动的智能营销拓客工具，帮助实体商家、企业快速获取精准潜在客户，提升销售业绩。\n\n【核心功能】\n• AI客户画像：智能分析目标客户特征\n• 多渠道获客：抖音、微信、百度全渠道引流\n• 客户管理：完善的客户跟进管理系统\n• 数据追踪：营销效果实时监测\n• 裂变工具：老客带新客，快速裂变\n\n【适用场景】\n• 实体店引流获客\n• 企业销售团队\n• 培训机构招生\n• 美容健身会所\n• 餐饮商家推广\n\n【核心优势】\n• AI技术精准定位客户\n• 降低获客成本50%以上\n• 操作简单易上手\n• 专业团队全程指导\n\n【推广奖励】\n• 注册即享新人礼\n• 邀请码：yFZZ2bF_i9\n• 推广可获得高额佣金'},
+
+   {id:'lv4',name:'有戏',emoji:'🎮',cat:'live',tags:['hot','new'],popular:true,desc:'游戏推广赚钱平台，海量热门游戏、丰厚佣金奖励，轻松变现你的游戏热情',url:'https://youxi.fullpeace.net/login?code=6gY8u',urlText:'立即加入',agentId:'6gY8u',
+    detail:'有戏是一个专业的游戏推广赚钱平台，汇聚海量热门游戏，为游戏爱好者提供边玩边赚的机会。\n\n【核心功能】\n• 海量游戏库：涵盖手游、页游、端游等多种类型\n• 专属邀请码：绑定你的推广身份，轻松追踪收益\n• 丰厚佣金：推广游戏获得高额分成\n• 实时结算：佣金收入透明，准时到账\n• 活动福利：新人礼包、节日活动奖励不停\n\n【适用人群】\n• 游戏爱好者\n• 直播/短视频创作者\n• 社交媒体达人\n• 想做游戏副业赚钱的人群\n\n【变现方式】\n• 邀请好友注册获得邀请奖励\n• 推广指定游戏获得下载/注册佣金\n• 参与游戏冲榜活动获得奖金\n• 发展下级代理获得团队奖励\n\n【推广奖励】\n• 邀请码：6gY8u\n• 新用户专属福利\n• 邀请好友额外奖励\n• 团队业绩分红'},
+    {id:'lv5',name:'二维码彩虹',emoji:'🌈',cat:'live',tags:['hot','new'],popular:true,desc:'专业二维码生成工具，支持美化定制、批量生成、数据统计',url:'https://www.erweicaihong.cn/share-code/VMG4-D5E6',urlText:'立即使用',
+    detail:'二维码彩虹是专业的二维码生成和美化平台，为商家和个人提供一站式二维码解决方案。\n\n【核心功能】\n• 二维码生成：支持文本、网址、微信、名片等多种类型\n• 美化定制：丰富的颜色、图标、样式模板\n• 批量生成：一次生成多个二维码，提高效率\n• 数据统计：追踪二维码扫描数据，了解传播效果\n• logo嵌入：支持在二维码中心添加logo\n\n【适用场景】\n• 商家推广引流\n• 微信公众号推广\n• 物料印刷制作\n• 活动宣传推广\n• 产品溯源追踪\n\n【核心优势】\n• 操作简单，无需设计基础\n• 多种美化模板，一键套用\n• 生成的二维码识别率高\n• 支持高清下载和打印\n\n【推广奖励】\n• 分享码：VMG4-D5E6\n• 新用户专属福利\n• 推广可获得佣金奖励'}
+
+    // ===== RENDER FUNCTIONS =====
+function renderToolCard(tool) {
+    const tagMap = {hot:'🔥 热门',free:'✅ 免费',new:'🆕 新上线'};
+    const tags = tool.tags.map(t => `<span class="tool-tag ${t}">${tagMap[t]||t}</span>`).join('');
+    const cardClass = ['tool-card'];
+    if(tool.popular) cardClass.push('popular');
+    if(tool.tags.includes('new')) cardClass.push('new');
+    if(tool.tags.includes('free')) cardClass.push('free-tag');
+    const agentBadge = tool.agentId ? `<span style="background:#22c55e;color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;margin-left:8px;">推广赚佣</span>` : '';
+    return `<div class="${cardClass.join(' ')}" data-cat="${tool.cat}" data-tags="${tool.tags.join(',')}" onclick="location.href='tool.html?id=${tool.id}'" style="cursor:pointer">
+        <div class="tool-card-header">
+            <div class="tool-icon">${tool.emoji}</div>
+            <div>
+                <div class="tool-name">${tool.name}${agentBadge}</div>
+            </div>
+        </div>
+        <p class="tool-desc">${tool.desc}</p>
+        <div class="tool-tags">${tags}</div>
+        <div class="tool-detail-btn" onclick="event.stopPropagation();location.href='tool.html?id=${tool.id}'">
+            <i class="fas fa-info-circle"></i> 查看详情
+        </div>
+    </div>`;
+}
+
+function renderGrid(id, cat, filter='all') {
+    const grid = document.getElementById(id);
+    let filtered = tools.filter(t => t.cat === cat);
+    if(filter !== 'all') filtered = filtered.filter(t => t.tags.includes(filter));
+    grid.innerHTML = filtered.map(renderToolCard).join('') || '<p style="color:#999;padding:20px">暂无数据</p>';
+}
+
+// ===== SIDEBAR CATEGORY FILTER =====
+let activeCat = 'all';
+let activeTag = 'all';
+
+function filterCategory(cat) {
+    activeCat = cat;
+    document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+    // 支持 <a> 标签和 <div> 标签
+    if(event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+    } else {
+        // 兼容通过 URL hash 触发的场景
+        const activeLink = document.querySelector(`.sidebar-item[onclick*="filterCategory('${cat}')"]`);
+        if(activeLink) activeLink.classList.add('active');
+    }
+    if(cat === 'all') {
+        document.querySelectorAll('[id$="-grid"]').forEach(g => g.style.display='');
+        document.querySelector('.hot-section').style.display='';
+    } else {
+        document.querySelectorAll('[id$="-grid"]').forEach(g => g.style.display='none');
+        document.querySelector('.hot-section').style.display='none';
+        const targetGrid = document.getElementById(cat + '-grid');
+        if(targetGrid) targetGrid.style.display='';
+    }
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn') && document.querySelector('.filter-btn').classList.add('active');
+}
+
+function filterTag(btn, tag) {
+    activeTag = tag;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if(activeCat === 'all') {
+        const hotGrid = document.getElementById('hot-grid');
+        if(tag === 'all') {
+            hotGrid.innerHTML = tools.filter(t => t.popular).map(renderToolCard).join('');
+        } else {
+            hotGrid.innerHTML = tools.filter(t => t.popular && t.tags.includes(tag)).map(renderToolCard).join('');
+        }
+    }
+}
+
+function filterSub(btn, cat, filter) {
+    document.querySelectorAll(`#section-${cat} .cat-tab`).forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    renderGrid(cat + '-grid', cat, filter);
+}
+
+// ===== HEADER SEARCH =====
+function handleHeaderSearch(e) { if(e.key==='Enter') headerSearch(); }
+function headerSearch() {
+    const q = document.getElementById('headerSearch').value.trim().toLowerCase();
+    if(!q) return;
+    const results = tools.filter(t =>
+        t.name.toLowerCase().includes(q) ||
+        t.desc.toLowerCase().includes(q) ||
+        t.cat.toLowerCase().includes(q)
+    );
+    const resultsHTML = results.map(renderToolCard).join('') || '<p style="color:#999;padding:20px">未找到相关工具</p>';
+    const section = document.getElementById('section-chat');
+    const resultsSection = document.getElementById('search-results') || (() => {
+        const div = document.createElement('div');
+        div.id = 'search-results';
+        div.className = 'section';
+        div.innerHTML = `<div class="section-header"><div class="section-title"><span>🔍</span>搜索结果 <span class="section-count">${results.length}个</span></div><a href="javascript:clearSearch()" style="font-size:13px;color:var(--primary)">清除搜索</a></div><div class="tool-grid" id="search-grid"></div>`;
+        section.parentNode.insertBefore(div, section);
+        return div;
+    })();
+    resultsSection.style.display = '';
+    resultsSection.querySelector('#search-grid').innerHTML = resultsHTML;
+    resultsSection.scrollIntoView({behavior:'smooth'});
+}
+function clearSearch() {
+    const s = document.getElementById('search-results');
+    if(s) s.style.display = 'none';
+    document.getElementById('headerSearch').value = '';
+}
+
+// ===== SCROLL =====
+function scrollToSection(id) {
+    const map = {fortune:'section-fortune',payment:'section-payment'};
+    const target = document.getElementById(map[id] || id);
+    if(target) target.scrollIntoView({behavior:'smooth'});
+    // close mobile sidebar
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+// ===== MOBILE SIDEBAR =====
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+
+// ===== SCROLL TO TOP =====
+window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTop');
+    btn.classList.toggle('visible', window.scrollY > 600);
+});
+
+// ===== INIT =====
+function init() {
+    // Hot tools
+    document.getElementById('hot-grid').innerHTML = tools.filter(t => t.popular).map(renderToolCard).join('');
+    // Category grids
+    ['chat','image','video','music','office','coding','agent','writing','design','enterprise','ecommerce','learning','life','live'].forEach(cat => {
+        renderGrid(cat + '-grid', cat);
+    });
+    // Update total count
+    document.getElementById('count-all').textContent = tools.length + '+';
+    document.querySelector('.banner-stat-value:last-child').previousElementSibling.textContent = tools.length + '+';
+}
+
+init();
+
+// ===== USER LOGIN SYSTEM =====
+const USER_DB_KEY = 'ai_gongju_chang_users';
+
+// User Modal
+const userModal = document.createElement('div');
+userModal.id = 'userModal';
+userModal.style.cssText = 'display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;';
+userModal.innerHTML = `
+<div style="background:#fff;border-radius:16px;padding:32px;width:90%;max-width:400px;position:relative">
+    <button onclick="closeUserModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:24px;cursor:pointer;color:#999">×</button>
+    <h2 id="modalTitle" style="text-align:center;margin-bottom:24px;font-size:20px">用户登录</h2>
+    <form id="userForm" onsubmit="handleUserSubmit(event)">
+        <div style="margin-bottom:16px">
+            <label style="display:block;margin-bottom:6px;font-size:14px;color:#666">用户名</label>
+            <input type="text" id="username" required style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none" placeholder="请输入用户名">
+        </div>
+        <div style="margin-bottom:16px" id="passwordField">
+            <label style="display:block;margin-bottom:6px;font-size:14px;color:#666">密码</label>
+            <input type="password" id="password" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none" placeholder="请输入密码">
+        </div>
+        <div style="margin-bottom:16px" id="wechatField">
+            <label style="display:block;margin-bottom:6px;font-size:14px;color:#666">微信号</label>
+            <input type="text" id="wechat" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none" placeholder="请输入微信号">
+        </div>
+        <div style="margin-bottom:16px" id="phoneField">
+            <label style="display:block;margin-bottom:6px;font-size:14px;color:#666">手机号</label>
+            <input type="tel" id="phone" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px;outline:none" placeholder="请输入手机号">
+        </div>
+        <button type="submit" style="width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:16px;cursor:pointer;font-weight:600">登 录</button>
+        <p style="text-align:center;margin-top:16px;font-size:14px;color:#666">
+            <span id="toggleText">还没有账号？</span>
+            <a href="#" onclick="toggleMode(event)" style="color:var(--primary);text-decoration:none;font-weight:600" id="toggleLink">立即注册</a>
+        </p>
+    </form>
+</div>
+`;
+document.body.appendChild(userModal);
+
+let isRegisterMode = false;
+
+function toggleMode(e) {
+    e.preventDefault();
+    isRegisterMode = !isRegisterMode;
+    document.getElementById('modalTitle').textContent = isRegisterMode ? '用户注册' : '用户登录';
+    document.getElementById('passwordField').style.display = isRegisterMode ? 'block' : 'none';
+    document.getElementById('wechatField').style.display = isRegisterMode ? 'block' : 'none';
+    document.getElementById('phoneField').style.display = isRegisterMode ? 'block' : 'none';
+    document.getElementById('toggleText').textContent = isRegisterMode ? '已有账号？' : '还没有账号？';
+    document.getElementById('toggleLink').textContent = isRegisterMode ? '立即登录' : '立即注册';
+    document.querySelector('#userForm button[type="submit"]').textContent = isRegisterMode ? '注 册' : '登 录';
+}
+
+function openUserModal(requireWechat = false) {
+    userModal.style.display = 'flex';
+    // Reset to login mode
+    isRegisterMode = false;
+    document.getElementById('modalTitle').textContent = '用户登录';
+    document.getElementById('passwordField').style.display = 'none';
+    document.getElementById('wechatField').style.display = 'none';
+    document.getElementById('phoneField').style.display = 'none';
+    document.getElementById('toggleText').textContent = '还没有账号？';
+    document.getElementById('toggleLink').textContent = '立即注册';
+    document.querySelector('#userForm button[type="submit"]').textContent = '登 录';
+    document.getElementById('username').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('wechat').value = '';
+    document.getElementById('phone').value = '';
+}
+
+function closeUserModal() {
+    userModal.style.display = 'none';
+}
+
+function getUsers() {
+    const data = localStorage.getItem(USER_DB_KEY);
+    return data ? JSON.parse(data) : [];
+}
+
+function saveUsers(users) {
+    localStorage.setItem(USER_DB_KEY, JSON.stringify(users));
+}
+
+function handleUserSubmit(e) {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const wechat = document.getElementById('wechat').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    
+    const users = getUsers();
+    
+    if (isRegisterMode) {
+        // Register
+        if (users.find(u => u.username === username)) {
+            alert('用户名已存在！');
+            return;
+        }
+        if (!wechat || !phone) {
+            alert('请填写完整信息！');
+            return;
+        }
+        const newUser = {
+            username,
+            password: '123456',
+            wechat,
+            phone,
+            registerTime: new Date().toISOString()
+        };
+        users.push(newUser);
+        saveUsers(users);
+        alert('注册成功！默认密码：123456');
+        // Auto login
+        sessionStorage.setItem('currentUser', JSON.stringify(newUser));
+        closeUserModal();
+        updateUserStatus();
+        location.reload();
+    } else {
+        // Login
+        const user = users.find(u => u.username === username);
+        if (!user) {
+            alert('用户不存在！');
+            return;
+        }
+        if (password && password !== '123456') {
+            alert('密码错误！');
+            return;
+        }
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+        closeUserModal();
+        updateUserStatus();
+        alert('登录成功！');
+    }
+}
+
+function getCurrentUser() {
+    const data = sessionStorage.getItem('currentUser');
+    return data ? JSON.parse(data) : null;
+}
+
+function logout() {
+    sessionStorage.removeItem('currentUser');
+    updateUserStatus();
+    location.reload();
+}
+
+function updateUserStatus() {
+    const user = getCurrentUser();
+    const userArea = document.querySelector('.header-right');
+    if (user) {
+        userArea.innerHTML = `
+            <span style="font-size:14px;color:var(--gray-600)">欢迎，${user.username}</span>
+            <span class="header-link" onclick="logout()" style="cursor:pointer">退出</span>
+            ${user.username === 'admin' ? '<a href="admin.html" class="header-link" style="color:var(--primary)">管理后台</a>' : ''}
+        `;
+    }
+}
+
+// Protect sections - show login modal when accessing protected content
+function requireLogin(callback) {
+    const user = getCurrentUser();
+    if (user) {
+        callback();
+    } else {
+        openUserModal();
+    }
+}
+
+// scrollToSection now handles navigation - tutorial moved to vip.html
+
+// Update user status on load
+updateUserStatus();
+
+// Close modal on outside click
+userModal.addEventListener('click', (e) => {
+    if (e.target === userModal) closeUserModal();
+});
+
+// ===== SCROLL TO TOP =====
+window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTop');
+    btn.classList.toggle('visible', window.scrollY > 600);
+});
+
+// PAY VIDEO SYSTEM
+const PAY_VIDEO_PRICE = 9.9; // 支付金额
+const PAY_VIDEO_COUNTDOWN = 5; // 免费预览秒数
+const VIDEO_UNLOCK_KEY = 'video_unlocked_BV1Wzo1BkEhT'; // 解锁状态key
+
+let countdownTimer = null;
+let selectedPaymentMethod = 'alipay';
+
+function checkMemberStatus() {
+    const memberData = localStorage.getItem('memberInfo');
+    if (memberData) {
+        const member = JSON.parse(memberData);
+        const now = Date.now();
+        if (member.expireTime && now < member.expireTime) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isVideoUnlocked() {
+    return localStorage.getItem(VIDEO_UNLOCK_KEY) === 'true' || checkMemberStatus();
+}
+
+function unlockVideo() {
+    localStorage.setItem(VIDEO_UNLOCK_KEY, 'true');
+    const overlay = document.getElementById('payOverlay');
+    const unlockedBadge = document.getElementById('unlockedBadge');
+    const vipBadge = document.getElementById('vipBadge');
+    if (overlay) {
+        overlay.classList.add('vip-unlocked');
+        overlay.style.display = 'none';
+    }
+    if (checkMemberStatus()) {
+        if (vipBadge) vipBadge.style.display = 'block';
+    } else {
+        if (unlockedBadge) unlockedBadge.style.display = 'block';
+    }
+    // Reload video to start playing
+    const video = document.getElementById('tutorialVideo');
+    if (video) {
+        video.src = video.src;
+    }
+}
+
+function initPayVideo() {
+    const overlay = document.getElementById('payOverlay');
+    const vipBtn = document.getElementById('vipBtn');
+    const vipBadge = document.getElementById('vipBadge');
+
+    if (checkMemberStatus()) {
+        unlockVideo();
+        return;
+    }
+
+    if (isVideoUnlocked()) {
+        unlockVideo();
+        return;
+    }
+
+    if (overlay) {
+        overlay.style.display = 'flex';
+    }
+    if (vipBtn) {
+        vipBtn.style.display = 'inline-flex';
+    }
+    if (vipBadge) {
+        vipBadge.style.display = 'none';
+    }
+
+    startCountdown();
+}
+
+function startCountdown() {
+    let seconds = PAY_VIDEO_COUNTDOWN;
+    const countdownEl = document.getElementById('countdownText');
+    const payBtn = document.getElementById('payBtn');
+
+    if (countdownEl) {
+        countdownEl.innerHTML = '<span>' + seconds + '</span>秒后可继续观看';
+    }
+
+    countdownTimer = setInterval(() => {
+        seconds--;
+        if (countdownEl) {
+            countdownEl.innerHTML = '<span>' + seconds + '</span>秒后可继续观看';
+        }
+
+        if (seconds <= 0) {
+            clearInterval(countdownTimer);
+            countdownTimer = null;
+            if (countdownEl) {
+                countdownEl.innerHTML = '<span>⏰</span> 预览结束，请解锁完整内容';
+            }
+            if (payBtn) {
+                payBtn.style.display = 'inline-flex';
+            }
+        }
+    }, 1000);
+}
+
+function showPaymentModal() {
+    const modal = document.getElementById('paymentModal');
+    const successDiv = document.getElementById('paymentSuccess');
+    const confirmBtn = document.getElementById('confirmPayBtn');
+    const qrcodeArea = document.getElementById('qrcodeArea');
+
+    if (modal) {
+        modal.classList.add('active');
+        if (successDiv) successDiv.classList.remove('active');
+        if (confirmBtn) confirmBtn.style.display = 'inline-flex';
+        if (qrcodeArea) qrcodeArea.style.display = 'block';
+        updateQrcode();
+    }
+}
+
+function closePaymentModal() {
+    const modal = document.getElementById('paymentModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+function selectPaymentMethod(method) {
+    selectedPaymentMethod = method;
+    const alipayBtn = document.getElementById('alipayBtn');
+    const wechatBtn = document.getElementById('wechatBtn');
+    const methodText = document.getElementById('qrcodeMethod');
+    const qrcodeImg = document.getElementById('qrcodeImg');
+
+    if (alipayBtn && wechatBtn) {
+        alipayBtn.classList.toggle('active', method === 'alipay');
+        wechatBtn.classList.toggle('active', method === 'wechat');
+    }
+
+    if (methodText) {
+        methodText.textContent = method === 'alipay' ? '支付宝' : '微信支付';
+    }
+
+    updateQrcode();
+}
+
+function updateQrcode() {
+    const qrcodeImg = document.getElementById('qrcodeImg');
+    const paymentConfig = JSON.parse(localStorage.getItem('admin_payment_config') || '{}');
+
+    if (selectedPaymentMethod === 'alipay' && paymentConfig.alipay && paymentConfig.alipay.qrcode) {
+        qrcodeImg.src = paymentConfig.alipay.qrcode;
+    } else if (selectedPaymentMethod === 'wechat' && paymentConfig.wechatPay && paymentConfig.wechatPay.qrcode) {
+        qrcodeImg.src = paymentConfig.wechatPay.qrcode;
+    }
+}
+
+function confirmPayment() {
+    const successDiv = document.getElementById('paymentSuccess');
+    const confirmBtn = document.getElementById('confirmPayBtn');
+    const qrcodeArea = document.getElementById('qrcodeArea');
+
+    if (successDiv) successDiv.classList.add('active');
+    if (confirmBtn) confirmBtn.style.display = 'none';
+    if (qrcodeArea) qrcodeArea.style.display = 'none';
+
+    setTimeout(function() {
+        unlockVideo();
+        closePaymentModal();
+        alert('🎉 恭喜！视频已解锁成功，可以免费观看完整内容了！');
+    }, 1500);
+}
+
+function goToVip() {
+    closePaymentModal();
+    window.open('activate.html', '_blank');
+}
+
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('paymentModal');
+    if (modal && e.target === modal) {
+        closePaymentModal();
+    }
+});
+
+// 移动端菜单切换
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+}
+
+// 关闭侧边栏
+function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+}
+
+// 联系弹窗
+function showContact() {
+    document.getElementById('contactModal').classList.add('active');
+}
+
+function closeContact() {
+    document.getElementById('contactModal').classList.remove('active');
+}
+
+document.addEventListener('click', function(e) {
+    const modal = document.getElementById('contactModal');
+    if (modal && e.target === modal) {
+        closeContact();
+    }
+});
+</script>
+
+<!-- 移动端遮罩层 -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- 移动端底部快捷导航 -->
+<div class="mobile-nav" style="display:none">
+    <a href="index.html" class="active"><span>🏠</span>首页</a>
+    <a href="vip.html"><span>👑</span>会员</a>
+            <a href="business.html"><span>💼</span>商机</a>
+    <a href="user.html"><span>👤</span>我的</a>
+</div>
+</body>
+</html>
