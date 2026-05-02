@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支付集成测试 - AI工具场</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 16px; margin-bottom: 20px; }
+        .header h1 { margin: 0 0 10px 0; font-size: 24px; }
+        .header p { opacity: 0.9; font-size: 14px; }
+        .card { background: white; border-radius: 16px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+        .card h2 { margin: 0 0 16px 0; font-size: 18px; color: #333; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+        .config-section { margin-bottom: 20px; }
+        .config-section h3 { font-size: 14px; color: #666; margin-bottom: 10px; }
+        .config-item { display: flex; align-items: center; margin-bottom: 10px; }
+        .config-item label { width: 180px; font-size: 13px; color: #333; }
+        .config-item select, .config-item input { flex: 1; padding: 8px 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 13px; }
+        .config-item select:focus, .config-item input:focus { border-color: #667eea; outline: none; }
+        .btn { padding: 12px 24px; border: none; border-radius: 10px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4); }
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .btn-warning { background: linear-gradient(135deg, #f59e0b, #e65100); color: white; }
+        .status { padding: 12px 16px; border-radius: 10px; font-size: 13px; margin-top: 12px; display: none; }
+        .status.show { display: block; }
+        .status.success { background: #d1fae5; color: #059669; }
+        .status.error { background: #fee2e2; color: #dc2626; }
+        .status.info { background: #dbeafe; color: #2563eb; }
+        .test-log { background: #1a1a2e; color: #0f0; font-family: 'Courier New', monospace; font-size: 12px; padding: 16px; border-radius: 10px; height: 300px; overflow-y: auto; margin-top: 16px; }
+        .test-log .log-line { margin-bottom: 6px; }
+        .test-log .time { color: #667eea; }
+        .test-log .success { color: #10b981; }
+        .test-log .error { color: #ef4444; }
+        .test-log .info { color: #0ea5e9; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; }
+        .plan-card { background: #f8f9fa; border: 2px solid #e5e7eb; border-radius: 12px; padding: 16px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .plan-card:hover { border-color: #667eea; transform: translateY(-2px); }
+        .plan-card.selected { border-color: #f59e0b; background: #fff7ed; }
+        .plan-name { font-size: 14px; font-weight: bold; color: #333; margin-bottom: 8px; }
+        .plan-price { font-size: 24px; font-weight: bold; color: #f59e0b; }
+        .code-block { background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; font-family: 'Courier New', monospace; font-size: 12px; margin-top: 12px; white-space: pre-wrap; word-break: break-all; }
+        .hint { font-size: 12px; color: #888; margin-top: 8px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 支付集成测试工具</h1>
+            <p>配置和测试微信支付集成功能</p>
+        </div>
+        
+        <!-- 配置区域 -->
+        <div class="card">
+            <h2>⚙️ 支付配置</h2>
+            
+            <div class="config-section">
+                <h3>支付模式选择</h3>
+                <div class="config-item">
+                    <label>当前模式：</label>
+                    <select id="payMode" onchange="updateConfig()">
+                        <option value="demo">演示模式（默认，可立即测试）</option>
+                        <option value="cloudbase">CloudBase云函数（生产推荐）</option>
+                        <option value="polling">轮询模式（第三方支付）</option>
+                    </select>
+            </div>
+                <div class="hint">
+                    💡 <strong>演示模式</strong>：模拟支付流程，无需配置<br>
+                    💡 <strong>CloudBase模式</strong>：需要配置云函数和环境ID<br>
+                    💡 <strong>轮询模式</strong>：需要接入第三方支付平台
+                </div>
+            </div>
+            
+            <div class="config-section" id="cloudbaseConfig" style="display:none;">
+                <h3>CloudBase 配置</h3>
+                <div class="config-item">
+                    <label>环境ID：</label>
+                    <input type="text" id="envId" placeholder="例如：env-xxx">
+                </div>
+                <div class="config-item">
+                    <label>云函数名称：</label>
+                    <input type="text" id="functionName" value="wechat-payment-callback" disabled>
+                </div>
+                <div class="hint">
+                    ⚠️ 请确保已部署云函数：wechat-payment-callback<br>
+                    ⚠️ 请在CloudBase控制台配置环境变量
+                </div>
+            </div>
+            
+            <div class="config-item">
+                <label></label>
+                <button class="btn btn-primary" onclick="saveConfig()">保存配置</button>
+            </div>
+            
+            <div class="status" id="configStatus"></div>
+        </div>
+        
+        <!-- 测试区域 -->
+        <div class="card">
+            <h2>🧪 功能测试</h2>
+            
+            <div class="config-section">
+                <h3>1. 选择测试套餐</h3>
+                <div class="grid">
+                    <div class="plan-card" data-plan="month" onclick="selectTestPlan(this)">
+                        <div class="plan-name">月卡会员</div>
+                        <div class="plan-price">¥29</div>
+                    </div>
+                    <div class="plan-card" data-plan="quarter" onclick="selectTestPlan(this)">
+                        <div class="plan-name">季卡会员</div>
+                        <div class="plan-price">¥79</div>
+                    </div>
+                    <div class="plan-card" data-plan="year" onclick="selectTestPlan(this)">
+                        <div class="plan-name">年卡会员</div>
+                        <div class="plan-price">¥199</div>
+                    </div>
+                    <div class="plan-card" data-plan="forever" onclick="selectTestPlan(this)">
+                        <div class="plan-name">永久会员</div>
+                        <div class="plan-price">¥399</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <h3>2. 执行测试</h3>
+                <button class="btn btn-success" onclick="startTest()" id="testBtn" disabled>开始测试</button>
+                <button class="btn btn-warning" onclick="clearLog()" style="margin-left: 10px;">清空日志</button>
+            </div>
+            
+            <div class="test-log" id="testLog">
+                <div class="log-line"><span class="time">[就绪]</span> <span class="info">等待开始测试...</span></div>
+            </div>
+        </div>
+        
+        <!-- 代码示例 -->
+        <div class="card">
+            <h2>📋 集成代码示例</h2>
+            
+            <div class="config-section">
+                <h3>activate.html 配置部分</h3>
+                <div class="code-block" id="codeExample1"></div>
+            </div>
+            
+            <div class="config-section">
+                <h3>CloudBase 云函数部署命令</h3>
+                <div class="code-block" id="codeExample2"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let selectedTestPlan = null;
+        let currentConfig = {
+            payMode: 'demo',
+            envId: '',
+            functionName: 'wechat-payment-callback'
+        };
+        
+        // 初始化
+        function init() {
+            // 从localStorage读取配置
+            const savedConfig = localStorage.getItem('payTestConfig');
+            if (savedConfig) {
+                currentConfig = JSON.parse(savedConfig);
+                document.getElementById('payMode').value = currentConfig.payMode;
+                document.getElementById('envId').value = currentConfig.envId || '';
+                updateConfig();
+            }
+            
+            // 显示代码示例
+            showCodeExamples();
+            
+            log('系统初始化完成', 'success');
+        }
+        
+        // 更新配置显示
+        function updateConfig() {
+            const mode = document.getElementById('payMode').value;
+            const cloudbaseConfig = document.getElementById('cloudbaseConfig');
+            
+            if (mode === 'cloudbase') {
+                cloudbaseConfig.style.display = 'block';
+            } else {
+                cloudbaseConfig.style.display = 'none';
+            }
+        }
+        
+        // 保存配置
+        function saveConfig() {
+            currentConfig.payMode = document.getElementById('payMode').value;
+            currentConfig.envId = document.getElementById('envId').value;
+            
+            localStorage.setItem('payTestConfig', JSON.stringify(currentConfig));
+            
+            showStatus('configStatus', '配置已保存', 'success');
+            log('配置已保存：' + JSON.stringify(currentConfig), 'info');
+        }
+        
+        // 选择测试套餐
+        function selectTestPlan(element) {
+            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedTestPlan = element.dataset.plan;
+            document.getElementById('testBtn').disabled = false;
+            
+            log('已选择套餐：' + selectedTestPlan, 'info');
+        }
+        
+        // 开始测试
+        async function startTest() {
+            if (!selectedTestPlan) {
+                alert('请先选择测试套餐');
+                return;
+            }
+            
+            log('开始测试，模式：' + currentConfig.payMode, 'info');
+            
+            if (currentConfig.payMode === 'demo') {
+                await testDemoMode();
+            } else if (currentConfig.payMode === 'cloudbase') {
+                await testCloudBaseMode();
+            } else if (currentConfig.payMode === 'polling') {
+                await testPollingMode();
+            }
+        }
+        
+        // 测试演示模式
+        async function testDemoMode() {
+            log('步骤1：显示支付弹窗...', 'info');
+            await sleep(1000);
+            
+            log('步骤2：模拟支付中...', 'info');
+            await sleep(2000);
+            
+            log('步骤3：支付成功！', 'success');
+            await sleep(500);
+            
+            log('步骤4：开通会员权限...', 'info');
+            await sleep(500);
+            
+            const expireTime = new Date();
+            if (selectedTestPlan === 'forever') {
+                expireTime.setFullYear(2099);
+            } else {
+                const days = { month: 30, quarter: 90, year: 365 }[selectedTestPlan];
+                expireTime.setDate(expireTime.getDate() + days);
+            }
+            
+            const memberInfo = {
+                level: selectedTestPlan,
+                activateTime: Date.now(),
+                expireTime: expireTime.getTime()
+            };
+            
+            localStorage.setItem('testMemberInfo', JSON.stringify(memberInfo));
+            
+            log('步骤5：会员开通成功！', 'success');
+            log('   套餐：' + selectedTestPlan, 'info');
+            log('   过期时间：' + expireTime.toLocaleDateString(), 'info');
+            log('', 'info');
+            log('✅ 演示模式测试完成！', 'success');
+        }
+        
+        // 测试CloudBase模式（模拟）
+        async function testCloudBaseMode() {
+            if (!currentConfig.envId) {
+                log('❌ 错误：未配置CloudBase环境ID', 'error');
+                return;
+            }
+            
+            log('步骤1：初始化CloudBase...', 'info');
+            await sleep(500);
+            
+            log('步骤2：调用云函数创建订单...', 'info');
+            log('   云函数：' + currentConfig.functionName, 'info');
+            log('   参数：{ userId: "test", membershipType: "' + selectedTestPlan + '" }', 'info');
+            await sleep(1500);
+            
+            log('步骤3：订单创建成功', 'success');
+            log('   订单号：ORDER_test_' + selectedTestPlan + '_' + Date.now(), 'info');
+            await sleep(500);
+            
+            log('步骤4：等待用户支付...', 'info');
+            log('   （实际场景：用户扫码支付，微信回调云函数）', 'info');
+            await sleep(1000);
+            
+            log('步骤5：模拟支付成功，云函数回调...', 'info');
+            await sleep(1000);
+            
+            log('步骤6：开通会员权限...', 'info');
+            await sleep(500);
+            
+            log('✅ CloudBase模式测试完成（模拟）！', 'success');
+            log('⚠️ 实际使用时需要：', 'error');
+            log('   1. 部署云函数', 'error');
+            log('   2. 配置微信支付回调URL', 'error');
+            log('   3. 在微信浏览器中打开页面', 'error');
+        }
+        
+        // 测试轮询模式（模拟）
+        async function testPollingMode() {
+            log('步骤1：创建订单（调用第三方支付API）...', 'info');
+            await sleep(1000);
+            
+            const orderId = 'ORDER_' + Date.now();
+            log('   订单号：' + orderId, 'info');
+            await sleep(500);
+            
+            log('步骤2：生成支付二维码...', 'info');
+            await sleep(1000);
+            
+            log('步骤3：开始轮询订单状态...', 'info');
+            log('   轮询间隔：3秒', 'info');
+            
+            // 模拟3次轮询
+            for (let i = 0; i < 3; i++) {
+                await sleep(800);
+                log('   轮询 ' + (i+1) + '：订单未支付...', 'info');
+            }
+            
+            await sleep(1000);
+            log('   轮询 4：订单已支付！', 'success');
+            
+            log('步骤4：开通会员权限...', 'info');
+            await sleep(500);
+            
+            log('✅ 轮询模式测试完成（模拟）！', 'success');
+        }
+        
+        // 清空日志
+        function clearLog() {
+            document.getElementById('testLog').innerHTML = '<div class="log-line"><span class="time">[已清空]</span> <span class="info">日志已清空</span></div>';
+        }
+        
+        // 显示代码示例
+        function showCodeExamples() {
+            // 示例1：activate.html配置
+            const code1 = `// 在 activate.html 中找到 CONFIG 对象
+const CONFIG = {
+    payMode: '${currentConfig.payMode}', // 修改这里切换模式
+    cloudbaseEnvId: '${currentConfig.envId || 'your-env-id'}',
+    demoDelay: 2000,
+    enableSound: true
+};`;
+            document.getElementById('codeExample1').textContent = code1;
+            
+            // 示例2：部署命令
+            const code2 = `# 1. 安装CloudBase CLI
+npm install -g @cloudbase/cli
+
+# 2. 登录
+tcb login
+
+# 3. 初始化项目（如果还没有）
+cd AI工具场
+tcb init
+
+# 4. 部署云函数
+tcb fn deploy wechat-payment-callback --envId ${currentConfig.envId || 'your-env-id'}
+
+# 5. 查看云函数日志
+tcb fn log wechat-payment-callback --envId ${currentConfig.envId || 'your-env-id'}
+
+# 6. 设置环境变量（在CloudBase控制台操作）
+# WECHAT_MCHID=你的商户号
+# WECHAT_API_V3_KEY=你的APIv3密钥
+# ...`;
+            document.getElementById('codeExample2').textContent = code2;
+        }
+        
+        // 工具函数
+        function log(message, type = 'info') {
+            const logEl = document.getElementById('testLog');
+            const time = new Date().toLocaleTimeString();
+            const line = document.createElement('div');
+            line.className = 'log-line';
+            line.innerHTML = `<span class="time">[${time}]</span> <span class="${type}">${message}</span>`;
+            logEl.appendChild(line);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+        
+        function showStatus(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = 'status show ' + type;
+            setTimeout(() => {
+                el.classList.remove('show');
+            }, 3000);
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        // 初始化
+        init();
+    </script>
+</body>
+</html>

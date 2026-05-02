@@ -1,0 +1,11 @@
+{
+  "name": "wechat-payment-callback",
+  "version": "1.0.0",
+  "description": "微信支付回调云函数 - 自动开通会员权限",
+  "main": "index.js",
+  "dependencies": {
+    "@cloudbase/node-sdk": "^2.4.0"
+  },
+  "author": "AI工具场",
+  "license": "MIT"
+}

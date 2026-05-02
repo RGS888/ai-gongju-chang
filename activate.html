@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>激活码中心 - AI工具场</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- 
+    ===== 微信支付集成说明 =====
+    1. 演示模式（当前默认）：
+       - 修改 CONFIG.payMode = 'demo'
+       - 无需任何配置，可测试完整流程
+       - 适合开发和演示
+    
+    2. CloudBase云函数模式（推荐生产使用）：
+       - 修改 CONFIG.payMode = 'cloudbase'
+       - 配置 CONFIG.cloudbaseEnvId = '你的环境ID'
+       - 部署 cloudfunctions/wechat-payment-callback 云函数
+       - 取消下面一行的注释，引入CloudBase SDK
+       - 需要在微信中打开页面才能完成支付
+       
+    <script src="https://imgcache.qq.com/qcloud/tcbjs/1.7.2/tcb.js"></script>
+    
+    3. 轮询模式（使用第三方支付平台）：
+       - 修改 CONFIG.payMode = 'polling'
+       - 需要接入第三方支付平台（如payjs.cn、xunhupay.com）
+       - 前端生成订单，轮询支付状态
+       - 适合无法使用CloudBase的场景
+    ===================
+    -->
     <style>
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -653,6 +676,18 @@
             { id: 'forever', name: '永久会员', price: 399, days: 9999, desc: '永久有效', popular: false },
         ];
         
+        // ===== 配置区域 =====
+        const CONFIG = {
+            // 支付模式：'demo'（演示模式，自动开通）| 'cloudbase'（CloudBase云函数）| 'polling'（轮询模式）
+            payMode: 'demo', // 修改为 'cloudbase' 启用真实支付
+            cloudbaseEnvId: 'your-env-id', // CloudBase环境ID
+            // 演示模式下，支付成功后延迟（毫秒）
+            demoDelay: 2000,
+            // 是否启用支付成功音效
+            enableSound: true
+        };
+        // =====================
+        
         let selectedPlan = null;
         let selectedPayType = 'member'; // member 或 single
         let currentCode = '';
@@ -865,17 +900,316 @@
             document.getElementById('payTitle').textContent = `购买${selectedPlan.name}`;
             document.getElementById('payPrice').textContent = `¥${selectedPlan.price}`;
             
-            // 生成订单和激活码
-            currentCode = generateCode();
+            // 根据配置选择支付方式
+            if (CONFIG.payMode === 'demo') {
+                // 演示模式：显示模拟支付界面
+                showDemoPay();
+            } else if (CONFIG.payMode === 'cloudbase') {
+                // CloudBase模式：调用云函数创建订单
+                createCloudBaseOrder();
+            } else if (CONFIG.payMode === 'polling') {
+                // 轮询模式：生成订单，轮询支付状态
+                createOrderAndPoll();
+            }
             
             // 显示支付弹窗
             document.getElementById('payModal').classList.add('show');
-            
-            // 开始模拟倒计时
-            startCountdown();
         }
         
-        // 开始倒计时
+        // 演示模式：模拟支付
+        function showDemoPay() {
+            // 生成模拟订单号
+            currentCode = generateCode();
+            
+            // 显示模拟支付界面
+            const qrBox = document.querySelector('.qr-box');
+            qrBox.innerHTML = `
+                <div class="mock-qr">
+                    <div class="icon">📱</div>
+                    <div class="text">演示模式</div>
+                </div>
+                <div class="qr-method">模拟微信支付流程</div>
+                <div class="qr-hint">💡 演示模式：${CONFIG.demoDelay/1000}秒后自动开通</div>
+            `;
+            
+            // 开始演示倒计时
+            startDemoCountdown();
+        }
+        
+        // 演示倒计时
+        function startDemoCountdown() {
+            let seconds = CONFIG.demoDelay / 1000;
+            const countdownEl = document.getElementById('payCountdown');
+            
+            countdownTimer = setInterval(() => {
+                seconds--;
+                if (seconds > 0) {
+                    countdownEl.textContent = `⏰ ${seconds}秒后模拟支付成功...`;
+                } else {
+                    clearInterval(countdownTimer);
+                    countdownEl.textContent = '✅ 支付成功！正在开通会员...';
+                    
+                    // 模拟支付成功
+                    setTimeout(() => {
+                        confirmPaymentDemo();
+                    }, 500);
+                }
+            }, 1000);
+        }
+        
+        // 演示模式：确认支付
+        function confirmPaymentDemo() {
+            clearInterval(countdownTimer);
+            document.getElementById('payCountdown').textContent = '';
+            
+            if (selectedPayType === 'single') {
+                // 单课购买
+                const owned = JSON.parse(localStorage.getItem('ownedMaterials') || '[]');
+                if (!owned.includes(0)) owned.push(0);
+                localStorage.setItem('ownedMaterials', JSON.stringify(owned));
+                
+                closePayModal();
+                document.getElementById('successDesc').textContent = '单课购买成功！\n\n激活码：' + currentCode + '\n请到会员区查看已购资料';
+                document.getElementById('successModal').classList.add('show');
+            } else {
+                // 会员开通
+                activateMember(selectedPlan, currentCode);
+            }
+        }
+        
+        // ===== CloudBase 云函数集成（需要配置后启用）=====
+        
+        // CloudBase SDK（需要在HTML头部引入）
+        // <script src="https://imgcache.qq.com/qcloud/tcbjs/1.7.2/tcb.js"></script>
+        
+        // 初始化CloudBase
+        let cloudbaseApp = null;
+        function initCloudBase() {
+            if (CONFIG.payMode !== 'cloudbase') return;
+            
+            // 检查CloudBase SDK是否加载
+            if (typeof tcb === 'undefined') {
+                console.error('CloudBase SDK未加载，请在head中引入：<script src="https://imgcache.qq.com/qcloud/tcbjs/1.7.2/tcb.js"></script>');
+                return;
+            }
+            
+            cloudbaseApp = tcb.init({
+                env: CONFIG.cloudbaseEnvId
+            });
+        }
+        
+        // 创建CloudBase订单
+        async function createCloudBaseOrder() {
+            if (!cloudbaseApp) {
+                alert('CloudBase未初始化');
+                return;
+            }
+            
+            try {
+                // 获取用户信息
+                const user = getCurrentUser();
+                if (!user || !user.openId) {
+                    alert('请先在微信中打开，或绑定微信账号');
+                    return;
+                }
+                
+                // 调用云函数创建订单
+                const result = await cloudbaseApp.callFunction({
+                    name: 'wechat-payment-callback',
+                    data: {
+                        type: 'createOrder',
+                        userId: user.id,
+                        membershipType: selectedPlan.id,
+                        openId: user.openId
+                    }
+                });
+                
+                if (result.result.code === 0) {
+                    const orderData = result.result.data;
+                    currentOrderId = orderData.orderId;
+                    
+                    // 显示微信支付二维码或JSAPI支付
+                    showWechatPay(orderData);
+                    
+                    // 开始轮询支付状态
+                    startPollingOrderStatus(currentOrderId);
+                } else {
+                    alert('创建订单失败：' + result.result.message);
+                }
+            } catch (err) {
+                console.error('创建订单失败:', err);
+                alert('创建订单失败，请重试');
+            }
+        }
+        
+        // 显示微信支付界面
+        function showWechatPay(orderData) {
+            const qrBox = document.querySelector('.qr-box');
+            
+            // 判断是否在微信浏览器中
+            const isWechat = /MicroMessenger/i.test(navigator.userAgent);
+            
+            if (isWechat) {
+                // 在微信中，使用JSAPI支付
+                qrBox.innerHTML = `
+                    <div style="padding:20px;">
+                        <div style="font-size:14px;margin-bottom:12px;">订单已创建</div>
+                        <div style="font-size:12px;color:#888;margin-bottom:16px;">请在微信中完成支付</div>
+                        <button onclick="invokeWechatPay('${orderData.prepay_id}')" 
+                                style="padding:12px 24px;background:#07c160;color:white;border:none;border-radius:8px;font-size:14px;">
+                            立即支付 ¥${selectedPlan.price}
+                        </button>
+                    </div>
+                `;
+            } else {
+                // 不在微信中，显示支付二维码
+                qrBox.innerHTML = `
+                    <div id="wechatQRCode" style="margin-bottom:12px;">
+                        <!-- 二维码将在这里显示 -->
+                        <div class="mock-qr">
+                            <div class="icon">📱</div>
+                            <div class="text">请使用微信扫码支付</div>
+                        </div>
+                    </div>
+                    <div class="qr-method">微信支付</div>
+                    <div class="qr-hint">打开微信 → 扫一扫</div>
+                `;
+                
+                // 生成支付二维码（需要调用后端API获取二维码链接）
+                // 这里使用模拟二维码
+                generateWechatQRCode(orderData);
+            }
+        }
+        
+        // 调用微信支付JSAPI
+        function invokeWechatPay(prepayId) {
+            if (typeof WeixinJSBridge === 'undefined') {
+                alert('请在微信中打开');
+                return;
+            }
+            
+            // 构造支付参数（需要从云函数获取）
+            const payParams = {
+                appId: '你的公众号AppID',
+                timeStamp: String(Math.floor(Date.now() / 1000)),
+                nonceStr: generateNonceStr(),
+                package: `prepay_id=${prepayId}`,
+                signType: 'RSA',
+                paySign: '从云函数获取的签名'
+            };
+            
+            WeixinJSBridge.invoke('getBrandWCPayRequest', payParams, function(res) {
+                if (res.err_msg === 'get_brand_wcpay_request:ok') {
+                    // 支付成功
+                    onPaymentSuccess();
+                } else {
+                    // 支付失败
+                    alert('支付失败：' + res.err_msg);
+                }
+            });
+        }
+        
+        // 轮询订单状态
+        let pollingTimer = null;
+        function startPollingOrderStatus(orderId) {
+            pollingTimer = setInterval(async () => {
+                try {
+                    const result = await cloudbaseApp.callFunction({
+                        name: 'wechat-payment-callback',
+                        data: {
+                            type: 'queryOrder',
+                            orderId: orderId
+                        }
+                    });
+                    
+                    if (result.result.code === 0) {
+                        const order = result.result.data;
+                        
+                        if (order.status === 'paid') {
+                            // 支付成功
+                            clearInterval(pollingTimer);
+                            onPaymentSuccess();
+                        } else if (order.status === 'closed') {
+                            // 订单已关闭
+                            clearInterval(pollingTimer);
+                            alert('订单已关闭，请重新下单');
+                        }
+                    }
+                } catch (err) {
+                    console.error('查询订单状态失败:', err);
+                }
+            }, 3000); // 每3秒查询一次
+        }
+        
+        // 支付成功处理
+        function onPaymentSuccess() {
+            clearInterval(pollingTimer);
+            
+            // 开通会员
+            activateMember(selectedPlan, currentCode);
+            
+            // 显示成功提示
+            closePayModal();
+            document.getElementById('successDesc').textContent = `${selectedPlan.name}开通成功！\n\n正在跳转至会员区...`;
+            document.getElementById('successModal').classList.add('show');
+        }
+        
+        // 生成随机字符串
+        function generateNonceStr(length = 32) {
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        // ===== 轮询模式（使用第三方支付平台）=====
+        
+        let currentOrderId = null;
+        
+        // 创建订单并开始轮询
+        async function createOrderAndPoll() {
+            // 调用后端API创建订单
+            // 这里使用模拟数据
+            currentOrderId = 'ORDER_' + Date.now();
+            currentCode = generateCode();
+            
+            // 显示支付二维码（使用第三方支付平台，如payjs.cn）
+            showThirdPartyPay();
+            
+            // 开始轮询
+            startPollingOrderStatus(currentOrderId);
+        }
+        
+        // 显示第三方支付
+        function showThirdPartyPay() {
+            const qrBox = document.querySelector('.qr-box');
+            
+            // 使用payjs.cn等第三方平台
+            const payUrl = `https://payjs.cn/api/native?mchid=你的商户号&total_fee=${selectedPlan.price * 100}&out_trade_no=${currentOrderId}`;
+            
+            qrBox.innerHTML = `
+                <div id="thirdPartyQR" style="margin-bottom:12px;">
+                    <!-- 这里显示支付二维码 -->
+                </div>
+                <div class="qr-method">扫码支付</div>
+                <div class="qr-hint">支持微信、支付宝、QQ钱包</div>
+            `;
+            
+            // 生成二维码（需要引入qrcode.js）
+            // generateQRCode('thirdPartyQR', payUrl);
+        }
+        
+        // 获取当前用户
+        function getCurrentUser() {
+            // 从localStorage或Cookie获取用户信息
+            const userStr = localStorage.getItem('currentUser');
+            if (userStr) {
+                return JSON.parse(userStr);
+            }
+            return null;
+        }
         function startCountdown() {
             let seconds = 5;
             const countdownEl = document.getElementById('payCountdown');
