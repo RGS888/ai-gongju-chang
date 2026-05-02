@@ -393,10 +393,7 @@
 
     </main>
     
-    <!-- 知识库 -->
-    <script src="knowledge.js"></script>
-    
-    <script>
+    <!-- 知识库已移至末尾 -->
         // ========== 支付配置 ==========
         let currentPayment = 'alipay'; // 当前支付方式
         let currentOrderId = null; // 当前订单号（静态模式）
@@ -1522,5 +1519,15 @@
             document.getElementById('contactModal').style.display = 'none';
         }
     </script>
+
+    <!-- 知识库（带错误处理，防止加载失败影响页面功能） -->
+    <script src="knowledge.js"></script>
+    <script>
+    // 确保页面功能正常，即使knowledge.js加载失败
+    if (typeof fortuneData === 'undefined') {
+        console.warn('knowledge.js加载失败，页面将使用内置数据');
+    }
+    </script>
+
 </body>
 </html>
