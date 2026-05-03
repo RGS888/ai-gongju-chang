@@ -5,29 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>激活码中心 - AI工具场</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- 
-    ===== 微信支付集成说明 =====
-    1. 演示模式（当前默认）：
-       - 修改 CONFIG.payMode = 'demo'
-       - 无需任何配置，可测试完整流程
-       - 适合开发和演示
-    
-    2. CloudBase云函数模式（推荐生产使用）：
-       - 修改 CONFIG.payMode = 'cloudbase'
-       - 配置 CONFIG.cloudbaseEnvId = '你的环境ID'
-       - 部署 cloudfunctions/wechat-payment-callback 云函数
-       - 取消下面一行的注释，引入CloudBase SDK
-       - 需要在微信中打开页面才能完成支付
-       
-    <script src="https://imgcache.qq.com/qcloud/tcbjs/1.7.2/tcb.js"></script>
-    
-    3. 轮询模式（使用第三方支付平台）：
-       - 修改 CONFIG.payMode = 'polling'
-       - 需要接入第三方支付平台（如payjs.cn、xunhupay.com）
-       - 前端生成订单，轮询支付状态
-       - 适合无法使用CloudBase的场景
-    ===================
-    -->
     <style>
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -349,25 +326,6 @@
             padding: 16px;
             margin-bottom: 12px;
         }
-        .qr-box .mock-qr {
-            width: 180px;
-            height: 180px;
-            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-            margin: 0 auto 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-        }
-        .qr-box .mock-qr .icon {
-            font-size: 50px;
-            margin-bottom: 8px;
-        }
-        .qr-box .mock-qr .text {
-            font-size: 11px;
-            color: #999;
-        }
         .qr-method {
             font-size: 13px;
             color: #666;
@@ -385,11 +343,13 @@
         .qr-box img {
             display: block;
             margin: 0 auto 8px;
+            max-width: 200px;
         }
         .payment-methods {
             display: flex;
             justify-content: center;
             gap: 12px;
+            margin-bottom: 12px;
         }
         .pay-method-btn {
             display: flex;
@@ -408,6 +368,9 @@
         }
         .pay-method-btn img {
             margin: 0;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
         }
         .pay-countdown {
             font-size: 13px;
@@ -512,6 +475,54 @@
             padding-bottom: 80px;
         }
         
+        /* 联系我们弹窗 */
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        .contact-modal.show {
+            display: flex;
+        }
+        .contact-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+        .contact-box h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        .contact-box img {
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+        .contact-box p {
+            color: #07c160;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+        .contact-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
         /* 响应式设计 */
         @media(max-width:768px){
             .header{padding:24px 16px}
@@ -534,7 +545,6 @@
             .pay-box{padding:20px}
             .pay-title{font-size:15px}
             .pay-price{font-size:30px}
-            .qr-box .mock-qr{width:160px;height:160px}
             .success-box{padding:30px 20px}
             .success-icon{font-size:48px}
             .success-title{font-size:16px}
@@ -547,15 +557,15 @@
 <body>
     <!-- 管理员入口 -->
     <div class="admin-link">
-        <a href="admin.html">🔐 管理</a>
+        <a href="admin.html">管理</a>
     </div>
     
     <div class="header">
-        <h1>🔑 激活码中心</h1>
+        <h1>激活码中心</h1>
         <p>开通会员，解锁全部资料</p>
         <!-- 邀请人提示 -->
         <div id="inviteHint" style="display:none; background: rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 16px; margin-top: 10px; font-size: 12px;">
-            🎁 您的好友 <span id="inviterName" style="font-weight:bold;"></span> 邀请您开通会员
+            您的好友 <span id="inviterName" style="font-weight:bold;"></span> 邀请您开通会员
         </div>
     </div>
     
@@ -563,14 +573,14 @@
         <!-- 会员已开通提示 -->
         <div class="section" id="memberTipSection" style="display:none;">
             <div class="member-tip">
-                <div class="title" id="memberTipTitle">🎉 会员已开通</div>
+                <div class="title" id="memberTipTitle">会员已开通</div>
                 <div class="info" id="memberTipInfo">有效期至：-</div>
                 <a href="vip.html" class="btn">进入会员区学习</a>
             </div>
         </div>
         
         <div class="section">
-            <div class="section-title">💳 开通会员</div>
+            <div class="section-title">开通会员</div>
             
             <!-- 会员套餐 -->
             <div class="plans-grid" id="plansGrid">
@@ -579,13 +589,13 @@
             
             <!-- 单课购买 -->
             <div class="single-buy" id="singleBuySection">
-                <h4>📹 单课购买（9.9元/个）</h4>
+                <h4>单课购买（9.9元/个）</h4>
                 <div class="price-tag">¥9.9 <small>/单个资料</small></div>
                 <div class="desc">按需购买，适合偶尔使用</div>
                 <div class="benefits">
-                    <span>✅</span> 可选任意单个资料<br>
-                    <span>✅</span> 永久观看权限<br>
-                    <span>💡</span> 会员全站更划算
+                    <span>可</span> 可选任意单个资料<br>
+                    <span>可</span> 永久观看权限<br>
+                    <span>提</span> 会员全站更划算
                 </div>
                 <button class="pay-btn" style="background:linear-gradient(135deg,#fbbf24,#f59e0b);" onclick="selectSingleCourse()">
                     选择单个资料
@@ -600,19 +610,19 @@
     
     <div class="bottom-nav">
         <a href="index.html" class="nav-item">
-            <span class="nav-icon">🏠</span>
+            <span class="nav-icon">首</span>
             首页
         </a>
         <a href="vip.html" class="nav-item">
-            <span class="nav-icon">👑</span>
+            <span class="nav-icon">员</span>
             会员区
         </a>
         <a href="activate.html" class="nav-item active">
-            <span class="nav-icon">🔑</span>
+            <span class="nav-icon">激</span>
             激活码
         </a>
         <a href="user.html" class="nav-item">
-            <span class="nav-icon">👤</span>
+            <span class="nav-icon">我</span>
             我的
         </a>
     </div>
@@ -623,37 +633,44 @@
             <button class="pay-close" onclick="closePayModal()">&times;</button>
             <div class="pay-title" id="payTitle">购买月卡会员</div>
             <div class="pay-price" id="payPrice">¥29</div>
-            <div class="qr-box">
-                <div class="payment-methods" style="margin-bottom:12px;">
-                    <div class="pay-method-btn active" id="alipayMethodBtn" onclick="switchPayQR('alipay')">
-                        <img src="assets/alipay.jpg" alt="支付宝" style="width:40px;height:40px;border-radius:6px;">
-                        <span>支付宝</span>
-                    </div>
-                    <div class="pay-method-btn" id="wechatMethodBtn" onclick="switchPayQR('wechat')">
-                        <img src="assets/wechat.jpg" alt="微信" style="width:40px;height:40px;border-radius:6px;">
-                        <span>微信</span>
-                    </div>
-                </div>
-                <img id="payQRImage" src="assets/alipay.jpg" alt="付款码" style="width:200px;border-radius:8px;">
-                <div class="qr-method" id="qrMethod">请使用<span id="payMethodText">支付宝</span>扫码支付</div>
-                <div class="qr-hint">💡 支付后联系客服微信：LZJD8768</div>
-                <div class="qr-contact">转账时备注：会员开通</div>
+            <div class="qr-box" id="qrBox">
+                <!-- 收款码区域由JS动态填充 -->
             </div>
             <div class="pay-countdown" id="payCountdown"></div>
-            <button class="pay-btn" style="margin-top:12px;" onclick="confirmPayment()">✅ 已支付，确认开通</button>
+            <button class="pay-btn" style="margin-top:12px;" onclick="confirmPayment()">已支付，确认开通</button>
         </div>
     </div>
     
     <!-- 成功弹窗 -->
     <div class="success-modal" id="successModal">
         <div class="success-box">
-            <div class="success-icon">🎉</div>
+            <div class="success-icon">成</div>
             <div class="success-title">开通成功！</div>
             <div class="success-desc" id="successDesc">您的会员已开通</div>
             <div id="orderDetails" style="background:#f8f9fa;border-radius:12px;padding:16px;margin:12px 0;font-size:12px;color:#333;text-align:left;"></div>
             <button class="success-btn" onclick="goToVip()">进入会员区</button>
         </div>
     </div>
+
+    <!-- 联系我们弹窗 -->
+    <div class="contact-modal" id="contactModal">
+        <div class="contact-box">
+            <button class="contact-close" onclick="closeContact()">&times;</button>
+            <h3>联系我们</h3>
+            <img src="wechat-qrcode.jpg" alt="客服二维码" style="width:200px;">
+            <p>微信号：LZJD8768</p>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+                <img src="assets/alipay.jpg" alt="支付宝" style="width:100px;border-radius:6px;">
+                <img src="assets/wechat.jpg" alt="微信" style="width:100px;border-radius:6px;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background:#1a1a2e;color:#888;padding:20px;text-align:center;">
+        <p><a href="index.html" style="color:#667eea;">首页</a> | <a href="javascript:void(0)" onclick="showContact()" style="color:#667eea;">联系我们</a> | <a href="vip.html" style="color:#667eea;">会员专区</a></p>
+        <p style="margin-top:8px;font-size:12px;">AI工具场</p>
+    </footer>
 
     <script>
         // 会员套餐配置
@@ -664,23 +681,22 @@
             { id: 'forever', name: '永久会员', price: 399, days: 9999, desc: '永久有效', popular: false },
         ];
         
-        // ===== 配置区域 =====
+        // 配置区域
         const CONFIG = {
-            // 支付模式：'manual'（手动确认，显示真实收款码）| 'demo'（演示模式，自动开通）
-            payMode: 'manual', // 使用手动收款模式，显示真实收款码
+            payMode: 'manual',
             cloudbaseEnvId: 'your-env-id',
             demoDelay: 2000,
             enableSound: true
         };
-        // =====================
         
         let selectedPlan = null;
-        let selectedPayType = 'member'; // member 或 single
+        let selectedPayType = 'member';
         let currentCode = '';
         let countdownTimer = null;
         let currentInviteCode = null;
+        let currentPayMethod = 'alipay';
         
-        // ===== 二级分销系统 =====
+        // 二级分销系统
         const DIST_DB_KEY = 'ai_gongju_chang_dist';
         const COMMISSION_RATE = { level1: 0.10, level2: 0.08 };
         const PLAN_PRICES = { 'month': 29, 'quarter': 79, 'year': 199, 'forever': 399 };
@@ -792,7 +808,7 @@
             return names[level] || '会员';
         }
         
-        // 初始化 - 检查URL中的邀请码和套餐
+        // 初始化
         function init() {
             const urlParams = new URLSearchParams(window.location.search);
             
@@ -807,7 +823,6 @@
             // 检查套餐参数
             const packageParam = urlParams.get('package');
             if (packageParam) {
-                // 从vip.html跳转过来的
                 setTimeout(() => {
                     selectPlan(packageParam);
                 }, 100);
@@ -824,7 +839,7 @@
             
             if (member) {
                 memberTipSection.style.display = 'block';
-                document.getElementById('memberTipTitle').textContent = '🎉 ' + getLevelName(member.level) + '已开通';
+                document.getElementById('memberTipTitle').textContent = getLevelName(member.level) + '已开通';
                 document.getElementById('memberTipInfo').textContent = member.level === 'forever' ? 
                     '永久有效' : '有效期至：' + new Date(member.expireTime).toLocaleDateString();
             } else {
@@ -837,8 +852,8 @@
             const grid = document.getElementById('plansGrid');
             grid.innerHTML = plans.map(p => {
                 let saveText = '';
-                if (p.id === 'quarter') saveText = '<div class="plan-save">省¥8</div>';
-                if (p.id === 'year') saveText = '<div class="plan-save">省¥149</div>';
+                if (p.id === 'quarter') saveText = '<div class="plan-save">省8元</div>';
+                if (p.id === 'year') saveText = '<div class="plan-save">省149元</div>';
                 if (p.id === 'forever') saveText = '<div class="plan-save">永久特权</div>';
                 
                 return `
@@ -890,7 +905,6 @@
             if (CONFIG.payMode === 'demo') {
                 showDemoPay();
             } else if (CONFIG.payMode === 'manual') {
-                // 手动收款模式：恢复显示真实收款码区域
                 showManualPay();
             } else if (CONFIG.payMode === 'cloudbase') {
                 createCloudBaseOrder();
@@ -898,52 +912,61 @@
                 createOrderAndPoll();
             }
             
-            // 显示支付弹窗
             document.getElementById('payModal').classList.add('show');
         }
         
-        // 手动收款模式：显示真实收款码
+        // 获取微信收款码图片路径
+        function getWechatQRImage() {
+            if (!selectedPlan) return 'assets/wechat.jpg';
+            const price = selectedPlan.price;
+            if (price == 6.6) return 'assets/payment/price_6_6.jpg';
+            else if (price == 9.9) return 'assets/payment/price_9_9.jpg';
+            else if (price == 19.9) return 'assets/payment/price_19_9.jpg';
+            else if (price == 29) return 'assets/payment/price_29.jpg';
+            else if (price == 29.9) return 'assets/payment/price_29_9.jpg';
+            else if (price == 79) return 'assets/payment/price_79.jpg';
+            else if (price == 199) return 'assets/payment/price_199.jpg';
+            else if (price == 399) return 'assets/payment/price_399.jpg';
+            return 'assets/wechat.jpg';
+        }
+        
+        // 手动收款模式
         function showManualPay() {
             currentCode = generateCode();
-            // 恢复原始收款码UI（重置qr-box内容）
-            const qrBox = document.querySelector('.qr-box');
+            currentPayMethod = 'alipay';
+            
+            const qrBox = document.getElementById('qrBox');
             qrBox.innerHTML = `
-                <div class="payment-methods" style="margin-bottom:12px;">
+                <div class="payment-methods">
                     <div class="pay-method-btn active" id="alipayMethodBtn" onclick="switchPayQR('alipay')">
-                        <img src="assets/alipay.jpg" alt="支付宝" style="width:40px;height:40px;border-radius:6px;">
+                        <img src="assets/alipay.jpg" alt="支付宝">
                         <span>支付宝</span>
                     </div>
                     <div class="pay-method-btn" id="wechatMethodBtn" onclick="switchPayQR('wechat')">
-                        <img src="assets/wechat.jpg" alt="微信" style="width:40px;height:40px;border-radius:6px;">
+                        <img src="assets/wechat.jpg" alt="微信">
                         <span>微信</span>
                     </div>
                 </div>
-                <img id="payQRImage" src="assets/alipay.jpg" alt="付款码" style="width:200px;border-radius:8px;">
-                <div class="qr-method" id="qrMethod">请使用<span id="payMethodText">支付宝</span>扫码支付</div>
-                <div class="qr-hint">💡 支付后联系客服微信：LZJD8768</div>
+                <img id="payQRImage" src="assets/alipay.jpg" alt="付款码">
+                <div class="qr-method">请使用<span id="payMethodText">支付宝</span>扫码支付</div>
+                <div class="qr-hint">支付后联系客服微信：LZJD8768</div>
                 <div class="qr-contact">转账时备注：会员开通</div>
             `;
-            // 根据当前选择的套餐自动切换到对应微信收款码
-            currentPayMethod = 'alipay';
         }
         
-        // 演示模式：模拟支付
+        // 演示模式
         function showDemoPay() {
-            // 生成模拟订单号
             currentCode = generateCode();
             
-            // 显示模拟支付界面
-            const qrBox = document.querySelector('.qr-box');
+            const qrBox = document.getElementById('qrBox');
             qrBox.innerHTML = `
-                <div class="mock-qr">
-                    <div class="icon">📱</div>
-                    <div class="text">演示模式</div>
+                <div style="padding:20px;text-align:center;">
+                    <div style="font-size:48px;margin-bottom:10px;">演示</div>
+                    <div style="color:#888;font-size:13px;">演示模式</div>
+                    <div style="margin-top:12px;color:#f59e0b;">${CONFIG.demoDelay/1000}秒后自动开通</div>
                 </div>
-                <div class="qr-method">模拟微信支付流程</div>
-                <div class="qr-hint">💡 演示模式：${CONFIG.demoDelay/1000}秒后自动开通</div>
             `;
             
-            // 开始演示倒计时
             startDemoCountdown();
         }
         
@@ -955,12 +978,11 @@
             countdownTimer = setInterval(() => {
                 seconds--;
                 if (seconds > 0) {
-                    countdownEl.textContent = `⏰ ${seconds}秒后模拟支付成功...`;
+                    countdownEl.textContent = seconds + '秒后模拟支付成功...';
                 } else {
                     clearInterval(countdownTimer);
-                    countdownEl.textContent = '✅ 支付成功！正在开通会员...';
+                    countdownEl.textContent = '支付成功！正在开通会员...';
                     
-                    // 模拟支付成功
                     setTimeout(() => {
                         confirmPaymentDemo();
                     }, 500);
@@ -968,289 +990,61 @@
             }, 1000);
         }
         
-        // 演示模式：确认支付
+        // 演示模式确认
         function confirmPaymentDemo() {
             clearInterval(countdownTimer);
             document.getElementById('payCountdown').textContent = '';
             
             if (selectedPayType === 'single') {
-                // 单课购买
                 const owned = JSON.parse(localStorage.getItem('ownedMaterials') || '[]');
                 if (!owned.includes(0)) owned.push(0);
                 localStorage.setItem('ownedMaterials', JSON.stringify(owned));
                 
                 closePayModal();
-                document.getElementById('successDesc').textContent = '单课购买成功！\n\n激活码：' + currentCode + '\n请到会员区查看已购资料';
+                document.getElementById('successDesc').textContent = '单课购买成功！激活码：' + currentCode;
                 document.getElementById('successModal').classList.add('show');
             } else {
-                // 会员开通
                 activateMember(selectedPlan, currentCode);
             }
         }
         
-        // ===== CloudBase 云函数集成（需要配置后启用）=====
-        
-        // CloudBase SDK（需要在HTML头部引入）
-        // <script src="https://imgcache.qq.com/qcloud/tcbjs/1.7.2/tcb.js"></script>
-        
-        // 初始化CloudBase
-        let cloudbaseApp = null;
-        function initCloudBase() {
-            if (CONFIG.payMode !== 'cloudbase') return;
+        // 切换支付二维码
+        function switchPayQR(method) {
+            currentPayMethod = method;
+            const qrImg = document.getElementById('payQRImage');
+            const methodText = document.getElementById('payMethodText');
+            const alipayBtn = document.getElementById('alipayMethodBtn');
+            const wechatBtn = document.getElementById('wechatMethodBtn');
             
-            // 检查CloudBase SDK是否加载
-            if (typeof tcb === 'undefined') {
-                console.error('CloudBase SDK未加载，请在head中引入：<script src="https://imgcache.qq.com/qcloud/tcbjs/1.7.2/tcb.js"></script>');
-                return;
-            }
+            if (!qrImg) return;
             
-            cloudbaseApp = tcb.init({
-                env: CONFIG.cloudbaseEnvId
-            });
-        }
-        
-        // 创建CloudBase订单
-        async function createCloudBaseOrder() {
-            if (!cloudbaseApp) {
-                alert('CloudBase未初始化');
-                return;
-            }
-            
-            try {
-                // 获取用户信息
-                const user = getCurrentUser();
-                if (!user || !user.openId) {
-                    alert('请先在微信中打开，或绑定微信账号');
-                    return;
-                }
-                
-                // 调用云函数创建订单
-                const result = await cloudbaseApp.callFunction({
-                    name: 'wechat-payment-callback',
-                    data: {
-                        type: 'createOrder',
-                        userId: user.id,
-                        membershipType: selectedPlan.id,
-                        openId: user.openId
-                    }
-                });
-                
-                if (result.result.code === 0) {
-                    const orderData = result.result.data;
-                    currentOrderId = orderData.orderId;
-                    
-                    // 显示微信支付二维码或JSAPI支付
-                    showWechatPay(orderData);
-                    
-                    // 开始轮询支付状态
-                    startPollingOrderStatus(currentOrderId);
-                } else {
-                    alert('创建订单失败：' + result.result.message);
-                }
-            } catch (err) {
-                console.error('创建订单失败:', err);
-                alert('创建订单失败，请重试');
-            }
-        }
-        
-        // 显示微信支付界面
-        function showWechatPay(orderData) {
-            const qrBox = document.querySelector('.qr-box');
-            
-            // 判断是否在微信浏览器中
-            const isWechat = /MicroMessenger/i.test(navigator.userAgent);
-            
-            if (isWechat) {
-                // 在微信中，使用JSAPI支付
-                qrBox.innerHTML = `
-                    <div style="padding:20px;">
-                        <div style="font-size:14px;margin-bottom:12px;">订单已创建</div>
-                        <div style="font-size:12px;color:#888;margin-bottom:16px;">请在微信中完成支付</div>
-                        <button onclick="invokeWechatPay('${orderData.prepay_id}')" 
-                                style="padding:12px 24px;background:#07c160;color:white;border:none;border-radius:8px;font-size:14px;">
-                            立即支付 ¥${selectedPlan.price}
-                        </button>
-                    </div>
-                `;
+            if (method === 'alipay') {
+                qrImg.src = 'assets/alipay.jpg';
+                if (methodText) methodText.textContent = '支付宝';
+                if (alipayBtn) alipayBtn.classList.add('active');
+                if (wechatBtn) wechatBtn.classList.remove('active');
             } else {
-                // 不在微信中，显示支付二维码
-                qrBox.innerHTML = `
-                    <div id="wechatQRCode" style="margin-bottom:12px;">
-                        <!-- 二维码将在这里显示 -->
-                        <div class="mock-qr">
-                            <div class="icon">📱</div>
-                            <div class="text">请使用微信扫码支付</div>
-                        </div>
-                    </div>
-                    <div class="qr-method">微信支付</div>
-                    <div class="qr-hint">打开微信 → 扫一扫</div>
-                `;
-                
-                // 生成支付二维码（需要调用后端API获取二维码链接）
-                // 这里使用模拟二维码
-                generateWechatQRCode(orderData);
+                qrImg.src = getWechatQRImage();
+                if (methodText) methodText.textContent = '微信';
+                if (wechatBtn) wechatBtn.classList.add('active');
+                if (alipayBtn) alipayBtn.classList.remove('active');
             }
         }
         
-        // 调用微信支付JSAPI
-        function invokeWechatPay(prepayId) {
-            if (typeof WeixinJSBridge === 'undefined') {
-                alert('请在微信中打开');
-                return;
-            }
-            
-            // 构造支付参数（需要从云函数获取）
-            const payParams = {
-                appId: '你的公众号AppID',
-                timeStamp: String(Math.floor(Date.now() / 1000)),
-                nonceStr: generateNonceStr(),
-                package: `prepay_id=${prepayId}`,
-                signType: 'RSA',
-                paySign: '从云函数获取的签名'
-            };
-            
-            WeixinJSBridge.invoke('getBrandWCPayRequest', payParams, function(res) {
-                if (res.err_msg === 'get_brand_wcpay_request:ok') {
-                    // 支付成功
-                    onPaymentSuccess();
-                } else {
-                    // 支付失败
-                    alert('支付失败：' + res.err_msg);
-                }
-            });
-        }
-        
-        // 轮询订单状态
-        let pollingTimer = null;
-        function startPollingOrderStatus(orderId) {
-            pollingTimer = setInterval(async () => {
-                try {
-                    const result = await cloudbaseApp.callFunction({
-                        name: 'wechat-payment-callback',
-                        data: {
-                            type: 'queryOrder',
-                            orderId: orderId
-                        }
-                    });
-                    
-                    if (result.result.code === 0) {
-                        const order = result.result.data;
-                        
-                        if (order.status === 'paid') {
-                            // 支付成功
-                            clearInterval(pollingTimer);
-                            onPaymentSuccess();
-                        } else if (order.status === 'closed') {
-                            // 订单已关闭
-                            clearInterval(pollingTimer);
-                            alert('订单已关闭，请重新下单');
-                        }
-                    }
-                } catch (err) {
-                    console.error('查询订单状态失败:', err);
-                }
-            }, 3000); // 每3秒查询一次
-        }
-        
-        // 支付成功处理
-        function onPaymentSuccess() {
-            clearInterval(pollingTimer);
-            
-            // 开通会员
-            activateMember(selectedPlan, currentCode);
-            
-            // 显示成功提示
-            closePayModal();
-            document.getElementById('successDesc').textContent = `${selectedPlan.name}开通成功！\n\n正在跳转至会员区...`;
-            document.getElementById('successModal').classList.add('show');
-        }
-        
-        // 生成随机字符串
-        function generateNonceStr(length = 32) {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let result = '';
-            for (let i = 0; i < length; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
-        
-        // ===== 轮询模式（使用第三方支付平台）=====
-        
-        let currentOrderId = null;
-        
-        // 创建订单并开始轮询
-        async function createOrderAndPoll() {
-            // 调用后端API创建订单
-            // 这里使用模拟数据
-            currentOrderId = 'ORDER_' + Date.now();
-            currentCode = generateCode();
-            
-            // 显示支付二维码（使用第三方支付平台，如payjs.cn）
-            showThirdPartyPay();
-            
-            // 开始轮询
-            startPollingOrderStatus(currentOrderId);
-        }
-        
-        // 显示第三方支付
-        function showThirdPartyPay() {
-            const qrBox = document.querySelector('.qr-box');
-            
-            // 使用payjs.cn等第三方平台
-            const payUrl = `https://payjs.cn/api/native?mchid=你的商户号&total_fee=${selectedPlan.price * 100}&out_trade_no=${currentOrderId}`;
-            
-            qrBox.innerHTML = `
-                <div id="thirdPartyQR" style="margin-bottom:12px;">
-                    <!-- 这里显示支付二维码 -->
-                </div>
-                <div class="qr-method">扫码支付</div>
-                <div class="qr-hint">支持微信、支付宝、QQ钱包</div>
-            `;
-            
-            // 生成二维码（需要引入qrcode.js）
-            // generateQRCode('thirdPartyQR', payUrl);
-        }
-        
-        // 获取当前用户
-        function getCurrentUser() {
-            // 从localStorage或Cookie获取用户信息
-            const userStr = localStorage.getItem('currentUser');
-            if (userStr) {
-                return JSON.parse(userStr);
-            }
-            return null;
-        }
-        function startCountdown() {
-            let seconds = 5;
-            const countdownEl = document.getElementById('payCountdown');
-            
-            countdownTimer = setInterval(() => {
-                seconds--;
-                if (seconds > 0) {
-                    countdownEl.textContent = `⏰ ${seconds}秒后自动开通（实际需联系客服支付）`;
-                } else {
-                    countdownEl.textContent = '';
-                }
-            }, 1000);
-        }
-        
-        // 确认支付（手动确认）
+        // 确认支付
         function confirmPayment() {
             clearInterval(countdownTimer);
             document.getElementById('payCountdown').textContent = '';
             
             if (selectedPayType === 'single') {
-                // 单课购买
                 const owned = JSON.parse(localStorage.getItem('ownedMaterials') || '[]');
-                if (!owned.includes(0)) owned.push(0); // 默认第一个资料
+                if (!owned.includes(0)) owned.push(0);
                 localStorage.setItem('ownedMaterials', JSON.stringify(owned));
                 
                 closePayModal();
-                document.getElementById('successDesc').textContent = '单课购买成功！\n\n激活码：' + currentCode + '\n请到会员区查看已购资料';
+                document.getElementById('successDesc').textContent = '单课购买成功！激活码：' + currentCode;
                 document.getElementById('successModal').classList.add('show');
             } else {
-                // 会员开通
                 activateMember(selectedPlan, currentCode);
             }
         }
@@ -1260,44 +1054,6 @@
             document.getElementById('payModal').classList.remove('show');
             clearInterval(countdownTimer);
         }
-
-        // 切换支付二维码
-        let currentPayMethod = 'alipay';
-        function switchPayQR(method) {
-            currentPayMethod = method;
-            const qrImg = document.getElementById('payQRImage');
-            const methodText = document.getElementById('payMethodText');
-            const alipayBtn = document.getElementById('alipayMethodBtn');
-            const wechatBtn = document.getElementById('wechatMethodBtn');
-            
-            if (!qrImg) return; // 元素不存在则退出
-
-            if (method === 'alipay') {
-                qrImg.src = 'assets/alipay.jpg';
-                if (methodText) methodText.textContent = '支付宝';
-                if (alipayBtn) alipayBtn.classList.add('active');
-                if (wechatBtn) wechatBtn.classList.remove('active');
-            } else {
-                // 根据价格选择对应的微信收款码
-                let wechatImg = 'assets/wechat.jpg'; // 默认
-                if (selectedPlan) {
-                    const price = selectedPlan.price;
-                    if (price == 6.6) wechatImg = 'assets/payment/price_6_6.jpg';
-                    else if (price == 9.9) wechatImg = 'assets/payment/price_9_9.jpg';
-                    else if (price == 19.9) wechatImg = 'assets/payment/price_19_9.jpg';
-                    else if (price == 29 || price == 29.0) wechatImg = 'assets/payment/price_29.jpg';
-                    else if (price == 29.9) wechatImg = 'assets/payment/price_29_9.jpg';
-                    else if (price == 79) wechatImg = 'assets/payment/price_79.jpg';
-                    else if (price == 199) wechatImg = 'assets/payment/price_199.jpg';
-                    else if (price == 399) wechatImg = 'assets/payment/price_399.jpg';
-                }
-                qrImg.src = wechatImg;
-                if (methodText) methodText.textContent = '微信';
-                if (wechatBtn) wechatBtn.classList.add('active');
-                if (alipayBtn) alipayBtn.classList.remove('active');
-            }
-            qrImg.onerror = function() { this.style.display = 'none'; };
-        }
         
         // 激活会员
         function activateMember(plan, code) {
@@ -1305,7 +1061,7 @@
             let expireTime;
             
             if (plan.id === 'forever') {
-                expireTime = now + 365 * 10 * 24 * 60 * 60 * 1000; // 10年作为永久
+                expireTime = now + 365 * 10 * 24 * 60 * 60 * 1000;
             } else {
                 expireTime = now + plan.days * 24 * 60 * 60 * 1000;
             }
@@ -1347,17 +1103,13 @@
             
             closePayModal();
             
-            // 显示成功弹窗，包含订单详情
             let expireText = plan.id === 'forever' ? '永久有效' : new Date(expireTime).toLocaleDateString();
             let levelName = getLevelName(plan.id);
             
-            // 主成功信息
-            let descText = `${levelName}开通成功！`;
-            document.getElementById('successDesc').textContent = descText;
+            document.getElementById('successDesc').textContent = levelName + '开通成功！';
             
-            // 订单详情
             let orderHtml = `
-                <div style="margin-bottom:10px;"><strong>📋 订单详情</strong></div>
+                <div style="margin-bottom:10px;"><strong>订单详情</strong></div>
                 <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
                     <span style="color:#666;">会员级别</span>
                     <span style="font-weight:bold;color:#667eea;">${levelName}</span>
@@ -1368,25 +1120,13 @@
                 </div>
                 <div style="display:flex;justify-content:space-between;margin-bottom:8px;align-items:center;">
                     <span style="color:#666;">激活码</span>
-                    <span style="font-weight:bold;font-size:14px;letter-spacing:2px;color:#333;font-family:monospace;">${code}</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
-                    <span style="color:#666;">开通时间</span>
-                    <span>${new Date(now).toLocaleString()}</span>
+                    <span style="font-weight:bold;font-size:14px;letter-spacing:2px;">${code}</span>
                 </div>
                 <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
                     <span style="color:#666;">有效期至</span>
                     <span style="color:#10b981;font-weight:bold;">${expireText}</span>
                 </div>
             `;
-            
-            if (currentInviteCode) {
-                orderHtml += `
-                    <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;">
-                        <span style="color:#667eea;">🎉 感谢好友推荐！</span>
-                    </div>
-                `;
-            }
             
             document.getElementById('orderDetails').innerHTML = orderHtml;
             document.getElementById('successModal').classList.add('show');
@@ -1434,40 +1174,18 @@
                 document.getElementById('successModal').classList.remove('show');
             }
         });
-
+        
         // 联系我们弹窗
         function showContact() {
-            const modal = document.getElementById('contactModal');
-            modal.style.display = 'flex';
+            document.getElementById('contactModal').classList.add('show');
         }
         function closeContact() {
-            const modal = document.getElementById('contactModal');
-            modal.style.display = 'none';
+            document.getElementById('contactModal').classList.remove('show');
         }
-
+        
         // 初始化
         renderPlans();
         init();
     </script>
-
-    <!-- 联系我们弹窗 -->
-    <div class="payment-modal" id="contactModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
-        <div style="background:#fff;border-radius:16px;padding:24px;max-width:400px;width:90%;text-align:center;position:relative;">
-            <button onclick="closeContact()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:24px;cursor:pointer;">&times;</button>
-            <h3 style="font-size:20px;margin-bottom:16px;">☎️ 联系我们</h3>
-            <img src="wechat-qrcode.jpg" alt="客服二维码" style="width:200px;border-radius:8px;margin-bottom:12px;">
-            <p style="color:#07c160;font-weight:bold;margin:8px 0;">微信号：LZJD8768</p>
-            <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
-                <img src="assets/alipay.jpg" alt="支付宝" style="width:100px;border-radius:6px;">
-                <img src="assets/wechat.jpg" alt="微信" style="width:100px;border-radius:6px;">
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer style="background:#1a1a2e;color:#888;padding:20px;text-align:center;">
-        <p><a href="index.html" style="color:#667eea;">首页</a> | <a href="javascript:void(0)" onclick="showContact()" style="color:#667eea;">联系我们</a> | <a href="vip.html" style="color:#667eea;">会员专区</a></p>
-        <p style="margin-top:8px;font-size:12px;">© 2026 AI工具场</p>
-    </footer>
 </body>
 </html>
