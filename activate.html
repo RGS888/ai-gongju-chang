@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>激活码中心 - AI工具场</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -681,12 +682,26 @@
             { id: 'forever', name: '永久会员', price: 399, days: 9999, desc: '永久有效', popular: false },
         ];
         
-        // 配置区域
+        // ========== 支付配置 ==========
         const CONFIG = {
-            payMode: 'manual',
-            cloudbaseEnvId: 'your-env-id',
+            // ===== 支付模式 =====
+            // 'dual'    = 支付宝+微信双通道（需部署云函数）
+            // 'manual'  = 手动收款码（当前兜底模式）
+            // 'demo'    = 演示模式
+            payMode: 'dual',
+
+            // ===== 腾讯云开发配置 =====
+            cloudbaseEnvId: 'your-env-id', // 云开发环境ID（需替换）
+            cloudFunctions: {
+                alipay: 'alipay-pay',         // 支付宝云函数名
+                wechatpay: 'wechatpay-pay'    // 微信支付云函数名
+            },
+
+            // ===== 支付参数 =====
             demoDelay: 2000,
-            enableSound: true
+            enableSound: true,
+            pollInterval: 3000,             // 轮询间隔（毫秒）
+            pollTimeout: 30 * 60 * 1000,    // 30分钟超时
         };
         
         let selectedPlan = null;
@@ -901,15 +916,16 @@
             document.getElementById('payTitle').textContent = `购买${selectedPlan.name}`;
             document.getElementById('payPrice').textContent = `¥${selectedPlan.price}`;
             
-            // 根据配置选择支付方式
-            if (CONFIG.payMode === 'demo') {
-                showDemoPay();
-            } else if (CONFIG.payMode === 'manual') {
-                showManualPay();
+            if (CONFIG.payMode === 'dual') {
+                showDualPayModal();
             } else if (CONFIG.payMode === 'cloudbase') {
                 createCloudBaseOrder();
             } else if (CONFIG.payMode === 'polling') {
                 createOrderAndPoll();
+            } else if (CONFIG.payMode === 'demo') {
+                showDemoPay();
+            } else {
+                showManualPay(); // 兜底
             }
             
             document.getElementById('payModal').classList.add('show');
@@ -930,7 +946,7 @@
             return 'assets/wechat.jpg';
         }
         
-        // 手动收款模式
+        // 手动收款模式（兜底）
         function showManualPay() {
             currentCode = generateCode();
             currentPayMethod = 'alipay';
@@ -952,6 +968,205 @@
                 <div class="qr-hint">支付后联系客服微信：LZJD8768</div>
                 <div class="qr-contact">转账时备注：会员开通</div>
             `;
+        }
+
+        // ========== 双通道支付弹窗 ==========
+        let currentOrderId = null;
+        let currentPayChannel = null; // 'alipay' | 'wechat'
+        let pollingTimer = null;
+
+        function showDualPayModal() {
+            currentCode = generateCode();
+            currentPayChannel = 'alipay';
+
+            const qrBox = document.getElementById('qrBox');
+            qrBox.innerHTML = `
+                <div class="payment-methods">
+                    <div class="pay-method-btn active" id="alipayMethodBtn" onclick="switchDualPayChannel('alipay')">
+                        <img src="assets/alipay.jpg" alt="支付宝" style="width:32px;height:32px;border-radius:6px;">
+                        <span>支付宝</span>
+                    </div>
+                    <div class="pay-method-btn" id="wechatMethodBtn" onclick="switchDualPayChannel('wechat')">
+                        <img src="assets/wechat.jpg" alt="微信支付" style="width:32px;height:32px;border-radius:6px;">
+                        <span>微信支付</span>
+                    </div>
+                </div>
+                <div id="qrLoading" style="padding:20px;text-align:center;">
+                    <div style="color:#888;font-size:13px;">正在请求支付...</div>
+                </div>
+                <div id="qrContainer" style="display:none;text-align:center;">
+                    <div id="qrPlaceholder" style="width:200px;height:200px;margin:0 auto 12px;background:#f8f9fa;display:flex;align-items:center;justify-content:center;font-size:11px;color:#999;border-radius:8px;"></div>
+                    <img id="payQRCode" src="" style="display:none;margin:0 auto;max-width:200px;" />
+                </div>
+                <div class="qr-method" id="qrMethodText">请使用支付宝扫码付款</div>
+                <div class="qr-hint">支付完成后系统将在10秒内自动开通</div>
+                <div class="qr-contact">如有疑问联系微信：LZJD8768</div>
+            `;
+
+            // 创建初始订单
+            createDualOrder();
+        }
+
+        // 切换支付通道
+        async function switchDualPayChannel(channel) {
+            if (currentPayChannel === channel) return;
+            if (pollingTimer) { clearInterval(pollingTimer); pollingTimer = null; }
+
+            currentPayChannel = channel;
+            document.getElementById('alipayMethodBtn').classList.toggle('active', channel === 'alipay');
+            document.getElementById('wechatMethodBtn').classList.toggle('active', channel === 'wechat');
+            document.getElementById('qrMethodText').textContent = channel === 'alipay'
+                ? '请使用支付宝扫码付款' : '请使用微信扫码付款';
+
+            await createDualOrder();
+        }
+
+        // 创建双通道订单
+        async function createDualOrder() {
+            const qrLoading = document.getElementById('qrLoading');
+            const qrContainer = document.getElementById('qrContainer');
+            const qrPlaceholder = document.getElementById('qrPlaceholder');
+            const payQRCode = document.getElementById('payQRCode');
+
+            qrLoading.style.display = 'block';
+            qrContainer.style.display = 'none';
+
+            // 如果云函数未配置，降级到手动收款模式
+            if (CONFIG.cloudbaseEnvId === 'your-env-id') {
+                qrLoading.style.display = 'none';
+                qrContainer.style.display = 'block';
+                qrPlaceholder.innerHTML = '';
+                payQRCode.style.display = 'block';
+                payQRCode.src = currentPayChannel === 'alipay'
+                    ? 'assets/alipay.jpg'
+                    : getWechatQRImage();
+                const qrMethodText = document.getElementById('qrMethodText');
+                if (qrMethodText) qrMethodText.textContent = currentPayChannel === 'alipay'
+                    ? '请用支付宝扫码转账' : '请用微信扫码转账';
+                return;
+            }
+
+            const funcKey = currentPayChannel === 'alipay' ? 'alipay' : 'wechatpay';
+            const endpoint = `https://${CONFIG.cloudbaseEnvId}.api.tcloudbase.com/${CONFIG.cloudFunctions[funcKey]}.http`;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        out_trade_no: currentCode,
+                        total_fee: selectedPlan.price,
+                        subject: `AI工具场 - ${selectedPlan.name}`,
+                        body: `开通${selectedPlan.name}`,
+                        channel: currentPayChannel
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.code !== 0) {
+                    qrLoading.innerHTML = `<div style="color:#dc2626;font-size:13px;padding:16px;">下单失败：${data.msg || '请稍后重试'}</div>`;
+                    return;
+                }
+
+                currentOrderId = data.orderId || currentCode;
+                const qrContent = data.qr_code || data.code_url;
+
+                if (!qrContent) {
+                    qrLoading.innerHTML = `<div style="color:#dc2626;font-size:13px;padding:16px;">支付二维码生成失败</div>`;
+                    return;
+                }
+
+                qrLoading.style.display = 'none';
+                qrContainer.style.display = 'block';
+                renderQRCode(qrContent);
+                startPaymentPolling();
+
+            } catch (err) {
+                console.error('[activate] 创建订单失败:', err);
+                qrLoading.innerHTML = `<div style="color:#dc2626;font-size:13px;padding:16px;">网络异常，请稍后重试</div>`;
+            }
+        }
+
+        // 渲染二维码
+        function renderQRCode(text) {
+            const placeholder = document.getElementById('qrPlaceholder');
+            const qrImg = document.getElementById('payQRCode');
+
+            if (typeof QRCode !== 'undefined') {
+                placeholder.innerHTML = '';
+                placeholder.style.display = 'flex';
+                qrImg.style.display = 'none';
+                new QRCode(placeholder, {
+                    text: text,
+                    width: 200,
+                    height: 200,
+                    colorDark: '#000000',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } else {
+                // 兜底：显示链接文字
+                placeholder.style.display = 'flex';
+                placeholder.innerHTML = `<div style="padding:8px;font-size:11px;word-break:break-all;text-align:left;line-height:1.6;">${text}</div>`;
+            }
+        }
+
+        // 轮询支付状态
+        function startPaymentPolling() {
+            if (pollingTimer) clearInterval(pollingTimer);
+            const startTime = Date.now();
+            let pollCount = 0;
+
+            pollingTimer = setInterval(async () => {
+                pollCount++;
+                if (Date.now() - startTime > CONFIG.pollTimeout) {
+                    clearInterval(pollingTimer);
+                    pollingTimer = null;
+                    const el = document.getElementById('payCountdown');
+                    if (el) el.textContent = '支付超时，请重新发起支付';
+                    return;
+                }
+
+                try {
+                    const funcKey = currentPayChannel === 'alipay' ? 'alipay' : 'wechatpay';
+                    const endpoint = `https://${CONFIG.cloudbaseEnvId}.api.tcloudbase.com/${CONFIG.cloudFunctions[funcKey]}.http`;
+                    const res = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ action: 'query', out_trade_no: currentOrderId || currentCode, channel: currentPayChannel })
+                    });
+                    const data = await res.json();
+
+                    if (data.trade_status === 'TRADE_SUCCESS' || data.trade_state === 'SUCCESS') {
+                        clearInterval(pollingTimer);
+                        pollingTimer = null;
+                        if (CONFIG.enableSound) playSuccessSound();
+                        activateMember(selectedPlan, currentOrderId || currentCode);
+                    }
+
+                    const el = document.getElementById('payCountdown');
+                    if (el) el.textContent = `等待支付中... (${pollCount * CONFIG.pollInterval / 1000}秒)`;
+
+                } catch (err) {
+                    console.warn('[activate] 轮询失败:', err);
+                }
+            }, CONFIG.pollInterval);
+        }
+
+        // 支付成功提示音
+        function playSuccessSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.value = 880;
+                gain.gain.value = 0.3;
+                osc.start();
+                osc.stop(ctx.currentTime + 0.15);
+            } catch (e) {}
         }
         
         // 演示模式
@@ -1053,6 +1268,7 @@
         function closePayModal() {
             document.getElementById('payModal').classList.remove('show');
             clearInterval(countdownTimer);
+            if (pollingTimer) { clearInterval(pollingTimer); pollingTimer = null; }
         }
         
         // 激活会员
