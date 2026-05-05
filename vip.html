@@ -656,6 +656,28 @@
             background: rgba(0,0,0,0.5);
         }
         
+        /* 支付通道切换 tab */
+        .pay-type-tabs {
+            display: flex;
+            gap: 8px;
+        }
+        .pay-type-tab {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .pay-type-tab.active {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fff7ed, #fff2e8);
+            color: #e65100;
+        }
+        
         /* 响应式 */
         @media(max-width:768px){
             .vip-header{padding:30px 16px}
@@ -707,12 +729,12 @@
         <div class="member-expire" id="memberExpire">有效期至：-</div>
     </div>
     
-    <!-- 开通引导（未开通时显示） -->
+    <!-- 一键开通横幅（替换原有 upgrade-banner） -->
     <div class="upgrade-banner" id="upgradeBanner">
-        <h3>🔓 开通会员，解锁全部资料</h3>
-        <a href="activate.html" class="upgrade-btn">
-            👉 立即开通会员 ¥29/月起
-        </a>
+        <h3>开通全站会员，解锁全部资料</h3>
+        <button class="upgrade-btn" onclick="openDirectPay()">
+            立即开通会员 ¥29
+        </button>
     </div>
     
     <div class="category-tabs">
@@ -752,79 +774,56 @@
         </a>
     </div>
     
-    <!-- 激活套餐选择弹窗 -->
+    <!-- 单一金额快捷支付弹窗（替换原有 activate-modal） -->
     <div class="activate-modal" id="activateModal">
         <div class="activate-modal-content">
             <div class="activate-modal-header">
-                <h3>💎 选择会员套餐</h3>
+                <h3>开通全站会员</h3>
                 <button class="activate-modal-close" onclick="closeActivateModal()">&times;</button>
             </div>
-            
-            <div class="package-cards">
-                <!-- 月卡 -->
-                <div class="package-card" data-package="month" data-price="29" onclick="selectPackage(this)">
-                    <div class="package-card-header">
-                        <span class="package-name">月卡会员</span>
-                        <span class="package-tag hot">热门</span>
-                    </div>
-                    <div class="package-price">¥29<small>/月</small></div>
-                    <div class="package-desc">适合短期学习需求</div>
-                    <div class="package-benefits">
-                        <span>✅</span> 解锁全部资料<br>
-                        <span>✅</span> 有效期30天<br>
-                        <span>✅</span> 持续更新内容
-                    </div>
+
+            <!-- 固定金额展示 -->
+            <div style="text-align:center;padding:20px 0;">
+                <div style="font-size:48px;font-weight:bold;color:#f59e0b;margin-bottom:8px;">
+                    ¥29<span style="font-size:16px;color:#888;font-weight:normal;">/月</span>
                 </div>
-                
-                <!-- 季卡 -->
-                <div class="package-card" data-package="quarter" data-price="79" onclick="selectPackage(this)">
-                    <div class="package-card-header">
-                        <span class="package-name">季卡会员</span>
-                        <span class="package-tag normal">推荐</span>
-                    </div>
-                    <div class="package-price">¥79<small>/季</small></div>
-                    <div class="package-desc">适合持续学习3个月</div>
-                    <div class="package-benefits">
-                        <span>✅</span> 解锁全部资料<br>
-                        <span>✅</span> 有效期90天<br>
-                        <span>✅</span> 节省¥8元
-                    </div>
-                </div>
-                
-                <!-- 年卡 -->
-                <div class="package-card" data-package="year" data-price="199" onclick="selectPackage(this)">
-                    <div class="package-card-header">
-                        <span class="package-name">年卡会员</span>
-                        <span class="package-tag best">超值</span>
-                    </div>
-                    <div class="package-price">¥199<small>/年</small></div>
-                    <div class="package-desc">适合长期学习用户</div>
-                    <div class="package-benefits">
-                        <span>✅</span> 解锁全部资料<br>
-                        <span>✅</span> 有效期365天<br>
-                        <span>✅</span> 节省¥149元
-                    </div>
-                </div>
-                
-                <!-- 永久卡 -->
-                <div class="package-card" data-package="forever" data-price="399" onclick="selectPackage(this)">
-                    <div class="package-card-header">
-                        <span class="package-name">永久会员</span>
-                        <span class="package-tag normal">尊享</span>
-                    </div>
-                    <div class="package-price">¥399<small>/永久</small></div>
-                    <div class="package-desc">一次购买，终身使用</div>
-                    <div class="package-benefits">
-                        <span>✅</span> 解锁全部资料<br>
-                        <span>✅</span> 永久有效<br>
-                        <span>✅</span> 永久更新特权
-                    </div>
-                </div>
+                <div style="font-size:13px;color:#666;">开通后畅享全部 40+ 优质资料</div>
             </div>
-            
-            <button class="confirm-package-btn" id="confirmPackageBtn" onclick="goToActivate()">
-                立即开通 月卡 ¥29
+
+            <!-- 支付通道切换 -->
+            <div class="pay-type-tabs" style="margin-bottom:16px;">
+                <div class="pay-type-tab active" id="tabAlipay" onclick="switchPayTab('alipay')">支付宝</div>
+                <div class="pay-type-tab" id="tabWechat" onclick="switchPayTab('wechat')">微信支付</div>
+            </div>
+
+            <!-- 支付二维码区域 -->
+            <div id="payQrArea">
+                <div id="payLoadingState" style="padding:24px;text-align:center;">
+                    <div style="font-size:28px;margin-bottom:8px;">⏳</div>
+                    <div style="color:#888;font-size:13px;">正在生成支付二维码...</div>
+                </div>
+                <div id="payQrContainer" style="display:none;text-align:center;">
+                    <div id="qrPlaceholder" style="width:200px;height:200px;margin:0 auto;background:#f8f9fa;border-radius:8px;display:flex;align-items:center;justify-content:center;"></div>
+                    <img id="payQrCode" src="" style="display:none;margin:0 auto;max-width:200px;" />
+                    <div id="payMethodHint" style="margin-top:12px;font-size:13px;color:#666;">请使用支付宝扫码支付</div>
+                </div>
+                <div id="payErrorState" style="display:none;padding:16px;text-align:center;color:#dc2626;font-size:13px;"></div>
+            </div>
+
+            <!-- 倒计时 + 查询按钮 -->
+            <div id="payCountdown" style="text-align:center;font-size:13px;color:#f59e0b;min-height:20px;margin:12px 0;"></div>
+
+            <!-- 开通按钮（支付成功前禁用） -->
+            <button class="confirm-package-btn" id="confirmPayBtn" onclick="confirmPay()" disabled
+                style="background:#ccc;cursor:not-allowed;">
+                等待支付结果...
             </button>
+
+            <!-- 提示 -->
+            <div style="text-align:center;font-size:11px;color:#999;margin-top:12px;">
+                支付成功后系统将在 <span style="color:#f59e0b;font-weight:bold;">10秒内</span> 自动开通<br>
+                如有疑问联系微信：LZJD8768
+            </div>
         </div>
     </div>
     
@@ -852,7 +851,7 @@
             
             <div class="unlock-btns">
                 <button class="unlock-btn unlock-btn-cancel" onclick="closeUnlockModal()">稍后再说</button>
-                <button class="unlock-btn unlock-btn-confirm" id="unlockConfirmBtn" onclick="goToActivate()">💳 现金购买 月卡 ¥29</button>
+                <button class="unlock-btn unlock-btn-confirm" id="unlockConfirmBtn" onclick="openDirectPay()">立即支付开通 ¥29</button>
             </div>
         </div>
     </div>
@@ -3918,6 +3917,10 @@
         // 关闭激活弹窗
         function closeActivateModal() {
             document.getElementById('activateModal').classList.remove('active');
+            if (payState && payState.pollingTimer) {
+                clearInterval(payState.pollingTimer);
+                payState.pollingTimer = null;
+            }
         }
         
         // 跳转激活页面
@@ -3948,6 +3951,384 @@
         
         // 初始化
         updateUI();
+        
+        // ============================================================
+        // 单一金额快捷支付系统
+        // ============================================================
+
+        // 支付配置
+        const PAY_CONFIG = {
+            amount: 29,
+            planId: 'month',
+            planName: '月卡会员',
+            cloudbaseEnvId: 'your-env-id', // 腾讯云开发环境ID（需替换）
+            cloudFunctions: {
+                alipay: 'alipay-pay',
+                wechatpay: 'wechatpay-pay'
+            },
+            pollInterval: 3000,
+            pollTimeout: 30 * 60 * 1000,
+            qrcodeCdn: 'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js'
+        };
+
+        // 加载二维码库（防止重复加载）
+        let qrcodeLibLoaded = false;
+        function loadQRCodeLib(callback) {
+            if (qrcodeLibLoaded && typeof QRCode !== 'undefined') {
+                callback();
+                return;
+            }
+            if (qrcodeLibLoaded) {
+                setTimeout(() => loadQRCodeLib(callback), 200);
+                return;
+            }
+            qrcodeLibLoaded = true;
+            const script = document.createElement('script');
+            script.src = PAY_CONFIG.qrcodeCdn;
+            script.onload = callback;
+            script.onerror = () => {
+                qrcodeLibLoaded = false;
+                console.warn('[vip] 二维码库加载失败，将使用文本模式');
+                callback();
+            };
+            document.head.appendChild(script);
+        }
+
+        // 支付状态
+        let payState = {
+            orderId: null,
+            channel: 'alipay',
+            pollingTimer: null,
+            paid: false
+        };
+
+        // 打开快捷支付弹窗
+        function openDirectPay() {
+            payState.paid = false;
+            payState.channel = 'alipay';
+
+            // 重置UI
+            document.getElementById('payLoadingState').style.display = 'block';
+            document.getElementById('payQrContainer').style.display = 'none';
+            document.getElementById('payErrorState').style.display = 'none';
+            document.getElementById('confirmPayBtn').disabled = true;
+            document.getElementById('confirmPayBtn').style.background = 'linear-gradient(135deg,#ccc,#aaa)';
+            document.getElementById('confirmPayBtn').style.cursor = 'not-allowed';
+            document.getElementById('confirmPayBtn').textContent = '等待支付结果...';
+            document.getElementById('payCountdown').textContent = '';
+
+            // Tab 状态
+            document.getElementById('tabAlipay').className = 'pay-type-tab active';
+            document.getElementById('tabWechat').className = 'pay-type-tab';
+            document.getElementById('payMethodHint').textContent = '请使用支付宝扫码支付';
+
+            // 关闭解锁弹窗（如果从解锁入口进来）
+            document.getElementById('unlockModal').classList.remove('active');
+
+            // 显示弹窗
+            document.getElementById('activateModal').classList.add('active');
+
+            // 检查是否配置了云函数环境
+            if (!PAY_CONFIG.cloudbaseEnvId || PAY_CONFIG.cloudbaseEnvId === 'your-env-id') {
+                // 降级：显示手动收款码
+                showManualPayFallback();
+                return;
+            }
+
+            // 加载二维码库并创建订单
+            loadQRCodeLib(() => createPayOrder());
+        }
+
+        // 降级：手动收款码模式
+        function showManualPayFallback() {
+            const loading = document.getElementById('payLoadingState');
+            const qrContainer = document.getElementById('payQrContainer');
+            const confirmBtn = document.getElementById('confirmPayBtn');
+
+            loading.style.display = 'none';
+            qrContainer.style.display = 'block';
+
+            const placeholder = document.getElementById('qrPlaceholder');
+            placeholder.style.display = 'flex';
+            placeholder.style.flexDirection = 'column';
+            placeholder.style.gap = '8px';
+            placeholder.style.width = '200px';
+            placeholder.style.height = 'auto';
+            placeholder.style.padding = '8px';
+            placeholder.innerHTML = `
+                <img src="assets/alipay.jpg" id="manualAlipayQr" style="width:160px;border-radius:6px;display:block;">
+                <img src="assets/wechat.jpg" id="manualWechatQr" style="width:160px;border-radius:6px;display:none;">
+            `;
+            document.getElementById('payQrCode').style.display = 'none';
+            document.getElementById('payMethodHint').textContent = '请使用支付宝扫码，付款备注：月卡';
+
+            document.getElementById('payCountdown').textContent = '付款后点击下方按钮，我们将在10分钟内手动激活';
+
+            confirmBtn.disabled = false;
+            confirmBtn.style.background = 'linear-gradient(135deg,#f59e0b,#e65100)';
+            confirmBtn.style.cursor = 'pointer';
+            confirmBtn.textContent = '我已付款，点击激活';
+            confirmBtn.onclick = function() { confirmManualPay(); };
+        }
+
+        // 手动确认付款
+        function confirmManualPay() {
+            const orderId = generatePayOrderId();
+            const btn = document.getElementById('confirmPayBtn');
+            btn.textContent = '✅ 已提交，等待激活...';
+            btn.disabled = true;
+            btn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+
+            // 记录到 localStorage 等待管理员处理
+            const pendingOrders = JSON.parse(localStorage.getItem('pending_orders') || '[]');
+            pendingOrders.push({
+                orderId,
+                channel: payState.channel,
+                amount: PAY_CONFIG.amount,
+                time: new Date().toISOString()
+            });
+            localStorage.setItem('pending_orders', JSON.stringify(pendingOrders));
+
+            document.getElementById('payCountdown').textContent = '请联系微信 LZJD8768 发送付款截图，备注订单号：' + orderId;
+        }
+
+        // 切换支付通道
+        async function switchPayTab(channel) {
+            if (payState.channel === channel) return;
+
+            if (payState.pollingTimer) {
+                clearInterval(payState.pollingTimer);
+                payState.pollingTimer = null;
+            }
+
+            payState.channel = channel;
+            document.getElementById('tabAlipay').className = 'pay-type-tab' + (channel === 'alipay' ? ' active' : '');
+            document.getElementById('tabWechat').className = 'pay-type-tab' + (channel === 'wechat' ? ' active' : '');
+
+            const hint = document.getElementById('payMethodHint');
+            if (hint) {
+                hint.textContent = channel === 'alipay' ? '请使用支付宝扫码支付' : '请使用微信支付扫码';
+            }
+
+            // 降级模式：切换收款码图片
+            if (!PAY_CONFIG.cloudbaseEnvId || PAY_CONFIG.cloudbaseEnvId === 'your-env-id') {
+                const alipayQr = document.getElementById('manualAlipayQr');
+                const wechatQr = document.getElementById('manualWechatQr');
+                if (alipayQr && wechatQr) {
+                    alipayQr.style.display = channel === 'alipay' ? 'block' : 'none';
+                    wechatQr.style.display = channel === 'wechat' ? 'block' : 'none';
+                }
+                const methodHint = document.getElementById('payMethodHint');
+                if (methodHint) {
+                    methodHint.textContent = channel === 'alipay'
+                        ? '请使用支付宝扫码，付款备注：月卡'
+                        : '请使用微信扫码，付款备注：月卡';
+                }
+                return;
+            }
+
+            await createPayOrder();
+        }
+
+        // 生成订单号
+        function generatePayOrderId() {
+            return 'VIP' + Date.now() + Math.random().toString(36).slice(2, 6).toUpperCase();
+        }
+
+        // 显示支付错误
+        function showPayError(msg) {
+            const loading = document.getElementById('payLoadingState');
+            const errorState = document.getElementById('payErrorState');
+            if (loading) loading.style.display = 'none';
+            if (errorState) {
+                errorState.style.display = 'block';
+                errorState.textContent = msg;
+            }
+        }
+
+        // 创建支付订单
+        async function createPayOrder() {
+            const loading = document.getElementById('payLoadingState');
+            const qrContainer = document.getElementById('payQrContainer');
+            const errorState = document.getElementById('payErrorState');
+            const confirmBtn = document.getElementById('confirmPayBtn');
+
+            loading.style.display = 'block';
+            qrContainer.style.display = 'none';
+            errorState.style.display = 'none';
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = '等待支付结果...';
+
+            const orderId = generatePayOrderId();
+            payState.orderId = orderId;
+
+            const fnName = payState.channel === 'alipay'
+                ? PAY_CONFIG.cloudFunctions.alipay
+                : PAY_CONFIG.cloudFunctions.wechatpay;
+            const endpoint = `https://${PAY_CONFIG.cloudbaseEnvId}.api.tcloudbase.com/${fnName}.http`;
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        out_trade_no: orderId,
+                        total_fee: PAY_CONFIG.amount,
+                        subject: `AI工具场 - ${PAY_CONFIG.planName}`,
+                        body: `开通${PAY_CONFIG.planName}，订单号：${orderId}`,
+                        channel: payState.channel
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.code !== 0 || (!data.qr_code && !data.code_url)) {
+                    showPayError('下单失败：' + (data.msg || '请稍后重试'));
+                    return;
+                }
+
+                loading.style.display = 'none';
+                qrContainer.style.display = 'block';
+                renderPayQR(data.qr_code || data.code_url);
+                startPayPolling(orderId);
+
+            } catch (err) {
+                console.error('[vip] 创建订单失败:', err);
+                showPayError('网络异常，请检查网络后重试');
+            }
+        }
+
+        // 渲染支付二维码
+        function renderPayQR(text) {
+            const placeholder = document.getElementById('qrPlaceholder');
+            const qrImg = document.getElementById('payQrCode');
+
+            if (typeof QRCode !== 'undefined') {
+                placeholder.innerHTML = '';
+                placeholder.style.display = 'block';
+                placeholder.style.width = '200px';
+                placeholder.style.height = '200px';
+                qrImg.style.display = 'none';
+                new QRCode(placeholder, {
+                    text: text,
+                    width: 200,
+                    height: 200,
+                    colorDark: '#000000',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } else {
+                placeholder.style.display = 'flex';
+                placeholder.innerHTML = `<div style="padding:8px;font-size:11px;word-break:break-all;text-align:left;line-height:1.6;color:#666;">${text}</div>`;
+                qrImg.style.display = 'none';
+            }
+        }
+
+        // 启动轮询
+        function startPayPolling(orderId) {
+            if (payState.pollingTimer) {
+                clearInterval(payState.pollingTimer);
+            }
+
+            const startTime = Date.now();
+            const confirmBtn = document.getElementById('confirmPayBtn');
+            const countdown = document.getElementById('payCountdown');
+
+            payState.pollingTimer = setInterval(async () => {
+                if (payState.paid) {
+                    clearInterval(payState.pollingTimer);
+                    return;
+                }
+
+                if (Date.now() - startTime > PAY_CONFIG.pollTimeout) {
+                    clearInterval(payState.pollingTimer);
+                    countdown.textContent = '⏰ 支付超时，请关闭后重新发起';
+                    confirmBtn.textContent = '超时，重新支付';
+                    confirmBtn.disabled = false;
+                    confirmBtn.style.background = 'linear-gradient(135deg,#f59e0b,#e65100)';
+                    confirmBtn.style.cursor = 'pointer';
+                    confirmBtn.onclick = () => createPayOrder();
+                    return;
+                }
+
+                countdown.textContent = `⏳ 等待支付中... (${Math.round((Date.now() - startTime) / 1000)}秒)`;
+
+                try {
+                    const fnName = payState.channel === 'alipay'
+                        ? PAY_CONFIG.cloudFunctions.alipay
+                        : PAY_CONFIG.cloudFunctions.wechatpay;
+                    const endpoint = `https://${PAY_CONFIG.cloudbaseEnvId}.api.tcloudbase.com/${fnName}.http`;
+                    const res = await fetch(`${endpoint}?action=query`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ out_trade_no: orderId, channel: payState.channel })
+                    });
+                    const data = await res.json();
+
+                    if (data.trade_status === 'TRADE_SUCCESS' || data.trade_state === 'SUCCESS') {
+                        payState.paid = true;
+                        clearInterval(payState.pollingTimer);
+                        playSuccessTone();
+                        countdown.textContent = '✅ 支付成功！正在开通会员...';
+                        confirmBtn.textContent = '🎉 开通中...';
+                        confirmBtn.disabled = true;
+                        setTimeout(() => activateVipMember(orderId), 500);
+                    }
+                } catch (err) {
+                    console.warn('[vip] 轮询失败:', err);
+                }
+            }, PAY_CONFIG.pollInterval);
+        }
+
+        // 开通会员（核心激活函数）
+        function activateVipMember(orderId) {
+            const now = Date.now();
+            const expireTime = now + 30 * 24 * 60 * 60 * 1000;
+
+            const memberInfo = {
+                level: PAY_CONFIG.planId,
+                activateCode: orderId,
+                activateTime: now,
+                expireTime: expireTime,
+                isActive: true
+            };
+
+            localStorage.setItem('vip_member', JSON.stringify(memberInfo));
+            localStorage.setItem('member_level', PAY_CONFIG.planId);
+            localStorage.setItem('member_expire', expireTime.toString());
+
+            closeActivateModal();
+            updateUI();
+
+            setTimeout(() => {
+                alert('🎉 恭喜！月卡会员已成功开通！\n\n有效期：30天\n即将刷新页面...');
+                window.location.reload();
+            }, 300);
+        }
+
+        // confirmPay：已支付后的手动确认按钮（兜底）
+        function confirmPay() {
+            if (payState.paid) {
+                activateVipMember(payState.orderId || generatePayOrderId());
+            }
+        }
+
+        // 成功提示音
+        function playSuccessTone() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.setValueAtTime(880, ctx.currentTime);
+                osc.frequency.setValueAtTime(1320, ctx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.5);
+            } catch(e) {}
+        }
         
         // 联系我们弹窗
         function showContact() {
