@@ -4062,12 +4062,16 @@
             document.getElementById('payQrCode').style.display = 'none';
             document.getElementById('payMethodHint').textContent = '请使用支付宝扫码，付款备注：月卡';
 
-            document.getElementById('payCountdown').textContent = '付款后点击下方按钮，我们将在10分钟内手动激活';
+            document.getElementById('payCountdown').innerHTML = `
+                <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px;font-size:12px;color:#c2410c;line-height:1.6;">
+                    💡 <b>付款说明：</b>扫码付款后，请备注"月卡"，然后点击下方按钮<br>
+                    ⏱️ 我们将在 <b>10分钟内</b> 手动为您开通
+                </div>`;
 
             confirmBtn.disabled = false;
             confirmBtn.style.background = 'linear-gradient(135deg,#f59e0b,#e65100)';
             confirmBtn.style.cursor = 'pointer';
-            confirmBtn.textContent = '我已付款，点击激活';
+            confirmBtn.textContent = '✅ 我已付款，申请开通';
             confirmBtn.onclick = function() { confirmManualPay(); };
         }
 
@@ -4089,7 +4093,13 @@
             });
             localStorage.setItem('pending_orders', JSON.stringify(pendingOrders));
 
-            document.getElementById('payCountdown').textContent = '请联系微信 LZJD8768 发送付款截图，备注订单号：' + orderId;
+            document.getElementById('payCountdown').innerHTML = `
+                <div style="background:#ecfdf5;border:1px solid #6ee7b7;border-radius:8px;padding:12px;font-size:13px;color:#065f46;text-align:left;line-height:1.8;">
+                    ✅ 申请已提交，订单号：<b>${orderId}</b><br>
+                    📱 请添加客服微信：<b style="color:#f59e0b;font-size:14px;">LZJD8768</b>
+                    <button onclick="copyWechatId()" style="margin-left:6px;padding:3px 8px;background:#f59e0b;color:white;border:none;border-radius:5px;font-size:11px;cursor:pointer;">复制微信号</button><br>
+                    📸 发送付款截图，10分钟内开通
+                </div>`;
         }
 
         // 切换支付通道
@@ -4133,6 +4143,34 @@
         // 生成订单号
         function generatePayOrderId() {
             return 'VIP' + Date.now() + Math.random().toString(36).slice(2, 6).toUpperCase();
+        }
+
+        // 复制客服微信号
+        function copyWechatId() {
+            const wechatId = 'LZJD8768';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(wechatId).then(() => {
+                    showToast('微信号已复制：' + wechatId);
+                }).catch(() => fallbackCopy(wechatId));
+            } else {
+                fallbackCopy(wechatId);
+            }
+        }
+        function fallbackCopy(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            showToast('微信号已复制：' + text);
+        }
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.textContent = msg;
+            t.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:99999;';
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2500);
         }
 
         // 显示支付错误

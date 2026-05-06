@@ -1246,22 +1246,68 @@
             }
         }
         
-        // 确认支付
+        // 确认支付（手动收款码模式：记录订单，等待管理员核实后激活）
         function confirmPayment() {
             clearInterval(countdownTimer);
+
+            if (!selectedPlan) return;
+
+            // 生成订单号并记录
+            const orderId = 'PAY' + Date.now() + Math.random().toString(36).slice(2, 5).toUpperCase();
+            const pendingOrders = JSON.parse(localStorage.getItem('pending_orders') || '[]');
+            pendingOrders.push({
+                orderId,
+                planId: selectedPlan.id,
+                planName: selectedPlan.name,
+                amount: selectedPlan.price,
+                channel: currentPayMethod || 'alipay',
+                time: new Date().toISOString()
+            });
+            localStorage.setItem('pending_orders', JSON.stringify(pendingOrders));
+
+            // 更新支付弹窗内容，显示后续操作提示
+            const qrBox = document.getElementById('qrBox');
+            qrBox.innerHTML = `
+                <div style="background:#ecfdf5;border:1px solid #6ee7b7;border-radius:10px;padding:16px;font-size:13px;color:#065f46;line-height:1.9;text-align:left;">
+                    ✅ <b>申请已提交</b><br>
+                    订单号：<b style="color:#f59e0b;">${orderId}</b><br>
+                    套餐：<b>${selectedPlan.name}</b>（¥${selectedPlan.price}）<br><br>
+                    📱 请添加客服微信：<b style="font-size:15px;color:#f59e0b;">LZJD8768</b>
+                    <button onclick="copyWxId()" style="margin-left:6px;padding:3px 8px;background:#f59e0b;color:#fff;border:none;border-radius:5px;font-size:11px;cursor:pointer;">复制</button><br>
+                    📸 发送<b>付款截图</b>，我们将在 <b>10分钟内</b> 手动开通
+                </div>`;
+
             document.getElementById('payCountdown').textContent = '';
-            
-            if (selectedPayType === 'single') {
-                const owned = JSON.parse(localStorage.getItem('ownedMaterials') || '[]');
-                if (!owned.includes(0)) owned.push(0);
-                localStorage.setItem('ownedMaterials', JSON.stringify(owned));
-                
-                closePayModal();
-                document.getElementById('successDesc').textContent = '单课购买成功！激活码：' + currentCode;
-                document.getElementById('successModal').classList.add('show');
-            } else {
-                activateMember(selectedPlan, currentCode);
+
+            // 修改确认按钮为关闭
+            const confirmBtn = document.querySelector('.pay-box .pay-btn');
+            if (confirmBtn) {
+                confirmBtn.textContent = '好的，我去联系客服';
+                confirmBtn.onclick = closePayModal;
             }
+        }
+
+        // 复制微信号
+        function copyWxId() {
+            const id = 'LZJD8768';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(id).then(() => showActToast('已复制微信号：' + id));
+            } else {
+                const el = document.createElement('textarea');
+                el.value = id;
+                document.body.appendChild(el);
+                el.select();
+                document.execCommand('copy');
+                document.body.removeChild(el);
+                showActToast('已复制微信号：' + id);
+            }
+        }
+        function showActToast(msg) {
+            const t = document.createElement('div');
+            t.textContent = msg;
+            t.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;z-index:99999;';
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 2500);
         }
         
         // 关闭支付弹窗
