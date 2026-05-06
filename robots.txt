@@ -1,0 +1,38 @@
+# AI工具场 robots.txt
+# https://aitoolchang.cn/
+
+User-agent: *
+Allow: /
+
+# 允许所有搜索引擎抓取
+
+# Sitemap位置
+Sitemap: https://aitoolchang.cn/sitemap.xml
+
+# 禁止抓取的页面（管理后台和用户隐私页面）
+Disallow: /admin.html
+Disallow: /user.html
+Disallow: /activate.html
+Disallow: /recharge.html
+Disallow: /withdraw.html
+
+# 图片优化
+User-agent: Googlebot-Image
+Allow: /assets/
+
+# 允许主流搜索引擎
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Sogou spider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# 特殊爬虫规则
+User-agent: *
+Crawl-delay: 1
