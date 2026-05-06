@@ -2119,6 +2119,22 @@
             ];
             const totalTools = toolStats.reduce((sum, t) => sum + t.count, 0);
             
+            // 自然流量统计（从localStorage读取，手动记录或统计服务接入）
+            const trafficStats = JSON.parse(localStorage.getItem('ai_gongju_chang_traffic') || '{}');
+            const todayPV = trafficStats.todayPV || 0;
+            const todayUV = trafficStats.todayUV || 0;
+            const totalPV = trafficStats.totalPV || 0;
+            const totalUV = trafficStats.totalUV || 0;
+            
+            // 流量来源分布
+            const trafficSources = [
+                { name: '百度搜索', value: trafficStats.baiduPercent || 45, color: '#293ca3' },
+                { name: 'Google搜索', value: trafficStats.googlePercent || 20, color: '#4285f4' },
+                { name: '直接访问', value: trafficStats.directPercent || 18, color: '#22c55e' },
+                { name: '微信内访问', value: trafficStats.wechatPercent || 10, color: '#07c160' },
+                { name: '其他来源', value: trafficStats.otherPercent || 7, color: '#94a3b8' }
+            ];
+            
             // 渲染Tab内容
             let analyticsTab = document.getElementById('tab-analytics');
             if (!analyticsTab) {
@@ -2129,6 +2145,80 @@
             }
             
             analyticsTab.innerHTML = `
+                <!-- 自然流量看板 -->
+                <div class="add-form" style="margin-bottom:24px;background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);border:1px solid #fbbf24">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                        <h2 style="color:#92400e">🌐 网站自然流量看板</h2>
+                        <button onclick="showTrafficModal()" style="background:#f59e0b;color:#fff;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px">
+                            ⚙️ 设置统计
+                        </button>
+                    </div>
+                    
+                    <!-- 流量核心指标 -->
+                    <div class="user-stats" style="margin-bottom:16px">
+                        <div class="stat-card" style="border-left:4px solid #92400e">
+                            <div class="value" style="color:#92400e">${todayPV.toLocaleString()}</div>
+                            <div class="label">今日浏览量(PV)</div>
+                        </div>
+                        <div class="stat-card" style="border-left:4px solid #dc2626">
+                            <div class="value" style="color:#dc2626">${todayUV.toLocaleString()}</div>
+                            <div class="label">今日访客数(UV)</div>
+                        </div>
+                        <div class="stat-card" style="border-left:4px solid #059669">
+                            <div class="value" style="color:#059669">${totalPV.toLocaleString()}</div>
+                            <div class="label">总浏览量(PV)</div>
+                        </div>
+                        <div class="stat-card" style="border-left:4px solid #7c3aed">
+                            <div class="value" style="color:#7c3aed">${totalUV.toLocaleString()}</div>
+                            <div class="label">总访客数(UV)</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 流量来源分布 -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                        <div>
+                            <h3 style="font-size:14px;color:#92400e;margin-bottom:12px">📊 流量来源分布</h3>
+                            <div style="display:flex;flex-direction:column;gap:10px">
+                                ${trafficSources.map(s => `
+                                    <div style="display:flex;align-items:center;gap:10px">
+                                        <div style="width:10px;height:10px;border-radius:50%;background:${s.color}"></div>
+                                        <span style="flex:1;font-size:13px;color:#666">${s.name}</span>
+                                        <div style="width:100px;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden">
+                                            <div style="height:100%;width:${s.value}%;background:${s.color}"></div>
+                                        </div>
+                                        <span style="font-weight:600;color:${s.color};font-size:13px;width:40px;text-align:right">${s.value}%</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <h3 style="font-size:14px;color:#92400e;margin-bottom:12px">📈 关键指标</h3>
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                                <div style="background:rgba(255,255,255,0.6);padding:12px;border-radius:8px;text-align:center">
+                                    <div style="font-size:20px;font-weight:700;color:#293ca3">${totalPV > 0 ? (totalUV/totalPV*100).toFixed(1) : 0}%</div>
+                                    <div style="font-size:12px;color:#666">跳出率</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.6);padding:12px;border-radius:8px;text-align:center">
+                                    <div style="font-size:20px;font-weight:700;color:#059669">${totalUV > 0 ? Math.round(totalPV/totalUV) : 0}</div>
+                                    <div style="font-size:12px;color:#666">平均访问页数</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.6);padding:12px;border-radius:8px;text-align:center">
+                                    <div style="font-size:20px;font-weight:700;color:#dc2626">${trafficSources[0].value}%</div>
+                                    <div style="font-size:12px;color:#666">百度占比</div>
+                                </div>
+                                <div style="background:rgba(255,255,255,0.6);padding:12px;border-radius:8px;text-align:center">
+                                    <div style="font-size:20px;font-weight:700;color:#7c3aed">${trafficStats.avgStayTime || '0:00'}</div>
+                                    <div style="font-size:12px;color:#666">平均停留时长</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top:12px;padding:10px;background:rgba(255,255,255,0.5);border-radius:8px;font-size:12px;color:#92400e">
+                        💡 提示：如已接入百度统计或Google Analytics，可在此手动记录每日数据，或联系技术支持集成API自动同步。
+                    </div>
+                </div>
+
                 <!-- 核心指标卡片 -->
                 <div class="user-stats" style="margin-bottom:24px">
                     <div class="stat-card" style="border-left:4px solid #4f46e5">
@@ -2283,6 +2373,137 @@
     }
     function closeContact() {
         document.getElementById('contactModal').style.display = 'none';
+    }
+    
+    // 流量统计设置弹窗
+    function showTrafficModal() {
+        const trafficStats = JSON.parse(localStorage.getItem('ai_gongju_chang_traffic') || '{}');
+        const modal = document.createElement('div');
+        modal.id = 'trafficModal';
+        modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:99999;display:flex;align-items:center;justify-content:center;';
+        modal.innerHTML = `
+            <div style="background:#fff;border-radius:16px;padding:24px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                    <h3 style="font-size:18px;color:#333">🌐 流量数据设置</h3>
+                    <button onclick="closeTrafficModal()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#999">&times;</button>
+                </div>
+                
+                <div style="margin-bottom:16px">
+                    <h4 style="font-size:14px;color:#666;margin-bottom:12px">📊 今日数据</h4>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">今日浏览量(PV)</label>
+                            <input type="number" id="trafficTodayPV" value="${trafficStats.todayPV || ''}" placeholder="如：1234" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">今日访客(UV)</label>
+                            <input type="number" id="trafficTodayUV" value="${trafficStats.todayUV || ''}" placeholder="如：567" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom:16px">
+                    <h4 style="font-size:14px;color:#666;margin-bottom:12px">📈 累计数据</h4>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">总浏览量(PV)</label>
+                            <input type="number" id="trafficTotalPV" value="${trafficStats.totalPV || ''}" placeholder="如：50000" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">总访客(UV)</label>
+                            <input type="number" id="trafficTotalUV" value="${trafficStats.totalUV || ''}" placeholder="如：20000" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom:16px">
+                    <h4 style="font-size:14px;color:#666;margin-bottom:12px">🔍 流量来源占比(%)</h4>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">百度搜索</label>
+                            <input type="number" id="trafficBaidu" value="${trafficStats.baiduPercent || 45}" min="0" max="100" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">Google搜索</label>
+                            <input type="number" id="trafficGoogle" value="${trafficStats.googlePercent || 20}" min="0" max="100" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">直接访问</label>
+                            <input type="number" id="trafficDirect" value="${trafficStats.directPercent || 18}" min="0" max="100" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">微信内访问</label>
+                            <input type="number" id="trafficWechat" value="${trafficStats.wechatPercent || 10}" min="0" max="100" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom:16px">
+                    <h4 style="font-size:14px;color:#666;margin-bottom:12px">⏱️ 其他指标</h4>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">平均停留时长</label>
+                            <input type="text" id="trafficAvgStay" value="${trafficStats.avgStayTime || '0:00'}" placeholder="如：2:30" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                        <div>
+                            <label style="font-size:13px;color:#666;display:block;margin-bottom:4px">其他来源占比(%)</label>
+                            <input type="number" id="trafficOther" value="${trafficStats.otherPercent || 7}" min="0" max="100" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px">
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background:#fef3c7;padding:12px;border-radius:8px;margin-bottom:16px;font-size:13px;color:#92400e">
+                    💡 <b>数据来源建议：</b><br>
+                    • 百度统计：登陆 <a href="https://tongji.baidu.com" target="_blank" style="color:#2563eb">tongji.baidu.com</a> 查看数据<br>
+                    • Google Analytics：登陆 <a href="https://analytics.google.com" target="_blank" style="color:#2563eb">analytics.google.com</a> 查看数据<br>
+                    • 每日手动更新或接入API自动同步
+                </div>
+                
+                <div style="display:flex;gap:12px">
+                    <button onclick="saveTrafficStats()" style="flex:1;padding:12px;background:#f59e0b;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-weight:600">
+                        💾 保存数据
+                    </button>
+                    <button onclick="resetTrafficStats()" style="padding:12px 20px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-size:14px;cursor:pointer">
+                        🔄 重置
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    
+    function closeTrafficModal() {
+        const modal = document.getElementById('trafficModal');
+        if (modal) modal.remove();
+    }
+    
+    function saveTrafficStats() {
+        const stats = {
+            todayPV: parseInt(document.getElementById('trafficTodayPV').value) || 0,
+            todayUV: parseInt(document.getElementById('trafficTodayUV').value) || 0,
+            totalPV: parseInt(document.getElementById('trafficTotalPV').value) || 0,
+            totalUV: parseInt(document.getElementById('trafficTotalUV').value) || 0,
+            baiduPercent: parseInt(document.getElementById('trafficBaidu').value) || 45,
+            googlePercent: parseInt(document.getElementById('trafficGoogle').value) || 20,
+            directPercent: parseInt(document.getElementById('trafficDirect').value) || 18,
+            wechatPercent: parseInt(document.getElementById('trafficWechat').value) || 10,
+            otherPercent: parseInt(document.getElementById('trafficOther').value) || 7,
+            avgStayTime: document.getElementById('trafficAvgStay').value || '0:00',
+            lastUpdate: new Date().toISOString()
+        };
+        localStorage.setItem('ai_gongju_chang_traffic', JSON.stringify(stats));
+        closeTrafficModal();
+        renderAnalyticsTab();
+        alert('✅ 流量数据已保存！');
+    }
+    
+    function resetTrafficStats() {
+        if (confirm('确定要重置所有流量数据吗？')) {
+            localStorage.removeItem('ai_gongju_chang_traffic');
+            closeTrafficModal();
+            renderAnalyticsTab();
+            alert('✅ 流量数据已重置');
+        }
     }
     </script>
 </body>
