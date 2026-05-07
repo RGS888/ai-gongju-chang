@@ -842,7 +842,7 @@
                 </div>
                 <div id="payQrContainer" style="display:none;text-align:center;">
                     <div id="qrPlaceholder" style="width:200px;height:200px;margin:0 auto;background:#f8f9fa;border-radius:8px;display:flex;align-items:center;justify-content:center;"></div>
-                    <img id="payQrCode" src="" style="display:none;margin:0 auto;max-width:200px;" />
+                    <img id="payQrCode" src="" alt="支付二维码" style="display:none;margin:0 auto;max-width:200px;" />
                     <div id="payMethodHint" style="margin-top:12px;font-size:13px;color:#666;">请使用支付宝扫码支付</div>
                 </div>
                 <div id="payErrorState" style="display:none;padding:16px;text-align:center;color:#dc2626;font-size:13px;"></div>
@@ -4094,8 +4094,8 @@
             placeholder.style.height = 'auto';
             placeholder.style.padding = '8px';
             placeholder.innerHTML = `
-                <img src="assets/alipay.jpg" id="manualAlipayQr" style="width:160px;border-radius:6px;display:block;">
-                <img src="assets/wechat.jpg" id="manualWechatQr" style="width:160px;border-radius:6px;display:none;">
+                <img src="assets/alipay.jpg" id="manualAlipayQr" alt="支付宝收款码" style="width:160px;border-radius:6px;display:block;">
+                <img src="assets/wechat.jpg" id="manualWechatQr" alt="微信收款码" style="width:160px;border-radius:6px;display:none;">
             `;
             document.getElementById('payQrCode').style.display = 'none';
             document.getElementById('payMethodHint').textContent = '请使用支付宝扫码，付款备注：月卡';
